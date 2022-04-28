@@ -1,0 +1,234 @@
+@import "../variables.scss";
+
+.photos {
+  &_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 10px;
+
+    &_wrapper {
+      display: flex;
+    }
+
+    &_title_first {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+      color: $darkGrey;
+      cursor: pointer;
+      padding: 0px 10px;
+
+      padding-bottom: 6px;
+      padding-top: 22px;
+      border-bottom: 1px solid #d2d9d8;
+      transition: 0.2s;
+
+      &.active {
+        border-bottom: 1px solid $azure;
+        color: $black;
+      }
+    }
+
+    &_title_second {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+      color: $darkGrey;
+      cursor: pointer;
+      padding-bottom: 6px;
+      padding-top: 22px;
+      border-bottom: 1px solid #d2d9d8;
+      padding: 0px 10px;
+      transition: 0.2s;
+
+      &.active {
+        border-bottom: 1px solid $azure;
+        color: $black;
+      }
+    }
+
+    &_select {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: flex-end;
+      border-bottom: 1px solid #d2d9d8;
+    }
+  }
+
+  &_options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+
+    &_left {
+      display: flex;
+      align-items: center;
+
+      &_p {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 16px;
+        color: $black;
+        margin-right: 40px;
+
+        &_span {
+          font-weight: 600;
+        }
+      }
+    }
+
+    &_right {
+      display: flex;
+      align-items: center;
+
+      &_add {
+        display: flex;
+        margin-right: 30px;
+
+        &_image {
+          margin-right: 5px;
+          width: 20px;
+          height: 20px;
+        }
+
+        &_p {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 16px;
+          color: $darkAzure;
+        }
+      }
+    }
+  }
+
+  &_cards {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  &_card {
+    margin-top: 10px;
+    width: 255px;
+    height: 255px;
+
+    &:not(:nth-child(3n + 3)) {
+      margin-right: 39px;
+    }
+
+    &_photo {
+      border-radius: 8px 8px 0px 0px;
+      width: 255px;
+      height: 152px;
+      object-fit: cover;
+
+      &_wrapper {
+        position: relative;
+      }
+
+      &_checkbox {
+        position: absolute;
+        bottom: 100px;
+        left: 232px;
+      }
+    }
+
+    &_info {
+      border: 1px solid #d2d9d8;
+      border-radius: 0px 0px 8px 8px;
+      margin-top: -4px;
+      padding: 8px;
+      box-sizing: border-box;
+      &_country {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        color: $darkGrey;
+      }
+
+      &_title {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: $darkAzure;
+
+        &_wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 10px;
+        }
+      }
+
+      &_comm {
+        display: flex;
+        margin-top: 12px;
+
+        &_likes {
+          display: flex;
+          margin-right: 11px;
+
+          &_image {
+            margin-right: 5px;
+          }
+
+          &_p {
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: $black;
+          }
+        }
+
+        &_comments {
+          display: flex;
+          margin-right: 11px;
+
+          &_image {
+            margin-right: 5px;
+          }
+          &_p {
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: $black;
+          }
+        }
+
+        &_fave {
+          display: flex;
+          margin-right: 11px;
+
+          &_image {
+            margin-right: 5px;
+          }
+          &_p {
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+}

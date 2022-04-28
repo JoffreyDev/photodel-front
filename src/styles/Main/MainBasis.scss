@@ -1,0 +1,14 @@
+@import "../variables.scss";
+
+.main_basis {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &_body {
+    width: 1150px;
+    padding: 0 0 0 20px;
+    min-height: calc(100vh - 400px);
+  }
+}

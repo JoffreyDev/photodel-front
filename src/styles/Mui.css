@@ -1,0 +1,102 @@
+.MuiPaper-root {
+  border-radius: 20px !important;
+}
+
+.MuiList-root {
+  padding: 16px 20px !important;
+}
+
+.MuiMenuItem-root {
+  border-radius: 10px !important;
+  background-color: transparent !important;
+  width: 301px !important;
+  height: 38px !important;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  margin: 1px 0 !important;
+  transition: 0.1s !important;
+}
+
+.MuiMenuItem-root:hover {
+  background-color: #50a398 !important;
+  color: white !important;
+}
+
+.MuiAutocomplete-root {
+  width: 350px;
+  display: flex;
+  align-items: center;
+}
+
+.MuiOutlinedInput-root {
+  background: #ffffff !important;
+  box-sizing: border-box !important;
+  border-radius: 30px !important;
+  outline: none !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 6px 45px 6px 20px !important;
+  box-sizing: border-box !important;
+}
+
+.MuiOutlinedInput-notchedOutline:hover {
+  border: 1px solid #d2d9d8 !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border: 1px solid #d2d9d8 !important;
+}
+
+.MuiChip-root {
+  width: 92px !important;
+  height: 24px !important;
+  background: #50a398 !important;
+  border-radius: 4px !important;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  color: white !important;
+}
+
+.MuiAutocomplete-option {
+  border-radius: 10px !important;
+  background-color: transparent !important;
+  height: 38px !important;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  margin: 1px 0 !important;
+  transition: 0.1s !important;
+}
+
+.MuiAutocomplete-option:hover {
+  background-color: #50a398 !important;
+  color: white !important;
+}
+
+.MuiAutocomplete-listbox {
+  padding: 16px 20px !important;
+}
+
+.MuiTypography-root {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #202424;
+}
+
+.MuiInputLabel-outlined {
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 13px !important;
+  color: #9ca3a1 !important;
+}

@@ -1,0 +1,142 @@
+@import "../variables.scss";
+
+.messages {
+  margin-bottom: 40px;
+  &_header {
+    padding: 10px;
+    border-bottom: 1px solid #d2d9d8;
+    margin-bottom: 20px;
+
+    &_h1 {
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+    }
+  }
+
+  &_chat {
+    &_wrapper {
+      height: 111px;
+      border-bottom: 1px solid #d2d9d8;
+      justify-content: space-between;
+      display: flex;
+      padding: 15px;
+      transition: 0.2s;
+
+      &:hover {
+        background: #f4f7f6;
+        transition: 0.2s;
+      }
+    }
+
+    &_avatar {
+      margin-left: 15px;
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 20px;
+      align-self: center;
+    }
+
+    &_info {
+      width: 100%;
+      &_top {
+        display: flex;
+        justify-content: space-between;
+
+        &_online {
+          margin-right: 6px;
+        }
+
+        &_name {
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 18px;
+          display: flex;
+          align-items: center;
+          color: #9ca3a1;
+        }
+
+        &_time {
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 16px;
+          display: flex;
+          align-items: center;
+          text-align: right;
+          color: #9ca3a1;
+        }
+      }
+
+      &_request_status {
+        display: flex;
+        align-items: center;
+        margin-top: 11px;
+
+        &_img {
+          margin-right: 8px;
+        }
+
+        &_p {
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+        }
+      }
+
+      &_low {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+
+        &_left {
+          display: flex;
+          align-items: center;
+
+          &_avatar {
+            height: 24px;
+            width: 24px;
+            object-fit: cover;
+            margin-right: 9px;
+            border-radius: 4px;
+          }
+
+          &_p {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16px;
+            color: #202424;
+          }
+        }
+
+        &_right {
+          height: 18px;
+          width: 18px;
+          background-color: #50a398;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &_number {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 9px;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+.profile_card {
+  display: flex;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d2d9d8;
+
+  &_avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 8px;
+
+    &_wrapper {
+      position: relative;
+    }
+
+    &_checkbox {
+      position: absolute;
+      top: 3px;
+      right: 7px;
+    }
+  }
+
+  &_info {
+    display: flex;
+    flex-direction: column;
+
+    &_first {
+      display: flex;
+      &_online {
+        margin-right: 6px;
+      }
+
+      &_name {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #50a398;
+      }
+    }
+
+    &_second {
+      display: flex;
+      margin-top: 10px;
+      &_img {
+        margin-right: 6px;
+      }
+
+      &_p {
+        margin-right: 12px;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+
+        color: #202424;
+      }
+    }
+
+    &_third {
+      display: flex;
+      margin-top: 8px;
+
+      &_category {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        color: #202424;
+        margin-right: 5px;
+      }
+
+      &_specs {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        color: #9ca3a1;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &_fourth {
+      margin-top: 8px;
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+
+      color: #9ca3a1;
+    }
+  }
+}

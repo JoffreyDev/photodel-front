@@ -1,0 +1,48 @@
+@import "../variables.scss";
+
+.favorites {
+  &_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 10px;
+
+    &_wrapper {
+      display: flex;
+    }
+
+    &_body {
+      margin-bottom: 20px;
+    }
+
+    &_title_first {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+      color: $darkGrey;
+      cursor: pointer;
+      padding-bottom: 6px;
+      padding-top: 30px;
+      border-bottom: 1px solid #d2d9d8;
+      padding: 20px 10px 7px 10px;
+      transition: 0.2s;
+
+      &.active {
+        border-bottom: 1px solid $azure;
+        color: $black;
+      }
+    }
+
+    &_select {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: flex-end;
+      border-bottom: 1px solid #d2d9d8;
+    }
+  }
+}

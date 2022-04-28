@@ -1,0 +1,227 @@
+@import "./variables.scss";
+
+.common_green_button {
+  width: 276px;
+  height: 56px;
+  background: $azure;
+  border: 1px solid $azure;
+  box-sizing: border-box;
+  border-radius: 30px;
+  color: white;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  transition: 0.1s;
+
+  &:hover {
+    background: rgba(80, 163, 152, 0.7);
+  }
+
+  &:active {
+    background-color: $darkAzure;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+.common_grey_button {
+  width: 276px;
+  height: 56px;
+  background: $darkGrey;
+  border: 1px solid $darkGrey;
+  box-sizing: border-box;
+  border-radius: 30px;
+  margin-top: 13px;
+  color: white;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  transition: 0.1s;
+
+  &:hover {
+    background: rgba(156, 163, 161, 0.7);
+  }
+
+  &:active {
+    background-color: #202424;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+.common_red_button {
+  width: 276px;
+  height: 56px;
+  background: #d86369;
+  box-sizing: border-box;
+  border-radius: 30px;
+  margin-top: 13px;
+  color: white;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  transition: 0.1s;
+
+  &:hover {
+    background: rgba(216, 99, 105, 0.7);
+  }
+
+  &:active {
+    background-color: darken(#d86369, 15);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+.common_text_input {
+  height: 38px;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d2d9d8;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 0px 10px 0px 20px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  transition: 0.1s;
+
+  &:focus {
+    border: 1px solid #50a398;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 4px #50a398;
+  }
+
+  &_wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    &.no_margin {
+      margin-bottom: 0;
+    }
+  }
+
+  &_label {
+    margin-left: 15px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: $darkGrey;
+    margin-bottom: 5px;
+  }
+}
+
+.common_location_input {
+  height: 38px;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d2d9d8;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 0px 10px 0px 20px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  transition: 0.1s;
+
+  &:focus {
+    border: 1px solid #50a398;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 4px #50a398;
+  }
+
+  &_wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &_label {
+    margin-left: 15px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: $darkGrey;
+    margin-bottom: 5px;
+  }
+
+  &_image {
+    position: absolute;
+    width: 16.5px;
+    height: 16.5px;
+    top: 30px;
+    left: 315px;
+  }
+}
+
+.common_checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+
+  & + label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: #202424;
+  }
+
+  & + label::before {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid #adb5bd;
+    border-radius: 0.5em;
+    margin-right: 1em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    background-color: #ffffff;
+  }
+
+  &:checked + label::before {
+    background-image: url("../img/mainPage/chb_check.svg");
+    background-size: cover;
+    border-color: rgba(80, 163, 152, 1);
+  }
+
+  &:not(:disabled):not(:checked) + label:hover::before {
+    border-color: #b3d7ff;
+  }
+  /* стили для активного состояния чекбокса (при нажатии на него) */
+  &:not(:disabled):active + label::before {
+    background-color: #b3d7ff;
+    border-color: #b3d7ff;
+  }
+}

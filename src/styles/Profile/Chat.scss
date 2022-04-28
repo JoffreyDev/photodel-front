@@ -1,0 +1,208 @@
+@import "../variables.scss";
+
+.chat {
+  display: flex;
+  flex-direction: column;
+
+  &_request_buttons {
+    align-self: flex-end;
+    margin-bottom: 16px;
+  }
+
+  &_request_first_message {
+    &_title {
+      margin-top: 16px;
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 10px;
+      color: #3c8278;
+      margin-bottom: 10px;
+    }
+
+    &_data_body {
+      margin-left: 10px;
+      &_left_p {
+        padding: 4px 20px 4px 0;
+        width: 150px;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #202424;
+      }
+
+      &_right_p {
+        padding: 4px 20px 4px 0;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+
+        color: #202424;
+      }
+    }
+  }
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d2d9d8;
+    margin-bottom: 24px;
+
+    &_left {
+      display: flex;
+      align-items: center;
+
+      &_arrow {
+        width: 7px;
+        height: 14px;
+        margin-right: 8px;
+      }
+
+      &_p {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        color: #3c8278;
+      }
+    }
+
+    &_center {
+      display: flex;
+      align-items: center;
+
+      &_avatar {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
+        margin-right: 9px;
+        border-radius: 4px;
+      }
+
+      &_online {
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+      }
+
+      &_p {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        display: flex;
+        align-items: center;
+        color: #9ca3a1;
+      }
+    }
+
+    &_right {
+      display: flex;
+      align-items: center;
+
+      &_menu {
+        width: 21px;
+        height: 5px;
+        cursor: pointer;
+        display: none;
+      }
+    }
+  }
+
+  &_body {
+    height: 50vh;
+    display: flex;
+    overflow: scroll;
+    flex-direction: column-reverse;
+  }
+
+  &_message {
+    &_wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    &_top {
+      display: flex;
+      align-items: center;
+
+      &_avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        margin-right: 9px;
+        object-fit: cover;
+      }
+
+      &_online {
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+      }
+
+      &_name {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        color: #9ca3a1;
+        margin-right: 10px;
+      }
+
+      &_time {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        color: #9ca3a1;
+      }
+    }
+
+    &_content {
+      margin-top: 16px;
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      width: 90%;
+      color: #202424;
+    }
+  }
+
+  &_lower_table {
+    display: flex;
+    align-items: center;
+    padding: 21px 21px 21px 28px;
+    justify-content: space-between;
+    background: #d2d9d8;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+
+    &_button {
+      background-color: #50a398;
+      background-image: url("../../img/commonImages/send.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      transition: 0.2s;
+
+      &:hover {
+        transition: 0.2s;
+        transform: scale(1.05);
+      }
+    }
+  }
+}

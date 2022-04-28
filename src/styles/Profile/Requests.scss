@@ -1,0 +1,118 @@
+@import "../variables.scss";
+
+.requests {
+  &_public_body {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &_public_preview {
+    display: flex;
+    width: 48%;
+    margin-bottom: 20px;
+
+    &_avatar {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 14px;
+    }
+
+    &_data {
+      &_upper {
+        display: flex;
+        align-items: center;
+
+        &_online {
+          margin-right: 6px;
+        }
+
+        &_name {
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 14px;
+          color: #9ca3a1;
+        }
+      }
+
+      &_middle {
+        margin-top: 6px;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 16px;
+        color: #202424;
+      }
+
+      &_lower {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+
+        &_status {
+          margin-right: 10px;
+
+          &_p {
+          }
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+
+          color: #202424;
+        }
+      }
+    }
+  }
+
+  &_window {
+    &_user_data {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+
+      &_avatar {
+        border-radius: 8px;
+        object-fit: cover;
+        width: 32px;
+        height: 32px;
+        margin-right: 6px;
+      }
+
+      &_online {
+        margin-right: 6px;
+      }
+
+      &_name {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        color: #9ca3a1;
+      }
+    }
+
+    &_field {
+      width: 48%;
+
+      &:not(:nth-child(2n + 2)) {
+        margin-right: 20px;
+      }
+    }
+
+    &_fields {
+      margin-top: 35px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &_buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
