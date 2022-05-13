@@ -23,7 +23,15 @@ const ProfilePopupUnauth = ({
   };
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
+    <ClickAwayListener
+      onClickAway={
+        window.screen.width <= 576
+          ? () => {
+              return;
+            }
+          : handleClickAway
+      }
+    >
       <div className="main_page_header_user_group">
         {styled === "main" && (
           <svg

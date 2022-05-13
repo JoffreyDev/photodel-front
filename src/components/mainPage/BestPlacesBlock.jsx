@@ -37,32 +37,42 @@ const BestPlacesBlock = () => {
               </div>
             )}
           </div>
-          <ul className="main_page_third_section_content_upper_row_rigth">
-            <li className="main_page_third_section_content_upper_row_rigth_li active">
-              Все
-            </li>
-            <li className="main_page_third_section_content_upper_row_rigth_li">
-               Город
-            </li>
-            <li className="main_page_third_section_content_upper_row_rigth_li">
-              Пляжи
-            </li>
-            <li className="main_page_third_section_content_upper_row_rigth_li">
-              Достопримечательности
-            </li>
-            <li className="main_page_third_section_content_upper_row_rigth_li">
-              Музеи
-            </li>
-            <li className="main_page_third_section_content_upper_row_rigth_li">
-              Прочие
-            </li>
-          </ul>
+          {false && (
+            <ul className="main_page_third_section_content_upper_row_rigth">
+              <li className="main_page_third_section_content_upper_row_rigth_li active">
+                Все
+              </li>
+              <li className="main_page_third_section_content_upper_row_rigth_li">
+                 Город
+              </li>
+              <li className="main_page_third_section_content_upper_row_rigth_li">
+                Пляжи
+              </li>
+              <li className="main_page_third_section_content_upper_row_rigth_li">
+                Достопримечательности
+              </li>
+              <li className="main_page_third_section_content_upper_row_rigth_li">
+                Музеи
+              </li>
+              <li className="main_page_third_section_content_upper_row_rigth_li">
+                Прочие
+              </li>
+            </ul>
+          )}
         </div>
         <div className="main_page_third_section_content_slider_wrapper">
-          <Carousel itemsToShow={6} pagination={false}>
+          <Carousel
+            itemsToShow={window.screen.width <= 576 ? 2.5 : 6}
+            showArrows={window.screen.width <= 576 ? false : true}
+            pagination={false}
+          >
             {places &&
               places.map((place, idx) => (
-                <BestPlaceCard place={place} key={idx} />
+                <BestPlaceCard
+                  place={place}
+                  key={idx}
+                  width={window.screen.width <= 576 ? "120px" : ""}
+                />
               ))}
           </Carousel>
         </div>

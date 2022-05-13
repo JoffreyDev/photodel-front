@@ -1,15 +1,40 @@
 import { MuiModal } from "..";
 import React from "react";
 import { Checkbox, PhotoCard, GreenButton } from "..";
-import Shape from "../../img/commonImages/shape.svg";
+import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
+import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
 
 const PhotoFullScreen = ({
   photo,
   modalActive,
   setModalActive,
-  width,
-  height,
+  changePhoto,
+  slider,
 }) => {
+  const [photoWidth, setPhotoWidth] = React.useState();
+  const [photoHeight, setPhotoHeight] = React.useState();
+
+  const getImageHeight = (photo) => {
+    var img = new Image();
+    img.src = photo;
+    img.onload = function () {
+      setPhotoHeight(img.height);
+    };
+  };
+
+  const getImageWidth = (photo) => {
+    var img = new Image();
+    img.src = photo;
+    img.onload = function () {
+      setPhotoWidth(img.width);
+    };
+  };
+
+  React.useEffect(() => {
+    getImageHeight(photo);
+    getImageWidth(photo);
+  }, [photo]);
+
   return (
     <MuiModal open={modalActive} setOpen={setModalActive}>
       <div
@@ -20,19 +45,40 @@ const PhotoFullScreen = ({
         }
         onClick={() => setModalActive(false)}
       >
+        {slider && (
+          <img
+            src={LeftArrow}
+            alt="prev"
+            className="photo_view_content_left_image_arrow left"
+            onClick={(e) => {
+              e.stopPropagation();
+              changePhoto("prev");
+            }}
+          />
+        )}
         <div className="photo_view_fullscreen_content">
           <img
             src={photo}
             alt="photo"
             className="photo_view_fullscreen_content_image"
-            style={width ? { width: width + "px", height: height + "px" } : {}}
-          />
-          <img
-            src={Shape}
-            alt="shape"
-            className="photo_view_fullscreen_content_shape"
+            style={
+              photoWidth
+                ? { width: photoWidth + "px", height: photoHeight + "px" }
+                : {}
+            }
             onClick={() => setModalActive(false)}
           />
+          {slider && (
+            <img
+              src={RightArrow}
+              alt="next"
+              className="photo_view_content_left_image_arrow right"
+              onClick={(e) => {
+                e.stopPropagation();
+                changePhoto("next");
+              }}
+            />
+          )}
         </div>
       </div>
     </MuiModal>

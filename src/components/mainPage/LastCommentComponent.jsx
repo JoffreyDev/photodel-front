@@ -1,7 +1,7 @@
 import React from "react";
 import profileComment from "../../img/mainPage/profileComment.png";
 
-const LastCommentComponent = () => {
+const LastCommentComponent = ({ comment }) => {
   return (
     <div className="main_page_last_comments_section_content_comment_wrapper">
       <h3 className="main_page_last_comments_section_content_comment_title">

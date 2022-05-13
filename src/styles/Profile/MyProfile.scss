@@ -623,3 +623,53 @@
     }
   }
 }
+
+@media (max-width: 576px) {
+  .my_profile {
+
+    &_contacts {
+      &_content {
+        justify-content: space-between;
+
+        &_row {
+          margin-right: 0px;
+        }
+      }
+    }
+
+    &_stats {
+      &_content {
+        flex-direction: row;
+
+        &_upper {
+          flex-direction: column;
+          margin-right: 40px;
+
+          &_stat {
+            margin-bottom: 10px;
+          }
+        }
+
+        &_lower {
+          flex-direction: column;
+          margin-top: 0px;
+
+          &_stat {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+
+    &_header_middle_row {
+      &_buttons {
+        flex-wrap: wrap;
+
+        &_button {
+          margin-bottom: 10px;
+
+        }
+      }
+    }
+  }
+}

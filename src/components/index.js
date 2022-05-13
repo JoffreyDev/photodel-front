@@ -33,6 +33,7 @@ export { default as EmailMessageSent } from "./RegAuth/EmailMessageSent";
 export { default as EmailConfirmedModal } from "./RegAuth/EmailConfirmedModal";
 export { default as RequestWindow } from "./PopUps/RequestWindow";
 export { default as LocationPopUp } from "./PopUps/LocationPopUp";
+export { default as Submit } from "./PopUps/Submit";
 export { default as Footer } from "./PagesArchitecture/Footer";
 export { default as Header } from "./PagesArchitecture/Header";
 export { default as SessionCard } from "./Previews/SessionCard";

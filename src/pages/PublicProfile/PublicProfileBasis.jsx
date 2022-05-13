@@ -44,6 +44,11 @@ const PublicProfileBasis = ({ mainSocket }) => {
 
   const [profileId, setProfileId] = React.useState(Number(id));
 
+  React.useEffect(() => {
+    window.scroll(0, 0);
+    document.title = "Фотодел";
+  }, []);
+
   return (
     <div>
       <Header styled={"themed"} />

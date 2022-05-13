@@ -140,3 +140,29 @@
     }
   }
 }
+
+@media (max-width: 576px) {
+  .messages {
+
+    &_chat_wrapper {
+      padding-left: 0px;
+      width: 100vw;
+      padding-right: 35px;
+    }
+
+    &_header {
+      display: none;
+    }
+    &_chat{
+      &_avatar{
+        margin-left: 0;
+      }
+
+      &_info {
+        &_top {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

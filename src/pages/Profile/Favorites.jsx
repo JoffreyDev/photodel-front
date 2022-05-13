@@ -117,7 +117,7 @@ function Favorites() {
         </div>
       </div>
       <div className="photos_options">
-        <div className="photos_options_left">
+        <div className="photos_options_left favorites">
           <p className="photos_options_left_p">
             Всего: <span className="photos_options_left_p_span">0</span>
           </p>
@@ -126,7 +126,7 @@ function Favorites() {
 
         <div className="photos_options_right">
           <SelectInput
-            width={200}
+            width={window.screen.width <= 576 ? 170 : 200}
             marginBottom={"10px"}
             values={[
               {
@@ -138,6 +138,12 @@ function Favorites() {
             label={"Выберите действие"}
             labelId="demo-multiple-name-label"
           />
+          <div className="photos_options_left mobile">
+            <p className="photos_options_left_p">
+              Всего: <span className="photos_options_left_p_span">0</span>
+            </p>
+            <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
+          </div>
         </div>
       </div>
       <div className="favorites_body">

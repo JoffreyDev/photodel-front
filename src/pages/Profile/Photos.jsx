@@ -8,6 +8,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { openSuccessAlert } from "../../redux/actions/userData";
+import { Submit } from "../../components";
 
 const Photos = ({ component }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -27,6 +28,8 @@ const Photos = ({ component }) => {
   const [action, setAction] = React.useState("");
   const [allPhotosSelected, setAllPhotosSelected] = React.useState(false);
 
+  const [submitActive, setSubmitActive] = React.useState(false);
+
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   React.useEffect(() => {
@@ -41,14 +44,19 @@ const Photos = ({ component }) => {
       });
   }, [userData.id, loaded, sortType, sortField]);
 
+  const deleteHandle = () => {
+    Requests.deletePhoto(selectedPhotos).then(() => {
+      setSelectedPhotos([]);
+      setAction("");
+      Requests.getPhotosList(userData.id).then((res) => setPhotos(res.data));
+      dispatch(openSuccessAlert("Фото успешно удалены!"));
+      setSubmitActive(false);
+    });
+  };
+
   React.useEffect(() => {
     if (action === 1) {
-      Requests.deletePhoto(selectedPhotos).then(() => {
-        setSelectedPhotos([]);
-        setAction("");
-        Requests.getPhotosList(userData.id).then((res) => setPhotos(res.data));
-        dispatch(openSuccessAlert("Фото успешно удалены!"));
-      });
+      setSubmitActive(true);
     }
   }, [action]);
 
@@ -77,6 +85,13 @@ const Photos = ({ component }) => {
             АЛЬБОМЫ
           </h1>
         </div>
+
+        <p className="photos_options_left_p mobile">
+          Всего:{" "}
+          <span className="photos_options_left_p_span">
+            {photos && photos.length}
+          </span>
+        </p>
 
         <div className="photos_header_select">
           <img
@@ -121,6 +136,43 @@ const Photos = ({ component }) => {
               {photos && photos.length}
             </span>
           </p>
+
+          <div className="photos_header_select mobile">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              alt="sort"
+              className="photos_header_select_image"
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          </div>
           <Checkbox
             marginBottom={"0px"}
             label={"Выбрать все"}
@@ -151,7 +203,7 @@ const Photos = ({ component }) => {
               onClick={() => navigate("/profile/add-photo")}
               className="photos_options_right_add_p"
             >
-              Добавить  фотографию
+              Добавить  фото
             </p>
           </div>
           <SelectInput
@@ -181,6 +233,12 @@ const Photos = ({ component }) => {
             />
           ))}
       </div>
+      <Submit
+        modalActive={submitActive}
+        setModalActive={setSubmitActive}
+        callback={deleteHandle}
+        setAction={setAction}
+      />
     </div>
   );
 };

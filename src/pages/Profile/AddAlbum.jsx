@@ -14,7 +14,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { AddPhotosToAlbum } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { openSuccessAlert } from "../../redux/actions/userData";
+import { openSuccessAlert, openErrorAlert } from "../../redux/actions/userData";
 
 const AddAlbum = ({ setActiveModule }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -52,6 +52,18 @@ const AddAlbum = ({ setActiveModule }) => {
   }, [userData]);
 
   const createAlbum = () => {
+    if (!name) {
+      dispatch(openErrorAlert("Укажите название альбома!"));
+      return;
+    } else if (!description) {
+      dispatch(openErrorAlert("Укажите описание альбома!"));
+      return;
+    } else if (!photosToDisplay) {
+      dispatch(
+        openErrorAlert("Не выбраны фотографии для добавления в альбом!")
+      );
+      return;
+    }
     Requests.createAlbum({
       name_album: name,
       description_album: description,

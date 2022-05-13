@@ -21,6 +21,10 @@ import {
 } from "../../redux/actions/siteEntities";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import MenuImg from "../../img/commonImages/menu.svg";
+import MenuGreenImg from "../../img/commonImages/menuGreen.svg";
+import { slide as Menu } from "react-burger-menu";
+import "../../styles/mainPage/burger.css";
 
 const Header = ({ styled }) => {
   const dispatch = useDispatch();
@@ -28,6 +32,7 @@ const Header = ({ styled }) => {
 
   const setRegModuleActive = (bool) => dispatch(toggleRegModule(bool));
   const setLogModuleActive = (bool) => dispatch(toggleLogModule(bool));
+  const [menuOpened, setMenuOpened] = React.useState(false);
 
   const { logModuleActive, regModuleActive } = useSelector(
     ({ siteEntities }) => siteEntities
@@ -47,6 +52,30 @@ const Header = ({ styled }) => {
 
   return (
     <header className="main_page_header">
+      <div className="main_page_header_menu">
+        <Menu isOpen={menuOpened} onClose={() => setMenuOpened(false)}>
+          <a id="home" className="menu-item" onClick={() => {
+             setMenuOpened(false);
+            navigate("/")}}>
+            Главная
+          </a>
+          <a className="menu-item" onClick={() => {
+            setMenuOpened(false)
+            navigate("/profies")}}>
+            Профи рядом
+          </a>
+          <a className="menu-item" onClick={() => {
+             setMenuOpened(false);
+            navigate("/places")}}>
+            Места для съемки
+          </a>
+          <a className="menu-item" onClick={() => {
+             setMenuOpened(false);
+            navigate("/photos")}}>
+            Фотографии
+          </a>
+        </Menu>
+      </div>
       <div className="main_page_header_container">
         <div className="main_page_header_rows">
           <div className="main_page_header_top_row">
@@ -161,7 +190,14 @@ const Header = ({ styled }) => {
             style={styled === "main" ? { opacity: 0 } : {}}
             className="main_page_header_top_row_hr"
           ></hr>
+
           <div className="main_page_header_bottom_row">
+            <img
+              src={styled === "themed" ? MenuGreenImg : MenuImg}
+              alt="menu"
+              className="main_page_header_bottom_row_left mobile"
+              onClick={() => setMenuOpened(true)}
+            />
             <div className="main_page_header_bottom_row_left">
               {styled === "main" && (
                 <svg
@@ -183,7 +219,6 @@ const Header = ({ styled }) => {
                   />
                 </svg>
               )}
-
               {styled === "themed" && (
                 <Link to="/">
                   <img
@@ -202,6 +237,42 @@ const Header = ({ styled }) => {
                 </p>
               </Link>
             </div>
+            {!isLoggedIn && window.screen.width <= 576 && (
+              <ProfilePopupUnauth
+                styled={styled}
+                UserSet={UserSet}
+                unAuthPopupOpened={unAuthPopupOpened}
+                setUnAuthPopupOpened={setUnAuthPopupOpened}
+                setRegModuleActive={setRegModuleActive}
+                setLogModuleActive={setLogModuleActive}
+              />
+            )}
+
+            {isLoggedIn && window.screen.width <= 576 && (
+              <div className="main_page_header_top_row_user_group">
+                {false && (
+                  <img
+                    src={styled === "themed" ? Bell : BellWhite}
+                    alt="bell"
+                    className="main_page_header_top_row_user_group_bell"
+                  />
+                )}
+
+                <img
+                  onClick={() => setLoggedUserPopupActive(true)}
+                  src={`data:image/png;base64,${userData.avatar}`}
+                  alt="avatar"
+                  className="main_page_header_top_row_user_group_avatar"
+                />
+
+                {loggedUserPopupActive && (
+                  <LoggedUserPopup
+                    setLoggedUserPopupActive={setLoggedUserPopupActive}
+                  />
+                )}
+              </div>
+            )}
+
             <div className="main_page_header_bottom_row_right">
               <ul className="main_page_header_bottom_row_right__ul">
                 <li

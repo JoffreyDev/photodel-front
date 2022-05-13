@@ -8,6 +8,7 @@ import Requests from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
+import { Submit } from "../../components";
 
 const Albums = ({ component }) => {
   const [albums, setAlbums] = React.useState(null);
@@ -22,6 +23,8 @@ const Albums = ({ component }) => {
   const [sortType, setSortType] = React.useState("+");
 
   const [selectedAlbums, setSelectedAlbums] = React.useState([]);
+
+  const [submitActive, setSubmitActive] = React.useState(false);
 
   const [action, setAction] = React.useState("");
   const [allAlbumsSelected, setAllAlbumsSelected] = React.useState(false);
@@ -44,18 +47,21 @@ const Albums = ({ component }) => {
       });
   }, [userData.id, loaded, sortType, sortField]);
 
+  const deleteHandle = () => {
+    Requests.deleteAlbums(selectedAlbums)
+      .then(() => {
+        setSelectedAlbums([]);
+        setAction("");
+        Requests.getAlbumsList(userData.id).then((res) => setAlbums(res.data));
+        dispatch(openSuccessAlert("Альбомы успешно удалены!"));
+        setSubmitActive(false);
+      })
+      .catch(() => dispatch(openErrorAlert("Произошла ошибка. ")));
+  };
+
   React.useEffect(() => {
     if (action === 1) {
-      Requests.deleteAlbums(selectedAlbums)
-        .then(() => {
-          setSelectedAlbums([]);
-          setAction("");
-          Requests.getAlbumsList(userData.id).then((res) =>
-            setAlbums(res.data)
-          );
-          dispatch(openSuccessAlert("Альбомы успешно удалены!"));
-        })
-        .catch(() => dispatch(openErrorAlert("Произошла ошибка. ")));
+      setSubmitActive(true);
     }
   }, [action]);
 
@@ -84,6 +90,12 @@ const Albums = ({ component }) => {
             АЛЬБОМЫ
           </h1>
         </div>
+        <p className="photos_options_left_p mobile">
+          Всего:{" "}
+          <span className="photos_options_left_p_span">
+            {albums && albums.length}
+          </span>
+        </p>
 
         <div className="albums_header_select">
           <img
@@ -99,8 +111,6 @@ const Albums = ({ component }) => {
             onClick={() =>
               setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
             }
-            alt="sort"
-            className="albums_header_select_image"
           />
           <SelectInput
             values={[
@@ -130,6 +140,42 @@ const Albums = ({ component }) => {
               {albums && albums.length}
             </span>
           </p>
+          <div className="albums_header_select mobile">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              alt="sort"
+              className="photos_header_select_image"
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          </div>
           <Checkbox
             marginBottom={"0px"}
             label={"Выбрать все"}
@@ -190,6 +236,12 @@ const Albums = ({ component }) => {
             />
           ))}
       </div>
+      <Submit
+        modalActive={submitActive}
+        setModalActive={setSubmitActive}
+        callback={deleteHandle}
+        setAction={setAction}
+      />
     </div>
   );
 };

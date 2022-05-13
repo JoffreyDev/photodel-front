@@ -5,12 +5,15 @@ import Comment from "../../img/photoView/comment.svg";
 import { rootAddress } from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
 
-function GalleryPhotoPreview({ photo, isAuthor, width, height }) {
+function GalleryPhotoPreview({ photo, isAuthor, width, height, wrapperWidth }) {
   const navigate = useNavigate();
   return (
-    <div className="main_photo_body_photo_wrapper">
+    <div
+      style={wrapperWidth ? { width: width } : {}}
+      className="main_photo_body_photo_wrapper"
+    >
       <img
-        style={width ? { height: `${height}px`, width: `${width}px` } : {}}
+        style={width ? { height: height, width: width } : {}}
         className="main_photo_body_photo"
         src={`${rootAddress}${photo.gallery_image.photo}`}
       />

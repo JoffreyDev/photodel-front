@@ -95,12 +95,16 @@ const RequestChat = () => {
   const changeReqStatus = (status) => {
     mainSocket.current.send(
       JSON.stringify({
-        message: message.trim(),
         command: "update_request_status",
         filming_status: status,
         request_id: Number(chatId),
       })
     );
+    console.log({
+      command: "update_request_status",
+      filming_status: status,
+      request_id: Number(chatId),
+    });
   };
 
   return (
@@ -149,45 +153,49 @@ const RequestChat = () => {
             })
             .reverse()}
       </div>
-      {data && userData.id !== data.receiver_id && (
-        <div className="chat_request_buttons">
-          <GreyButton
-            width={"180px"}
-            height={"38px"}
-            text={"Отклонить запрос"}
-            callback={() => changeReqStatus("REJECTED")}
-          />
-          <GreenButton
-            margin={"0 0 0 15px"}
-            width={"180px"}
-            height={"38px"}
-            text={"Принять запрос"}
-            callback={() => changeReqStatus("ACCEPTED")}
-          />
-        </div>
-      )}
+      {messages &&
+        userData.id !== Number(messages[0].customer) &&
+        messages[0].filming_status === "NEW" && (
+          <div className="chat_request_buttons">
+            <GreyButton
+              width={"180px"}
+              height={"38px"}
+              text={"Отклонить запрос"}
+              callback={() => changeReqStatus("REJECTED")}
+            />
+            <GreenButton
+              margin={"0 0 0 15px"}
+              width={"180px"}
+              height={"38px"}
+              text={"Принять запрос"}
+              callback={() => changeReqStatus("ACCEPTED")}
+            />
+          </div>
+        )}
 
-      {data && userData.id === data.receiver_id && (
-        <div className="chat_request_buttons">
-          <RedButton
-            width={"200px"}
-            height={"38px"}
-            text={"Запрос не завершен"}
-            callback={() => changeReqStatus("UNCOMPLETED")}
-          />
-          <GreenButton
-            margin={"0 0 0 15px"}
-            width={"200px"}
-            height={"38px"}
-            text={"Запрос завершен"}
-            callback={() => changeReqStatus("COMPLETED")}
-          />
-        </div>
-      )}
+      {messages &&
+        userData.id === Number(messages[0].customer) &&
+        messages[0].filming_status === "ACCEPTED" && (
+          <div className="chat_request_buttons">
+            <RedButton
+              width={"200px"}
+              height={"38px"}
+              text={"Запрос не завершен"}
+              callback={() => changeReqStatus("UNCOMPLETED")}
+            />
+            <GreenButton
+              margin={"0 0 0 15px"}
+              width={"200px"}
+              height={"38px"}
+              text={"Запрос завершен"}
+              callback={() => changeReqStatus("COMPLETED")}
+            />
+          </div>
+        )}
 
       <div className="chat_lower_table">
         <TextInputNoMargin
-          width={"732px"}
+          width={window.screen.width <= 576 ? "200px" : "732px"}
           height={"38px"}
           placeholder={"Напишите сообщение"}
           callback={setMessage}

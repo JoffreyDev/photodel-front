@@ -166,7 +166,6 @@ export class Requests {
       },
 
       data: {
-        ready_status: ready_status,
         filming_geo: filming_geo,
         work_condition: work_condition,
         cost_services: cost_services,
@@ -181,13 +180,10 @@ export class Requests {
         instagram: instagram,
         facebook: facebook,
         vk: vk,
-        location_now: location_now,
-        date_stay_start: date_stay_start,
-        date_stay_end: date_stay_end,
+
         message: message,
         spec_model_or_photographer: spec_model_or_photographer,
         string_location: string_location,
-        string_location_now: string_location_now,
         avatar: avatar,
         is_change: is_change,
       },
@@ -814,12 +810,12 @@ export class Requests {
       },
 
       url: `api/film_places/list/?${
-        userCoords && `?user_coords=${userCoords.join(" ")}`
+        userCoords && `user_coords=${userCoords.join(" ")}`
       }${
         userCoords && search_words
           ? `&search_words=${search_words}`
           : !userCoords && search_words
-          ? `&search_words=${search_words}`
+          ? `search_words=${search_words}`
           : ""
       }${
         name_category !== "Все" ? `&category=${name_category}` : ""
@@ -1112,7 +1108,7 @@ export class Requests {
 
       data: {
         filming_timestamp: filming_timestamp,
-        hours_duration: hours_duration,
+        hours_duration: hours_duration + "часов",
         filming_type: filming_type,
         filming_status: filming_status,
         count_person: count_person,
@@ -1266,6 +1262,68 @@ export class Requests {
       },
 
       url: `api/film_places/film_request/list_incoming/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async createNewRequestUnauth({
+    filming_timestamp,
+    hours_duration,
+    filming_type,
+    filming_status,
+    count_person,
+    filming_budget,
+    description,
+    place_filming,
+    request_receiver_id,
+    email,
+  }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      data: {
+        filming_timestamp: filming_timestamp,
+        hours_duration: hours_duration + "часов",
+        filming_type: filming_type,
+        filming_status: filming_status,
+        count_person: count_person,
+        filming_budget: filming_budget,
+        description: description,
+        place_filming: place_filming,
+        receiver_profile: request_receiver_id,
+        email: email,
+      },
+
+      url: `api/film_places/create_not_auth_film_request/`,
+    }).then((res) => res);
+  }
+
+  static async checkUnauthRequest({ code, email }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      data: {
+        code: code,
+        email: email,
+      },
+
+      url: `api/film_places/confirm_email/`,
+    }).then((res) => res);
+  }
+
+  static async getLastComments() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/additional_entities/last_comments/`,
     }).then((res) => res);
   }
 }

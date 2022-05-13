@@ -24,14 +24,21 @@ const PopularPhotosBlock = () => {
           </div>
         </div>
         <div className="main_page_popular_photos_section_content_slider_wrapper">
-          <Carousel itemsToShow={4} pagination={false}>
+          <Carousel
+            itemsToShow={
+              window.screen.width <= 576 ? window.screen.width / 270 : 4
+            }
+            pagination={false}
+            showArrows={window.screen.width <= 576 ? false : true}
+          >
             {photos &&
               photos.map((photo, idx) => (
                 <GalleryPhotoPreview
                   photo={photo}
                   key={idx}
                   height={152}
-                  width={255}
+                  width={window.screen.width <= 576 ? 216 : 255}
+                  wrapperWidth={window.screen.width <= 576 ? 216 : 255}
                 />
               ))}
           </Carousel>

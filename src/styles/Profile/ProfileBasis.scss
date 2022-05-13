@@ -54,6 +54,7 @@
   display: flex;
   justify-content: center;
 
+
   &_content {
     width: 1150px;
     display: flex;
@@ -108,5 +109,71 @@
   &_module_component {
     margin-top: 20px;
     width: 76%;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile_basis {
+    flex-direction: column;
+
+    &_module_component {
+      width: 100%;
+    }
+
+    &_content {
+      flex-direction: column;
+      width: 100vw;
+      justify-content: flex-start;
+
+    }
+
+    &_module_choice {
+      width: 100vw;
+               
+     
+      &_ul { 
+          display: flex;
+          margin-top: 5px;
+          overflow-x: scroll;
+          width: 100%;
+          padding-right: 20px;
+          margin-bottom: 0px;
+          margin-bottom: -10px;
+          
+
+      }
+
+      &_li {
+        display: flex;
+        justify-content: center;
+        padding-right: 12px;
+        padding-left: 12px;
+        white-space: nowrap;
+
+        &.active {
+          border-bottom: 2px solid #50A398;
+        }
+      }
+
+      &_p {
+        padding-top: 3px;
+      }
+
+    }
+  }
+
+  /* хром, сафари */
+  .profile_basis_module_choice_ul::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  /* ie 10+ */
+  .profile_basis_module_choice_ul {
+    -ms-overflow-style: none;
+  }
+  
+  /* фф (свойство больше не работает, других способов тоже нет)*/
+  .profile_basis_module_choice_ul {
+    overflow: -moz-scrollbars-none;
   }
 }

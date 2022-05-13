@@ -107,3 +107,14 @@
     }
   }
 }
+
+@media (max-width: 576px) {
+  .reg_auth_content.active {
+    width: 90vw;
+    overflow: scroll;
+  }
+
+  .reg_auth_wrapper.active {
+    overflow: scroll;
+  }
+}

@@ -32,8 +32,6 @@ const PublicPhotoView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [photo, setPhoto] = React.useState();
-  const [photoWidth, setPhotoWidth] = React.useState();
-  const [photoHeight, setPhotoHeight] = React.useState();
   const [comments, setComments] = React.useState();
   const [comment, setComment] = React.useState();
   const [commentingId, setCommentingId] = React.useState();
@@ -46,8 +44,6 @@ const PublicPhotoView = ({ setProfileId }) => {
       Requests.getSinglePhoto(photoId)
         .then((res) => {
           setPhoto(res.data);
-          getImageHeight(`${rootAddress}${res.data.gallery_image.photo}`);
-          getImageWidth(`${rootAddress}${res.data.gallery_image.photo}`);
         })
         .then(() => {
           Requests.getPhotoComments(photoId).then((res) => {
@@ -61,8 +57,6 @@ const PublicPhotoView = ({ setProfileId }) => {
       Requests.getSinglePhotoUnauth(photoId)
         .then((res) => {
           setPhoto(res.data);
-          getImageHeight(`${rootAddress}${res.data.gallery_image.photo}`);
-          getImageWidth(`${rootAddress}${res.data.gallery_image.photo}`);
         })
         .then(() => {
           Requests.getPhotoComments(photoId).then((res) => {
@@ -126,22 +120,6 @@ const PublicPhotoView = ({ setProfileId }) => {
     });
   };
 
-  const getImageHeight = (image) => {
-    var img = new Image();
-    img.src = image;
-    img.onload = function () {
-      setPhotoHeight(img.height);
-    };
-  };
-
-  const getImageWidth = (image) => {
-    var img = new Image();
-    img.src = image;
-    img.onload = function () {
-      setPhotoWidth(img.width);
-    };
-  };
-
   return (
     <div className="photo_view">
       <PublicHeader profile={photo && photo.profile} />
@@ -164,11 +142,6 @@ const PublicPhotoView = ({ setProfileId }) => {
                 }
                 alt="main"
                 className="photo_view_content_left_image"
-              />
-              <img
-                src={Fullscreen}
-                alt="fullscreen"
-                className="photo_view_content_left_image_fullscreen"
                 onClick={() => setFullScreenActive(true)}
               />
             </div>
@@ -250,6 +223,131 @@ const PublicPhotoView = ({ setProfileId }) => {
           <p className="photo_view_content_left_description">
             {photo && photo.description}
           </p>
+          <div className="photo_view_content_right_geo mobile">
+            <img
+              src={Geo}
+              alt="geolocation"
+              className="photo_view_content_right_geo_img"
+            />
+            <p className="photo_view_content_right_geo_p">
+              {photo && photo.string_place_location}
+            </p>
+          </div>
+          <div className="photo_view_content_right_map mobile">
+            {photo && photo.place_location && (
+              <YMaps>
+                <Map
+                  width={"100%"}
+                  height={"110px"}
+                  defaultState={{
+                    center:
+                      photo &&
+                      photo.place_location
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" "),
+                    zoom: 12,
+                  }}
+                >
+                  <Placemark
+                    geometry={
+                      photo &&
+                      photo.place_location
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" ")
+                    }
+                  />
+                </Map>
+              </YMaps>
+            )}
+          </div>
+          <div className="photo_view_content_right_specs mobile">
+            <div className="photo_view_content_right_spec">
+              <img
+                src={Camera}
+                alt="camera"
+                className="photo_view_content_right_spec_img"
+              />
+              <p className="photo_view_content_right_spec_p">
+                {photo && photo.photo_camera}
+              </p>
+            </div>
+
+            <div className="photo_view_content_right_spec_row">
+              <div className="photo_view_content_right_spec">
+                <img
+                  src={Aperture}
+                  alt="camera"
+                  className="photo_view_content_right_spec_img"
+                />
+                <p className="photo_view_content_right_spec_p">
+                  {photo && photo.aperture}
+                </p>
+              </div>
+              <div className="photo_view_content_right_spec">
+                <img
+                  src={FocalLength}
+                  alt="camera"
+                  className="photo_view_content_right_spec_img"
+                />
+                <p className="photo_view_content_right_spec_p">
+                  {photo && photo.focal_len}
+                </p>
+              </div>
+            </div>
+
+            <div className="photo_view_content_right_spec_row">
+              <div className="photo_view_content_right_spec">
+                <img
+                  src={Timer}
+                  alt="camera"
+                  className="photo_view_content_right_spec_img"
+                />
+                <p className="photo_view_content_right_spec_p">
+                  {photo && photo.excerpt}
+                </p>
+              </div>
+              <div className="photo_view_content_right_spec">
+                <img
+                  src={ISO}
+                  alt="camera"
+                  className="photo_view_content_right_spec_img"
+                />
+                <p className="photo_view_content_right_spec_p">
+                  {photo && photo.iso}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="photo_view_content_right_categories mobile">
+            <p className="photo_view_content_right_categories_title">
+              Категории:{" "}
+            </p>
+            <p className="photo_view_content_right_categories_p">
+              {photo &&
+                photo.category.map((category) => category.name_spec).join(", ")}
+            </p>
+          </div>
+          <div className="photo_view_content_right_albums mobile">
+            <p className="photo_view_content_right_albums_title">
+              Фото в {photo && photo.album.length} альбоме (-ах):
+            </p>
+            {photo &&
+              photo.album.map((album) => <PhotoViewAlbum album={album} />)}
+          </div>
+          {window.screen.width <= 576 && (
+            <GreenButton
+              width={"180px"}
+              height={"38px"}
+              disabled
+              text={"Купить фото"}
+              callback={() =>
+                navigate(`/profile/edit-photo/${photo && photo.id}`)
+              }
+              margin={"20px 0 20px  0"}
+            />
+          )}
           <div className="photo_view_content_left_textarea">
             <textarea
               placeholder={"Ваш комментарий"}
@@ -395,24 +493,24 @@ const PublicPhotoView = ({ setProfileId }) => {
               Становилось 3 раза
             </p>
           </div>
-          <GreenButton
-            width={"180px"}
-            height={"38px"}
-            disabled
-            text={"Купить фото"}
-            callback={() =>
-              navigate(`/profile/edit-photo/${photo && photo.id}`)
-            }
-            margin={"20px 0 0 0"}
-          />
+          {window.screen.width > 576 && (
+            <GreenButton
+              width={"180px"}
+              height={"38px"}
+              disabled
+              text={"Купить фото"}
+              callback={() =>
+                navigate(`/profile/edit-photo/${photo && photo.id}`)
+              }
+              margin={"20px 0 0 0"}
+            />
+          )}
         </div>
       </div>
       <PhotoFullScreen
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
         photo={`${rootAddress}${photo && photo.gallery_image.photo}`}
-        width={photoWidth}
-        height={photoHeight}
       />
     </div>
   );

@@ -8,6 +8,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
+import { Submit } from "../../components";
 
 const Sessions = () => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const Sessions = () => {
   const [selectedSessions, setSelectedSessions] = React.useState([]);
   const [allSessionsSelected, setAllSessionsSelected] = React.useState(false);
   const [action, setAction] = React.useState("");
+
+  const [submitActive, setSubmitActive] = React.useState(false);
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
@@ -35,14 +38,19 @@ const Sessions = () => {
       ).then((res) => setSessions(res.data));
   }, [userData.id, sortType, sortField]);
 
+  const deleteHandle = () => {
+    Requests.deleteSessions(selectedSessions).then((res) => {
+      setSelectedSessions([]);
+      setAction("");
+      Requests.getSessions(userData.id).then((res) => setSessions(res.data));
+      dispatch(openSuccessAlert("Фотосессии успешно удалены!"));
+      setSubmitActive(false);
+    });
+  };
+
   React.useEffect(() => {
     if (action === 1) {
-      Requests.deleteSessions(selectedSessions).then((res) => {
-        setSelectedSessions([]);
-        setAction("");
-        Requests.getSessions(userData.id).then((res) => setSessions(res.data));
-        dispatch(openSuccessAlert("Фотосессии успешно удалены!"));
-      });
+      setSubmitActive(true);
     }
   }, [action]);
 
@@ -112,6 +120,42 @@ const Sessions = () => {
             marginBottom={"0px"}
             label={"Выбрать все"}
           />
+          <div className="sessions_header_select mobile">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+              alt="sort"
+              className="sessions_header_select_image"
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="sessions_options_right">
@@ -129,7 +173,7 @@ const Sessions = () => {
             </p>
           </div>
           <SelectInput
-            width={200}
+            width={window.screen.width <= 576 ? 170 : 200}
             marginBottom={"10px"}
             values={[
               {
@@ -155,6 +199,12 @@ const Sessions = () => {
             />
           ))}
       </div>
+      <Submit
+        modalActive={submitActive}
+        setModalActive={setSubmitActive}
+        setAction={setAction}
+        callback={deleteHandle}
+      />
     </div>
   );
 };

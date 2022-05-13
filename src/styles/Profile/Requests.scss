@@ -108,11 +108,39 @@
       margin-top: 35px;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     &_buttons {
       display: flex;
       justify-content: space-between;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .requests {
+    &_public_previews {
+      width: 100%;
+    }
+
+    &_window {
+
+      &_fields {
+        flex-wrap: wrap;
+      }
+
+      &_field {
+        width: 100%;
+
+        margin-right: 0px !important;
+      }
+
+      &_buttons {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }

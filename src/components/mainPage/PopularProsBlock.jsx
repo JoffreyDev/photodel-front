@@ -33,29 +33,37 @@ const PopularProsBlock = () => {
               </label>
             </div> */}
           </div>
-          <ul className="main_page_second_section_content_upper_row_rigth">
-            <li className="main_page_second_section_content_upper_row_rigth_li active">
-              Все
-            </li>
-            <li className="main_page_second_section_content_upper_row_rigth_li">
-              фотографы
-            </li>
-            <li className="main_page_second_section_content_upper_row_rigth_li">
-              Модели
-            </li>
-            <li className="main_page_second_section_content_upper_row_rigth_li">
-              Студии
-            </li>
-            <li className="main_page_second_section_content_upper_row_rigth_li">
-              Визажисты
-            </li>
-            <li className="main_page_second_section_content_upper_row_rigth_li">
-              Прочие
-            </li>
-          </ul>
+          {false && (
+            <ul className="main_page_second_section_content_upper_row_rigth">
+              <li className="main_page_second_section_content_upper_row_rigth_li active">
+                Все
+              </li>
+              <li className="main_page_second_section_content_upper_row_rigth_li">
+                фотографы
+              </li>
+              <li className="main_page_second_section_content_upper_row_rigth_li">
+                Модели
+              </li>
+              <li className="main_page_second_section_content_upper_row_rigth_li">
+                Студии
+              </li>
+              <li className="main_page_second_section_content_upper_row_rigth_li">
+                Визажисты
+              </li>
+              <li className="main_page_second_section_content_upper_row_rigth_li">
+                Прочие
+              </li>
+            </ul>
+          )}
         </div>
         <div className="main_page_second_section_content_slider_wrapper">
-          <Carousel itemsToShow={6} pagination={false}>
+          <Carousel
+            itemsToShow={
+              window.screen.width <= 576 ? window.screen.width / 165 : 6
+            }
+            pagination={false}
+            showArrows={window.screen.width <= 576 ? false : true}
+          >
             {profiles &&
               profiles.map((profile, idx) => (
                 <PopularProCard profile={profile} key={idx} />

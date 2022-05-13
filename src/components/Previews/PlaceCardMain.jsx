@@ -65,7 +65,7 @@ const PlaceCard = ({
       </div>
       <div className="sessions_card_info">
         <p className="sessions_card_info_country">
-          {place.string_place_location.split(",")[0] +
+          {place.string_place_location.split(",")[1] +
             " | ~" +
             place.diff_distance}
         </p>

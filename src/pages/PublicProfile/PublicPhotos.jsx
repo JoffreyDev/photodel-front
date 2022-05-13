@@ -105,7 +105,13 @@ const PublicPhotos = ({ component, setProfileId }) => {
       <div className="photos_cards">
         {photos &&
           photos.map((item, index) => (
-            <GalleryPhotoPreview photo={item} key={index} isAuthor />
+            <GalleryPhotoPreview
+              photo={item}
+              key={index}
+              isAuthor
+              wrapperWidth={window.screen.width <= 576 ? "49%" : ""}
+              width={window.screen.width <= 576 ? "49%" : ""}
+            />
           ))}
       </div>
     </div>

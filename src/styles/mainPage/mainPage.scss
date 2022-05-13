@@ -84,6 +84,7 @@
       margin-right: 45px;
       align-items: center;
       position: relative;
+                    cursor: pointer;
 
       &_header {
         display: flex;
@@ -224,6 +225,7 @@
         display: flex;
         align-items: center;
         position: relative;
+        cursor: pointer;
 
         &_avatar {
           border-radius: 4px;
@@ -265,6 +267,10 @@
       &_left {
         display: flex;
         align-items: center;
+
+        &.mobile {
+          display: none;
+        }
 
         &__logo {
           margin-right: 10px;
@@ -664,6 +670,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+                      cursor: pointer;
 
         &_image {
           margin-right: 5px;
@@ -852,6 +859,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+                      cursor: pointer;
 
         &_image {
           margin-right: 5px;
@@ -1034,6 +1042,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+                      cursor: pointer;
 
         &_image {
           margin-right: 5px;
@@ -1060,15 +1069,60 @@
       align-items: flex-start;
     }
 
+     &_adv {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          margin-right: 30px;
+          cursor: pointer;
+
+          &_image {
+            width: 545px;
+            height: 245px;
+            object-fit: cover;
+            border-radius: 8px 8px 0px 0px ;
+          }
+
+          &_info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            border: 1px solid #D2D9D8;
+            box-sizing: border-box;
+            border-radius: 0px 0px 8px 8px;
+            padding: 15px 20px;
+           
+          }
+
+            &_title {
+              font-family: 'Montserrat';
+              font-style: normal;
+              font-weight: 600;
+              font-size: 16px;
+              color: #202424;
+            }
+            
+            &_link {
+              font-family: 'Montserrat';
+              font-style: normal;
+              font-weight: 500;
+              font-size: 13px;
+            
+              color: #3C8278;
+            }
+        }
+
     &_content {
       display: flex;
       width: 1150px;
       padding: 0px 10px;
-      flex-direction: column;
+      flex-direction: row;
       box-sizing: border-box;
       justify-content: center;
 
       &_survey {
+
         &_table {
           width: 540px;
           height: 243px;
@@ -1118,8 +1172,9 @@
 
       &_upper_row {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
 
         &_left {
           display: flex;
@@ -1460,6 +1515,149 @@
           }
         }
       }
+    }
+  }
+}
+
+  // под мобильные адаптация
+
+@media (max-width: 576px) {
+
+  .main_page {
+    &_header {
+
+      padding-top: 0;
+
+      &_container {
+        padding-top: 25px;
+      }
+
+
+      &_top_row {
+         display: none;
+
+         &_hr {
+           display: none;
+         }
+      }
+
+      &_bottom_row {
+        padding: 0 20px;
+        &_right {
+          display: none;
+        }
+      }
+    }
+
+    &_middle_block{
+      &__title {
+        font-size: 32px;
+        font-size: 1.7em;
+      }
+    }
+
+    &_survey_section{
+
+      &_wrapper {
+        flex-direction: column;
+        height: auto;
+        margin-bottom: 30px;
+      }
+
+      &_adv {
+        margin-right: 0px;
+        width: 100%;
+        margin-bottom: 30px;
+
+        &_image {
+          width: 100%;
+        }
+      }
+
+      &_content {
+        width: 100%;
+        flex-direction: column;
+
+        &_survey_table {
+          width: 100%;
+        }
+      }
+    }
+
+    &_second_section {
+      &_content {
+        padding: 20px 0px 20px 20px;
+      }
+    }
+
+    &_third_section {
+      &_wrapper { 
+        height: auto;
+      }
+
+      &_content {
+        padding: 20px 0px 20px 20px;
+      }
+
+      &_content_upper_row_left_h2 {
+        font-size: 21px;
+      }
+    }
+
+    &_second_section_content_upper_row_left_h2 {
+      font-size: 21px;
+    }
+
+    &_popular_photos_section_content_upper_row_left_h2 {
+      font-size: 21px;
+    }
+
+    &_popular_photos_section_content {
+      padding: 20px 0px 20px 20px;
+    }
+
+    &_proposal_section{ 
+      &_content {
+        &_title {
+          text-align: center;
+          font-size: 30px ;
+        }
+
+        &_p {
+          text-align: center;
+        }
+      }
+    }
+
+    &_about_section {
+      &_wrapper {
+        display: none;
+      }
+    }
+
+    &_footer_section {
+      &_wrapper {
+        height: 450px;
+      }
+
+      &_content {
+        flex-wrap: wrap;
+
+        &_ul {
+          width: 50%;
+          margin-bottom: 25px;
+        }
+
+        &_contacts {
+          width: 50%;
+        }
+      }
+
+
+    }
+
+    &_header_bottom_row_left.mobile {
+      display: block;
     }
   }
 }

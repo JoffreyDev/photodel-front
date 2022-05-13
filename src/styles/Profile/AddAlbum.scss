@@ -214,3 +214,20 @@
     }
   }
 }
+
+@media (max-width: 576px) {
+  .edit_album {
+    
+    &_left_content {
+      width: 100%;
+    }
+
+    &_buttons {
+      align-self: center;
+    }
+
+    &_popup_content {
+      width: 100vw
+    }
+  }
+}

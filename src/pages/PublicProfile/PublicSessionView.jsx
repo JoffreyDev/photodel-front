@@ -14,13 +14,15 @@ import Lock from "../../img/photoView/lock.svg";
 import Money from "../../img/photoView/money.svg";
 import Geo from "../../img/photoView/map.svg";
 import Timer from "../../img/photoView/timer.svg";
-import { Comment, PhotoViewAlbum } from "../../components";
+import { Comment, PhotoViewAlbum, PhotoFullScreen } from "../../components";
 import { GreenButton } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
-import ImageGallery from "react-image-gallery";
 import { RequestWindow } from "../../components";
+import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
+import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
+import { PublicHeader } from "..";
 
 const PublicSessionView = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -37,8 +39,10 @@ const PublicSessionView = ({ setProfileId }) => {
   const [comments, setComments] = React.useState();
 
   const [photos, setPhotos] = React.useState();
+  const [slideNumber, setSlideNumber] = React.useState(0);
 
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
+  const [fullScreenActive, setFullScreenActive] = React.useState(false);
 
   React.useEffect(() => {
     !loaded &&
@@ -47,12 +51,7 @@ const PublicSessionView = ({ setProfileId }) => {
         setLoaded(true);
         setSession(res.data);
         setPhotos(
-          res.data.photos.map((photo) => {
-            return {
-              original: `${rootAddress}${photo.photo}`,
-              originalClass: "photo_view_content_left_image_slider",
-            };
-          })
+          res.data.photos.map((photo) => `${rootAddress}${photo.photo}`)
         );
       });
 
@@ -62,12 +61,7 @@ const PublicSessionView = ({ setProfileId }) => {
         setLoaded(true);
         setSession(res.data);
         setPhotos(
-          res.data.photos.map((photo) => {
-            return {
-              original: `${rootAddress}${photo.photo}`,
-              originalClass: "photo_view_content_left_image_slider",
-            };
-          })
+          res.data.photos.map((photo) => `${rootAddress}${photo.photo}`)
         );
       });
   }, [loaded]);
@@ -140,8 +134,21 @@ const PublicSessionView = ({ setProfileId }) => {
     });
   };
 
+  const changePhoto = (dir) => {
+    if (dir === "next") {
+      if (slideNumber === photos.length - 1) setSlideNumber(0);
+      else setSlideNumber(slideNumber + 1);
+    }
+
+    if (dir === "prev") {
+      if (slideNumber === 0) setSlideNumber(photos.length - 1);
+      else setSlideNumber(slideNumber - 1);
+    }
+  };
+
   return (
     <div className="photo_view">
+      <PublicHeader profile={session && session.profile} />
       <div className="photo_view_header">
         <img src={Back} alt="back" className="add_photo_header_arrow" />
         <p
@@ -154,11 +161,24 @@ const PublicSessionView = ({ setProfileId }) => {
       <div className="photo_view_content">
         <div className="photo_view_content_left">
           {photos && (
-            <div style={{ borderRadius: "8px" }}>
-              <ImageGallery
-                items={photos}
-                showThumbnails
-                showPlayButton={false}
+            <div className="photo_view_content_left_image_wrapper">
+              <img
+                src={LeftArrow}
+                alt="prev"
+                className="photo_view_content_left_image_arrow left"
+                onClick={() => changePhoto("prev")}
+              />
+              <img
+                src={photos && photos[slideNumber]}
+                alt="image"
+                className="photo_view_content_left_image"
+                onClick={() => setFullScreenActive(true)}
+              />
+              <img
+                src={RightArrow}
+                alt="next"
+                className="photo_view_content_left_image_arrow right"
+                onClick={() => changePhoto("next")}
               />
             </div>
           )}
@@ -250,6 +270,107 @@ const PublicSessionView = ({ setProfileId }) => {
           <p className="photo_view_content_left_description">
             {session && session.session_description}
           </p>
+          <div className="photo_view_content_right_geo mobile">
+            <img
+              src={Geo}
+              alt="geolocation"
+              className="photo_view_content_right_geo_img"
+            />
+            <p className="photo_view_content_right_geo_p">
+              {session && session.string_session_location}
+            </p>
+          </div>
+          <div className="photo_view_content_right_map mobile">
+            {session && session.session_location && (
+              <YMaps>
+                <Map
+                  width={"100%"}
+                  height={"110px"}
+                  defaultState={{
+                    center:
+                      session &&
+                      session.session_location
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" "),
+                    zoom: 12,
+                  }}
+                >
+                  <Placemark
+                    geometry={
+                      session &&
+                      session.session_location
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" ")
+                    }
+                  />
+                </Map>
+              </YMaps>
+            )}
+          </div>
+          <div className="photo_view_content_right_data mobile">
+            <p className="photo_view_content_right_data_p">
+              Тип съемки:{" "}
+              <span className="photo_view_content_right_data_span">
+                Свадебная
+              </span>
+            </p>
+            <p className="photo_view_content_right_data_p">
+              Дата проведения:{" "}
+              <span className="photo_view_content_right_data_span">
+                {session &&
+                  `${session.session_date.split("").splice(8, 2).join("")} ${
+                    session.session_date.split("").splice(5, 2).join("") ===
+                    "01"
+                      ? "января"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "02"
+                      ? "февраля"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "03"
+                      ? "марта"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "04"
+                      ? "апреля"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "05"
+                      ? "мая"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "06"
+                      ? "июня"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "07"
+                      ? "июля"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "08"
+                      ? "авугста"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "09"
+                      ? "сентября"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "10"
+                      ? "октября"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "11"
+                      ? "ноября"
+                      : session.session_date.split("").splice(5, 2).join("") ===
+                        "12"
+                      ? "декабря"
+                      : ""
+                  } ${session.session_date.split("").splice(0, 4).join("")}`}
+              </span>
+            </p>
+          </div>
+          {window.screen.width <= 576 && (
+            <GreenButton
+              width={"180px"}
+              height={"38px"}
+              text={"Запрос на съемку"}
+              margin={"20px 0 20px 0"}
+              callback={() => setReqWindowActive(true)}
+            />
+          )}
           <div className="photo_view_content_left_textarea">
             <textarea
               placeholder={"Ваш комментарий"}
@@ -366,19 +487,30 @@ const PublicSessionView = ({ setProfileId }) => {
               </span>
             </p>
           </div>
-          <GreenButton
-            width={"180px"}
-            height={"38px"}
-            text={"Запрос на съемку"}
-            margin={"20px 0 0 0"}
-            callback={() => setReqWindowActive(true)}
-          />
+          {window.screen.width > 576 && (
+            <GreenButton
+              width={"180px"}
+              height={"38px"}
+              text={"Запрос на съемку"}
+              margin={"20px 0 0 0"}
+              callback={() => setReqWindowActive(true)}
+            />
+          )}
         </div>
       </div>
       <RequestWindow
         user={session && session.profile}
         active={reqWindowAcive}
         setActive={setReqWindowActive}
+        width={window.screen.width <= 576 ? "90vw" : "40vw"}
+        notAlign={window.screen.width <= 576}
+      />
+      <PhotoFullScreen
+        photo={photos && photos[slideNumber]}
+        changePhoto={changePhoto}
+        modalActive={fullScreenActive}
+        setModalActive={setFullScreenActive}
+        slider
       />
     </div>
   );

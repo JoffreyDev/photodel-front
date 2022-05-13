@@ -1,12 +1,16 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
-* {
-  cursor: url("../img/commonImages/cursor.svg"), auto;
+#root {
+  overflow-x: hidden ;
 }
 
 .hidden_file_input {
   opacity: 0;
   position: absolute;
+  cursor: pointer;
+}
+
+li, input {
   cursor: pointer;
 }
 
@@ -46,4 +50,18 @@
   background-position: center;
   background-repeat: no-repeat;
   right: -10px;
+}
+
+.ymaps-2-1-79-map.ymaps-2-1-79-map ymaps,
+.ymaps-2-1-79-map ymaps:after,
+.ymaps-2-1-79-map ymaps:before  {
+border-radius: 10px;
+}
+
+.ymaps-2-1-79-balloon__close-button {
+  opacity: 0  !important;
+}
+
+.ymaps-2-1-79-balloon__content {
+  margin-right: 12px !important;
 }

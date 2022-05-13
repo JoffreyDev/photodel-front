@@ -8,6 +8,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
+import { Submit } from "../../components";
 
 const Places = () => {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ const Places = () => {
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
+  const [submitActive, setSubmitActive] = React.useState(false);
+
   const [sortField, setSortField] = React.useState(1);
   const [sortType, setSortType] = React.useState("+");
 
@@ -35,14 +38,19 @@ const Places = () => {
       ).then((res) => setPlaces(res.data));
   }, [userData.id, sortType, sortField]);
 
+  const deleteHandle = () => {
+    Requests.deleteFilmPlaces(selectedPlaces).then((res) => {
+      setSelectedPlaces([]);
+      setAction("");
+      Requests.getPlacesList(userData.id).then((res) => setPlaces(res.data));
+      dispatch(openSuccessAlert("Места успешно удалены!"));
+      setSubmitActive(false);
+    });
+  };
+
   React.useEffect(() => {
     if (action === 1) {
-      Requests.deleteFilmPlaces(selectedPlaces).then((res) => {
-        setSelectedPlaces([]);
-        setAction("");
-        Requests.getPlacesList(userData.id).then((res) => setPlaces(res.data));
-        dispatch(openSuccessAlert("Места успешно удалены!"));
-      });
+      setSubmitActive(true);
     }
   }, [action]);
 
@@ -50,6 +58,12 @@ const Places = () => {
     <div className="places">
       <div className="places_header">
         <h1 className="places_header_title">МЕСТА ДЛЯ СЪЕМОК</h1>
+        <p className="photos_options_left_p mobile noBorder">
+          Всего:{" "}
+          <span className="photos_options_left_p_span">
+            {places && places.length}
+          </span>
+        </p>
         <div className="places_header_select">
           <img
             src={
@@ -110,6 +124,42 @@ const Places = () => {
             marginBottom={"0px"}
             label={"Выбрать все"}
           />
+          <div className="places_header_select mobile">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              alt="sort"
+              className="places_header_select_image"
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="places_options_right">
@@ -123,7 +173,7 @@ const Places = () => {
               onClick={() => navigate("/profile/add-place")}
               className="places_options_right_add_p"
             >
-              Добавить место для съемок
+              Добавить место
             </p>
           </div>
           <SelectInput
@@ -153,6 +203,12 @@ const Places = () => {
             />
           ))}
       </div>
+      <Submit
+        modalActive={submitActive}
+        setModalActive={setSubmitActive}
+        callback={deleteHandle}
+        setAction={setAction}
+      />
     </div>
   );
 };

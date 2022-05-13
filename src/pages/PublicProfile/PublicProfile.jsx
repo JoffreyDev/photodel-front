@@ -42,9 +42,11 @@ const PublicProfile = ({ setProfileId }) => {
       receiver: Number(profileId),
     })
       .then((res) => navigate(`/profile/chat/${res.data.id}`))
-      .catch(() =>
-        openErrorAlert("Произошла ошибка. Возможно, такой чат уже существует.")
-      );
+      .catch((err) => {
+        navigate(
+          `/profile/chat/${Number(err.response.data.message.split("id=")[1])}`
+        );
+      });
   };
 
   const addToFavorite = () => {
@@ -325,7 +327,7 @@ const PublicProfile = ({ setProfileId }) => {
 
           <ul className="my_profile_common_data_content_right_ul">
             <li className="my_profile_common_data_content_right_li">
-              {profileData && profileData.type_pro.name_category}
+              {profileData && profileData.type_pro?.name_category}
             </li>
             <li className="my_profile_common_data_content_right_li">
               {profileData &&
@@ -484,6 +486,8 @@ const PublicProfile = ({ setProfileId }) => {
         user={profileData}
         active={reqWindowAcive}
         setActive={setReqWindowActive}
+        width={window.screen.width <= 576 ? "90vw" : "40vw"}
+        notAlign={window.screen.width <= 576}
       />
     </div>
   );

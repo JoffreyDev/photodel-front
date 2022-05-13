@@ -129,7 +129,7 @@ const Chat = () => {
 
       <div className="chat_lower_table">
         <TextInputNoMargin
-          width={"732px"}
+          width={window.screen.width <= 576 ? "200px" : "732px"}
           height={"38px"}
           placeholder={"Напишите сообщение"}
           callback={setMessage}

@@ -60,6 +60,11 @@
       width: 100%;
       justify-content: flex-end;
       border-bottom: 1px solid #d2d9d8;
+      cursor: pointer;
+
+      &.mobile {
+        display: none;
+      }
     }
   }
 
@@ -73,6 +78,10 @@
       display: flex;
       align-items: center;
 
+      &.mobile {
+        display: none;
+      }
+
       &_p {
         font-family: Montserrat;
         font-style: normal;
@@ -85,6 +94,10 @@
         &_span {
           font-weight: 600;
         }
+
+        &.mobile {
+          display: none;
+        }
       }
     }
 
@@ -95,6 +108,7 @@
       &_add {
         display: flex;
         margin-right: 30px;
+                      cursor: pointer;
 
         &_image {
           margin-right: 5px;
@@ -125,6 +139,7 @@
     margin-top: 10px;
     width: 255px;
     height: 255px;
+    cursor: pointer;
 
     &:not(:nth-child(3n + 3)) {
       margin-right: 39px;
@@ -231,4 +246,103 @@
       }
     }
   }
+}
+
+@media (max-width: 576px) {
+  .photos {
+
+    &_cards {
+      justify-content: space-between;
+    }
+
+    &_card {
+      width: 48%;
+      margin-right: 6px !important;
+      height: 191px;
+
+      &_photo {
+        width: 100%;
+        height: 100px;
+
+        &_checkbox {
+          bottom: 45px;
+          left: 134px;
+          z-index: 2;
+        }
+
+      }
+
+      &_wrapper {
+        width: 100%;
+        height: 100px;
+      }
+    }
+
+    &_options {
+      margin-top: 0px;
+      flex-direction: column-reverse;
+
+      &_left.mobile {
+        display: flex;
+      }
+
+      &_left_p.mobile {
+        padding: 23px 0 5px 0px;
+        margin-right: 0px;
+        border-bottom: 1px solid #d2d9d8;
+        width: 100%;
+        text-align: right;
+
+        &.noBorder {
+          border-bottom: none;
+        }
+       
+      }
+
+      &_right {
+        width: 100%;
+        justify-content: space-between;
+        transform: scale(0.9);
+
+          &_add {
+            white-space: nowrap;
+            margin-left: -12px;
+          }
+      }
+
+      &_left {
+        width: 109%;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        white-space: nowrap;
+         transform: scale(0.9);
+
+
+        &_p {
+          display: none;
+
+          &.mobile {
+            display: block;
+        }
+
+         
+      }
+    }
+
+    &_cards {
+      margin-top: 0;
+    }
+
+   
+  }
+
+  &_header_select {
+    display: none;
+  
+    &.mobile {
+      display: flex;
+      border-bottom: none;
+    }
+  }
+}
 }

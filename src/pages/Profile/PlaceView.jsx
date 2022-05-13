@@ -13,14 +13,16 @@ import Lock from "../../img/photoView/lock.svg";
 import Geo from "../../img/photoView/map.svg";
 import Timer from "../../img/photoView/timer.svg";
 import { Comment } from "../../components";
-import { GreenButton } from "../../components";
+import { GreenButton, PhotoFullScreen } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
-import ImageGallery from "react-image-gallery";
 import Camera from "../../img/placeView/photo.svg";
 import Money from "../../img/placeView/money.svg";
 import Work from "../../img/placeView/work.svg";
+import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
+import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
+import { sliderClasses } from "@mui/material";
 
 const PlaceView = () => {
   const navigate = useNavigate();
@@ -36,7 +38,10 @@ const PlaceView = () => {
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
 
+  const [fullScreenActive, setFullScreenActive] = React.useState(false);
+
   const [photos, setPhotos] = React.useState();
+  const [slideNumber, setSlideNumber] = React.useState(0);
 
   React.useEffect(() => {
     !loaded &&
@@ -45,12 +50,7 @@ const PlaceView = () => {
           setLoaded(true);
           setPlace(res.data);
           setPhotos(
-            res.data.place_image.map((photo) => {
-              return {
-                original: `${rootAddress}${photo.photo}`,
-                originalClass: "photo_view_content_left_image_slider",
-              };
-            })
+            res.data.place_image.map((photo) => `${rootAddress}${photo.photo}`)
           );
         })
         .then(() => {
@@ -111,6 +111,18 @@ const PlaceView = () => {
     });
   };
 
+  const changePhoto = (dir) => {
+    if (dir === "next") {
+      if (slideNumber === photos.length - 1) setSlideNumber(0);
+      else setSlideNumber(slideNumber + 1);
+    }
+
+    if (dir === "prev") {
+      if (slideNumber === 0) setSlideNumber(photos.length - 1);
+      else setSlideNumber(slideNumber - 1);
+    }
+  };
+
   return (
     <div className="photo_view">
       <div className="photo_view_header">
@@ -122,14 +134,46 @@ const PlaceView = () => {
           Все места для съемок
         </p>
       </div>
+      <div className="photo_view_content_right_table mobile">
+        <div className="photo_view_content_right_table_row">
+          <img
+            src={Lock}
+            alt="published"
+            className="photo_view_content_right_table_row_img"
+          />
+          <p className="photo_view_content_right_table_row_p">Опубликовано</p>
+        </div>
+
+        <GreenButton
+          width={"180px"}
+          height={"38px"}
+          text={"Редактировать"}
+          callback={() =>
+            navigate(`/profile/edit-session/${place && place.id}`)
+          }
+        />
+      </div>
       <div className="photo_view_content">
         <div className="photo_view_content_left">
           {photos && (
-            <div style={{ borderRadius: "8px" }}>
-              <ImageGallery
-                items={photos}
-                showThumbnails
-                showPlayButton={false}
+            <div className="photo_view_content_left_image_wrapper">
+              <img
+                src={LeftArrow}
+                alt="prev"
+                className="photo_view_content_left_image_arrow left"
+                onClick={() => changePhoto("prev")}
+              />
+              <img
+                src={photos && photos[slideNumber]}
+                alt="image"
+                className="photo_view_content_left_image"
+                onClick={() => setFullScreenActive(true)}
+              />
+              <img
+                src={RightArrow}
+                alt="next"
+                className="photo_view_content_left_image_arrow right"
+                onClick={() => changePhoto("next")}
               />
             </div>
           )}
@@ -210,6 +254,98 @@ const PlaceView = () => {
           <p className="photo_view_content_left_description">
             {place && place.description}
           </p>
+          <div className="photo_view_content_right_geo mobile">
+            <img
+              src={Geo}
+              alt="geolocation"
+              className="photo_view_content_right_geo_img"
+            />
+            <p className="photo_view_content_right_geo_p">
+              {place && place.string_place_location}
+            </p>
+          </div>
+          <div className="photo_view_content_right_map mobile">
+            {place && place.place_location && (
+              <YMaps>
+                <Map
+                  width={"100%"}
+                  height={"110px"}
+                  defaultState={{
+                    center:
+                      place &&
+                      place.place_location
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" "),
+                    zoom: 12,
+                  }}
+                >
+                  <Placemark
+                    geometry={
+                      place &&
+                      place.place_location
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" ")
+                    }
+                  />
+                </Map>
+              </YMaps>
+            )}
+          </div>
+          <div className="photo_view_content_right_specs mobile">
+            <div className="photo_view_content_right_spec">
+              <img
+                src={Camera}
+                alt="camera"
+                className="photo_view_content_right_spec_img"
+              />
+              <p className="photo_view_content_right_spec_p">
+                {place && place.photo_camera}
+              </p>
+            </div>
+
+            <div className="photo_view_content_right_spec_row">
+              <div className="photo_view_content_right_spec">
+                <img
+                  src={Money}
+                  alt="cost"
+                  className="photo_view_content_right_spec_img"
+                />
+                <p className="photo_view_content_right_spec_p">
+                  {place && place.cost}
+                </p>
+              </div>
+            </div>
+
+            <div className="photo_view_content_right_spec_row">
+              <div className="photo_view_content_right_spec">
+                <img
+                  src={Work}
+                  alt="payment"
+                  className="photo_view_content_right_spec_img"
+                />
+                <p className="photo_view_content_right_spec_p">
+                  {place && place.payment}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{ marginBottom: "10px" }}
+            className="photo_view_content_right_categories mobile"
+          >
+            <p className="photo_view_content_right_categories_title">
+              Категории:
+            </p>
+            <p className="photo_view_content_right_categories_p">
+              {place &&
+                place.category
+                  .map((category) => category.name_category)
+                  .join(", ")}
+            </p>
+          </div>
           <div className="photo_view_content_left_textarea">
             <textarea
               placeholder={"Ваш комментарий"}
@@ -349,6 +485,13 @@ const PlaceView = () => {
           </div>
         </div>
       </div>
+      <PhotoFullScreen
+        photo={photos && photos[slideNumber]}
+        changePhoto={changePhoto}
+        modalActive={fullScreenActive}
+        setModalActive={setFullScreenActive}
+        slider
+      />
     </div>
   );
 };

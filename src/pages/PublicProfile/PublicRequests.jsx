@@ -75,6 +75,7 @@ const PublicRequests = ({ component, setProfileId }) => {
           <p className="photos_options_left_p">
             Всего:{" "}
             <span className="photos_options_left_p_span">
+              22
               {/*  {photos && photos.length} */}
             </span>
           </p>

@@ -20,6 +20,9 @@ import SortImageInvert from "../../img/commonImages/sort-.svg";
 import Shape from "../../img/commonImages/shape.svg";
 import Online from "../../img/commonImages/online.svg";
 import Rate from "../../img/commonImages/rate.svg";
+import Filter from "../../img/commonImages/filter.svg";
+import Loading from "../../img/commonImages/loading.gif";
+import { slide as Menu } from "react-burger-menu";
 
 const MainProfiles = () => {
   const { prosCategories } = useSelector(({ siteEntities }) => siteEntities);
@@ -44,40 +47,68 @@ const MainProfiles = () => {
   const [page, setPage] = React.useState(1);
   const [countItems, setCountItems] = React.useState();
 
-  const [balloonLayout, setBalloonLayout] = React.useState("");
-  const [balloonContent, setBalloonContent] = React.useState("");
+  const [balloonDataLoading, setBalloonDataLoading] = React.useState(true);
 
-  const getPointData = (profile) => {
-    Requests.getPublicProfile(profile).then((res) => {
-      setBalloonContent(res.data);
+  const [name, setName] = React.useState("");
+  const [surname, setSurname] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [avatar, setAvatar] = React.useState("");
+  const [rating, setRating] = React.useState("");
+  const [menuOpened, setMenuOpened] = React.useState(false);
+
+  const [selectAdded, setSelectAdded] = React.useState(false);
+
+  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
+
+  function closeCurrentBalloon() {
+    let close = document.querySelector(
+      'ymaps[class$="-balloon__close-button"]'
+    );
+    if (close != null) {
+      close.click();
+    }
+  }
+
+  const getProfileData = (id) => {
+    setBalloonDataLoading(true);
+    Requests.getPublicProfile(id).then((res) => {
+      setName(res.data.name);
+      setSurname(res.data.surname);
+      setAvatar(res.data.avatar);
+      setId(id);
+      setRating(res.data.rating);
+      forceUpdate();
+      setBalloonDataLoading(false);
     });
-    return {
-      balloonContentBody: [
+  };
+
+  let pointData = {
+    balloonContentBody: [
+      balloonDataLoading
+        ? `<div style=display:flex;justify-content:center;align-items:center>
+        <img src=${Loading} style=height:50px;width:50px;object-fit:cover;border-radius:8px; />
+        </div>
         `
+        : `
+      <a href=${`/public/profile/${id}`} style=text-decorate: none; >
         <div style=display:flex;flex-direction:column;align-items:center class="recent-block-wrapper">
-        <img src=${`data:image/png;base64,${balloonContent.avatar}`} style=height:100px;width:100px;object-fit:cover;border-radius:8px;  />
+        <img src=${`data:image/png;base64,${avatar}`} style=height:100px;width:100px;object-fit:cover;border-radius:8px;  />
         <div style=display:flex;justify-content:center;align-items:center;margin-top:8px;flex-direction:column; >
          <div style=display:flex;justify-content:center;align-items:center;margin-top:5px; >
           <img src=${Online} style=width:6px;height:6px;margin-right:4px; />
-          <p style=font-family:Montserrat;font-style:normal;font-weight:600;font-size:12px;color:#9CA3A1;>${
-            balloonContent.surname
-          }</p>
+          <p style=font-family:Montserrat;font-style:normal;font-weight:600;font-size:12px;color:#9CA3A1;>${surname}</p>
           </div>
-          <p style=font-family:Montserrat;font-style:normal;font-weight:600;font-size:12px;color:#9CA3A1;>${
-            balloonContent.name
-          }</p>
+          <p style=font-family:Montserrat;font-style:normal;font-weight:600;font-size:12px;color:#9CA3A1;>${name}</p>
         </div>
         <div style=display:flex;justify-content:center;align-items:center;margin-top:6px; >
        
           <img src=${Rate} style=width:14px;height:14px;margin-right:4px; />
-          <p style=font-family:Montserrat;font-style:normal;font-weight:500;font-size:12px;color:black;>${
-            balloonContent.rating
-          }</p>
+          <p style=font-family:Montserrat;font-style:normal;font-weight:500;font-size:12px;color:black;>${rating}</p>
           </div>
       </div>
+      </a>
           `,
-      ].join(""),
-    };
+    ].join(""),
   };
 
   React.useEffect(() => {
@@ -107,6 +138,7 @@ const MainProfiles = () => {
 
   const handleSearch = () => {
     setFetching(true);
+    setMenuOpened(false);
     Requests.getAllProfiles({
       userCoords: userCoords,
       name_category: category,
@@ -145,11 +177,111 @@ const MainProfiles = () => {
   });
 
   React.useEffect(() => {
-    prosCategories && prosCategories.unshift({ id: 100, name_category: "Все" });
+    if (prosCategories && !selectAdded) {
+      prosCategories.unshift({ id: 100, name_category: "Все" });
+      setSelectAdded(true);
+    }
   }, [prosCategories]);
+
+  React.useEffect(() => {
+    window.scroll(0, 0);
+    document.title = "Профи рядом";
+  }, []);
 
   return (
     <div className="main_photo">
+      <div className="main_photo_menu">
+        <Menu isOpen={menuOpened} onClose={() => setMenuOpened(false)}>
+          <div className="main_photo_header_fields mobile">
+            <TextInput
+              height={"38px"}
+              width={"255px"}
+              label={"Простой поиск"}
+              placeholder={"Введите что-нибудь"}
+              value={searchReq}
+              callback={setSearchReq}
+            />
+            <SelectInput
+              height={"38px"}
+              width={"255px"}
+              label={"Категория"}
+              values={
+                prosCategories &&
+                prosCategories.map((item) => {
+                  return { id: item.id, value: item.name_category };
+                })
+              }
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              setValue={setCategory}
+              getName
+            />
+            <SelectInput
+              height={"38px"}
+              width={"255px"}
+              label={"Радиус нахождения автора"}
+              values={[
+                { id: "10000000000", value: "Без ограничения" },
+                { id: "5000", value: "В переделах 5км" },
+                { id: "10000", value: "В переделах 10км" },
+                { id: "25000", value: "В переделах 25км" },
+                { id: "50000", value: "В переделах 50км" },
+                { id: "100000", value: "В переделах 100км" },
+              ]}
+              value={searchDist}
+              onChange={(e) => setSearchDist(e.target.value)}
+              setValue={setSearchDist}
+            />
+            <div className="main_photo_header_sorts mobile">
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src={
+                    sortType === "+"
+                      ? SortImage
+                      : sortType === "-"
+                      ? SortImageInvert
+                      : ""
+                  }
+                  alt="sort"
+                  className="places_header_select_image"
+                  onClick={() =>
+                    setSortType(
+                      sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                    )
+                  }
+                />
+                <SelectInput
+                  values={[
+                    {
+                      id: 1,
+                      value: "По дате добавления",
+                    },
+                    {
+                      id: 2,
+                      value: "По популярности",
+                    },
+                  ]}
+                  width={190}
+                  nonBorder={true}
+                  fontSize={"13px"}
+                  marginBottom={"0px"}
+                  value={sortField}
+                  onChange={(e) => setSortField(e.target.value)}
+                />
+              </div>
+            </div>
+            <div style={{ alignSelf: "center" }}>
+              <GreenButton
+                height={"38px"}
+                width={"180px"}
+                text={"Найти"}
+                callback={handleSearch}
+                margin={"15px 0 0 0"}
+              />
+            </div>
+          </div>
+        </Menu>
+      </div>
       <div
         className={
           mapViewActive ? "main_photo_content map_active" : "main_photo_content"
@@ -157,7 +289,70 @@ const MainProfiles = () => {
       >
         <div className="main_photo_header">
           <h1 className="main_photo_header_h1">Профи рядом с Вами</h1>
-
+          <div className="main_photo_header_middle">
+            <div
+              onClick={() => setMenuOpened(true)}
+              className="main_photo_header_middle_filters"
+            >
+              <img
+                src={Filter}
+                alt={"filter"}
+                className="main_photo_header_middle_filters_img"
+              />
+              <p className="main_photo_header_middle_filters_">Все фильтры</p>
+            </div>
+            <p className="main_photo_header_sorts_p">
+              {countItems && countItems} найдено
+            </p>
+          </div>
+          <div className="main_photo_map mobile">
+            <YMaps>
+              <Map
+                onClick={closeCurrentBalloon}
+                defaultState={{
+                  center: [55.751574, 37.573856],
+                  zoom: 5,
+                  controls: ["fullscreenControl", "geolocationControl"],
+                  panelMaxMapArea: 0,
+                }}
+                options={{
+                  geolocationControlFloat: "right",
+                }}
+                width="100%"
+                height={"100%"}
+                modules={["package.full"]}
+              >
+                {profilesMarks &&
+                  profilesMarks.map((profile) => (
+                    <Placemark
+                      options={{
+                        iconLayout: "default#image",
+                        // Своё изображение иконки метки.
+                        iconImageHref: "./media/marker.svg",
+                        // Размеры метки.
+                        iconImageSize: [30, 42],
+                        balloonPanelMaxMapArea: 0,
+                      }}
+                      properties={pointData}
+                      modules={[
+                        "geoObject.addon.balloon",
+                        "geoObject.addon.hint",
+                      ]}
+                      geometry={
+                        profile.location
+                          ? profile.location
+                              .split("(")[1]
+                              .split(")")[0]
+                              .split(" ")
+                              .map((elem) => Number(elem))
+                          : [55.751574, 37.573856]
+                      }
+                      onBalloonOpen={() => getProfileData(profile.id)}
+                    />
+                  ))}
+              </Map>
+            </YMaps>
+          </div>
           <div className="main_photo_header_fields">
             <TextInput
               height={"38px"}
@@ -330,7 +525,6 @@ const MainProfiles = () => {
           </div>
         )}
       </div>
-
       {mapViewActive && (
         <div className="main_photo_map">
           <div
@@ -357,12 +551,16 @@ const MainProfiles = () => {
             </div>
             <YMaps>
               <Map
+                onClick={closeCurrentBalloon}
                 defaultState={{
                   center: [55.751574, 37.573856],
                   zoom: 5,
+                  controls: ["fullscreenControl", "geolocationControl"],
                 }}
+                options={{ geolocationControlFloat: "right" }}
                 width="100%"
                 height={"100%"}
+                modules={["package.full"]}
               >
                 {profilesMarks &&
                   profilesMarks.map((profile) => (
@@ -374,7 +572,7 @@ const MainProfiles = () => {
                         // Размеры метки.
                         iconImageSize: [30, 42],
                       }}
-                      properties={() => getPointData(profile.id)}
+                      properties={pointData}
                       modules={[
                         "geoObject.addon.balloon",
                         "geoObject.addon.hint",
@@ -388,6 +586,7 @@ const MainProfiles = () => {
                               .map((elem) => Number(elem))
                           : [55.751574, 37.573856]
                       }
+                      onBalloonOpen={() => getProfileData(profile.id)}
                     />
                   ))}
               </Map>

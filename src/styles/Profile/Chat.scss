@@ -206,3 +206,15 @@
     }
   }
 }
+
+@media (max-width: 576px) {
+  .chat {
+    &_lower_table_button {
+      margin-left: 10px;
+    }
+
+    &_lower_table {
+      width: 100%;
+    }
+  }
+}

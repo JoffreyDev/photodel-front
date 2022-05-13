@@ -157,7 +157,6 @@ const AddPhoto = () => {
     EXIF.getData(e.target.files[0], function () {
       var allMetaData = EXIF.getAllTags(this);
       setExifData(allMetaData);
-      console.log(allMetaData);
     });
 
     getBase64(parsedFile, function (base64Data) {
@@ -171,26 +170,45 @@ const AddPhoto = () => {
         exifData.Model &&
         setCamera(`${exifData.Make} ${exifData.Model}`);
       exifData.ISOSpeedRatings && setISO(`${exifData.ISOSpeedRatings}`);
-      exifData.FocalLength.numerator &&
-        exifData.FocalLength.denominator &&
+      exifData.FocalLength?.numerator &&
+        exifData.FocalLength?.denominator &&
         setFocusDistance(`${exifData.FocalLength.numerator}mm`);
-      exifData.FNumber.numerator &&
-        exifData.FNumber.denominator &&
+      exifData.FNumber?.numerator &&
+        exifData.FNumber?.denominator &&
         setAperture(
           `f/${exifData.FNumber.numerator / exifData.FNumber.denominator}`
         );
-      exifData.ExposureTime.numerator &&
-        exifData.ExposureTime.denominator &&
+      exifData.ExposureTime?.numerator &&
+        exifData.ExposureTime?.denominator &&
         setExcerpt(
           `${exifData.ExposureTime.numerator}/${exifData.ExposureTime.denominator}s`
         );
       exifData.Flash &&
         setFlash(exifData.Flash.includes("Flash fired") ? "Да" : "Нет");
-      dispatch(openSuccessAlert("Данные EXIF были заполнены."));
+      dispatch(openSuccessAlert("Доступные данные EXIF были заполнены."));
     }
   }, [exifData]);
 
   const handlePhotoCreate = () => {
+    if (!loadedPhoto) {
+      dispatch(openErrorAlert("Загрузите фото!"));
+      return;
+    } else if (!title) {
+      dispatch(openErrorAlert("Не указано название!"));
+      return;
+    } else if (!description) {
+      dispatch(openErrorAlert("Не указано описание!"));
+      return;
+    } else if (!coords) {
+      dispatch(openErrorAlert("Не указано местоположение!"));
+      return;
+    } else if (!category) {
+      dispatch(openErrorAlert("Не указана категория!"));
+      return;
+    } else if (!albums) {
+      dispatch(openErrorAlert("Не указаны связанные альбомы!"));
+      return;
+    }
     Requests.createImage(loadedPhoto).then((res) => {
       Requests.createPhoto({
         gallery_image: res.data.id,

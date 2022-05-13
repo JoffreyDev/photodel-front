@@ -7,6 +7,8 @@ import Accepted from "../../img/requests/add.svg";
 import Completed from "../../img/requests/check.svg";
 import Uncompleted from "../../img/requests/uncheсk.svg";
 import { useNavigate } from "react-router-dom";
+import Like from "../../img/commonImages/like.svg";
+import Loading from "../../img/commonImages/loading.gif";
 
 function PublicRequestBlock({ request }) {
   const navigate = useNavigate();

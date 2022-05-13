@@ -168,6 +168,22 @@ const AddPlace = () => {
   };
 
   const handleCreate = () => {
+    if (!sendPhotosArray) {
+      dispatch(openErrorAlert("Загрузите фото!"));
+      return;
+    } else if (!title) {
+      dispatch(openErrorAlert("Не указано название!"));
+      return;
+    } else if (!description) {
+      dispatch(openErrorAlert("Не указано описание!"));
+      return;
+    } else if (!coords) {
+      dispatch(openErrorAlert("Не указано местоположение!"));
+      return;
+    } else if (!category) {
+      dispatch(openErrorAlert("Не указана категория!"));
+      return;
+    }
     sendPhotosArray.forEach((photo, idx) => {
       Requests.createImage(photo).then((res) => {
         uploadedPhotos.push(res.data.id);

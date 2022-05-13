@@ -14,7 +14,15 @@ const LoggedUserPopup = ({ setLoggedUserPopupActive }) => {
   };
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
+    <ClickAwayListener
+      onClickAway={
+        window.screen.width <= 576
+          ? () => {
+              return;
+            }
+          : handleClickAway
+      }
+    >
       <div className="main_page_header_top_row_popup">
         <div className="main_page_header_top_row_popup_top">
           <img

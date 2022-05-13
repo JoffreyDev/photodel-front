@@ -2,8 +2,10 @@ import React from "react";
 import { GreenButton } from "..";
 import { useDispatch } from "react-redux";
 import { toggleRegModule } from "../../redux/actions/siteEntities";
+import { useSelector } from "react-redux";
 
 const ProposalBlock = ({ setRegModuleActive }) => {
+  const { isLoggedIn } = useSelector(({ userData }) => userData);
   const dispatch = useDispatch();
   return (
     <section className="main_page_proposal_section_wrapper">
@@ -20,6 +22,7 @@ const ProposalBlock = ({ setRegModuleActive }) => {
           margin={"20px 0 0 0"}
           width={"276px"}
           height={"56px"}
+          disabled={isLoggedIn}
         />
       </div>
     </section>

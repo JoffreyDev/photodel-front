@@ -3,7 +3,7 @@ import { rootAddress } from "../../http/axios-requests";
 import placeImage from "../../img/mainPage/place.png";
 import { useNavigate } from "react-router-dom";
 
-const BestPlaceCard = ({ place }) => {
+const BestPlaceCard = ({ place, width }) => {
   const navigate = useNavigate();
   return (
     <div
@@ -14,6 +14,7 @@ const BestPlaceCard = ({ place }) => {
         src={`${rootAddress}${place.main_photo.photo}`}
         alt=""
         className="main_page_third_section_content_slider_card_image"
+        style={width ? { width: width } : {}}
       />
       <div className="main_page_third_section_content_slider_card_author_name_wrapper">
         <div className="main_page_third_section_content_slider_card_author_name_wrapper_row">

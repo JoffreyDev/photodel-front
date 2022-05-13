@@ -19,6 +19,8 @@ import TeamActive from "../../img/profile/team-active.svg";
 import BookmarkDis from "../../img/profile/bookmark-dis.svg";
 import BookmarkActive from "../../img/profile/bookmark-active.svg";
 import SettingsDis from "../../img/profile/settings-dis.svg";
+import MoneyDis from "../../img/commonImages/money.svg";
+import StudyDis from "../../img/commonImages/study.svg";
 import SettingsActive from "../../img/profile/settings-active.svg";
 import "../../styles/Profile/ProfileBasis.scss";
 import {
@@ -52,6 +54,11 @@ const ProfileBasis = ({ mainSocket }) => {
 
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    window.scroll(0, 0);
+    document.title = "Фотодел";
+  }, []);
+
   return (
     <div>
       <Header styled={"themed"} />
@@ -61,7 +68,11 @@ const ProfileBasis = ({ mainSocket }) => {
             <ul className="profile_basis_module_choice_ul">
               <li
                 onClick={() => navigate("/profile/data")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "data"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={component === "data" ? ProfileActive : ProfileDis}
@@ -78,10 +89,13 @@ const ProfileBasis = ({ mainSocket }) => {
                   Мой профиль
                 </p>
               </li>
-
               <li
                 onClick={() => navigate("/profile/requests")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "requests"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={component === "requests" ? RequestsActive : RequestsDis}
@@ -98,10 +112,13 @@ const ProfileBasis = ({ mainSocket }) => {
                   Запросы
                 </p>
               </li>
-
               <li
                 onClick={() => navigate("/profile/messages")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "messages"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={component === "messages" ? MessageActive : MessageDis}
@@ -119,31 +136,13 @@ const ProfileBasis = ({ mainSocket }) => {
                 </p>
               </li>
 
-              {false && (
-                <li
-                  onClick={() => navigate("/profile/reviews")}
-                  className="profile_basis_module_choice_li"
-                >
-                  <img
-                    src={component === "reviews" ? ReviewActive : ReviewDis}
-                    className="profile_basis_module_choice_img"
-                    alt="menu choice"
-                  />
-                  <p
-                    className={
-                      component === "reviews"
-                        ? "profile_basis_module_choice_p active"
-                        : "profile_basis_module_choice_p"
-                    }
-                  >
-                    Отзывы
-                  </p>
-                </li>
-              )}
-
               <li
                 onClick={() => navigate("/profile/photos")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "photos" || component === "albums"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={
@@ -164,10 +163,13 @@ const ProfileBasis = ({ mainSocket }) => {
                   Фотографии
                 </p>
               </li>
-
               <li
                 onClick={() => navigate("/profile/places")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "places"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={component === "places" ? PlacesActive : PlacesDis}
@@ -184,10 +186,13 @@ const ProfileBasis = ({ mainSocket }) => {
                   места для съемок
                 </p>
               </li>
-
               <li
                 onClick={() => navigate("/profile/sessions")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "sessions"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={component === "sessions" ? AlbumActive : AlbumDis}
@@ -205,31 +210,13 @@ const ProfileBasis = ({ mainSocket }) => {
                 </p>
               </li>
 
-              {false && (
-                <li
-                  onClick={() => navigate("/profile/team")}
-                  className="profile_basis_module_choice_li"
-                >
-                  <img
-                    src={component === "team" ? TeamActive : TeamDis}
-                    className="profile_basis_module_choice_img"
-                    alt="menu choice"
-                  />
-                  <p
-                    className={
-                      component === "team"
-                        ? "profile_basis_module_choice_p active"
-                        : "profile_basis_module_choice_p"
-                    }
-                  >
-                    Команда
-                  </p>
-                </li>
-              )}
-
               <li
                 onClick={() => navigate("/profile/favorites")}
-                className="profile_basis_module_choice_li"
+                className={
+                  component === "favorites"
+                    ? "profile_basis_module_choice_li active"
+                    : "profile_basis_module_choice_li"
+                }
               >
                 <img
                   src={component === "favorites" ? BookmarkActive : BookmarkDis}
@@ -238,7 +225,7 @@ const ProfileBasis = ({ mainSocket }) => {
                 />
                 <p
                   className={
-                    component === "bookmark"
+                    component === "favorites"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }
@@ -246,7 +233,6 @@ const ProfileBasis = ({ mainSocket }) => {
                   Избранное
                 </p>
               </li>
-
               {false && (
                 <li
                   onClick={() => navigate("/profile/settings")}
@@ -270,6 +256,86 @@ const ProfileBasis = ({ mainSocket }) => {
                   </p>
                 </li>
               )}
+              <li
+                onClick={() => navigate("/profile/team")}
+                className="profile_basis_module_choice_li"
+                style={{ opacity: 0.4, pointerEvents: "none" }}
+              >
+                <img
+                  src={component === "team" ? TeamActive : TeamDis}
+                  className="profile_basis_module_choice_img"
+                  alt="menu choice"
+                />
+                <p
+                  className={
+                    component === "team"
+                      ? "profile_basis_module_choice_p active"
+                      : "profile_basis_module_choice_p"
+                  }
+                >
+                  Команда
+                </p>
+              </li>
+              <li
+                onClick={() => navigate("/profile/reviews")}
+                className="profile_basis_module_choice_li"
+                style={{ opacity: 0.4, pointerEvents: "none" }}
+              >
+                <img
+                  src={component === "reviews" ? ReviewActive : ReviewDis}
+                  className="profile_basis_module_choice_img"
+                  alt="menu choice"
+                />
+                <p
+                  className={
+                    component === "reviews"
+                      ? "profile_basis_module_choice_p active"
+                      : "profile_basis_module_choice_p"
+                  }
+                >
+                  Отзывы
+                </p>
+              </li>
+              <li
+                onClick={() => navigate("/profile/finance")}
+                className="profile_basis_module_choice_li"
+                style={{ opacity: 0.4, pointerEvents: "none" }}
+              >
+                <img
+                  src={MoneyDis}
+                  className="profile_basis_module_choice_img"
+                  alt="menu choice"
+                />
+                <p
+                  className={
+                    component === "finance"
+                      ? "profile_basis_module_choice_p active"
+                      : "profile_basis_module_choice_p"
+                  }
+                >
+                  Финансы
+                </p>
+              </li>
+              <li
+                onClick={() => navigate("/profile/study")}
+                className="profile_basis_module_choice_li"
+                style={{ opacity: 0.4, pointerEvents: "none" }}
+              >
+                <img
+                  src={StudyDis}
+                  className="profile_basis_module_choice_img"
+                  alt="menu choice"
+                />
+                <p
+                  className={
+                    component === "study"
+                      ? "profile_basis_module_choice_p active"
+                      : "profile_basis_module_choice_p"
+                  }
+                >
+                  Обучение
+                </p>
+              </li>
             </ul>
           </div>
           <div className="profile_basis_module_component">

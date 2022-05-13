@@ -71,8 +71,8 @@ function ProfileMainPreview({ profile, width, marginRight, disableBorder }) {
           </p>
         </div>
         <p className="profile_card_info_fourth">
-          {profile.string_location && profile.string_location.split(", ")[1]} |
-          5км
+          {profile.string_location && profile.string_location.split(", ")[1]} |{" "}
+          ~{profile.diff_distance && profile.diff_distance}
         </p>
       </div>
     </div>
