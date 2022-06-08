@@ -14,7 +14,10 @@ import {
   RedButton,
 } from "../../components/index";
 import { useParams } from "react-router-dom";
-import { rootAddress, rootSocketAddress } from "../../http/axios-requests";
+import Requests, {
+  rootAddress,
+  rootSocketAddress,
+} from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -31,6 +34,16 @@ const RequestChat = () => {
   const [messages, setMessages] = React.useState();
 
   const mainSocket = React.useRef(null);
+
+  const updateStatus = (status) => {
+    Requests.updateFilmingStatus(Number(chatId) + 1, status).then(() => {
+      mainSocket.current.send(
+        JSON.stringify({
+          command: "fetch_messages",
+        })
+      );
+    });
+  };
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
@@ -92,21 +105,6 @@ const RequestChat = () => {
     setMessage("");
   };
 
-  const changeReqStatus = (status) => {
-    mainSocket.current.send(
-      JSON.stringify({
-        command: "update_request_status",
-        filming_status: status,
-        request_id: Number(chatId),
-      })
-    );
-    console.log({
-      command: "update_request_status",
-      filming_status: status,
-      request_id: Number(chatId),
-    });
-  };
-
   return (
     <div onKeyDown={(e) => keyDownHandler(e)} className="chat">
       <div className="chat_header">
@@ -161,34 +159,34 @@ const RequestChat = () => {
               width={"180px"}
               height={"38px"}
               text={"Отклонить запрос"}
-              callback={() => changeReqStatus("REJECTED")}
+              callback={() => updateStatus("REJECTED")}
             />
             <GreenButton
               margin={"0 0 0 15px"}
               width={"180px"}
               height={"38px"}
               text={"Принять запрос"}
-              callback={() => changeReqStatus("ACCEPTED")}
+              callback={() => updateStatus("ACCEPTED")}
             />
           </div>
         )}
 
       {messages &&
-        userData.id === Number(messages[0].customer) &&
+        userData.avatar === messages[0].avatar &&
         messages[0].filming_status === "ACCEPTED" && (
           <div className="chat_request_buttons">
             <RedButton
               width={"200px"}
               height={"38px"}
               text={"Запрос не завершен"}
-              callback={() => changeReqStatus("UNCOMPLETED")}
+              callback={() => updateStatus("UNCOMPLETED")}
             />
             <GreenButton
               margin={"0 0 0 15px"}
               width={"200px"}
               height={"38px"}
               text={"Запрос завершен"}
-              callback={() => changeReqStatus("COMPLETED")}
+              callback={() => updateStatus("COMPLETED")}
             />
           </div>
         )}

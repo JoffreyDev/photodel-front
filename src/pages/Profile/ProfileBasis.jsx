@@ -45,6 +45,7 @@ import {
   Favorites,
   Requests,
   RequestChat,
+  EditSession,
 } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -362,6 +363,9 @@ const ProfileBasis = ({ mainSocket }) => {
             {component === "favorites" && <Favorites />}
             {component === "requests" && <Requests />}
             {component === "request" && <RequestChat mainSocket={mainSocket} />}
+            {component === "edit-session" && (
+              <EditSession component={component} />
+            )}
           </div>
         </div>
       </div>

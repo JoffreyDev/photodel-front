@@ -87,7 +87,11 @@ const RegModule = ({
       <div className="reg_auth_header">
         <h1 className="reg_auth_header_title">Регистрация</h1>
         <svg
-          style={{ padding: "5px", boxSizing: "content-box" }}
+          style={{
+            padding: "5px",
+            boxSizing: "content-box",
+            cursor: "pointer",
+          }}
           onClick={() => setRegModuleActive(false)}
           width="14"
           height="14"

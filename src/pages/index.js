@@ -12,6 +12,7 @@ export { default as AddPhoto } from "./Profile/AddPhoto";
 export { default as AddSession } from "./Profile/AddSession";
 export { default as AddPlace } from "./Profile/AddPlace";
 export { default as EditPhoto } from "./Profile/EditPhoto";
+export { default as EditSession } from "./Profile/EditSession";
 export { default as PhotoView } from "./Profile/PhotoView";
 export { default as AlbumView } from "./Profile/AlbumView";
 export { default as SessionView } from "./Profile/SessionView";

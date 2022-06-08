@@ -28,6 +28,8 @@ export { default as ModalWindow } from "./RegAuth/ModalWindow";
 export { default as MuiModal } from "./common/MuiModal";
 export { default as ProfileMap } from "./Maps/ProfileMap";
 export { default as RegModule } from "./RegAuth/RegModule";
+export { default as ResetPass } from "./RegAuth/ResetPass";
+export { default as ResetPassSubmit } from "./RegAuth/ResetPassSubmit";
 export { default as LoginModule } from "./RegAuth/LoginModule";
 export { default as EmailMessageSent } from "./RegAuth/EmailMessageSent";
 export { default as EmailConfirmedModal } from "./RegAuth/EmailConfirmedModal";

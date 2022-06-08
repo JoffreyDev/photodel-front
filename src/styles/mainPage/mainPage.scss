@@ -78,6 +78,7 @@
 
     &_user_group {
       position: relative;
+      cursor: pointer;
     }
 
     &_loc_select {
@@ -460,6 +461,7 @@
         position: absolute;
         bottom: 19px;
         right: 35px;
+        cursor: pointer;
       }
     }
   }
@@ -591,6 +593,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
       }
 
       &_slider_card {
@@ -790,6 +793,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
       }
 
       &_slider_card {
@@ -811,6 +815,7 @@
             flex-direction: column;
             align-items: center;
             margin-top: 8px;
+           
 
             &_row {
               display: flex;

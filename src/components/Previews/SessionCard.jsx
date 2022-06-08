@@ -68,6 +68,7 @@ const SessionCard = ({
               src={Edit}
               alt="edit"
               className="sessions_card_info_title_img"
+              onClick={() => navigate(`/profile/edit-session/${session.id}`)}
             />
           )}
         </div>

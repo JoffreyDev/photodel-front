@@ -10,7 +10,12 @@ import {
   toggleIsLoggenIn,
 } from "../../redux/actions/userData";
 
-const LoginModule = ({ logModuleActive, setLogModuleActive, switchModals }) => {
+const LoginModule = ({
+  logModuleActive,
+  setLogModuleActive,
+  switchModals,
+  setResetPassActive,
+}) => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
 
@@ -33,6 +38,11 @@ const LoginModule = ({ logModuleActive, setLogModuleActive, switchModals }) => {
       );
   };
 
+  const openResetPassWindow = () => {
+    setLogModuleActive(false);
+    setResetPassActive(true);
+  };
+
   return (
     <ModalWindow
       moduleActive={logModuleActive}
@@ -41,7 +51,11 @@ const LoginModule = ({ logModuleActive, setLogModuleActive, switchModals }) => {
       <div className="reg_auth_header">
         <h1 className="reg_auth_header_title">Вход</h1>
         <svg
-          style={{ padding: "5px", boxSizing: "content-box" }}
+          style={{
+            padding: "5px",
+            boxSizing: "content-box",
+            cursor: "pointer",
+          }}
           onClick={() => setLogModuleActive(false)}
           width="14"
           height="14"
@@ -82,6 +96,9 @@ const LoginModule = ({ logModuleActive, setLogModuleActive, switchModals }) => {
           height={"38px"}
           callback={onClickSubmit}
         />
+        <p className="reg_auth_content_lower_p" onClick={openResetPassWindow}>
+          Напомнить пароль
+        </p>
         <p className="reg_auth_content_lower_p" onClick={() => switchModals()}>
           Зарегистрироваться
         </p>

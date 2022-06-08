@@ -11,6 +11,7 @@ import {
   Footer,
   EmailConfirmedModal,
   ProfileMap,
+  ResetPassSubmit,
 } from "../components/index";
 import Requests from "../http/axios-requests";
 import "../styles/mainPage/mainPage.scss";
@@ -20,6 +21,9 @@ const Home = () => {
   const [emailConfirmedModalActive, setEmailConfirmedModalActive] =
     React.useState(false);
 
+  const [resetPassSubmitActive, setResetPassSubmitActive] =
+    React.useState(false);
+
   React.useEffect(() => {
     if (window.location.href.includes("email_token")) {
       Requests.checkEmailToken(
@@ -27,6 +31,8 @@ const Home = () => {
       ).then(() => {
         setEmailConfirmedModalActive(true);
       });
+    } else if (window.location.href.includes("reset_token")) {
+      setResetPassSubmitActive(true);
     }
   }, []);
 
@@ -40,6 +46,10 @@ const Home = () => {
       <EmailConfirmedModal
         emailConfirmedModalActive={emailConfirmedModalActive}
         setEmailConfirmedModalActive={setEmailConfirmedModalActive}
+      />
+      <ResetPassSubmit
+        resetPassSubmitActive={resetPassSubmitActive}
+        setResetPassSubmitActive={setResetPassSubmitActive}
       />
       <FirstSection />
       <ProfileMap />

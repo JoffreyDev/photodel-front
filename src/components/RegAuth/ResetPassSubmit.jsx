@@ -1,25 +1,46 @@
 import React from "react";
 import ModalWindow from "./ModalWindow";
-import { GreenButton } from "..";
+import { GreenButton, Checkbox, TextInput } from "..";
+import Requests from "../../http/axios-requests";
+import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
+import { useDispatch } from "react-redux";
 
-const EmailMessageSent = ({
-  emailSentModalActive,
-  setEmailSentModalActive,
-}) => {
+function ResetPass({ resetPassSubmitActive, setResetPassSubmitActive }) {
+  const [pass, setPass] = React.useState();
+  const [pass2, setPass2] = React.useState();
+
+  const dispatch = useDispatch();
+
+  const updatePassword = () => {
+    if (pass !== pass2) {
+      dispatchEvent(openErrorAlert("Пароли не совпадают!"));
+    }
+    Requests.updatePassword(
+      window.location.href.split("?reset_token=")[1],
+      pass,
+      pass2
+    )
+      .then(() => {
+        dispatch(openSuccessAlert("Пароль успешно обновлен!"));
+        setResetPassSubmitActive(false);
+      })
+      .catch(() => dispatch(openErrorAlert("Произошла ошибка!")));
+  };
+
   return (
     <ModalWindow
-      moduleActive={emailSentModalActive}
-      setModuleActive={setEmailSentModalActive}
+      moduleActive={resetPassSubmitActive}
+      setModuleActive={setResetPassSubmitActive}
     >
       <div className="reg_auth_header">
-        <h1 className="reg_auth_header_title">Подтверждение E-mail</h1>
+        <h1 className="reg_auth_header_title">Восстановление пароля</h1>
         <svg
           style={{
             padding: "5px",
             boxSizing: "content-box",
             cursor: "pointer",
           }}
-          onClick={() => setEmailSentModalActive(false)}
+          onClick={() => setResetPassSubmitActive(false)}
           width="14"
           height="14"
           viewBox="0 0 14 14"
@@ -35,21 +56,37 @@ const EmailMessageSent = ({
       <div className="reg_auth_content_fields">
         <p
           className="reg_auth_content_lower_p"
-          onClick={() => setEmailSentModalActive()}
-          style={{ textAlign: "center" }}
+          onClick={() => setResetPassSubmitActive()}
+          style={{ textAlign: "center", marginBottom: "10px " }}
         >
-          Письмо с ссылкой для подтверждения E-mail отправлено на Вашу почту.
+          Придумайте новый пароль
         </p>
-        <GreenButton
-          callback={() => setEmailSentModalActive(false)}
-          text="Ок"
+        <TextInput
           width={"100%"}
           height={"38px"}
-          margin={"30px 0 0 0 "}
+          callback={setPass}
+          value={pass}
+          label={"Пароль"}
+          type={"pass"}
+        />
+        <TextInput
+          width={"100%"}
+          height={"38px"}
+          callback={setPass2}
+          value={pass2}
+          label={"Повторите пароль"}
+          type={"pass"}
+        />
+        <GreenButton
+          text="Обновить"
+          width={"100%"}
+          height={"38px"}
+          margin={"20px 0 0 0"}
+          callback={updatePassword}
         />
       </div>
     </ModalWindow>
   );
-};
+}
 
-export default EmailMessageSent;
+export default ResetPass;

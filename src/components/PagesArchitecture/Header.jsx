@@ -7,6 +7,7 @@ import {
   EmailMessageSent,
   LoggedUserPopup,
   LocationPopUp,
+  ResetPass,
 } from "..";
 import BottomArrow from "../../img/mainPage/black_bottom_arrow.svg";
 import LanguageThemed from "../../img/mainPage/language.svg";
@@ -44,6 +45,7 @@ const Header = ({ styled }) => {
   const [emailSentModalActive, setEmailSentModalActive] = React.useState(false);
   const [loggedUserPopupActive, setLoggedUserPopupActive] =
     React.useState(false);
+  const [resetPassActive, setResetPassActive] = React.useState(false);
 
   const switchModals = () => {
     dispatch(toggleRegModule(!regModuleActive));
@@ -54,24 +56,41 @@ const Header = ({ styled }) => {
     <header className="main_page_header">
       <div className="main_page_header_menu">
         <Menu isOpen={menuOpened} onClose={() => setMenuOpened(false)}>
-          <a id="home" className="menu-item" onClick={() => {
-             setMenuOpened(false);
-            navigate("/")}}>
+          <a
+            id="home"
+            className="menu-item"
+            onClick={() => {
+              setMenuOpened(false);
+              navigate("/");
+            }}
+          >
             Главная
           </a>
-          <a className="menu-item" onClick={() => {
-            setMenuOpened(false)
-            navigate("/profies")}}>
+          <a
+            className="menu-item"
+            onClick={() => {
+              setMenuOpened(false);
+              navigate("/profies");
+            }}
+          >
             Профи рядом
           </a>
-          <a className="menu-item" onClick={() => {
-             setMenuOpened(false);
-            navigate("/places")}}>
+          <a
+            className="menu-item"
+            onClick={() => {
+              setMenuOpened(false);
+              navigate("/places");
+            }}
+          >
             Места для съемки
           </a>
-          <a className="menu-item" onClick={() => {
-             setMenuOpened(false);
-            navigate("/photos")}}>
+          <a
+            className="menu-item"
+            onClick={() => {
+              setMenuOpened(false);
+              navigate("/photos");
+            }}
+          >
             Фотографии
           </a>
         </Menu>
@@ -319,15 +338,21 @@ const Header = ({ styled }) => {
         setRegModuleActive={setRegModuleActive}
         switchModals={switchModals}
         setEmailSentModalActive={setEmailSentModalActive}
+        setResetPassActive={setResetPassActive}
       />
       <LoginModule
         logModuleActive={logModuleActive}
         setLogModuleActive={setLogModuleActive}
         switchModals={switchModals}
+        setResetPassActive={setResetPassActive}
       />
       <EmailMessageSent
         emailSentModalActive={emailSentModalActive}
         setEmailSentModalActive={setEmailSentModalActive}
+      />
+      <ResetPass
+        resetPassActive={resetPassActive}
+        setResetPassActive={setResetPassActive}
       />
     </header>
   );

@@ -1326,6 +1326,137 @@ export class Requests {
       url: `api/additional_entities/last_comments/`,
     }).then((res) => res);
   }
+
+  static async getAdverts() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/additional_entities/list_advertisement/`,
+    }).then((res) => res);
+  }
+
+  static async updateSession({
+    session_name,
+    session_description,
+    session_location,
+    string_session_location,
+    session_date,
+    session_сategory,
+    photos,
+    is_hidden,
+    main_photo,
+    id,
+  }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        session_name: session_name,
+        session_description: session_description,
+        session_location: session_location,
+        string_session_location: string_session_location,
+        session_date: session_date,
+        session_сategory: session_сategory,
+        main_photo: main_photo,
+
+        photos: photos,
+        is_hidden: is_hidden,
+      },
+      url: `api/gallery/photo_session/update/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async clickAdvert(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/additional_entities/add_click_to_advertisement/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async sendPassResetToken(username) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      data: {
+        username: username,
+      },
+
+      url: `api/accounts/reset-password-email/`,
+    }).then((res) => res);
+  }
+
+  static async updatePassword(token, password, password2) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      data: {
+        token: token,
+        new_password1: password,
+        new_password2: password2,
+      },
+
+      url: `api/accounts/user/update-password/`,
+    }).then((res) => res);
+  }
+
+  static async updateFilmingStatus(id, status) {
+    return $api({
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        request_id: Number(id),
+        filming_status: status,
+      },
+
+      url: `api/chat/update_film_request_status/`,
+    }).then((res) => res);
+  }
+
+  static async getPollsList() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/additional_entities/list_polls/`,
+    }).then((res) => res);
+  }
+
+  static async addPollVote(choice) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        choice: choice,
+      },
+
+      url: `api/additional_entities/add_answer/`,
+    }).then((res) => res);
+  }
 }
 
 export default Requests;
