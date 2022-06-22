@@ -52,6 +52,7 @@ export { default as AddPhotosToAlbum } from "./PopUps/AddPhotosToAlbum";
 export { default as LoggedUserPopup } from "./PopUps/LoggedUserPopup";
 export { default as PhotoFullScreen } from "./PopUps/PhotoFullScreen";
 export { default as PhotosPreviewCheckbox } from "./Previews/PhotosPreviewCheckbox";
+export { default as ScreenLoader } from "./Previews/ScreenLoader";
 export { default as PublicRequestBlock } from "./Previews/PublicRequestBlock";
 export { default as MessageBlock } from "./Profile/MessageBlock";
 export { default as ChatBlock } from "./Profile/ChatBlock";

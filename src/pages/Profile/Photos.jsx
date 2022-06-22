@@ -33,6 +33,10 @@ const Photos = ({ component }) => {
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     userData.id &&
       Requests.getPhotosList(
         userData.id,

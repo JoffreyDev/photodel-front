@@ -5,9 +5,10 @@ import Rating from "../../img/profile/rating.svg";
 import Pro from "../../img/profile/pro.svg";
 import "../../styles/Profile/MyProfile.scss";
 import { GreenButton } from "../../components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { setIsLoaded } from "../../redux/actions/siteEntities";
 
 const MyProfile = () => {
   const handleOpenProfileEdit = () => {
@@ -15,6 +16,7 @@ const MyProfile = () => {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //проверка заполнения данных в полях профиля
   function isJson(str) {
@@ -29,9 +31,14 @@ const MyProfile = () => {
   const { userData } = useSelector(({ userData }) => userData);
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     if (userData && !userData.is_change) {
       navigate("/profile/edit-profile");
-    }
+      dispatch(setIsLoaded(true));
+    } else dispatch(setIsLoaded(true));
   }, [userData]);
 
   return (
@@ -296,74 +303,82 @@ const MyProfile = () => {
             </div>
           </div>
 
-          <div className="my_profile_about">
-            <p className="my_profile_about_title">Обо мне</p>
-            <div className="my_profile_about_content">
-              <p
-                dangerouslySetInnerHTML={{ __html: userData && userData.about }}
-                className="my_profile_about_content_p"
-              ></p>
+          {userData && userData.about && (
+            <div className="my_profile_about">
+              <p className="my_profile_about_title">Обо мне</p>
+              <div className="my_profile_about_content">
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: userData && userData.about,
+                  }}
+                  className="my_profile_about_content_p"
+                ></p>
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="my_profile_contacts">
-            <p className="my_profile_contacts_title">Контакты</p>
-            <div className="my_profile_contacts_content">
-              <ul className="my_profile_contacts_content_left_ul">
-                <li className="my_profile_contacts_content_left_li">
-                  Местонахождение:
-                </li>
-                <li className="my_profile_contacts_content_left_li">
-                  Телефон:
-                </li>
-                <li className="my_profile_contacts_content_left_li">Сайт:</li>
-                {false && (
-                  <div>
-                    <li className="my_profile_contacts_content_left_li">
-                      Почта:
-                    </li>
-                    <li className="my_profile_contacts_content_left_li">
-                      Instagram:
-                    </li>
-                    <li className="my_profile_contacts_content_left_li">
-                      Facebook:
-                    </li>
-                    <li className="my_profile_contacts_content_left_li">
-                      ВКонтакте:
-                    </li>
-                  </div>
-                )}
-              </ul>
+          {userData && (userData.phone || userData.site) && (
+            <div className="my_profile_contacts">
+              <p className="my_profile_contacts_title">Контакты</p>
+              <div className="my_profile_contacts_content">
+                <ul className="my_profile_contacts_content_left_ul">
+                  <li className="my_profile_contacts_content_left_li">
+                    Местонахождение:
+                  </li>
+                  <li className="my_profile_contacts_content_left_li">
+                    Телефон:
+                  </li>
+                  <li className="my_profile_contacts_content_left_li">Сайт:</li>
+                  {false && (
+                    <div>
+                      <li className="my_profile_contacts_content_left_li">
+                        Почта:
+                      </li>
+                      <li className="my_profile_contacts_content_left_li">
+                        Instagram:
+                      </li>
+                      <li className="my_profile_contacts_content_left_li">
+                        Facebook:
+                      </li>
+                      <li className="my_profile_contacts_content_left_li">
+                        ВКонтакте:
+                      </li>
+                    </div>
+                  )}
+                </ul>
 
-              <ul className="my_profile_contacts_content_right_ul">
-                <li className="my_profile_contacts_content_right_li">
-                  {userData.string_location && userData.string_location}
-                </li>
-                <li className="my_profile_contacts_content_right_li">
-                  {userData.phone && userData.phone}
-                </li>
-                <li className="my_profile_contacts_content_right_li link">
-                  {userData.site && userData.site}
-                </li>
-                {false && (
-                  <div>
-                    <li className="my_profile_contacts_content_right_li link">
-                      {userData.email && userData.email}
-                    </li>
-                    <li className="my_profile_contacts_content_right_li link">
-                      {userData.instagram && userData.instagram}
-                    </li>
-                    <li className="my_profile_contacts_content_right_li link">
-                      {userData.facebook && userData.facebook}
-                    </li>
-                    <li className="my_profile_contacts_content_right_li link">
-                      {userData.vk && userData.vk}
-                    </li>
-                  </div>
-                )}
-              </ul>
+                <ul className="my_profile_contacts_content_right_ul">
+                  <li className="my_profile_contacts_content_right_li">
+                    {userData.string_location && userData.string_location}
+                  </li>
+                  <li className="my_profile_contacts_content_right_li">
+                    {userData.phone && userData.phone}
+                  </li>
+                  <li className="my_profile_contacts_content_right_li link">
+                    {userData.site && userData.site}
+                  </li>
+                  {false && (
+                    <div>
+                      <li className="my_profile_contacts_content_right_li link">
+                        {userData.email && userData.email}
+                      </li>
+                      <li className="my_profile_contacts_content_right_li link">
+                        {userData.instagram && userData.instagram}
+                      </li>
+                      <li className="my_profile_contacts_content_right_li link">
+                        {userData.facebook && userData.facebook}
+                      </li>
+                      <li className="my_profile_contacts_content_right_li link">
+                        {userData.vk && userData.vk}
+                      </li>
+                    </div>
+                  )}
+                </ul>
+              </div>
             </div>
+          )}
 
+          <div>
             <div className="my_profile_temp_location">
               <p className="my_profile_temp_location_title">
                 Временная геолокация

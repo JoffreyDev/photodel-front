@@ -5,18 +5,19 @@ const LastCommentComponent = ({ comment }) => {
   return (
     <div className="main_page_last_comments_section_content_comment_wrapper">
       <h3 className="main_page_last_comments_section_content_comment_title">
-        На священной горе
+        {comment.gallery__name_image}
       </h3>
       <p className="main_page_last_comments_section_content_comment_content">
-        Восхитительное по красоте место, очень удачное для съемок в ночное
-        время! Советую всем влюбленным для романтической съемки!
+        {comment.content}
       </p>
       <div className="main_page_last_comments_section_content_comment_lower_table">
-        <img
-          src={profileComment}
-          alt=""
-          className="main_page_last_comments_section_content_comment_lower_table_profile_image"
-        />
+        {false && (
+          <img
+            src={profileComment}
+            alt=""
+            className="main_page_last_comments_section_content_comment_lower_table_profile_image"
+          />
+        )}
         <svg
           className="main_page_last_comments_section_content_comment_lower_table_profile_online"
           width="4"
@@ -28,7 +29,7 @@ const LastCommentComponent = ({ comment }) => {
           <circle cx="2" cy="2" r="2" fill="#50A398" />
         </svg>
         <p className="main_page_last_comments_section_content_comment_lower_table_profile_name">
-          Родионова Марианна
+          {comment.sender_comment__name} {comment.sender_comment__surname}
         </p>
         <svg
           className="main_page_last_comments_section_content_comment_lower_table_profile_pro"
@@ -53,7 +54,38 @@ const LastCommentComponent = ({ comment }) => {
           />
         </svg>
         <p className="main_page_last_comments_section_content_comment_lower_table_date">
-          Сегодня 20:20
+          {comment.timestamp &&
+            `${
+              comment.timestamp.split("").splice(8, 2)[0] === "0"
+                ? comment.timestamp.split("").splice(9, 1).join("")
+                : comment.timestamp.split("").splice(8, 2).join("")
+            } ${
+              comment.timestamp.split("").splice(5, 2).join("") === "01"
+                ? "января"
+                : comment.timestamp.split("").splice(5, 2).join("") === "02"
+                ? "февраля"
+                : comment.timestamp.split("").splice(5, 2).join("") === "03"
+                ? "марта"
+                : comment.timestamp.split("").splice(5, 2).join("") === "04"
+                ? "апреля"
+                : comment.timestamp.split("").splice(5, 2).join("") === "05"
+                ? "мая"
+                : comment.timestamp.split("").splice(5, 2).join("") === "06"
+                ? "июня"
+                : comment.timestamp.split("").splice(5, 2).join("") === "07"
+                ? "июля"
+                : comment.timestamp.split("").splice(5, 2).join("") === "08"
+                ? "авугста"
+                : comment.timestamp.split("").splice(5, 2).join("") === "09"
+                ? "сентября"
+                : comment.timestamp.split("").splice(5, 2).join("") === "10"
+                ? "октября"
+                : comment.timestamp.split("").splice(5, 2).join("") === "11"
+                ? "ноября"
+                : comment.timestamp.split("").splice(5, 2).join("") === "12"
+                ? "декабря"
+                : ""
+            }, ${comment.timestamp.split("").splice(11, 5).join("")}`}
         </p>
       </div>
     </div>

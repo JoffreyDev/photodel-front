@@ -5,6 +5,7 @@ const initialState = {
   prosCategories: null,
   countries: null,
   languages: null,
+  isLoaded: false,
 };
 
 const siteEntities = (state = initialState, action) => {
@@ -37,6 +38,12 @@ const siteEntities = (state = initialState, action) => {
       return {
         ...state,
         countries: action.payload,
+      };
+
+    case "SET_IS_LOADED":
+      return {
+        ...state,
+        isLoaded: action.payload,
       };
 
     case "SET_LANGUAGES":

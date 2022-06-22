@@ -228,17 +228,19 @@ const PublicProfile = ({ setProfileId }) => {
           </div>
         </div>
       </div>
-      <div className="my_profile_header_middle_row_location">
-        <img
-          src={Location}
-          alt="location"
-          className="my_profile_header_middle_row_location_img"
-        />
-        <p className="my_profile_header_middle_row_location_p">
-          {" "}
-          {profileData && profileData.string_location}
-        </p>
-      </div>
+      {profileData && profileData.string_location && (
+        <div className="my_profile_header_middle_row_location">
+          <img
+            src={Location}
+            alt="location"
+            className="my_profile_header_middle_row_location_img"
+          />
+          <p className="my_profile_header_middle_row_location_p">
+            {" "}
+            {profileData && profileData.string_location}
+          </p>
+        </div>
+      )}
 
       {userData.id !== Number(profileId) && (
         <div className="my_profile_header_middle_row_buttons">
@@ -298,7 +300,7 @@ const PublicProfile = ({ setProfileId }) => {
                 Специализация:
               </li>
             )}
-            {profileData && profileData.filming_geo && (
+            {profileData && profileData.filming_geo.length >= 1 && (
               <li className="my_profile_common_data_content_left_li">
                 География съемок:
               </li>
@@ -318,7 +320,7 @@ const PublicProfile = ({ setProfileId }) => {
                 Фототехника:
               </li>
             )}
-            {profileData && profileData.languages && (
+            {profileData && profileData.languages.length >= 1 && (
               <li className="my_profile_common_data_content_left_li">
                 Владение языками:
               </li>
@@ -360,40 +362,50 @@ const PublicProfile = ({ setProfileId }) => {
         </div>
       </div>
 
-      <div className="my_profile_about">
-        <p className="my_profile_about_title">Обо мне</p>
-        <div className="my_profile_about_content">
-          <p className="my_profile_about_content_p">
-            {profileData && profileData.about}
-          </p>
-        </div>
-      </div>
-
-      <div className="my_profile_contacts">
-        <p className="my_profile_contacts_title">Контакты</p>
-        <div className="my_profile_contacts_content public">
-          <div className="my_profile_contacts_content_row public">
-            <img
-              src={Phone}
-              alt="phone"
-              className="my_profile_contacts_content_row_img"
-            />
-            <p className="my_profile_contacts_content_row_p black">
-              {profileData && profileData.phone}
-            </p>
-          </div>
-          <div className="my_profile_contacts_content_row public">
-            <img
-              src={Web}
-              alt="site"
-              className="my_profile_contacts_content_row_img"
-            />
-            <p className="my_profile_contacts_content_row_p ">
-              {profileData && profileData.site}
+      {profileData && profileData.about && (
+        <div className="my_profile_about">
+          <p className="my_profile_about_title">Обо мне</p>
+          <div className="my_profile_about_content">
+            <p className="my_profile_about_content_p">
+              {profileData && profileData.about}
             </p>
           </div>
         </div>
+      )}
 
+      {profileData && (profileData.phone || profileData.site) && (
+        <div className="my_profile_contacts">
+          <p className="my_profile_contacts_title">Контакты</p>
+          <div className="my_profile_contacts_content public">
+            {profileData && profileData.phone && (
+              <div className="my_profile_contacts_content_row public">
+                <img
+                  src={Phone}
+                  alt="phone"
+                  className="my_profile_contacts_content_row_img"
+                />
+                <p className="my_profile_contacts_content_row_p black">
+                  {profileData && profileData.phone}
+                </p>
+              </div>
+            )}
+            {profileData && profileData.site && (
+              <div className="my_profile_contacts_content_row public">
+                <img
+                  src={Web}
+                  alt="site"
+                  className="my_profile_contacts_content_row_img"
+                />
+                <p className="my_profile_contacts_content_row_p ">
+                  {profileData && profileData.site}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div>
         <div className="my_profile_stats">
           <p className="my_profile_stats_title">Статистика</p>
           <div className="my_profile_stats_content">

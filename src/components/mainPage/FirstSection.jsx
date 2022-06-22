@@ -1,8 +1,17 @@
 import React from "react";
 import { Header } from "..";
 import searchIcon from "../../img/mainPage/search-vector.png";
+import { useNavigate } from "react-router-dom";
 
 const FirstSection = () => {
+  const navigate = useNavigate();
+
+  const [req, setReq] = React.useState();
+
+  const handleSearch = () => {
+    navigate(`/profies?req=${req}`);
+  };
+
   return (
     <div>
       <section className="main_page_first_section">
@@ -20,11 +29,14 @@ const FirstSection = () => {
               alt="search icon"
               className="main_page_middle_block__search-input__icon"
               aria-hidden="true"
+              onClick={handleSearch}
             ></img>
             <input
               type="text"
               placeholder="Начать поиск"
               className="main_page_middle_block__search-input"
+              value={req}
+              onChange={(e) => setReq(e.target.value)}
             />
           </div>
         </div>

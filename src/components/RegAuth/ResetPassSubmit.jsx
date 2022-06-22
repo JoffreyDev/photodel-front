@@ -13,7 +13,7 @@ function ResetPass({ resetPassSubmitActive, setResetPassSubmitActive }) {
 
   const updatePassword = () => {
     if (pass !== pass2) {
-      dispatchEvent(openErrorAlert("Пароли не совпадают!"));
+      dispatch(openErrorAlert("Пароли не совпадают!"));
     }
     Requests.updatePassword(
       window.location.href.split("?reset_token=")[1],

@@ -49,6 +49,10 @@ const EditPhoto = () => {
   const params = useParams();
   const photoId = params.id;
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   //получаем альбомы юзера
   React.useEffect(() => {
     userData.id &&

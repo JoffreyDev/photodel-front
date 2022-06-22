@@ -30,6 +30,10 @@ const Places = () => {
   const [sortType, setSortType] = React.useState("+");
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     userData.id &&
       Requests.getPlacesList(
         userData.id,

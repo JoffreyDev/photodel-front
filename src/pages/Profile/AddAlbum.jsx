@@ -76,6 +76,10 @@ const AddAlbum = ({ setActiveModule }) => {
     });
   };
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   return (
     <div className="edit_album">
       <div className="edit_album_header">

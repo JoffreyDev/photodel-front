@@ -30,6 +30,10 @@ const Sessions = () => {
   const [sortType, setSortType] = React.useState("+");
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     userData.id &&
       Requests.getSessions(
         userData.id,

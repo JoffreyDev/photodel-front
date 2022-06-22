@@ -44,6 +44,10 @@ const PlaceView = () => {
   const [slideNumber, setSlideNumber] = React.useState(0);
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     !loaded &&
       Requests.getSinglePlace(placeId)
         .then((res) => {

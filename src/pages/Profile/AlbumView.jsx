@@ -16,6 +16,10 @@ const AlbumView = () => {
 
   const albumId = params.id;
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   //данные о юзере
   const { userData } = useSelector(({ userData }) => userData);
 

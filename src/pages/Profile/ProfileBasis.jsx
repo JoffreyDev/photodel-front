@@ -48,16 +48,26 @@ import {
   EditSession,
 } from "..";
 import { useParams, useNavigate } from "react-router-dom";
+import { ScreenLoader } from "../../components";
+import { useSelector } from "react-redux";
 
 const ProfileBasis = ({ mainSocket }) => {
   const params = useParams();
   const component = params.component;
+
+  const { isLoaded } = useSelector(({ siteEntities }) => siteEntities);
+
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const navigate = useNavigate();
 
   React.useEffect(() => {
     window.scroll(0, 0);
     document.title = "Фотодел";
+  }, []);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
   }, []);
 
   return (

@@ -55,6 +55,7 @@
     &_left {
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       &_arrow {
         width: 7px;
@@ -76,6 +77,7 @@
     &_center {
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       &_avatar {
         width: 24px;
@@ -198,6 +200,7 @@
       height: 38px;
       border-radius: 8px;
       transition: 0.2s;
+      cursor: pointer;
 
       &:hover {
         transition: 0.2s;

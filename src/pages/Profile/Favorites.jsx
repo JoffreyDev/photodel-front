@@ -11,8 +11,10 @@ import {
 import "../../styles/Profile/Favorites.scss";
 import Requests from "../../http/axios-requests";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Favorites() {
+  const navigate = useNavigate();
   const { userData } = useSelector(({ userData }) => userData);
   const [profiles, setProfiles] = React.useState();
   const [photos, setPhotos] = React.useState();
@@ -44,6 +46,10 @@ function Favorites() {
       }
     }
   }, [component, userData]);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
 
   return (
     <div className="favorites">

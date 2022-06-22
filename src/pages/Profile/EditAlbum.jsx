@@ -13,12 +13,14 @@ import {
 import AddImage from "../../img/sessions/add.svg";
 import "../../styles/Profile/AddAlbum.scss";
 import Requests from "../../http/axios-requests";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AddPhotosToAlbum } from "../../components";
 
 const EditAlbum = ({ setActiveModule }) => {
   const params = useParams();
   const albumId = params.id;
+
+  const navigate = useNavigate();
 
   const [modalActive, setModalActive] = React.useState();
   const [photos, setPhotos] = React.useState([]);
@@ -26,6 +28,10 @@ const EditAlbum = ({ setActiveModule }) => {
 
   React.useEffect(() => {
     Requests.getSingleAlbum(albumId).then((res) => setPhotos(res.data));
+  }, []);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
   }, []);
   return (
     <div className="edit_album">

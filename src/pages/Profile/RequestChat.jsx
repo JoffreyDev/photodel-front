@@ -46,6 +46,10 @@ const RequestChat = () => {
   };
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     mainSocket.current = new WebSocket(
       `wss://${rootSocketAddress}/ws/request_chat/${chatId}/?token=${localStorage.getItem(
         "access"

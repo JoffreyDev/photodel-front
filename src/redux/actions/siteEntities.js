@@ -27,3 +27,8 @@ export const setLanguages = (arr) => ({
   type: "SET_LANGUAGES",
   payload: arr,
 });
+
+export const setIsLoaded = (bool) => ({
+  type: "SET_IS_LOADED",
+  payload: bool,
+});

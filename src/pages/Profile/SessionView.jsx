@@ -42,6 +42,10 @@ const SessionView = () => {
   const [photos, setPhotos] = React.useState();
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     !loaded &&
       Requests.getSingleSession(sessionId).then((res) => {
         setLoaded(true);

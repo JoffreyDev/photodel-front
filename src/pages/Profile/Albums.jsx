@@ -34,6 +34,10 @@ const Albums = ({ component }) => {
   //данные о юзере
   const { userData } = useSelector(({ userData }) => userData);
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   //получаем список альбомов
   React.useEffect(() => {
     userData.id &&

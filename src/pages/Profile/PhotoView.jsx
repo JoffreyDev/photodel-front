@@ -42,6 +42,10 @@ const PhotoView = () => {
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
 
   React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
+  React.useEffect(() => {
     !loaded &&
       localStorage.getItem("key") &&
       Requests.getSinglePhoto(photoId)

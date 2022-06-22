@@ -85,7 +85,7 @@ const MainPlaces = () => {
         </div>
         `
         : `
-      <a href=${`/public/photo/${id}`} style=text-decorate: none; >
+      <a href=${`/public/place/${id}`} style=text-decorate: none; >
         <div style=display:flex;flex-direction:column;align-items:center class="recent-block-wrapper">
         <img src=${image} style=height:100px;width:100px;object-fit:cover;border-radius:8px;  />
          <div style=display:flex;justify-content:center;align-items:center;margin-top:5px; >

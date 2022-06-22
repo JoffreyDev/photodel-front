@@ -112,11 +112,17 @@ const MainProfiles = () => {
   };
 
   React.useEffect(() => {
+    if (window.location.href.includes("?req=")) {
+      setSearchReq(decodeURI(window.location.href.split("?req=")[1]));
+    }
+
     setFetching(true);
     Requests.getAllProfiles({
       userCoords: userCoords,
       name_category: category,
-      search_words: searchReq,
+      search_words: window.location.href.includes("?req=")
+        ? decodeURI(window.location.href.split("?req=")[1])
+        : searchReq,
       distance: searchDist,
       sortField: sortField === 1 ? "id" : sortField === 2 ? "views" : "",
       sortType: sortType,
@@ -134,6 +140,8 @@ const MainProfiles = () => {
       search_words: searchReq,
       distance: searchDist,
     }).then((res) => setProfilesMarks(res.data));
+
+    navigate("/profies");
   }, [sortType, sortField, mapViewActive, page]);
 
   const handleSearch = () => {

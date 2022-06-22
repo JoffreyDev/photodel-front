@@ -117,7 +117,7 @@ const RequestBlock = ({ request }) => {
                 .join("")}.${request.filming_timestamp
                 .split("")
                 .splice(0, 4)
-                .join("")} | ${request.hours_duration}`}
+                .join("")} | ${request.hours_duration.split("ч").join(" ч")}`}
           </p>
         </div>
         <div className="messages_chat_info_request_status">

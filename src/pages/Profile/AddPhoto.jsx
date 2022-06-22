@@ -43,6 +43,10 @@ const AddPhoto = () => {
 
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   //получаем альбомы юзера
   React.useEffect(() => {
     userData.id &&

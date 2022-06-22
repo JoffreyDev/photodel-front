@@ -43,6 +43,10 @@ const AddSession = () => {
 
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   //инициализация карты
   const handleLoad = () => {
     window.ymaps.ready(init);

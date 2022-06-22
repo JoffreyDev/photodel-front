@@ -169,6 +169,10 @@ const ProfileEdit = ({ setActiveModule }) => {
     reader.readAsDataURL(file);
   }
 
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
+
   const photoHandler = (e) => {
     if (e.target.files[0].size > 4.9e6) {
       dispatch(alert("Вес картинки не может превышать 5 мегабайт!"));

@@ -2,12 +2,18 @@ import "../../styles/Profile/Messages.scss";
 import React from "react";
 import { RequestBlock } from "../../components";
 import { rootSocketAddress } from "../../http/axios-requests";
+import { useNavigate } from "react-router-dom";
 
 const Requests = () => {
   const [socketReconnect, setSocketReconnect] = React.useState();
   const [requests, setRequests] = React.useState();
+  const navigate = useNavigate();
 
   const mainSocket = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
