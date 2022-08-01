@@ -8,7 +8,7 @@ import { GreenButton } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import { setIsLoaded } from "../../redux/actions/siteEntities";
+import { setDataLoaded } from "../../redux/actions/siteEntities";
 
 const MyProfile = () => {
   const handleOpenProfileEdit = () => {
@@ -37,8 +37,10 @@ const MyProfile = () => {
   React.useEffect(() => {
     if (userData && !userData.is_change) {
       navigate("/profile/edit-profile");
-      dispatch(setIsLoaded(true));
-    } else dispatch(setIsLoaded(true));
+      dispatch(setDataLoaded(true));
+    } else if (userData && userData.is_change) {
+      dispatch(setDataLoaded(true));
+    }
   }, [userData]);
 
   return (
@@ -183,7 +185,11 @@ const MyProfile = () => {
                       className="my_profile_header_middle_row_status_img"
                     />
                     <p className="my_profile_header_middle_row_status_p">
-                      {userData.ready_status}
+                      {userData.ready_status === "BUSY"
+                        ? "Занят"
+                        : userData.ready_status === "FREE"
+                        ? "Свободен"
+                        : ""}
                     </p>
                   </div>
                 )}

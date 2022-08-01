@@ -40,16 +40,16 @@ const siteEntities = (state = initialState, action) => {
         countries: action.payload,
       };
 
-    case "SET_IS_LOADED":
-      return {
-        ...state,
-        isLoaded: action.payload,
-      };
-
     case "SET_LANGUAGES":
       return {
         ...state,
         languages: action.payload,
+      };
+
+    case "SET_DATA_LOADED":
+      return {
+        ...state,
+        isLoaded: action.payload,
       };
 
     default:

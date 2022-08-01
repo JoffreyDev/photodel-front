@@ -5,10 +5,10 @@ const LastCommentComponent = ({ comment }) => {
   return (
     <div className="main_page_last_comments_section_content_comment_wrapper">
       <h3 className="main_page_last_comments_section_content_comment_title">
-        {comment.gallery__name_image}
+        {comment && comment.gallery__name_image}
       </h3>
       <p className="main_page_last_comments_section_content_comment_content">
-        {comment.content}
+        {comment && comment.content}
       </p>
       <div className="main_page_last_comments_section_content_comment_lower_table">
         {false && (
@@ -29,7 +29,8 @@ const LastCommentComponent = ({ comment }) => {
           <circle cx="2" cy="2" r="2" fill="#50A398" />
         </svg>
         <p className="main_page_last_comments_section_content_comment_lower_table_profile_name">
-          {comment.sender_comment__name} {comment.sender_comment__surname}
+          {comment && comment.sender_comment__name}{" "}
+          {comment && comment.sender_comment__surname}
         </p>
         <svg
           className="main_page_last_comments_section_content_comment_lower_table_profile_pro"
@@ -54,7 +55,8 @@ const LastCommentComponent = ({ comment }) => {
           />
         </svg>
         <p className="main_page_last_comments_section_content_comment_lower_table_date">
-          {comment.timestamp &&
+          {comment &&
+            comment.timestamp &&
             `${
               comment.timestamp.split("").splice(8, 2)[0] === "0"
                 ? comment.timestamp.split("").splice(9, 1).join("")
@@ -85,7 +87,9 @@ const LastCommentComponent = ({ comment }) => {
                 : comment.timestamp.split("").splice(5, 2).join("") === "12"
                 ? "декабря"
                 : ""
-            }, ${comment.timestamp.split("").splice(11, 5).join("")}`}
+            }, ${
+              comment && comment.timestamp.split("").splice(11, 5).join("")
+            }`}
         </p>
       </div>
     </div>

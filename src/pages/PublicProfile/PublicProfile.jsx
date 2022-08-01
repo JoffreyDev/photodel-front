@@ -221,7 +221,11 @@ const PublicProfile = ({ setProfileId }) => {
                   className="my_profile_header_middle_row_status_img"
                 />
                 <p className="my_profile_header_middle_row_status_p">
-                  {profileData && profileData.ready_status}
+                  {userData.ready_status === "BUSY"
+                    ? "Занят"
+                    : userData.ready_status === "FREE"
+                    ? "Свободен"
+                    : ""}
                 </p>
               </div>
             )}

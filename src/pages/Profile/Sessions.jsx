@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
+import { setDataLoaded } from "../../redux/actions/siteEntities";
 
 const Sessions = () => {
   const navigate = useNavigate();
@@ -39,7 +40,9 @@ const Sessions = () => {
         userData.id,
         sortField === 1 ? "id" : sortField === 2 ? "views" : "",
         sortType
-      ).then((res) => setSessions(res.data));
+      ).then((res) => {
+        setSessions(res.data);
+      });
   }, [userData.id, sortType, sortField]);
 
   const deleteHandle = () => {
@@ -48,6 +51,7 @@ const Sessions = () => {
       setAction("");
       Requests.getSessions(userData.id).then((res) => setSessions(res.data));
       dispatch(openSuccessAlert("Фотосессии успешно удалены!"));
+
       setSubmitActive(false);
     });
   };

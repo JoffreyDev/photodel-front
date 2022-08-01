@@ -163,24 +163,28 @@ const PublicPlaceView = ({ setProfileId }) => {
         <div className="photo_view_content_left">
           {photos && (
             <div className="photo_view_content_left_image_wrapper">
-              <img
-                src={LeftArrow}
-                alt="prev"
-                className="photo_view_content_left_image_arrow left"
-                onClick={() => changePhoto("prev")}
-              />
+              {photos.length > 1 && (
+                <img
+                  src={LeftArrow}
+                  alt="prev"
+                  className="photo_view_content_left_image_arrow left"
+                  onClick={() => changePhoto("prev")}
+                />
+              )}
               <img
                 src={photos && photos[slideNumber]}
                 alt="image"
                 className="photo_view_content_left_image"
                 onClick={() => setFullScreenActive(true)}
               />
-              <img
-                src={RightArrow}
-                alt="next"
-                className="photo_view_content_left_image_arrow right"
-                onClick={() => changePhoto("next")}
-              />
+              {photos.length > 1 && (
+                <img
+                  src={RightArrow}
+                  alt="next"
+                  className="photo_view_content_left_image_arrow right"
+                  onClick={() => changePhoto("next")}
+                />
+              )}
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -346,22 +350,24 @@ const PublicPlaceView = ({ setProfileId }) => {
               margin={"20px 0 20px 0 "}
             />
           )}
-          <div className="photo_view_content_left_textarea">
-            <textarea
-              placeholder={"Ваш комментарий"}
-              className="photo_view_content_left_textarea_field"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <div className="photo_view_content_left_textarea_button">
-              <GreenButton
-                text={"Комментировать"}
-                width={"210px"}
-                height={"38px"}
-                callback={handleComment}
+          {localStorage.getItem("access") && (
+            <div className="photo_view_content_left_textarea">
+              <textarea
+                placeholder={"Ваш комментарий"}
+                className="photo_view_content_left_textarea_field"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               />
+              <div className="photo_view_content_left_textarea_button">
+                <GreenButton
+                  text={"Комментировать"}
+                  width={"210px"}
+                  height={"38px"}
+                  callback={handleComment}
+                />
+              </div>
             </div>
-          </div>
+          )}
           <div className="photo_view_content_left_comment">
             {comments &&
               comments.map((comment, idx) => (

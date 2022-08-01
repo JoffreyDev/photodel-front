@@ -59,7 +59,7 @@
 
   &_first_section {
     min-height: 100vh;
-    background-image: url(../../img/mainPage/banner.png);
+    background-image: url(../../img/mainPage/banner.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -108,7 +108,7 @@
         line-height: 16px;
         color: #202424;
         top: 30px;
-        z-index: 9999;
+        z-index: 5;
 
         &_content {
           &_cities {

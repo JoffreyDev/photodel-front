@@ -14,6 +14,7 @@ import {
   setProsCategories,
   setCountries,
   setLanguages,
+  setDataLoaded,
 } from "./redux/actions/siteEntities";
 import Requests, {
   rootAddress,

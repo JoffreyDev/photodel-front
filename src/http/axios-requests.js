@@ -166,6 +166,7 @@ export class Requests {
       },
 
       data: {
+        ready_status: ready_status,
         filming_geo: filming_geo,
         work_condition: work_condition,
         cost_services: cost_services,

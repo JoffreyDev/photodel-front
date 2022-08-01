@@ -175,24 +175,28 @@ const SessionView = () => {
         <div className="photo_view_content_left">
           {photos && (
             <div className="photo_view_content_left_image_wrapper">
-              <img
-                src={LeftArrow}
-                alt="prev"
-                className="photo_view_content_left_image_arrow left"
-                onClick={() => changePhoto("prev")}
-              />
+              {photos.length > 1 && (
+                <img
+                  src={LeftArrow}
+                  alt="prev"
+                  className="photo_view_content_left_image_arrow left"
+                  onClick={() => changePhoto("prev")}
+                />
+              )}
               <img
                 src={photos && photos[slideNumber]}
                 alt="image"
                 className="photo_view_content_left_image"
                 onClick={() => setFullScreenActive(true)}
               />
-              <img
-                src={RightArrow}
-                alt="next"
-                className="photo_view_content_left_image_arrow right"
-                onClick={() => changePhoto("next")}
-              />
+              {photos.length > 1 && (
+                <img
+                  src={RightArrow}
+                  alt="next"
+                  className="photo_view_content_left_image_arrow right"
+                  onClick={() => changePhoto("next")}
+                />
+              )}
             </div>
           )}
           <div className="photo_view_content_left_activities">

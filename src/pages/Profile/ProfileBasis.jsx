@@ -350,6 +350,7 @@ const ProfileBasis = ({ mainSocket }) => {
             </ul>
           </div>
           <div className="profile_basis_module_component">
+            {/*  {!isLoaded && <ScreenLoader />} */}
             {component === "data" && <MyProfile component={component} />}
             {component === "edit-profile" && (
               <ProfileEdit component={component} />

@@ -158,6 +158,7 @@ const ProfileEdit = ({ setActiveModule }) => {
         new Date(userData.date_stay_end),
       ]);
     }
+    setStatus(userData.ready_status);
   }, [userData]);
 
   //получить фото в base64
@@ -293,12 +294,21 @@ const ProfileEdit = ({ setActiveModule }) => {
           <div className="my_profile_header_middle_row">
             <div className="my_profile_header_middle_row_status">
               <div className="reg_auth_content_input_wrapper">
-                <label className="reg_auth_content_label">Статус</label>
-                <input
+                <SelectInput
+                  values={[
+                    {
+                      id: "BUSY",
+                      value: "Занят",
+                    },
+                    {
+                      id: "FREE",
+                      value: "Свободен",
+                    },
+                  ]}
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  type="text"
-                  className="reg_auth_content_input"
+                  label={"Статус"}
+                  setValue={setStatus}
                 />
               </div>
             </div>
