@@ -8,6 +8,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { PublicHeader } from "..";
+import { ScreenLoader } from "../../components";
 
 const Sessions = () => {
   const navigate = useNavigate();
@@ -26,11 +27,16 @@ const Sessions = () => {
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   const [profileData, setPorfileData] = React.useState();
 
   React.useEffect(() => {
     profileId &&
-      Requests.getSessions(profileId).then((res) => setSessions(res.data));
+      Requests.getSessions(profileId).then((res) => {
+        setDataLoading(false);
+        setSessions(res.data);
+      });
 
     Requests.getPublicProfile(profileId).then((res) =>
       setPorfileData(res.data)
@@ -89,6 +95,14 @@ const Sessions = () => {
               disableEdit
             />
           ))}
+        {sessions && sessions.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, фотосессий не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
     </div>
   );

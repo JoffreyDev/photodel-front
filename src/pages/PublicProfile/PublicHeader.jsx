@@ -4,26 +4,41 @@ import Rate from "../../img/profile/rating.svg";
 import Online from "../../img/commonImages/online.svg";
 import Offline from "../../img/commonImages/offline.svg";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 function PublicHeader({ profile }) {
   const navigate = useNavigate();
   return (
     <div className="public_view_profile_header">
       <div className="public_view_profile_header_left">
-        <img
-          src={profile && `data:image/png;base64,${profile.avatar}`}
-          alt="avatar"
-          className="public_view_profile_header_left_avatar"
-          onClick={() => navigate(`/public/profile/${profile.id}`)}
-        />
-        <img
-          src={profile && profile.user_channel_name ? Online : Offline}
-          alt="online"
-          className="public_view_profile_header_left_online"
-        />
-        <p className="public_view_profile_header_left_name">
-          {profile && `${profile.name} ${profile.surname}`}
-        </p>
+        {profile && (
+          <img
+            src={profile && `data:image/png;base64,${profile.avatar}`}
+            alt="avatar"
+            className="public_view_profile_header_left_avatar"
+            onClick={() => navigate(`/public/profile/${profile.id}`)}
+          />
+        )}
+
+        {!profile && (
+          <div style={{ marginRight: "10px" }}>
+            <Skeleton variant="circular" width={40} height={40} />
+          </div>
+        )}
+        {profile && (
+          <img
+            src={profile && profile.user_channel_name ? Online : Offline}
+            alt="online"
+            className="public_view_profile_header_left_online"
+          />
+        )}
+        {profile && (
+          <p className="public_view_profile_header_left_name">
+            {profile && `${profile.name} ${profile.surname}`}
+          </p>
+        )}
+        {!profile && <Skeleton width={200} variant="text" />}
       </div>
       <div className="public_view_profile_header_right">
         <img

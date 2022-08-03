@@ -34,6 +34,8 @@ import {
 } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import PublicProfile from "./PublicProfile";
+import { ScreenLoader } from "../../components";
+import { useSelector, useDispatch } from "react-redux";
 
 const PublicProfileBasis = ({ mainSocket }) => {
   const params = useParams();
@@ -41,8 +43,11 @@ const PublicProfileBasis = ({ mainSocket }) => {
   const id = params.id;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [profileId, setProfileId] = React.useState(Number(id));
+
+  const { isLoaded } = useSelector(({ siteEntities }) => siteEntities);
 
   React.useEffect(() => {
     window.scroll(0, 0);

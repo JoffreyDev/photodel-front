@@ -23,6 +23,7 @@ import Requests, { rootAddress } from "../../http/axios-requests";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
 import Fullscreen from "../../img/commonImages/fullscreen.svg";
+import Skeleton from "@mui/material/Skeleton";
 
 const PhotoView = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const PhotoView = () => {
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
+  const [dataLoading, setDataLoading] = React.useState(true);
 
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
@@ -58,6 +60,7 @@ const PhotoView = () => {
           Requests.getPhotoComments(photoId).then((res) => {
             setComments(res.data);
             setLoaded(true);
+            setDataLoading(false);
           });
         });
 
@@ -73,6 +76,7 @@ const PhotoView = () => {
           Requests.getPhotoComments(photoId).then((res) => {
             setComments(res.data);
             setLoaded(true);
+            setDataLoading(false);
           });
         });
   }, [loaded, photoId]);
@@ -183,7 +187,7 @@ const PhotoView = () => {
       </div>
       <div className="photo_view_content">
         <div className="photo_view_content_left">
-          {photo && (
+          {photo && !dataLoading && (
             <div className="photo_view_content_left_image_wrapper">
               <img
                 src={
@@ -193,6 +197,11 @@ const PhotoView = () => {
                 className="photo_view_content_left_image"
                 onClick={() => setFullScreenActive(true)}
               />
+            </div>
+          )}
+          {dataLoading && (
+            <div className="photo_view_content_left_image_wrapper">
+              <Skeleton variant="rectangular" height={300} />
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -266,12 +275,18 @@ const PhotoView = () => {
                 } ${photo.was_added.split("").splice(0, 4).join("")}`}
             </p>
           </div>
-          <h1 className="photo_view_content_left_title">
-            {photo && photo.name_image}
-          </h1>
-          <p className="photo_view_content_left_description">
-            {photo && photo.description}
-          </p>
+          {!dataLoading && (
+            <h1 className="photo_view_content_left_title">
+              {photo && photo.name_image}
+            </h1>
+          )}
+          {dataLoading && <Skeleton variant="text" width={50} />}
+          {!dataLoading && (
+            <p className="photo_view_content_left_description">
+              {photo && photo.description}
+            </p>
+          )}
+          {dataLoading && <Skeleton variant="text" width={100} />}
           <div className="photo_view_content_right_geo mobile">
             <img
               src={Geo}
@@ -283,7 +298,7 @@ const PhotoView = () => {
             </p>
           </div>
           <div className="photo_view_content_right_map mobile">
-            {photo && photo.place_location && (
+            {photo && photo.place_location && !dataLoading && (
               <YMaps>
                 <Map
                   width={"100%"}
@@ -310,6 +325,7 @@ const PhotoView = () => {
                 </Map>
               </YMaps>
             )}
+            {dataLoading && <Skeleton variant="rectangular" height={100} />}
           </div>
           <div className="photo_view_content_right_specs mobile">
             <div className="photo_view_content_right_spec">
@@ -450,7 +466,7 @@ const PhotoView = () => {
             </p>
           </div>
           <div className="photo_view_content_right_map">
-            {photo && photo.place_location && (
+            {photo && photo.place_location && !dataLoading && (
               <YMaps>
                 <Map
                   width={"255px"}
@@ -477,6 +493,7 @@ const PhotoView = () => {
                 </Map>
               </YMaps>
             )}
+            {dataLoading && <Skeleton variant="rectangular" height={100} />}
           </div>
           <div className="photo_view_content_right_specs">
             <div className="photo_view_content_right_spec">

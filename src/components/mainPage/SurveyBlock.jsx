@@ -17,34 +17,43 @@ const SurveyBlock = () => {
   return (
     <section className="main_page_survey_section_wrapper">
       <div className="main_page_survey_section_content">
-        <div className="main_page_survey_section_adv">
-          <a
-            onClick={() => Requests.clickAdvert(advert[0]?.id)}
-            href={advert[0]?.ad_link}
-            target="_blank"
-            rel="noreferrer"
-            className="main_page_survey_section_adv_link"
-          >
-            <img
-              src={`${rootAddress}${advert[0]?.ad_image}`}
-              className="main_page_survey_section_adv_image"
-            />
-            <div className="main_page_survey_section_adv_info">
-              <h1 className="main_page_survey_section_adv_title">
-                {advert[0]?.ad_title}
-              </h1>
-              <a
-                href={advert[0]?.ad_link}
-                target="_blank"
-                rel="noreferrer"
-                className="main_page_survey_section_adv_link"
-              >
-                {" "}
-                {advert[0]?.ad_link}
-              </a>
-            </div>
-          </a>
-        </div>
+        {!advert && (
+          <div className="main_page_survey_section_adv_link dis">
+            <h1 className="main_page_survey_section_adv_title">
+              Нет рекламы, либо у вас включен AdBlock :(
+            </h1>
+          </div>
+        )}
+        {advert && (
+          <div className="main_page_survey_section_adv">
+            <a
+              onClick={() => Requests.clickAdvert(advert[0]?.id)}
+              href={advert[0]?.ad_link}
+              target="_blank"
+              rel="noreferrer"
+              className="main_page_survey_section_adv_link"
+            >
+              <img
+                src={`${rootAddress}${advert[0]?.ad_image}`}
+                className="main_page_survey_section_adv_image"
+              />
+              <div className="main_page_survey_section_adv_info">
+                <h1 className="main_page_survey_section_adv_title">
+                  {advert[0]?.ad_title}
+                </h1>
+                <a
+                  href={advert[0]?.ad_link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="main_page_survey_section_adv_link"
+                >
+                  {" "}
+                  {advert[0]?.ad_link}
+                </a>
+              </div>
+            </a>
+          </div>
+        )}
         <div className="main_page_survey_section_content_upper_row">
           <div className="main_page_survey_section_content_upper_row_left">
             <h2 className="main_page_survey_section_content_upper_row_left_h2">

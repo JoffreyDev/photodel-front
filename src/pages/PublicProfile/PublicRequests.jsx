@@ -13,6 +13,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { PublicHeader } from "..";
+import { ScreenLoader } from "../../components";
 
 const PublicRequests = ({ component, setProfileId }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -23,6 +24,8 @@ const PublicRequests = ({ component, setProfileId }) => {
   const [loaded, setLoaded] = React.useState(false);
   const [profileData, setProfileData] = React.useState();
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -30,6 +33,7 @@ const PublicRequests = ({ component, setProfileId }) => {
       Requests.getPublicRequests(profileId).then((res) => {
         setLoaded(true);
         setRequests(res.data);
+        setDataLoading(false);
       });
 
     Requests.getPublicProfile(profileId).then((res) =>
@@ -45,37 +49,17 @@ const PublicRequests = ({ component, setProfileId }) => {
     <div className="photos">
       <PublicHeader profile={profileData} />
       <div className="places_header">
-        <h1 className="places_header_title">ЗАПРОСЫ НА СЪЕМКУ</h1>
-        <div className="places_header_select">
-          <img
-            src={SortImage}
-            alt="sort"
-            className="places_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-          />
-        </div>
+        <h1 style={{ marginTop: "10px" }} className="places_header_title">
+          ЗАПРОСЫ НА СЪЕМКУ
+        </h1>
+        <div className="places_header_select"></div>
       </div>
       <div className="photos_options">
         <div className="photos_options_left">
           <p className="photos_options_left_p">
             Всего:{" "}
             <span className="photos_options_left_p_span">
-              22
+              {requests && requests.length}
               {/*  {photos && photos.length} */}
             </span>
           </p>
@@ -87,6 +71,14 @@ const PublicRequests = ({ component, setProfileId }) => {
           requests.map((request, idx) => (
             <PublicRequestBlock request={request} key={idx} />
           ))}
+        {requests && requests.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Тут пока не было запросов.
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
     </div>
   );

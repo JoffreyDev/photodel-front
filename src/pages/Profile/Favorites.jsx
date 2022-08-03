@@ -12,6 +12,7 @@ import "../../styles/Profile/Favorites.scss";
 import Requests from "../../http/axios-requests";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ScreenLoader } from "../../components";
 
 function Favorites() {
   const navigate = useNavigate();
@@ -25,24 +26,34 @@ function Favorites() {
   const [action, setAction] = React.useState(1);
   const [selectedPositions, setSelectedPositions] = React.useState([]);
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (userData) {
+      setDataLoading(true);
       if (component === "profiles") {
-        Requests.getFavoriteProfiles(userData.id).then((res) =>
-          setProfiles(res.data)
-        );
+        Requests.getFavoriteProfiles(userData.id).then((res) => {
+          setProfiles(res.data);
+          setDataLoading(false);
+        });
       } else if (component === "photos") {
-        Requests.getFavoritePhotos(userData.id).then((res) =>
-          setPhotos(res.data)
-        );
+        setDataLoading(true);
+        Requests.getFavoritePhotos(userData.id).then((res) => {
+          setPhotos(res.data);
+          setDataLoading(false);
+        });
       } else if (component === "places") {
-        Requests.getFavoritePlaces(userData.id).then((res) =>
-          setPlaces(res.data)
-        );
+        setDataLoading(true);
+        Requests.getFavoritePlaces(userData.id).then((res) => {
+          setPlaces(res.data);
+          setDataLoading(false);
+        });
       } else if (component === "sessions") {
-        Requests.getFavoriteSessions(userData.id).then((res) =>
-          setSessions(res.data)
-        );
+        setDataLoading(true);
+        Requests.getFavoriteSessions(userData.id).then((res) => {
+          setSessions(res.data);
+          setDataLoading(false);
+        });
       }
     }
   }, [component, userData]);
@@ -155,6 +166,7 @@ function Favorites() {
       <div className="favorites_body">
         {profiles &&
           component === "profiles" &&
+          !dataLoading &&
           profiles.map((profile, idx) => (
             <ProfileCard
               array={selectedPositions}
@@ -163,9 +175,23 @@ function Favorites() {
               key={idx}
             />
           ))}
+        {profiles &&
+          component === "profiles" &&
+          profiles.length === 0 &&
+          !dataLoading && (
+            <div className="photos_cards_empty">
+              <h1 className="photos_cards_empty_title">
+                Нет избранных профилей.
+              </h1>
+            </div>
+          )}
+
+        {dataLoading && <ScreenLoader height={"30%"} />}
+
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {photos &&
             component === "photos" &&
+            !dataLoading &&
             photos.map((photo, idx) => (
               <PhotoCard
                 array={selectedPositions}
@@ -174,11 +200,22 @@ function Favorites() {
                 key={idx}
               />
             ))}
+          {photos &&
+            component === "photos" &&
+            photos.length === 0 &&
+            !dataLoading && (
+              <div className="photos_cards_empty">
+                <h1 className="photos_cards_empty_title">
+                  Нет избранных фотографий.
+                </h1>
+              </div>
+            )}
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {places &&
             component === "places" &&
+            !dataLoading &&
             places.map((place, idx) => (
               <PlaceCard
                 array={selectedPositions}
@@ -187,11 +224,22 @@ function Favorites() {
                 key={idx}
               />
             ))}
+          {places &&
+            component === "places" &&
+            places.length === 0 &&
+            !dataLoading && (
+              <div className="photos_cards_empty">
+                <h1 className="photos_cards_empty_title">
+                  Нет избранных мест.
+                </h1>
+              </div>
+            )}
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {sessions &&
             component === "sessions" &&
+            !dataLoading &&
             sessions.map((session, idx) => (
               <SessionCard
                 array={selectedPositions}
@@ -200,6 +248,16 @@ function Favorites() {
                 key={idx}
               />
             ))}
+          {sessions &&
+            component === "sessions" &&
+            sessions.length === 0 &&
+            !dataLoading && (
+              <div className="photos_cards_empty">
+                <h1 className="photos_cards_empty_title">
+                  Нет избранных фотосессий.
+                </h1>
+              </div>
+            )}
         </div>
       </div>
     </div>

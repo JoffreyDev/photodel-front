@@ -21,6 +21,7 @@ import { openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
 import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
 import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
+import Skeleton from "@mui/material/Skeleton";
 
 const SessionView = () => {
   const navigate = useNavigate();
@@ -41,6 +42,8 @@ const SessionView = () => {
 
   const [photos, setPhotos] = React.useState();
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
   }, []);
@@ -53,6 +56,7 @@ const SessionView = () => {
         setPhotos(
           res.data.photos.map((photo) => `${rootAddress}${photo.photo}`)
         );
+        setDataLoading(false);
       });
   }, [loaded]);
 
@@ -173,7 +177,7 @@ const SessionView = () => {
       </div>
       <div className="photo_view_content">
         <div className="photo_view_content_left">
-          {photos && (
+          {photos && !dataLoading && (
             <div className="photo_view_content_left_image_wrapper">
               {photos.length > 1 && (
                 <img
@@ -197,6 +201,11 @@ const SessionView = () => {
                   onClick={() => changePhoto("next")}
                 />
               )}
+            </div>
+          )}
+          {dataLoading && (
+            <div className="photo_view_content_left_image_wrapper">
+              <Skeleton variant="rectangular" height={300} />
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -281,12 +290,18 @@ const SessionView = () => {
                 } ${session.session_date.split("").splice(0, 4).join("")}`}
             </p>
           </div>
-          <h1 className="photo_view_content_left_title">
-            {session && session.session_name}
-          </h1>
-          <p className="photo_view_content_left_description">
-            {session && session.session_description}
-          </p>
+          {!dataLoading && (
+            <h1 className="photo_view_content_left_title">
+              {session && session.session_name}
+            </h1>
+          )}
+          {dataLoading && <Skeleton variant="text" width={50} />}
+          {!dataLoading && (
+            <p className="photo_view_content_left_description">
+              {session && session.session_description}
+            </p>
+          )}
+          {dataLoading && <Skeleton variant="text" width={50} />}
           <div className="photo_view_content_right_geo mobile">
             <img
               src={Geo}
@@ -298,7 +313,7 @@ const SessionView = () => {
             </p>
           </div>
           <div className="photo_view_content_right_map mobile">
-            {session && session.session_location && (
+            {session && session.session_location && !dataLoading && (
               <YMaps>
                 <Map
                   width={"100%"}
@@ -325,6 +340,7 @@ const SessionView = () => {
                 </Map>
               </YMaps>
             )}
+            {dataLoading && <Skeleton variant="rectangular" height={100} />}
           </div>
           <div className="photo_view_content_right_data mobile">
             <p className="photo_view_content_right_data_p">
@@ -445,7 +461,7 @@ const SessionView = () => {
             </p>
           </div>
           <div className="photo_view_content_right_map">
-            {session && session.session_location && (
+            {session && session.session_location && !dataLoading && (
               <YMaps>
                 <Map
                   width={"255px"}
@@ -472,6 +488,7 @@ const SessionView = () => {
                 </Map>
               </YMaps>
             )}
+            {dataLoading && <Skeleton variant="rectangular" height={100} />}
           </div>
           <div className="photo_view_content_right_data">
             <p className="photo_view_content_right_data_p">

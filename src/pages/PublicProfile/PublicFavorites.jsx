@@ -14,6 +14,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector } from "react-redux";
 import { PublicHeader } from "..";
 import { useParams } from "react-router-dom";
+import { ScreenLoader } from "../../components";
 
 function PublicFavorites() {
   const params = useParams();
@@ -30,23 +31,32 @@ function PublicFavorites() {
   const [selectedPositions, setSelectedPositions] = React.useState([]);
   const [profileData, setPorfileData] = React.useState();
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (component === "profiles") {
-      Requests.getFavoriteProfiles(Number(profileId)).then((res) =>
-        setProfiles(res.data)
-      );
+      Requests.getFavoriteProfiles(Number(profileId)).then((res) => {
+        setProfiles(res.data);
+        setDataLoading(false);
+      });
     } else if (component === "photos") {
-      Requests.getFavoritePhotos(Number(profileId)).then((res) =>
-        setPhotos(res.data)
-      );
+      setDataLoading(true);
+      Requests.getFavoritePhotos(Number(profileId)).then((res) => {
+        setPhotos(res.data);
+        setDataLoading(false);
+      });
     } else if (component === "places") {
-      Requests.getFavoritePlaces(Number(profileId)).then((res) =>
-        setPlaces(res.data)
-      );
+      setDataLoading(true);
+      Requests.getFavoritePlaces(Number(profileId)).then((res) => {
+        setPlaces(res.data);
+        setDataLoading(false);
+      });
     } else if (component === "sessions") {
-      Requests.getFavoriteSessions(Number(profileId)).then((res) =>
-        setSessions(res.data)
-      );
+      setDataLoading(true);
+      Requests.getFavoriteSessions(Number(profileId)).then((res) => {
+        setSessions(res.data);
+        setDataLoading(false);
+      });
     }
 
     Requests.getPublicProfile(profileId).then((res) =>
@@ -100,31 +110,6 @@ function PublicFavorites() {
             ФОТОСЕССИИ
           </h1>
         </div>
-
-        <div className="favorites_header_select">
-          <img
-            src={SortImage}
-            alt="sort"
-            className="favorites_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortType}
-          />
-        </div>
       </div>
       <div className="photos_options">
         <div style={{ marginBottom: "20px" }} className="photos_options_left">
@@ -147,28 +132,65 @@ function PublicFavorites() {
       <div className="favorites_body">
         {profiles &&
           component === "profiles" &&
+          !dataLoading &&
           profiles.map((profile, idx) => (
             <ProfileCard disableCheck profile={profile} key={idx} />
           ))}
+
+        {profiles &&
+          component === "profiles" &&
+          profiles.length === 0 &&
+          !dataLoading && (
+            <div className="photos_cards_empty">
+              <h1 className="photos_cards_empty_title">
+                Нет избранных профилей.
+              </h1>
+            </div>
+          )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
+
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {photos &&
             component === "photos" &&
+            !dataLoading &&
             photos.map((photo, idx) => (
               <GalleryPhotoPreview photo={photo.gallery} key={idx} />
             ))}
+          {photos &&
+            component === "photos" &&
+            photos.length === 0 &&
+            !dataLoading && (
+              <div className="photos_cards_empty">
+                <h1 className="photos_cards_empty_title">
+                  Нет избранных фотографий.
+                </h1>
+              </div>
+            )}
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {places &&
             component === "places" &&
+            !dataLoading &&
             places.map((place, idx) => (
               <PlaceCard disableCheck place={place.place} key={idx} />
             ))}
+          {places &&
+            component === "places" &&
+            places.length === 0 &&
+            !dataLoading && (
+              <div className="photos_cards_empty">
+                <h1 className="photos_cards_empty_title">
+                  Нет избранных мест.
+                </h1>
+              </div>
+            )}
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {sessions &&
             component === "sessions" &&
+            !dataLoading &&
             sessions.map((session, idx) => (
               <SessionCard
                 disableCheck
@@ -176,6 +198,16 @@ function PublicFavorites() {
                 key={idx}
               />
             ))}
+          {sessions &&
+            component === "sessions" &&
+            sessions.length === 0 &&
+            !dataLoading && (
+              <div className="photos_cards_empty">
+                <h1 className="photos_cards_empty_title">
+                  Нет избранных фотосессий.
+                </h1>
+              </div>
+            )}
         </div>
       </div>
     </div>

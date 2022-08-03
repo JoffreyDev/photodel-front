@@ -632,7 +632,24 @@
 }
 
 @media (max-width: 576px) {
+
+  .react-calendar {
+    margin-bottom: 10px;
+  }
+
   .my_profile {
+
+    &_temp_location_content_upper_inputs {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &_common_data_content {
+      &.edit {
+flex-direction: column;
+      }
+      
+    }
 
     &_contacts {
       &_content {

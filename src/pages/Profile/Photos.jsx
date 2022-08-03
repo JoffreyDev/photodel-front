@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { Submit } from "../../components";
+import { ScreenLoader } from "../../components";
 
 const Photos = ({ component }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -32,6 +33,8 @@ const Photos = ({ component }) => {
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
   }, []);
@@ -45,6 +48,7 @@ const Photos = ({ component }) => {
       ).then((res) => {
         setLoaded(true);
         setPhotos(res.data);
+        setDataLoading(false);
       });
   }, [userData.id, loaded, sortType, sortField]);
 
@@ -228,6 +232,7 @@ const Photos = ({ component }) => {
       </div>
       <div className="photos_cards">
         {photos &&
+          !dataLoading &&
           photos.map((item, index) => (
             <PhotoCard
               photo={item}
@@ -236,6 +241,14 @@ const Photos = ({ component }) => {
               array={selectedPhotos}
             />
           ))}
+        {photos && photos.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, фотографий не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
       <Submit
         modalActive={submitActive}

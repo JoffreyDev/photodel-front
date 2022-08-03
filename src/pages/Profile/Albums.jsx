@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
+import { ScreenLoader } from "../../components";
 
 const Albums = ({ component }) => {
   const [albums, setAlbums] = React.useState(null);
@@ -29,6 +30,8 @@ const Albums = ({ component }) => {
   const [action, setAction] = React.useState("");
   const [allAlbumsSelected, setAllAlbumsSelected] = React.useState(false);
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   //данные о юзере
@@ -48,6 +51,7 @@ const Albums = ({ component }) => {
       ).then((res) => {
         setAlbums(res.data);
         setLoaded(true);
+        setDataLoading(false);
       });
   }, [userData.id, loaded, sortType, sortField]);
 
@@ -239,6 +243,14 @@ const Albums = ({ component }) => {
               array={selectedAlbums}
             />
           ))}
+        {albums && albums.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, альбомов не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
       <Submit
         modalActive={submitActive}

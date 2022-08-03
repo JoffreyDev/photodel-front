@@ -7,12 +7,14 @@ import "../../styles/Profile/Albums.scss";
 import Requests from "../../http/axios-requests";
 import { useNavigate, useParams } from "react-router-dom";
 import { PublicHeader } from "..";
+import { ScreenLoader } from "../../components";
 
 const PublicAlbums = ({ component, setProfileId }) => {
   const [albums, setAlbums] = React.useState(null);
 
   const [loaded, setLoaded] = React.useState(false);
   const [profileData, setProfileData] = React.useState();
+  const [dataLoading, setDataLoading] = React.useState(true);
 
   const navigate = useNavigate();
 
@@ -25,6 +27,7 @@ const PublicAlbums = ({ component, setProfileId }) => {
       Requests.getAlbumsList(profileId).then((res) => {
         setAlbums(res.data);
         setLoaded(true);
+        setDataLoading(false);
       });
 
     Requests.getPublicProfile(profileId).then((res) =>
@@ -102,6 +105,14 @@ const PublicAlbums = ({ component, setProfileId }) => {
           albums.map((album) => (
             <AlbumCard album={album} disableCheck disableEdit notAuthor />
           ))}
+        {albums && albums.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, альбомов не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
     </div>
   );

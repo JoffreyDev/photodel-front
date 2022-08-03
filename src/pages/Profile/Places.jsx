@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
+import { ScreenLoader } from "../../components";
 
 const Places = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ const Places = () => {
   const [sortField, setSortField] = React.useState(1);
   const [sortType, setSortType] = React.useState("+");
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
   }, []);
@@ -39,7 +42,10 @@ const Places = () => {
         userData.id,
         sortField === 1 ? "id" : sortField === 2 ? "views" : "",
         sortType
-      ).then((res) => setPlaces(res.data));
+      ).then((res) => {
+        setDataLoading(false);
+        setPlaces(res.data);
+      });
   }, [userData.id, sortType, sortField]);
 
   const deleteHandle = () => {
@@ -206,6 +212,14 @@ const Places = () => {
               key={idx}
             />
           ))}
+        {places && places.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, мест не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
       <Submit
         modalActive={submitActive}

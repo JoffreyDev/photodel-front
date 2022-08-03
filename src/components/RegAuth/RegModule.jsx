@@ -128,7 +128,7 @@ const RegModule = ({
           <label className="reg_auth_content_label">E-mail</label>
           <input
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
             type="text"
             className="reg_auth_content_input"
           />

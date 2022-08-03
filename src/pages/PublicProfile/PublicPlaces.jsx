@@ -8,6 +8,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { PublicHeader } from "..";
+import { ScreenLoader } from "../../components";
 
 const Places = () => {
   const navigate = useNavigate();
@@ -25,11 +26,16 @@ const Places = () => {
   const [action, setAction] = React.useState("");
   const [profileData, setPorfileData] = React.useState();
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   React.useEffect(() => {
     profileId &&
-      Requests.getPlacesList(profileId).then((res) => setPlaces(res.data));
+      Requests.getPlacesList(profileId).then((res) => {
+        setPlaces(res.data);
+        setDataLoading(false);
+      });
 
     Requests.getPublicProfile(profileId).then((res) =>
       setPorfileData(res.data)
@@ -88,6 +94,14 @@ const Places = () => {
               notAuthor
             />
           ))}
+        {places && places.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, мест не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
     </div>
   );

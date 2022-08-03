@@ -18,6 +18,7 @@ import Web from "../../img/Public/web.svg";
 import Phone from "../../img/Public/phone.svg";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { RequestWindow } from "../../components";
+import { ScreenLoader } from "../../components";
 
 const PublicProfile = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -27,13 +28,15 @@ const PublicProfile = ({ setProfileId }) => {
 
   const [profileData, setProfileData] = React.useState();
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
+  const [dataLoading, setDataLoading] = React.useState(true);
 
   const { userData } = useSelector(({ userData }) => userData);
 
   React.useEffect(() => {
-    Requests.getPublicProfile(profileId).then((res) =>
-      setProfileData(res.data)
-    );
+    Requests.getPublicProfile(profileId).then((res) => {
+      setProfileData(res.data);
+      setDataLoading(false);
+    });
   }, [profileId]);
 
   const handleChatCreate = () => {
@@ -67,444 +70,458 @@ const PublicProfile = ({ setProfileId }) => {
 
   return (
     <div className="my_profile_wrapper">
-      <div className="my_profile_header">
-        <img
-          src={`data:image/png;base64,${profileData && profileData.avatar}`}
-          alt="Avatar"
-          className="my_profile_avatar"
-        />
-        <div className="my_profile_header_data">
-          <div className="my_profile_header_upper_row">
-            <div className="my_profile_header_upper_row_left">
-              <p className="my_profile_header_upper_row_name">
-                {profileData && profileData.name + " " + profileData.surname}
-              </p>
-              {false && (
-                <img
-                  src={Pro}
-                  alt="Pro status"
-                  className="my_profile_header_upper_row_pro"
-                />
-              )}
-              {false && (
-                <p className="my_profile_header_upper_row_pro_period">
-                  до 12.03.2021
-                </p>
-              )}
-              {false && (
-                <p className="my_profile_header_upper_row_pro_prolong">
-                  Продлить
-                </p>
-              )}
-            </div>
-            <div className="my_profile_header_upper_row_right">
-              <img
-                src={Rating}
-                alt="Rating"
-                className="my_profile_header_upper_row_rating_img"
-              />
-              <p className="my_profile_header_upper_row_rating_p">
-                {profileData && profileData.rating
-                  ? profileData.rating
-                  : "Пока нет рейтинга"}
-              </p>
-            </div>
-          </div>
-          <div className="my_profile_header_middle_row_online">
+      {dataLoading && <ScreenLoader />}
+      {!dataLoading && (
+        <div>
+          <div className="my_profile_header">
             <img
-              src={
-                profileData && profileData.user_channel_name ? Online : Offline
-              }
-              alt="online"
-              className="my_profile_header_middle_row_online_img"
+              src={`data:image/png;base64,${profileData && profileData.avatar}`}
+              alt="Avatar"
+              className="my_profile_avatar"
             />
-            <p className="my_profile_header_middle_row_online_p">
-              {profileData && profileData.user_channel_name
-                ? "В сети"
-                : "Не в сети"}
-            </p>
+            <div className="my_profile_header_data">
+              <div className="my_profile_header_upper_row">
+                <div className="my_profile_header_upper_row_left">
+                  <p className="my_profile_header_upper_row_name">
+                    {profileData &&
+                      profileData.name + " " + profileData.surname}
+                  </p>
+                  {false && (
+                    <img
+                      src={Pro}
+                      alt="Pro status"
+                      className="my_profile_header_upper_row_pro"
+                    />
+                  )}
+                  {false && (
+                    <p className="my_profile_header_upper_row_pro_period">
+                      до 12.03.2021
+                    </p>
+                  )}
+                  {false && (
+                    <p className="my_profile_header_upper_row_pro_prolong">
+                      Продлить
+                    </p>
+                  )}
+                </div>
+                <div className="my_profile_header_upper_row_right">
+                  <img
+                    src={Rating}
+                    alt="Rating"
+                    className="my_profile_header_upper_row_rating_img"
+                  />
+                  <p className="my_profile_header_upper_row_rating_p">
+                    {profileData && profileData.rating
+                      ? profileData.rating
+                      : "Пока нет рейтинга"}
+                  </p>
+                </div>
+              </div>
+              <div className="my_profile_header_middle_row_online">
+                <img
+                  src={
+                    profileData && profileData.user_channel_name
+                      ? Online
+                      : Offline
+                  }
+                  alt="online"
+                  className="my_profile_header_middle_row_online_img"
+                />
+                <p className="my_profile_header_middle_row_online_p">
+                  {profileData && profileData.user_channel_name
+                    ? "В сети"
+                    : "Не в сети"}
+                </p>
+              </div>
+              <div className="my_profile_header_middle_row">
+                <div className="my_profile_header_middle_row_registered">
+                  <img
+                    src={Time}
+                    alt="Register date"
+                    className="my_profile_header_middle_row_registered_img"
+                  />
+                  <p className="my_profile_header_middle_row_registered_p">
+                    {profileData &&
+                      `C ${
+                        profileData.date_register
+                          .split("")
+                          .splice(5, 2)
+                          .join("") === "01"
+                          ? "января"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "02"
+                          ? "февраля"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "03"
+                          ? "марта"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "04"
+                          ? "апреля"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "05"
+                          ? "мая"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "06"
+                          ? "июня"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "07"
+                          ? "июля"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "08"
+                          ? "авугста"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "09"
+                          ? "сентября"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "10"
+                          ? "октября"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "11"
+                          ? "ноября"
+                          : profileData.date_register
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "12"
+                          ? "декабря"
+                          : ""
+                      } ${profileData.date_register
+                        .split("")
+                        .splice(0, 4)
+                        .join("")}`}
+                  </p>
+                </div>
+                {false && (
+                  <div className="my_profile_header_middle_row_verified">
+                    <img
+                      src={Verified}
+                      alt="Verified"
+                      className="my_profile_header_middle_row_verified_img"
+                    />
+                    <p className="my_profile_header_middle_row_verified_p">
+                      Подтвержден
+                    </p>
+                  </div>
+                )}
+                {profileData && profileData.ready_status && (
+                  <div className="my_profile_header_middle_row_status">
+                    <img
+                      src={Status}
+                      alt="Status"
+                      className="my_profile_header_middle_row_status_img"
+                    />
+                    <p className="my_profile_header_middle_row_status_p">
+                      {userData.ready_status === "BUSY"
+                        ? "Занят"
+                        : userData.ready_status === "FREE"
+                        ? "Свободен"
+                        : ""}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-          <div className="my_profile_header_middle_row">
-            <div className="my_profile_header_middle_row_registered">
+          {profileData && profileData.string_location && (
+            <div className="my_profile_header_middle_row_location">
               <img
-                src={Time}
-                alt="Register date"
-                className="my_profile_header_middle_row_registered_img"
+                src={Location}
+                alt="location"
+                className="my_profile_header_middle_row_location_img"
               />
-              <p className="my_profile_header_middle_row_registered_p">
-                {profileData &&
-                  `C ${
-                    profileData.date_register
-                      .split("")
-                      .splice(5, 2)
-                      .join("") === "01"
-                      ? "января"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "02"
-                      ? "февраля"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "03"
-                      ? "марта"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "04"
-                      ? "апреля"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "05"
-                      ? "мая"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "06"
-                      ? "июня"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "07"
-                      ? "июля"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "08"
-                      ? "авугста"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "09"
-                      ? "сентября"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "10"
-                      ? "октября"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "11"
-                      ? "ноября"
-                      : profileData.date_register
-                          .split("")
-                          .splice(5, 2)
-                          .join("") === "12"
-                      ? "декабря"
-                      : ""
-                  } ${profileData.date_register
-                    .split("")
-                    .splice(0, 4)
-                    .join("")}`}
+              <p className="my_profile_header_middle_row_location_p">
+                {" "}
+                {profileData && profileData.string_location}
               </p>
             </div>
-            {false && (
-              <div className="my_profile_header_middle_row_verified">
+          )}
+
+          {userData.id !== Number(profileId) && localStorage.getItem("access") && (
+            <div className="my_profile_header_middle_row_buttons">
+              <div className="my_profile_header_middle_row_buttons_button mail">
                 <img
-                  src={Verified}
-                  alt="Verified"
-                  className="my_profile_header_middle_row_verified_img"
+                  src={Mail}
+                  alt="mail"
+                  className="my_profile_header_middle_row_buttons_button_img"
                 />
-                <p className="my_profile_header_middle_row_verified_p">
-                  Подтвержден
+                <p
+                  onClick={handleChatCreate}
+                  className="my_profile_header_middle_row_buttons_mail_p"
+                >
+                  Написать сообщение
                 </p>
               </div>
-            )}
-            {profileData && profileData.ready_status && (
-              <div className="my_profile_header_middle_row_status">
+              <div className="my_profile_header_middle_row_buttons_button req">
                 <img
-                  src={Status}
-                  alt="Status"
-                  className="my_profile_header_middle_row_status_img"
+                  src={Req}
+                  alt="mail"
+                  className="my_profile_header_middle_row_buttons_button_img"
                 />
-                <p className="my_profile_header_middle_row_status_p">
-                  {userData.ready_status === "BUSY"
-                    ? "Занят"
-                    : userData.ready_status === "FREE"
-                    ? "Свободен"
-                    : ""}
+                <p
+                  onClick={() => setReqWindowActive(true)}
+                  className="my_profile_header_middle_row_buttons_mail_p"
+                >
+                  Отправить запрос
                 </p>
               </div>
-            )}
+              <div className="my_profile_header_middle_row_buttons_button fave">
+                <img
+                  src={Fave}
+                  alt="mail"
+                  className="my_profile_header_middle_row_buttons_button_img"
+                />
+                <p
+                  onClick={addToFavorite}
+                  className="my_profile_header_middle_row_buttons_mail_p"
+                >
+                  Добавить в Избранное
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="my_profile_common_data">
+            <p className="my_profile_common_data_title">Общие данные</p>
+            <div className="my_profile_common_data_content">
+              <ul className="my_profile_common_data_content_left_ul">
+                {profileData && profileData.type_pro && (
+                  <li className="my_profile_common_data_content_left_li">
+                    Категория:
+                  </li>
+                )}
+                {profileData && profileData.spec_model_or_photographer && (
+                  <li className="my_profile_common_data_content_left_li">
+                    Специализация:
+                  </li>
+                )}
+                {profileData && profileData.filming_geo.length >= 1 && (
+                  <li className="my_profile_common_data_content_left_li">
+                    География съемок:
+                  </li>
+                )}
+                {profileData && profileData.cost_services && (
+                  <li className="my_profile_common_data_content_left_li">
+                    Стоимость услуг:
+                  </li>
+                )}
+                {profileData && profileData.work_condition && (
+                  <li className="my_profile_common_data_content_left_li">
+                    Условия работы:
+                  </li>
+                )}
+                {profileData && profileData.photo_technics && (
+                  <li className="my_profile_common_data_content_left_li">
+                    Фототехника:
+                  </li>
+                )}
+                {profileData && profileData.languages.length >= 1 && (
+                  <li className="my_profile_common_data_content_left_li">
+                    Владение языками:
+                  </li>
+                )}
+              </ul>
+
+              <ul className="my_profile_common_data_content_right_ul">
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData && profileData.type_pro?.name_category}
+                </li>
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData &&
+                    profileData.spec_model_or_photographer
+                      .map((spec) => spec.name_spec)
+                      .join(", ")}
+                </li>
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData &&
+                    profileData.filming_geo
+                      .map((geo) => geo.name_country)
+                      .join(", ")}
+                </li>
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData && profileData.cost_services}
+                </li>
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData && profileData.work_condition}
+                </li>
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData && profileData.photo_technics}
+                </li>
+                <li className="my_profile_common_data_content_right_li">
+                  {profileData &&
+                    profileData.languages
+                      .map((lang) => lang.name_language)
+                      .join(", ")}
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
-      {profileData && profileData.string_location && (
-        <div className="my_profile_header_middle_row_location">
-          <img
-            src={Location}
-            alt="location"
-            className="my_profile_header_middle_row_location_img"
+
+          {profileData && profileData.about && (
+            <div className="my_profile_about">
+              <p className="my_profile_about_title">Обо мне</p>
+              <div className="my_profile_about_content">
+                <p className="my_profile_about_content_p">
+                  {profileData && profileData.about}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {profileData && (profileData.phone || profileData.site) && (
+            <div className="my_profile_contacts">
+              <p className="my_profile_contacts_title">Контакты</p>
+              <div className="my_profile_contacts_content public">
+                {profileData && profileData.phone && (
+                  <div className="my_profile_contacts_content_row public">
+                    <img
+                      src={Phone}
+                      alt="phone"
+                      className="my_profile_contacts_content_row_img"
+                    />
+                    <p className="my_profile_contacts_content_row_p black">
+                      {profileData && profileData.phone}
+                    </p>
+                  </div>
+                )}
+                {profileData && profileData.site && (
+                  <div className="my_profile_contacts_content_row public">
+                    <img
+                      src={Web}
+                      alt="site"
+                      className="my_profile_contacts_content_row_img"
+                    />
+                    <p className="my_profile_contacts_content_row_p ">
+                      {profileData && profileData.site}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <div className="my_profile_stats">
+              <p className="my_profile_stats_title">Статистика</p>
+              <div className="my_profile_stats_content">
+                <div className="my_profile_stats_content_upper">
+                  <div className="my_profile_stats_content_upper_stat">
+                    <p className="my_profile_stats_content_upper_key">
+                      Просмотры:
+                    </p>
+                    <p className="my_profile_stats_content_upper_value">
+                      {profileData && profileData.statistics.me_count_views}
+                    </p>
+                  </div>
+
+                  <div className="my_profile_stats_content_upper_stat">
+                    <p className="my_profile_stats_content_upper_key">
+                      Комментарии:{" "}
+                    </p>
+                    <p className="my_profile_stats_content_upper_value">
+                      {" "}
+                      {profileData && profileData.statistics.my_count_commetns}
+                    </p>
+                  </div>
+
+                  <div className="my_profile_stats_content_upper_stat">
+                    <p className="my_profile_stats_content_upper_key">
+                      В избранном:{" "}
+                    </p>
+                    <p className="my_profile_stats_content_upper_value">
+                      {" "}
+                      {profileData && profileData.statistics.me_count_favorites}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="my_profile_stats_content_lower">
+                  <div className="my_profile_stats_content_lower_stat">
+                    <p className="my_profile_stats_content_lower_key">
+                      Лайки:{" "}
+                    </p>
+                    <p className="my_profile_stats_content_lower_value">
+                      {" "}
+                      {profileData && profileData.statistics.me_count_likes}
+                    </p>
+                  </div>
+
+                  {
+                    <div className="my_profile_stats_content_lower_stat">
+                      <p className="my_profile_stats_content_lower_key">
+                        Отзывы:{" "}
+                      </p>
+                      <p className="my_profile_stats_content_lower_value">0</p>
+                    </div>
+                  }
+
+                  <div className="my_profile_stats_content_lower_stat">
+                    <p className="my_profile_stats_content_lower_key">
+                      Избранные:{" "}
+                    </p>
+                    <p className="my_profile_stats_content_lower_value">
+                      {" "}
+                      {profileData && profileData.statistics.me_count_favorites}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="my_profile_requests">
+              <p className="my_profile_requests_title">Запросы</p>
+              <div className="my_profile_requests_content">
+                <div className="my_profile_requests_content_upper">
+                  <div className="my_profile_requests_content_upper_stat">
+                    <p className="my_profile_requests_content_upper_key">
+                      Запросы на съемку:
+                    </p>
+                    <p className="my_profile_requests_content_upper_value">
+                      {" "}
+                      {profileData && profileData.statistics.my_requests}
+                    </p>
+                  </div>
+
+                  {false && (
+                    <div className="my_profile_requests_content_upper_stat">
+                      <p className="my_profile_requests_content_upper_key">
+                        Запросы на обучение:
+                      </p>
+                      <p className="my_profile_requests_content_upper_value">
+                        {profileData && profileData.statistics.my_requests}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <RequestWindow
+            user={profileData}
+            active={reqWindowAcive}
+            setActive={setReqWindowActive}
+            width={window.screen.width <= 576 ? "90vw" : "40vw"}
+            notAlign={window.screen.width <= 576}
           />
-          <p className="my_profile_header_middle_row_location_p">
-            {" "}
-            {profileData && profileData.string_location}
-          </p>
         </div>
       )}
-
-      {userData.id !== Number(profileId) && (
-        <div className="my_profile_header_middle_row_buttons">
-          <div className="my_profile_header_middle_row_buttons_button mail">
-            <img
-              src={Mail}
-              alt="mail"
-              className="my_profile_header_middle_row_buttons_button_img"
-            />
-            <p
-              onClick={handleChatCreate}
-              className="my_profile_header_middle_row_buttons_mail_p"
-            >
-              Написать сообщение
-            </p>
-          </div>
-          <div className="my_profile_header_middle_row_buttons_button req">
-            <img
-              src={Req}
-              alt="mail"
-              className="my_profile_header_middle_row_buttons_button_img"
-            />
-            <p
-              onClick={() => setReqWindowActive(true)}
-              className="my_profile_header_middle_row_buttons_mail_p"
-            >
-              Отправить запрос
-            </p>
-          </div>
-          <div className="my_profile_header_middle_row_buttons_button fave">
-            <img
-              src={Fave}
-              alt="mail"
-              className="my_profile_header_middle_row_buttons_button_img"
-            />
-            <p
-              onClick={addToFavorite}
-              className="my_profile_header_middle_row_buttons_mail_p"
-            >
-              Добавить в Избранное
-            </p>
-          </div>
-        </div>
-      )}
-
-      <div className="my_profile_common_data">
-        <p className="my_profile_common_data_title">Общие данные</p>
-        <div className="my_profile_common_data_content">
-          <ul className="my_profile_common_data_content_left_ul">
-            {profileData && profileData.type_pro && (
-              <li className="my_profile_common_data_content_left_li">
-                Категория:
-              </li>
-            )}
-            {profileData && profileData.spec_model_or_photographer && (
-              <li className="my_profile_common_data_content_left_li">
-                Специализация:
-              </li>
-            )}
-            {profileData && profileData.filming_geo.length >= 1 && (
-              <li className="my_profile_common_data_content_left_li">
-                География съемок:
-              </li>
-            )}
-            {profileData && profileData.cost_services && (
-              <li className="my_profile_common_data_content_left_li">
-                Стоимость услуг:
-              </li>
-            )}
-            {profileData && profileData.work_condition && (
-              <li className="my_profile_common_data_content_left_li">
-                Условия работы:
-              </li>
-            )}
-            {profileData && profileData.photo_technics && (
-              <li className="my_profile_common_data_content_left_li">
-                Фототехника:
-              </li>
-            )}
-            {profileData && profileData.languages.length >= 1 && (
-              <li className="my_profile_common_data_content_left_li">
-                Владение языками:
-              </li>
-            )}
-          </ul>
-
-          <ul className="my_profile_common_data_content_right_ul">
-            <li className="my_profile_common_data_content_right_li">
-              {profileData && profileData.type_pro?.name_category}
-            </li>
-            <li className="my_profile_common_data_content_right_li">
-              {profileData &&
-                profileData.spec_model_or_photographer
-                  .map((spec) => spec.name_spec)
-                  .join(", ")}
-            </li>
-            <li className="my_profile_common_data_content_right_li">
-              {profileData &&
-                profileData.filming_geo
-                  .map((geo) => geo.name_country)
-                  .join(", ")}
-            </li>
-            <li className="my_profile_common_data_content_right_li">
-              {profileData && profileData.cost_services}
-            </li>
-            <li className="my_profile_common_data_content_right_li">
-              {profileData && profileData.work_condition}
-            </li>
-            <li className="my_profile_common_data_content_right_li">
-              {profileData && profileData.photo_technics}
-            </li>
-            <li className="my_profile_common_data_content_right_li">
-              {profileData &&
-                profileData.languages
-                  .map((lang) => lang.name_language)
-                  .join(", ")}
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {profileData && profileData.about && (
-        <div className="my_profile_about">
-          <p className="my_profile_about_title">Обо мне</p>
-          <div className="my_profile_about_content">
-            <p className="my_profile_about_content_p">
-              {profileData && profileData.about}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {profileData && (profileData.phone || profileData.site) && (
-        <div className="my_profile_contacts">
-          <p className="my_profile_contacts_title">Контакты</p>
-          <div className="my_profile_contacts_content public">
-            {profileData && profileData.phone && (
-              <div className="my_profile_contacts_content_row public">
-                <img
-                  src={Phone}
-                  alt="phone"
-                  className="my_profile_contacts_content_row_img"
-                />
-                <p className="my_profile_contacts_content_row_p black">
-                  {profileData && profileData.phone}
-                </p>
-              </div>
-            )}
-            {profileData && profileData.site && (
-              <div className="my_profile_contacts_content_row public">
-                <img
-                  src={Web}
-                  alt="site"
-                  className="my_profile_contacts_content_row_img"
-                />
-                <p className="my_profile_contacts_content_row_p ">
-                  {profileData && profileData.site}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      <div>
-        <div className="my_profile_stats">
-          <p className="my_profile_stats_title">Статистика</p>
-          <div className="my_profile_stats_content">
-            <div className="my_profile_stats_content_upper">
-              <div className="my_profile_stats_content_upper_stat">
-                <p className="my_profile_stats_content_upper_key">Просмотры:</p>
-                <p className="my_profile_stats_content_upper_value">
-                  {profileData && profileData.statistics.me_count_views}
-                </p>
-              </div>
-
-              <div className="my_profile_stats_content_upper_stat">
-                <p className="my_profile_stats_content_upper_key">
-                  Комментарии:{" "}
-                </p>
-                <p className="my_profile_stats_content_upper_value">
-                  {" "}
-                  {profileData && profileData.statistics.my_count_commetns}
-                </p>
-              </div>
-
-              <div className="my_profile_stats_content_upper_stat">
-                <p className="my_profile_stats_content_upper_key">
-                  В избранном:{" "}
-                </p>
-                <p className="my_profile_stats_content_upper_value">
-                  {" "}
-                  {profileData && profileData.statistics.me_count_favorites}
-                </p>
-              </div>
-            </div>
-
-            <div className="my_profile_stats_content_lower">
-              <div className="my_profile_stats_content_lower_stat">
-                <p className="my_profile_stats_content_lower_key">Лайки: </p>
-                <p className="my_profile_stats_content_lower_value">
-                  {" "}
-                  {profileData && profileData.statistics.me_count_likes}
-                </p>
-              </div>
-
-              {
-                <div className="my_profile_stats_content_lower_stat">
-                  <p className="my_profile_stats_content_lower_key">Отзывы: </p>
-                  <p className="my_profile_stats_content_lower_value">0</p>
-                </div>
-              }
-
-              <div className="my_profile_stats_content_lower_stat">
-                <p className="my_profile_stats_content_lower_key">
-                  Избранные:{" "}
-                </p>
-                <p className="my_profile_stats_content_lower_value">
-                  {" "}
-                  {profileData && profileData.statistics.me_count_favorites}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="my_profile_requests">
-          <p className="my_profile_requests_title">Запросы</p>
-          <div className="my_profile_requests_content">
-            <div className="my_profile_requests_content_upper">
-              <div className="my_profile_requests_content_upper_stat">
-                <p className="my_profile_requests_content_upper_key">
-                  Запросы на съемку:
-                </p>
-                <p className="my_profile_requests_content_upper_value">
-                  {" "}
-                  {profileData && profileData.statistics.my_requests}
-                </p>
-              </div>
-
-              {false && (
-                <div className="my_profile_requests_content_upper_stat">
-                  <p className="my_profile_requests_content_upper_key">
-                    Запросы на обучение:
-                  </p>
-                  <p className="my_profile_requests_content_upper_value">
-                    {profileData && profileData.statistics.my_requests}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      <RequestWindow
-        user={profileData}
-        active={reqWindowAcive}
-        setActive={setReqWindowActive}
-        width={window.screen.width <= 576 ? "90vw" : "40vw"}
-        notAlign={window.screen.width <= 576}
-      />
     </div>
   );
 };

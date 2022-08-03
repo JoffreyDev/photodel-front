@@ -12,6 +12,7 @@ import Requests from "../../http/axios-requests";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { PublicHeader } from "..";
+import { ScreenLoader } from "../../components";
 
 const PublicPhotos = ({ component, setProfileId }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -21,6 +22,7 @@ const PublicPhotos = ({ component, setProfileId }) => {
   const [photos, setPhotos] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
   const [profileData, setProfileData] = React.useState();
+  const [dataLoading, setDataLoading] = React.useState(true);
 
   const navigate = useNavigate();
 
@@ -29,6 +31,7 @@ const PublicPhotos = ({ component, setProfileId }) => {
       Requests.getPhotosList(profileId).then((res) => {
         setLoaded(true);
         setPhotos(res.data);
+        setDataLoading(false);
       });
 
     Requests.getPublicProfile(profileId).then((res) =>
@@ -104,6 +107,7 @@ const PublicPhotos = ({ component, setProfileId }) => {
 
       <div className="photos_cards">
         {photos &&
+          !dataLoading &&
           photos.map((item, index) => (
             <GalleryPhotoPreview
               photo={item}
@@ -113,6 +117,14 @@ const PublicPhotos = ({ component, setProfileId }) => {
               width={window.screen.width <= 576 ? "49%" : ""}
             />
           ))}
+        {photos && photos.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, фотографий не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
     </div>
   );

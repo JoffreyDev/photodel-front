@@ -24,6 +24,7 @@ import { RequestWindow } from "../../components";
 import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
 import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
 import { PublicHeader } from "..";
+import Skeleton from "@mui/material/Skeleton";
 
 const PublicPlaceView = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const PublicPlaceView = ({ setProfileId }) => {
   const [slideNumber, setSlideNumber] = React.useState(0);
 
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
+  const [dataLoading, setDataLoading] = React.useState(true);
 
   React.useEffect(() => {
     !loaded &&
@@ -55,6 +57,7 @@ const PublicPlaceView = ({ setProfileId }) => {
           setPhotos(
             res.data.place_image.map((photo) => `${rootAddress}${photo.photo}`)
           );
+          setDataLoading(false);
         })
         .then(() => {
           Requests.getPlaceComments(placeId).then((res) => {
@@ -72,6 +75,7 @@ const PublicPlaceView = ({ setProfileId }) => {
           setPhotos(
             res.data.place_image.map((photo) => `${rootAddress}${photo.photo}`)
           );
+          setDataLoading(false);
         })
         .then(() => {
           Requests.getPlaceComments(placeId).then((res) => {
@@ -161,7 +165,7 @@ const PublicPlaceView = ({ setProfileId }) => {
       </div>
       <div className="photo_view_content">
         <div className="photo_view_content_left">
-          {photos && (
+          {photos && !dataLoading && (
             <div className="photo_view_content_left_image_wrapper">
               {photos.length > 1 && (
                 <img
@@ -185,6 +189,11 @@ const PublicPlaceView = ({ setProfileId }) => {
                   onClick={() => changePhoto("next")}
                 />
               )}
+            </div>
+          )}
+          {dataLoading && (
+            <div className="photo_view_content_left_image_wrapper">
+              <Skeleton variant="rectangular" height={300} />
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -258,12 +267,18 @@ const PublicPlaceView = ({ setProfileId }) => {
                 } ${place.was_added.split("").splice(0, 4).join("")}`}
             </p>
           </div>
-          <h1 className="photo_view_content_left_title">
-            {place && place.name_place}
-          </h1>
-          <p className="photo_view_content_left_description">
-            {place && place.description}
-          </p>
+          {!dataLoading && (
+            <h1 className="photo_view_content_left_title">
+              {place && place.name_place}
+            </h1>
+          )}
+          {dataLoading && <Skeleton variant="text" width={50} />}
+          {!dataLoading && (
+            <p className="photo_view_content_left_description">
+              {place && place.description}
+            </p>
+          )}
+          {dataLoading && <Skeleton variant="text" width={100} />}
           <div className="photo_view_content_right_geo mobile">
             <img
               src={Geo}
@@ -275,7 +290,7 @@ const PublicPlaceView = ({ setProfileId }) => {
             </p>
           </div>
           <div className="photo_view_content_right_map mobile">
-            {place && place.place_location && (
+            {place && place.place_location && !dataLoading && (
               <YMaps>
                 <Map
                   width={"100%"}
@@ -302,6 +317,7 @@ const PublicPlaceView = ({ setProfileId }) => {
                 </Map>
               </YMaps>
             )}
+            {dataLoading && <Skeleton variant="rectangular" height={100} />}
           </div>
           <div className="photo_view_content_right_specs mobile">
             <div className="photo_view_content_right_spec">
@@ -387,7 +403,7 @@ const PublicPlaceView = ({ setProfileId }) => {
             </p>
           </div>
           <div className="photo_view_content_right_map">
-            {place && place.place_location && (
+            {place && place.place_location && !dataLoading && (
               <YMaps>
                 <Map
                   width={"255px"}
@@ -414,6 +430,7 @@ const PublicPlaceView = ({ setProfileId }) => {
                 </Map>
               </YMaps>
             )}
+            {dataLoading && <Skeleton variant="rectangular" height={100} />}
           </div>
           <div className="photo_view_content_right_specs">
             <div className="photo_view_content_right_spec">

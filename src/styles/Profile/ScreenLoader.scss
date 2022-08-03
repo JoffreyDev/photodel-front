@@ -1,11 +1,12 @@
 .screenloader {
     &_overlay {
         width: 56%;
-        height: 70%;
+        height: 50%;
         background-color: white;
         pointer-events: none;
-        z-index: 99999;
+        z-index: 0;
         position: absolute;
+        background-color: transparent;
     }
 
     &_body {

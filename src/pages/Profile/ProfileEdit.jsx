@@ -309,6 +309,7 @@ const ProfileEdit = ({ setActiveModule }) => {
                   onChange={(e) => setStatus(e.target.value)}
                   label={"Статус"}
                   setValue={setStatus}
+                  width={"50%"}
                 />
               </div>
             </div>
@@ -318,7 +319,7 @@ const ProfileEdit = ({ setActiveModule }) => {
 
       <div className="my_profile_common_data">
         <p className="my_profile_common_data_title">Общие данные</p>
-        <div className="my_profile_common_data_content">
+        <div className="my_profile_common_data_content edit">
           <div className="my_profile_common_data_content_left_inputs">
             <SelectInput
               values={
@@ -532,14 +533,14 @@ const ProfileEdit = ({ setActiveModule }) => {
         <div className="my_profile_lower_buttons_wrapper">
           <div style={{ marginRight: "15px" }}>
             <GreyButton
-              width={"180px"}
+              width={"165px"}
               height={"38px"}
               text={"Отменить"}
               callback={handleEditCancel}
             />
           </div>
           <GreenButton
-            width={"180px"}
+            width={"165px"}
             height={"38px"}
             text={"Сохранить"}
             callback={handleUpdate}

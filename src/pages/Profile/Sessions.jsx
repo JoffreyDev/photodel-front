@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
-import { setDataLoaded } from "../../redux/actions/siteEntities";
+import { ScreenLoader } from "../../components";
 
 const Sessions = () => {
   const navigate = useNavigate();
@@ -30,6 +30,8 @@ const Sessions = () => {
   const [sortField, setSortField] = React.useState(1);
   const [sortType, setSortType] = React.useState("+");
 
+  const [dataLoading, setDataLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
   }, []);
@@ -42,6 +44,7 @@ const Sessions = () => {
         sortType
       ).then((res) => {
         setSessions(res.data);
+        setDataLoading(false);
       });
   }, [userData.id, sortType, sortField]);
 
@@ -206,6 +209,14 @@ const Sessions = () => {
               array={selectedSessions}
             />
           ))}
+        {sessions && sessions.length === 0 && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нам жаль, фотосессий не найдено :(
+            </h1>
+          </div>
+        )}
+        {dataLoading && <ScreenLoader height={"30%"} />}
       </div>
       <Submit
         modalActive={submitActive}
