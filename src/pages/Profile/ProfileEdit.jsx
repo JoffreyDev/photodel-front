@@ -219,8 +219,8 @@ const ProfileEdit = ({ setActiveModule }) => {
         : null,
       string_location_now: tempLocationString,
       message: tempLocationMessage,
-      date_stay_start: convertDate(tempDate[0]),
-      date_stay_end: convertDate(tempDate[1]),
+      date_stay_start: tempDate ? convertDate(tempDate[0]) : null,
+      date_stay_end: tempDate ? convertDate(tempDate[1]) : null,
     })
       .then(() => {
         Requests.getOwnProfile().then((res) => {
@@ -250,6 +250,13 @@ const ProfileEdit = ({ setActiveModule }) => {
       Dec: "12",
     };
     return parts[3] + "-" + months[parts[1]] + "-" + parts[2] + "T" + parts[4];
+  };
+
+  const resetTempLocation = () => {
+    setTempDate(null);
+    setTempLocationMessage("");
+    setTempLocationString("");
+    setTempLocation(null);
   };
 
   return (
@@ -294,23 +301,25 @@ const ProfileEdit = ({ setActiveModule }) => {
           <div className="my_profile_header_middle_row">
             <div className="my_profile_header_middle_row_status">
               <div className="reg_auth_content_input_wrapper">
-                <SelectInput
-                  values={[
-                    {
-                      id: "BUSY",
-                      value: "Занят",
-                    },
-                    {
-                      id: "FREE",
-                      value: "Свободен",
-                    },
-                  ]}
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  label={"Статус"}
-                  setValue={setStatus}
-                  width={"50%"}
-                />
+                {status && (
+                  <SelectInput
+                    values={[
+                      {
+                        id: "BUSY",
+                        value: "Занят",
+                      },
+                      {
+                        id: "FREE",
+                        value: "Свободен",
+                      },
+                    ]}
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    label={"Статус"}
+                    setValue={setStatus}
+                    width={"50%"}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -321,18 +330,20 @@ const ProfileEdit = ({ setActiveModule }) => {
         <p className="my_profile_common_data_title">Общие данные</p>
         <div className="my_profile_common_data_content edit">
           <div className="my_profile_common_data_content_left_inputs">
-            <SelectInput
-              values={
-                categories &&
-                categories.map((item) => {
-                  return { id: item.id, value: item.name_category };
-                })
-              }
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              label={"Категория"}
-              setValue={setCategory}
-            />
+            {category && (
+              <SelectInput
+                values={
+                  categories &&
+                  categories.map((item) => {
+                    return { id: item.id, value: item.name_category };
+                  })
+                }
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                label={"Категория"}
+                setValue={setCategory}
+              />
+            )}
 
             {countries && (
               <AutoCompleteInput
@@ -358,7 +369,7 @@ const ProfileEdit = ({ setActiveModule }) => {
               value={conditions}
               callback={setConditions}
             />
-            {languages && (
+            {languages && languageSkills && (
               <AutoCompleteInput
                 values={
                   languages &&
@@ -378,7 +389,7 @@ const ProfileEdit = ({ setActiveModule }) => {
             )}
           </div>
           <div className="my_profile_common_data_content_right_inputs">
-            {specs && (
+            {specs && spec && (
               <AutoCompleteInput
                 values={
                   specs &&
@@ -529,6 +540,12 @@ const ProfileEdit = ({ setActiveModule }) => {
               onChange={(e) => setTempLocationMessage(e.target.value)}
             />
           </div>
+          <p
+            onClick={() => resetTempLocation()}
+            className="my_profile_temp_location_content_reset"
+          >
+            Сбросить данные о временной геолокации
+          </p>
         </div>
         <div className="my_profile_lower_buttons_wrapper">
           <div style={{ marginRight: "15px" }}>

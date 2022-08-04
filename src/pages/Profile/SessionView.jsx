@@ -205,7 +205,11 @@ const SessionView = () => {
           )}
           {dataLoading && (
             <div className="photo_view_content_left_image_wrapper">
-              <Skeleton variant="rectangular" height={300} />
+              <Skeleton
+                sx={{ borderRadius: 3 }}
+                variant="rectangular"
+                height={300}
+              />
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -295,13 +299,17 @@ const SessionView = () => {
               {session && session.session_name}
             </h1>
           )}
-          {dataLoading && <Skeleton variant="text" width={50} />}
+          {dataLoading && (
+            <Skeleton sx={{ borderRadius: 3 }} variant="text" width={50} />
+          )}
           {!dataLoading && (
             <p className="photo_view_content_left_description">
               {session && session.session_description}
             </p>
           )}
-          {dataLoading && <Skeleton variant="text" width={50} />}
+          {dataLoading && (
+            <Skeleton sx={{ borderRadius: 3 }} variant="text" width={50} />
+          )}
           <div className="photo_view_content_right_geo mobile">
             <img
               src={Geo}
@@ -340,7 +348,13 @@ const SessionView = () => {
                 </Map>
               </YMaps>
             )}
-            {dataLoading && <Skeleton variant="rectangular" height={100} />}
+            {dataLoading && (
+              <Skeleton
+                sx={{ borderRadius: 3 }}
+                variant="rectangular"
+                height={100}
+              />
+            )}
           </div>
           <div className="photo_view_content_right_data mobile">
             <p className="photo_view_content_right_data_p">
@@ -488,7 +502,13 @@ const SessionView = () => {
                 </Map>
               </YMaps>
             )}
-            {dataLoading && <Skeleton variant="rectangular" height={100} />}
+            {dataLoading && (
+              <Skeleton
+                sx={{ borderRadius: 3 }}
+                variant="rectangular"
+                height={100}
+              />
+            )}
           </div>
           <div className="photo_view_content_right_data">
             <p className="photo_view_content_right_data_p">

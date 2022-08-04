@@ -206,107 +206,135 @@ const MyProfile = () => {
 
           <div className="my_profile_common_data">
             <p className="my_profile_common_data_title">Общие данные</p>
-            <div className="my_profile_common_data_content">
-              <ul className="my_profile_common_data_content_left_ul">
-                {userData && JSON.parse(userData.type_pro).length >= 1 && (
-                  <li className="my_profile_common_data_content_left_li">
+            <table>
+              {userData && JSON.parse(userData.type_pro).length >= 1 && (
+                <tr>
+                  <td className="my_profile_common_data_content_left_li">
                     Категория:
-                  </li>
-                )}
-                {userData &&
-                  JSON.parse(userData.spec_model_or_photographer).length >=
-                    1 && (
-                    <li className="my_profile_common_data_content_left_li">
-                      Специализация:
-                    </li>
-                  )}
-                {userData && JSON.parse(userData.filming_geo).length >= 1 && (
-                  <li className="my_profile_common_data_content_left_li">
-                    География съемок:
-                  </li>
-                )}
-                {userData.cost_services && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Стоимость услуг:
-                  </li>
-                )}
-                {userData.work_condition && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Условия работы:
-                  </li>
-                )}
-                {userData.photo_technics && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Фототехника:
-                  </li>
-                )}
-                {userData && JSON.parse(userData.languages.length) >= 1 && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Владение языками:
-                  </li>
-                )}
-              </ul>
-
-              <ul className="my_profile_common_data_content_right_ul">
-                <li className="my_profile_common_data_content_right_li">
-                  {isJson(userData.type_pro) &&
-                    JSON.parse(userData.type_pro).map((item, index) => {
-                      if (index + 1 !== JSON.parse(userData.type_pro).length) {
-                        return Object.values(item)[0] + ", ";
-                      } else {
-                        return Object.values(item)[0];
-                      }
-                    })}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {isJson(userData.spec_model_or_photographer) &&
-                    JSON.parse(userData.spec_model_or_photographer).map(
-                      (item, index) => {
+                  </td>
+                  <td className="my_profile_common_data_content_right_li">
+                    {isJson(userData.type_pro) &&
+                      JSON.parse(userData.type_pro).map((item, index) => {
                         if (
                           index + 1 !==
-                          JSON.parse(userData.spec_model_or_photographer).length
+                          JSON.parse(userData.type_pro).length
                         ) {
                           return Object.values(item)[0] + ", ";
                         } else {
                           return Object.values(item)[0];
                         }
-                      }
-                    )}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {isJson(userData.filming_geo) &&
-                    JSON.parse(userData.filming_geo).map((item, index) => {
-                      if (
-                        index + 1 !==
-                        JSON.parse(userData.filming_geo).length
-                      ) {
-                        return Object.values(item)[0] + ", ";
-                      } else {
-                        return Object.values(item)[0];
-                      }
-                    })}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {userData.cost_services && userData.cost_services}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {userData.work_condition && userData.work_condition}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {userData.photo_technics && userData.photo_technics}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {isJson(userData.languages) &&
-                    JSON.parse(userData.languages).map((item, index) => {
-                      if (index + 1 !== JSON.parse(userData.languages).length) {
-                        return Object.values(item)[0] + ", ";
-                      } else {
-                        return Object.values(item)[0];
-                      }
-                    })}
-                </li>
-              </ul>
-            </div>
+                      })}
+                  </td>
+                </tr>
+              )}
+
+              {userData &&
+                JSON.parse(userData.spec_model_or_photographer).length >= 1 && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      Специализация:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {" "}
+                      {isJson(userData.spec_model_or_photographer) &&
+                        JSON.parse(userData.spec_model_or_photographer).map(
+                          (item, index) => {
+                            if (
+                              index + 1 !==
+                              JSON.parse(userData.spec_model_or_photographer)
+                                .length
+                            ) {
+                              return Object.values(item)[0] + ", ";
+                            } else {
+                              return Object.values(item)[0];
+                            }
+                          }
+                        )}
+                    </td>
+                  </tr>
+                )}
+
+              {userData && JSON.parse(userData.filming_geo).length >= 1 && (
+                <tr>
+                  <td className="my_profile_common_data_content_left_li">
+                    География съемок:
+                  </td>
+                  <td className="my_profile_common_data_content_right_li">
+                    {isJson(userData.filming_geo) &&
+                      JSON.parse(userData.filming_geo).map((item, index) => {
+                        if (
+                          index + 1 !==
+                          JSON.parse(userData.filming_geo).length
+                        ) {
+                          return Object.values(item)[0] + ", ";
+                        } else {
+                          return Object.values(item)[0];
+                        }
+                      })}
+                  </td>
+                </tr>
+              )}
+
+              {userData.cost_services && (
+                <tr>
+                  <td className="my_profile_common_data_content_left_li">
+                    Стоимость услуг:
+                  </td>
+                  <td className="my_profile_common_data_content_right_li">
+                    {" "}
+                    {userData.cost_services && userData.cost_services}
+                  </td>
+                </tr>
+              )}
+
+              {userData.work_condition && (
+                <tr>
+                  <td className="my_profile_common_data_content_left_li">
+                    {" "}
+                    Условия работы:
+                  </td>
+                  <td className="my_profile_common_data_content_right_li">
+                    {" "}
+                    {userData.work_condition && userData.work_condition}
+                  </td>
+                </tr>
+              )}
+
+              {userData.photo_technics && (
+                <tr>
+                  <td className="my_profile_common_data_content_left_li">
+                    {" "}
+                    Фототехника:
+                  </td>
+                  <td className="my_profile_common_data_content_right_li">
+                    {" "}
+                    {userData.photo_technics && userData.photo_technics}
+                  </td>
+                </tr>
+              )}
+
+              {userData && JSON.parse(userData.languages.length) >= 1 && (
+                <tr>
+                  <td className="my_profile_common_data_content_left_li">
+                    {" "}
+                    Владение языками:
+                  </td>
+                  <td className="my_profile_common_data_content_right_li">
+                    {isJson(userData.languages) &&
+                      JSON.parse(userData.languages).map((item, index) => {
+                        if (
+                          index + 1 !==
+                          JSON.parse(userData.languages).length
+                        ) {
+                          return Object.values(item)[0] + ", ";
+                        } else {
+                          return Object.values(item)[0];
+                        }
+                      })}
+                  </td>
+                </tr>
+              )}
+            </table>
           </div>
 
           {userData && userData.about && (
@@ -327,98 +355,94 @@ const MyProfile = () => {
             <div className="my_profile_contacts">
               <p className="my_profile_contacts_title">Контакты</p>
               <div className="my_profile_contacts_content">
-                <ul className="my_profile_contacts_content_left_ul">
-                  <li className="my_profile_contacts_content_left_li">
-                    Местонахождение:
-                  </li>
-                  <li className="my_profile_contacts_content_left_li">
-                    Телефон:
-                  </li>
-                  <li className="my_profile_contacts_content_left_li">Сайт:</li>
-                  {false && (
-                    <div>
-                      <li className="my_profile_contacts_content_left_li">
-                        Почта:
-                      </li>
-                      <li className="my_profile_contacts_content_left_li">
-                        Instagram:
-                      </li>
-                      <li className="my_profile_contacts_content_left_li">
-                        Facebook:
-                      </li>
-                      <li className="my_profile_contacts_content_left_li">
-                        ВКонтакте:
-                      </li>
-                    </div>
+                <table>
+                  {userData.string_location && (
+                    <tr>
+                      <td className="my_profile_common_data_content_left_li">
+                        {" "}
+                        Местонахождение:
+                      </td>
+                      <td className="my_profile_common_data_content_right_li">
+                        {userData.string_location && userData.string_location}
+                      </td>
+                    </tr>
                   )}
-                </ul>
 
-                <ul className="my_profile_contacts_content_right_ul">
-                  <li className="my_profile_contacts_content_right_li">
-                    {userData.string_location && userData.string_location}
-                  </li>
-                  <li className="my_profile_contacts_content_right_li">
-                    {userData.phone && userData.phone}
-                  </li>
-                  <li className="my_profile_contacts_content_right_li link">
-                    {userData.site && userData.site}
-                  </li>
-                  {false && (
-                    <div>
-                      <li className="my_profile_contacts_content_right_li link">
-                        {userData.email && userData.email}
-                      </li>
-                      <li className="my_profile_contacts_content_right_li link">
-                        {userData.instagram && userData.instagram}
-                      </li>
-                      <li className="my_profile_contacts_content_right_li link">
-                        {userData.facebook && userData.facebook}
-                      </li>
-                      <li className="my_profile_contacts_content_right_li link">
-                        {userData.vk && userData.vk}
-                      </li>
-                    </div>
+                  {userData.phone && (
+                    <tr>
+                      <td className="my_profile_common_data_content_left_li">
+                        {" "}
+                        Телефон:
+                      </td>
+                      <td className="my_profile_common_data_content_right_li">
+                        {userData.phone && userData.phone}
+                      </td>
+                    </tr>
                   )}
-                </ul>
+
+                  {userData.site && (
+                    <tr>
+                      <td className="my_profile_common_data_content_left_li">
+                        Сайт:
+                      </td>
+                      <td className="my_profile_common_data_content_right_li">
+                        {userData.site && userData.site}
+                      </td>
+                    </tr>
+                  )}
+                </table>
               </div>
             </div>
           )}
 
           <div>
-            <div className="my_profile_temp_location">
-              <p className="my_profile_temp_location_title">
-                Временная геолокация
-              </p>
-              <div className="my_profile_temp_location_content">
-                <ul className="my_profile_temp_location_content_left_ul">
-                  <li className="my_profile_temp_location_content_left_li">
-                    Нахожусь сейчас:
-                  </li>
-                  <li className="my_profile_temp_location_content_left_li">
-                    Даты пребывания:
-                  </li>
-                  <li className="my_profile_temp_location_content_left_li">
-                    Сообщение:
-                  </li>
-                </ul>
+            {userData.location_now && (
+              <div className="my_profile_temp_location">
+                <p className="my_profile_temp_location_title">
+                  Временная геолокация
+                </p>
+                <div className="my_profile_temp_location_content">
+                  <table>
+                    {userData.string_location_now && (
+                      <tr>
+                        <td className="my_profile_common_data_content_left_li">
+                          {" "}
+                          Нахожусь сейчас:
+                        </td>
+                        <td className="my_profile_common_data_content_right_li">
+                          {userData.string_location_now}
+                        </td>
+                      </tr>
+                    )}
 
-                <ul className="my_profile_temp_location_content_right_ul">
-                  <li className="my_profile_temp_location_content_right_li">
-                    {userData.string_location_now &&
-                      userData.string_location_now}
-                  </li>
-                  <li className="my_profile_temp_location_content_right_li">
-                    {userData.date_stay_start &&
-                      `${userData.date_stay_start.split("T")[0]} - ${
-                        userData.date_stay_end.split("T")[0]
-                      }`}
-                  </li>
-                  <li className="my_profile_temp_location_content_right_li">
-                    {userData.message && userData.message}
-                  </li>
-                </ul>
+                    {userData.date_stay_start && (
+                      <tr>
+                        <td className="my_profile_common_data_content_left_li">
+                          {" "}
+                          Даты пребывания:
+                        </td>
+                        <td className="my_profile_common_data_content_right_li">
+                          {`${userData.date_stay_start.split("T")[0]} - ${
+                            userData.date_stay_end.split("T")[0]
+                          }`}
+                        </td>
+                      </tr>
+                    )}
+
+                    {userData.message && (
+                      <tr>
+                        <td className="my_profile_common_data_content_left_li">
+                          Сообщение:
+                        </td>
+                        <td className="my_profile_common_data_content_right_li">
+                          {userData.message}
+                        </td>
+                      </tr>
+                    )}
+                  </table>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="my_profile_stats">
               <p className="my_profile_stats_title">Статистика</p>

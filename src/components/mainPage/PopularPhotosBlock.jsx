@@ -24,24 +24,47 @@ const PopularPhotosBlock = () => {
           </div>
         </div>
         <div className="main_page_popular_photos_section_content_slider_wrapper">
-          <Carousel
-            itemsToShow={
-              window.screen.width <= 576 ? window.screen.width / 270 : 4
-            }
-            pagination={false}
-            showArrows={window.screen.width <= 576 ? false : true}
-          >
-            {photos &&
-              photos.map((photo, idx) => (
-                <GalleryPhotoPreview
-                  photo={photo}
-                  key={idx}
-                  height={152}
-                  width={window.screen.width <= 576 ? 216 : 255}
-                  wrapperWidth={window.screen.width <= 576 ? 216 : 255}
-                />
-              ))}
-          </Carousel>
+          {photos && (
+            <Carousel
+              itemsToShow={
+                window.screen.width <= 576 ? window.screen.width / 270 : 4
+              }
+              pagination={false}
+              showArrows={window.screen.width <= 576 ? false : true}
+            >
+              {photos &&
+                photos.map((photo, idx) => (
+                  <GalleryPhotoPreview
+                    photo={photo}
+                    key={idx}
+                    height={152}
+                    width={window.screen.width <= 576 ? 216 : 255}
+                    wrapperWidth={window.screen.width <= 576 ? 216 : 255}
+                  />
+                ))}
+            </Carousel>
+          )}
+          {!photos && (
+            <Carousel
+              itemsToShow={
+                window.screen.width <= 576 ? window.screen.width / 270 : 4
+              }
+              pagination={false}
+              showArrows={window.screen.width <= 576 ? false : true}
+            >
+              {!photos &&
+                Array(8)
+                  .fill(" ")
+                  .map((photo, idx) => (
+                    <GalleryPhotoPreview
+                      key={idx}
+                      height={152}
+                      width={window.screen.width <= 576 ? 216 : 255}
+                      wrapperWidth={window.screen.width <= 576 ? 216 : 255}
+                    />
+                  ))}
+            </Carousel>
+          )}
         </div>
         <div className="main_page_popular_photos_section_content_lower_table">
           <svg

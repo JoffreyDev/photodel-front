@@ -61,7 +61,6 @@ const AddPlace = () => {
           {
             center: [55.753994, 37.622093],
             zoom: 9,
-            controls: ["fullscreenControl", "geolocationControl"],
           },
           {
             searchControlProvider: "yandex#search",
@@ -350,7 +349,7 @@ const AddPlace = () => {
             width={"100%"}
             height={"38px"}
             placeholder="Местоположение"
-            label={"Введите местоположение или выберите на карте"}
+            label={"Укажите местоположение на карте, после чего закройте карту"}
             callback={setAddressLine}
             value={addressLine}
           />

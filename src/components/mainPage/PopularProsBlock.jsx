@@ -57,18 +57,34 @@ const PopularProsBlock = () => {
           )}
         </div>
         <div className="main_page_second_section_content_slider_wrapper">
-          <Carousel
-            itemsToShow={
-              window.screen.width <= 576 ? window.screen.width / 165 : 6
-            }
-            pagination={false}
-            showArrows={window.screen.width <= 576 ? false : true}
-          >
-            {profiles &&
-              profiles.map((profile, idx) => (
-                <PopularProCard profile={profile} key={idx} />
-              ))}
-          </Carousel>
+          {profiles && (
+            <Carousel
+              itemsToShow={
+                window.screen.width <= 576 ? window.screen.width / 165 : 6
+              }
+              pagination={false}
+              showArrows={window.screen.width <= 576 ? false : true}
+            >
+              {profiles &&
+                profiles.map((profile, idx) => (
+                  <PopularProCard profile={profile} key={idx} />
+                ))}
+            </Carousel>
+          )}
+          {!profiles && (
+            <Carousel
+              itemsToShow={
+                window.screen.width <= 576 ? window.screen.width / 165 : 6
+              }
+              pagination={false}
+              showArrows={window.screen.width <= 576 ? false : true}
+            >
+              {!profiles &&
+                Array(8)
+                  .fill(0)
+                  .map((profile, idx) => <PopularProCard key={idx} />)}
+            </Carousel>
+          )}
         </div>
         <div className="main_page_second_section_content_lower_table">
           <svg

@@ -1,5 +1,6 @@
 import { MuiModal } from "..";
 import React from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
   const handleLoad = () => {
@@ -99,7 +100,13 @@ const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
           alignItems: "center",
         }}
       >
-        <div id="map" style={{ height: "600px", width: "1000px" }}></div>
+        <div style={{ position: "absolute", zIndex: "1" }}>
+          <CircularProgress color="success" />
+        </div>
+        <div
+          id="map"
+          style={{ height: "600px", width: "1000px", zIndex: "2" }}
+        ></div>
       </div>
     </MuiModal>
   );

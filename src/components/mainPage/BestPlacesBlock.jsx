@@ -61,20 +61,39 @@ const BestPlacesBlock = () => {
           )}
         </div>
         <div className="main_page_third_section_content_slider_wrapper">
-          <Carousel
-            itemsToShow={window.screen.width <= 576 ? 2.5 : 6}
-            showArrows={window.screen.width <= 576 ? false : true}
-            pagination={false}
-          >
-            {places &&
-              places.map((place, idx) => (
-                <BestPlaceCard
-                  place={place}
-                  key={idx}
-                  width={window.screen.width <= 576 ? "120px" : ""}
-                />
-              ))}
-          </Carousel>
+          {places && (
+            <Carousel
+              itemsToShow={window.screen.width <= 576 ? 2.5 : 6}
+              showArrows={window.screen.width <= 576 ? false : true}
+              pagination={false}
+            >
+              {places &&
+                places.map((place, idx) => (
+                  <BestPlaceCard
+                    place={place}
+                    key={idx}
+                    width={window.screen.width <= 576 ? "120px" : ""}
+                  />
+                ))}
+            </Carousel>
+          )}
+          {!places && (
+            <Carousel
+              itemsToShow={window.screen.width <= 576 ? 2.5 : 6}
+              showArrows={window.screen.width <= 576 ? false : true}
+              pagination={false}
+            >
+              {!places &&
+                Array(8)
+                  .fill(" ")
+                  .map((place, idx) => (
+                    <BestPlaceCard
+                      key={idx}
+                      width={window.screen.width <= 576 ? "120px" : ""}
+                    />
+                  ))}
+            </Carousel>
+          )}
         </div>
         <div className="main_page_third_section_content_lower_table">
           <svg

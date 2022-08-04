@@ -181,12 +181,15 @@ export class Requests {
         instagram: instagram,
         facebook: facebook,
         vk: vk,
-
         message: message,
         spec_model_or_photographer: spec_model_or_photographer,
         string_location: string_location,
         avatar: avatar,
         is_change: is_change,
+        location_now: location_now,
+        date_stay_start: date_stay_start,
+        date_stay_end: date_stay_end,
+        string_location_now: string_location_now,
       },
 
       url: `/api/accounts/profile/update/`,

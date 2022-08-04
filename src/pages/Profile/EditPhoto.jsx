@@ -343,7 +343,7 @@ const EditPhoto = () => {
             value={flash}
           />
           <h1 className="add_photo_left_content_h1 margin">Категории</h1>
-          {prosSpecs && (
+          {prosSpecs && category && (
             <AutoCompleteInput
               values={
                 prosSpecs &&
@@ -361,7 +361,7 @@ const EditPhoto = () => {
             />
           )}
           <h1 className="add_photo_left_content_h1 margin">Фото в альбомах</h1>
-          {loadedAlbums && (
+          {loadedAlbums && albums && (
             <AutoCompleteInput
               values={
                 loadedAlbums &&

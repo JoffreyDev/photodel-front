@@ -23,7 +23,12 @@ function PublicHeader({ profile }) {
 
         {!profile && (
           <div style={{ marginRight: "10px" }}>
-            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton
+              sx={{ borderRadius: 3 }}
+              variant="circular"
+              width={40}
+              height={40}
+            />
           </div>
         )}
         {profile && (
@@ -38,7 +43,9 @@ function PublicHeader({ profile }) {
             {profile && `${profile.name} ${profile.surname}`}
           </p>
         )}
-        {!profile && <Skeleton width={200} variant="text" />}
+        {!profile && (
+          <Skeleton sx={{ borderRadius: 3 }} width={200} variant="text" />
+        )}
       </div>
       <div className="public_view_profile_header_right">
         <img

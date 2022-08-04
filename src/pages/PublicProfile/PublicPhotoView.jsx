@@ -152,7 +152,11 @@ const PublicPhotoView = ({ setProfileId }) => {
           )}
           {dataLoading && (
             <div className="photo_view_content_left_image_wrapper">
-              <Skeleton variant="rectangular" height={300} />
+              <Skeleton
+                variant="rectangular"
+                height={300}
+                sx={{ borderRadius: 3 }}
+              />
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -231,13 +235,17 @@ const PublicPhotoView = ({ setProfileId }) => {
               {photo && photo.name_image}
             </h1>
           )}
-          {dataLoading && <Skeleton variant="text" width={50} />}
+          {dataLoading && (
+            <Skeleton sx={{ borderRadius: 3 }} variant="text" width={50} />
+          )}
           {!dataLoading && (
             <p className="photo_view_content_left_description">
               {photo && photo.description}
             </p>
           )}
-          {dataLoading && <Skeleton variant="text" width={100} />}
+          {dataLoading && (
+            <Skeleton sx={{ borderRadius: 3 }} variant="text" width={100} />
+          )}
           <div className="photo_view_content_right_geo mobile">
             <img
               src={Geo}
@@ -276,7 +284,13 @@ const PublicPhotoView = ({ setProfileId }) => {
                 </Map>
               </YMaps>
             )}
-            {dataLoading && <Skeleton variant="rectangular" height={100} />}
+            {dataLoading && (
+              <Skeleton
+                variant="rectangular"
+                height={100}
+                sx={{ borderRadius: 3 }}
+              />
+            )}
           </div>
           <div className="photo_view_content_right_specs mobile">
             <div className="photo_view_content_right_spec">
@@ -428,7 +442,13 @@ const PublicPhotoView = ({ setProfileId }) => {
                 </Map>
               </YMaps>
             )}
-            {dataLoading && <Skeleton variant="rectangular" height={100} />}
+            {dataLoading && (
+              <Skeleton
+                variant="rectangular"
+                height={100}
+                sx={{ borderRadius: 3 }}
+              />
+            )}
           </div>
           <div className="photo_view_content_right_specs">
             <div className="photo_view_content_right_spec">

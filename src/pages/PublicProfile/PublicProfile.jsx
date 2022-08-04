@@ -11,6 +11,7 @@ import React from "react";
 import Online from "../../img/commonImages/online.svg";
 import Offline from "../../img/commonImages/offline.svg";
 import Location from "../../img/Public/map.svg";
+import Pin from "../../img/commonImages/pin.svg";
 import Mail from "../../img/Public/mail.svg";
 import Req from "../../img/Public/request.svg";
 import Fave from "../../img/Public/bookmark.svg";
@@ -18,7 +19,11 @@ import Web from "../../img/Public/web.svg";
 import Phone from "../../img/Public/phone.svg";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { RequestWindow } from "../../components";
-import { ScreenLoader } from "../../components";
+import {
+  ScreenLoader,
+  GeolocationProfilePopup,
+  TempGeolocationProfilePopup,
+} from "../../components";
 
 const PublicProfile = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -29,6 +34,10 @@ const PublicProfile = ({ setProfileId }) => {
   const [profileData, setProfileData] = React.useState();
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
   const [dataLoading, setDataLoading] = React.useState(true);
+
+  const [locationPopupActive, setLocationPopupActive] = React.useState(false);
+  const [tempLocationPopupActive, setTempLocationPopupActive] =
+    React.useState(false);
 
   const { userData } = useSelector(({ userData }) => userData);
 
@@ -241,17 +250,40 @@ const PublicProfile = ({ setProfileId }) => {
               </div>
             </div>
           </div>
-          {profileData && profileData.string_location && (
-            <div className="my_profile_header_middle_row_location">
-              <img
-                src={Location}
-                alt="location"
-                className="my_profile_header_middle_row_location_img"
-              />
-              <p className="my_profile_header_middle_row_location_p">
-                {" "}
-                {profileData && profileData.string_location}
-              </p>
+          {profileData && profileData.string_location && profileData.location && (
+            <div className="my_profile_header_middle_row_locations">
+              <div
+                onClick={() => setLocationPopupActive(true)}
+                className="my_profile_header_middle_row_location"
+              >
+                <img
+                  src={Location}
+                  alt="location"
+                  className="my_profile_header_middle_row_location_img"
+                />
+                <p className="my_profile_header_middle_row_location_p">
+                  {" "}
+                  {profileData && profileData.string_location}
+                </p>
+              </div>
+
+              {profileData.string_location_now &&
+                profileData.location_now &&
+                profileData.date_stay_start && (
+                  <div
+                    onClick={() => setTempLocationPopupActive(true)}
+                    className="my_profile_header_middle_row_location"
+                  >
+                    <img
+                      src={Pin}
+                      alt="location"
+                      className="my_profile_header_middle_row_location_img"
+                    />
+                    <p className="my_profile_header_middle_row_location_p">
+                      Сейчас в {profileData && profileData.string_location_now}
+                    </p>
+                  </div>
+                )}
             </div>
           )}
 
@@ -302,76 +334,99 @@ const PublicProfile = ({ setProfileId }) => {
           <div className="my_profile_common_data">
             <p className="my_profile_common_data_title">Общие данные</p>
             <div className="my_profile_common_data_content">
-              <ul className="my_profile_common_data_content_left_ul">
+              <table>
                 {profileData && profileData.type_pro && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Категория:
-                  </li>
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      Категория:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {profileData && profileData.type_pro?.name_category}
+                    </td>
+                  </tr>
                 )}
-                {profileData && profileData.spec_model_or_photographer && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Специализация:
-                  </li>
-                )}
-                {profileData && profileData.filming_geo.length >= 1 && (
-                  <li className="my_profile_common_data_content_left_li">
-                    География съемок:
-                  </li>
-                )}
-                {profileData && profileData.cost_services && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Стоимость услуг:
-                  </li>
-                )}
-                {profileData && profileData.work_condition && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Условия работы:
-                  </li>
-                )}
-                {profileData && profileData.photo_technics && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Фототехника:
-                  </li>
-                )}
-                {profileData && profileData.languages.length >= 1 && (
-                  <li className="my_profile_common_data_content_left_li">
-                    Владение языками:
-                  </li>
-                )}
-              </ul>
 
-              <ul className="my_profile_common_data_content_right_ul">
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData && profileData.type_pro?.name_category}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData &&
-                    profileData.spec_model_or_photographer
-                      .map((spec) => spec.name_spec)
-                      .join(", ")}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData &&
-                    profileData.filming_geo
-                      .map((geo) => geo.name_country)
-                      .join(", ")}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData && profileData.cost_services}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData && profileData.work_condition}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData && profileData.photo_technics}
-                </li>
-                <li className="my_profile_common_data_content_right_li">
-                  {profileData &&
-                    profileData.languages
-                      .map((lang) => lang.name_language)
-                      .join(", ")}
-                </li>
-              </ul>
+                {profileData && profileData.spec_model_or_photographer && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      Специализация:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {profileData &&
+                        profileData.spec_model_or_photographer
+                          .map((spec) => spec.name_spec)
+                          .join(", ")}
+                    </td>
+                  </tr>
+                )}
+
+                {profileData && profileData.filming_geo.length >= 1 && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      География съемок:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {profileData &&
+                        profileData.filming_geo
+                          .map((geo) => geo.name_country)
+                          .join(", ")}
+                    </td>
+                  </tr>
+                )}
+
+                {userData.cost_services && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      Стоимость услуг:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {" "}
+                      {userData.cost_services && userData.cost_services}
+                    </td>
+                  </tr>
+                )}
+
+                {userData.work_condition && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      {" "}
+                      Условия работы:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {" "}
+                      {userData.work_condition && userData.work_condition}
+                    </td>
+                  </tr>
+                )}
+
+                {userData.photo_technics && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      {" "}
+                      Фототехника:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {" "}
+                      {userData.photo_technics && userData.photo_technics}
+                    </td>
+                  </tr>
+                )}
+
+                {profileData && profileData.languages.length >= 1 && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      {" "}
+                      Владение языками:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {profileData &&
+                        profileData.languages
+                          .map((lang) => lang.name_language)
+                          .join(", ")}
+                    </td>
+                  </tr>
+                )}
+              </table>
             </div>
           </div>
 
@@ -520,6 +575,33 @@ const PublicProfile = ({ setProfileId }) => {
             width={window.screen.width <= 576 ? "90vw" : "40vw"}
             notAlign={window.screen.width <= 576}
           />
+          {profileData.string_location && (
+            <GeolocationProfilePopup
+              avatar={profileData && profileData.avatar}
+              name={profileData && profileData.name}
+              surname={profileData && profileData.surname}
+              coords={profileData && profileData.location}
+              online={profileData && profileData.user_channel_name}
+              string_location={profileData && profileData.string_location}
+              modalActive={locationPopupActive}
+              setModalActive={setLocationPopupActive}
+            />
+          )}
+          {profileData.string_location_now && (
+            <TempGeolocationProfilePopup
+              avatar={profileData && profileData.avatar}
+              name={profileData && profileData.name}
+              surname={profileData && profileData.surname}
+              coords={profileData && profileData.location_now}
+              online={profileData && profileData.user_channel_name}
+              string_location={profileData && profileData.string_location_now}
+              modalActive={tempLocationPopupActive}
+              setModalActive={setTempLocationPopupActive}
+              message={profileData.message}
+              date_stay_end={profileData.date_stay_end}
+              date_stay_start={profileData.date_stay_start}
+            />
+          )}
         </div>
       )}
     </div>

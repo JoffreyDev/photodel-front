@@ -49,6 +49,8 @@ export { default as PhotoViewAlbum } from "./Previews/PhotoViewAlbum";
 export { default as GalleryPhotoPreview } from "./Previews/GalleryPhotoPreview";
 export { default as Comment } from "./Reviews/Comment";
 export { default as AddPhotosToAlbum } from "./PopUps/AddPhotosToAlbum";
+export { default as GeolocationProfilePopup } from "./PopUps/GeolocationProfilePopup";
+export { default as TempGeolocationProfilePopup } from "./PopUps/TempGeolocationProfilePopup";
 export { default as LoggedUserPopup } from "./PopUps/LoggedUserPopup";
 export { default as PhotoFullScreen } from "./PopUps/PhotoFullScreen";
 export { default as PhotosPreviewCheckbox } from "./Previews/PhotosPreviewCheckbox";

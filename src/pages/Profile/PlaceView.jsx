@@ -191,7 +191,11 @@ const PlaceView = () => {
           )}
           {dataLoading && (
             <div className="photo_view_content_left_image_wrapper">
-              <Skeleton variant="rectangular" height={300} />
+              <Skeleton
+                sx={{ borderRadius: 3 }}
+                variant="rectangular"
+                height={300}
+              />
             </div>
           )}
           <div className="photo_view_content_left_activities">
@@ -270,13 +274,17 @@ const PlaceView = () => {
               {place && place.name_place}
             </h1>
           )}
-          {dataLoading && <Skeleton variant="text" width={50} />}
+          {dataLoading && (
+            <Skeleton sx={{ borderRadius: 3 }} variant="text" width={50} />
+          )}
           {!dataLoading && (
             <p className="photo_view_content_left_description">
               {place && place.description}
             </p>
           )}
-          {dataLoading && <Skeleton variant="text" width={100} />}
+          {dataLoading && (
+            <Skeleton sx={{ borderRadius: 3 }} variant="text" width={100} />
+          )}
           <div className="photo_view_content_right_geo mobile">
             <img
               src={Geo}
@@ -315,7 +323,13 @@ const PlaceView = () => {
                 </Map>
               </YMaps>
             )}
-            {dataLoading && <Skeleton variant="rectangular" height={100} />}
+            {dataLoading && (
+              <Skeleton
+                sx={{ borderRadius: 3 }}
+                variant="rectangular"
+                height={100}
+              />
+            )}
           </div>
           <div className="photo_view_content_right_specs mobile">
             <div className="photo_view_content_right_spec">
@@ -456,7 +470,13 @@ const PlaceView = () => {
                 </Map>
               </YMaps>
             )}
-            {dataLoading && <Skeleton variant="rectangular" height={100} />}
+            {dataLoading && (
+              <Skeleton
+                sx={{ borderRadius: 3 }}
+                variant="rectangular"
+                height={100}
+              />
+            )}
           </div>
           <div className="photo_view_content_right_specs">
             <div className="photo_view_content_right_spec">

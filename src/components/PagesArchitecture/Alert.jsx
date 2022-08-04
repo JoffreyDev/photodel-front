@@ -29,8 +29,10 @@ export default function CustomizedSnackbars() {
     }
 
     setOpenSuccess(false);
-    dispatch(openSuccessAlert(false));
-    dispatch(openErrorAlert(false));
+    setTimeout(() => {
+      dispatch(openSuccessAlert(false));
+      dispatch(openErrorAlert(false));
+    }, 1000);
   };
 
   const handleCloseError = (event, reason) => {
@@ -39,15 +41,17 @@ export default function CustomizedSnackbars() {
     }
 
     setOpenError(false);
-    dispatch(openSuccessAlert(false));
-    dispatch(openErrorAlert(false));
+    setTimeout(() => {
+      dispatch(openSuccessAlert(false));
+      dispatch(openErrorAlert(false));
+    }, 1000);
   };
 
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Snackbar
         open={openSuccess}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onClose={handleCloseSuccess}
       >
         <Alert
