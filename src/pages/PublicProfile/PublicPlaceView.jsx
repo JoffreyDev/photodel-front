@@ -334,39 +334,39 @@ const PublicPlaceView = ({ setProfileId }) => {
             )}
           </div>
           <div className="photo_view_content_right_specs mobile">
-            <div className="photo_view_content_right_spec">
+            <div title="Камера" className="photo_view_content_right_spec">
               <img
                 src={Camera}
                 alt="camera"
                 className="photo_view_content_right_spec_img"
               />
               <p className="photo_view_content_right_spec_p">
-                {place && place.photo_camera}
+                {place && place.photo_camera ? place.photo_camera : "нет"}
               </p>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Стоимость" className="photo_view_content_right_spec">
                 <img
                   src={Money}
                   alt="cost"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {place && place.cost}
+                  {place && place.cost ? place.cost : "нет"}
                 </p>
               </div>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Оплата" className="photo_view_content_right_spec">
                 <img
                   src={Work}
                   alt="payment"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {place && place.payment}
+                  {place && place.payment ? place.payment : "нет"}
                 </p>
               </div>
             </div>
@@ -453,39 +453,39 @@ const PublicPlaceView = ({ setProfileId }) => {
             )}
           </div>
           <div className="photo_view_content_right_specs">
-            <div className="photo_view_content_right_spec">
+            <div title="Камера" className="photo_view_content_right_spec">
               <img
                 src={Camera}
                 alt="camera"
                 className="photo_view_content_right_spec_img"
               />
               <p className="photo_view_content_right_spec_p">
-                {place && place.photo_camera}
+                {place && place.photo_camera ? place.photo_camera : "нет"}
               </p>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Стоимость" className="photo_view_content_right_spec">
                 <img
                   src={Money}
                   alt="cost"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {place && place.cost}
+                  {place && place.cost ? place.cost : "нет"}
                 </p>
               </div>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Оплата" className="photo_view_content_right_spec">
                 <img
                   src={Work}
                   alt="payment"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {place && place.payment}
+                  {place && place.payment ? place.payment : "нет"}
                 </p>
               </div>
             </div>
@@ -525,6 +525,7 @@ const PublicPlaceView = ({ setProfileId }) => {
         changePhoto={changePhoto}
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
+        slider={photos && photos.length > 1}
       />
     </div>
   );

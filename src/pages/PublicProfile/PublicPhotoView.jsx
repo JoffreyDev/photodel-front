@@ -293,59 +293,62 @@ const PublicPhotoView = ({ setProfileId }) => {
             )}
           </div>
           <div className="photo_view_content_right_specs mobile">
-            <div className="photo_view_content_right_spec">
+            <div title="Камера" className="photo_view_content_right_spec">
               <img
                 src={Camera}
                 alt="camera"
                 className="photo_view_content_right_spec_img"
               />
               <p className="photo_view_content_right_spec_p">
-                {photo && photo.photo_camera}
+                {photo && photo.photo_camera ? photo.photo_camera : "нет"}
               </p>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Диафрагма" className="photo_view_content_right_spec">
                 <img
                   src={Aperture}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.aperture}
+                  {photo && photo.aperture ? photo.aperture : "нет"}
                 </p>
               </div>
-              <div className="photo_view_content_right_spec">
+              <div
+                title="Фокусное расстояние"
+                className="photo_view_content_right_spec"
+              >
                 <img
                   src={FocalLength}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.focal_len}
+                  {photo && photo.focal_len ? photo.focal_len : "нет"}
                 </p>
               </div>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Выдержка" className="photo_view_content_right_spec">
                 <img
                   src={Timer}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.excerpt}
+                  {photo && photo.excerpt ? photo.excerpt : "нет"}
                 </p>
               </div>
-              <div className="photo_view_content_right_spec">
+              <div title="ISO" className="photo_view_content_right_spec">
                 <img
                   src={ISO}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.iso}
+                  {photo && photo.iso ? photo.iso : "нет"}
                 </p>
               </div>
             </div>
@@ -451,59 +454,62 @@ const PublicPhotoView = ({ setProfileId }) => {
             )}
           </div>
           <div className="photo_view_content_right_specs">
-            <div className="photo_view_content_right_spec">
+            <div title="Камера" className="photo_view_content_right_spec">
               <img
                 src={Camera}
                 alt="camera"
                 className="photo_view_content_right_spec_img"
               />
               <p className="photo_view_content_right_spec_p">
-                {photo && photo.photo_camera}
+                {photo && photo.photo_camera ? photo.photo_camera : "нет"}
               </p>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Диафрагма" className="photo_view_content_right_spec">
                 <img
                   src={Aperture}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.aperture}
+                  {photo && photo.aperture ? photo.aperture : "нет"}
                 </p>
               </div>
-              <div className="photo_view_content_right_spec">
+              <div
+                title="Фокусное расстояние"
+                className="photo_view_content_right_spec"
+              >
                 <img
                   src={FocalLength}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.focal_len}
+                  {photo && photo.focal_len ? photo.focal_len : "нет"}
                 </p>
               </div>
             </div>
 
             <div className="photo_view_content_right_spec_row">
-              <div className="photo_view_content_right_spec">
+              <div title="Выдержка" className="photo_view_content_right_spec">
                 <img
                   src={Timer}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.excerpt}
+                  {photo && photo.excerpt ? photo.excerpt : "нет"}
                 </p>
               </div>
-              <div className="photo_view_content_right_spec">
+              <div title="ISO" className="photo_view_content_right_spec">
                 <img
                   src={ISO}
                   alt="camera"
                   className="photo_view_content_right_spec_img"
                 />
                 <p className="photo_view_content_right_spec_p">
-                  {photo && photo.iso}
+                  {photo && photo.iso ? photo.iso : "нет"}
                 </p>
               </div>
             </div>

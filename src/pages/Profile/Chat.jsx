@@ -50,6 +50,19 @@ const Chat = () => {
       if (data.hasOwnProperty("messages")) {
         setData(data);
         setMessages(data.messages);
+
+        mainSocket.current.send(
+          JSON.stringify({
+            command: "update_chat_status",
+            message_ids: data.messages
+              .filter(
+                (message) =>
+                  message.surname !== userData.surname ||
+                  message.name !== userData.name
+              )
+              .map((message) => message.id),
+          })
+        );
       }
       if (data.command === "new_message") {
         setMessages((prev) => [...prev, data.message]);

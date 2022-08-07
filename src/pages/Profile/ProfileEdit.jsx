@@ -193,6 +193,9 @@ const ProfileEdit = ({ setActiveModule }) => {
     } else if (!location) {
       dispatch(openErrorAlert("Вы не указали ваше местоположение!"));
       return;
+    } else if (!about) {
+      dispatch(openErrorAlert("Напишите пару слов о себе. Это обязательно!"));
+      return;
     }
 
     Requests.updateOwnProfile({
@@ -301,7 +304,7 @@ const ProfileEdit = ({ setActiveModule }) => {
           <div className="my_profile_header_middle_row">
             <div className="my_profile_header_middle_row_status">
               <div className="reg_auth_content_input_wrapper">
-                {status && (
+                {status !== undefined && (
                   <SelectInput
                     values={[
                       {
@@ -330,7 +333,7 @@ const ProfileEdit = ({ setActiveModule }) => {
         <p className="my_profile_common_data_title">Общие данные</p>
         <div className="my_profile_common_data_content edit">
           <div className="my_profile_common_data_content_left_inputs">
-            {category && (
+            {category !== undefined && (
               <SelectInput
                 values={
                   categories &&

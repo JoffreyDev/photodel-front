@@ -35,6 +35,7 @@ const Requests = () => {
 
       if (data.hasOwnProperty("request_chat_info")) {
         setRequests(data.request_chat_info);
+        setDataLoading(false);
       }
 
       console.log(data);

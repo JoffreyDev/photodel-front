@@ -186,32 +186,25 @@ const AddPlace = () => {
     } else if (!category) {
       dispatch(openErrorAlert("Не указана категория!"));
       return;
+    } else if (!cost) {
+      dispatch(openErrorAlert("Указание стоимости обязательно!"));
+    } else if (!camera) {
+      dispatch(openErrorAlert("Указание камеры обязательно!"));
     }
-    sendPhotosArray.forEach((photo, idx) => {
-      Requests.createImage(photo).then((res) => {
-        uploadedPhotos.push(res.data.id);
-        if (idx === mainPhoto) {
-          mainPhotoId = res.data.id;
-        }
-        if (uploadedPhotos.length === sendPhotosArray.length) {
-          Requests.createFilmPlace({
-            name_place: title,
-            description: description,
-            place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
-            string_place_location: addressLine,
-            session_сategory: category,
-            place_image: uploadedPhotos,
-            photo_camera: camera,
-            cost: cost,
-            payment: paymentType,
-            category: category.map((category) => category.id),
-            main_photo: mainPhotoId,
-          }).then(() => {
-            dispatch(openSuccessAlert("Место для съемки успешно добавлено!"));
-            navigate("/profile/places");
-          });
-        } else return;
-      });
+    Requests.createFilmPlace({
+      name_place: title,
+      description: description,
+      place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
+      string_place_location: addressLine,
+      session_сategory: category,
+      photo_camera: camera,
+      cost: cost,
+      payment: paymentType,
+      category: category.map((category) => category.id),
+      main_photo: mainPhotoId,
+    }).then(() => {
+      dispatch(openSuccessAlert("Место для съемки успешно обновлено!"));
+      navigate("/profile/places");
     });
   };
 

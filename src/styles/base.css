@@ -25,31 +25,29 @@ li, input {
 }
 
 .rec.rec-arrow:hover {
-  background-color: #ffffff !important;
+  background-color: #ffffff ;
   color: transparent !important;
   outline: none !important;
-  border: none;
 }
 
 .rec.rec-arrow:focus {
-  background-color: #ffffff !important;
+  background-color: #ffffff ;
   color: transparent !important;
   outline: none !important;
-  border: none;
 }
 
 .rec-arrow-left {
-  background-image: url("../img/commonImages/left_arrow.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  left: -10px;
+  background-image: url("../img/commonImages/left_arrow.svg") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  left: -10px !important;
 }
 
 .rec-arrow-right {
-  background-image: url("../img/commonImages/right_arrow.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  right: -10px;
+  background-image: url("../img/commonImages/right_arrow.svg") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  right: -10px !important;
 }
 
 .ymaps-2-1-79-map.ymaps-2-1-79-map ymaps,

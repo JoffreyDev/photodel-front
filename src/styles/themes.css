@@ -1,0 +1,767 @@
+:root[data-theme="light"] {
+    --background-color: #fafafa;
+    --secondary-text-color: #000000;
+    --arrows-back: #ffffff;
+    --arrows-hover: #ffffff;
+    --arrows-border:  1px solid #D2D9D8;
+    --background-color-2: #F4F7F6;
+}
+
+:root[data-theme="dark"] {
+    --background-color: #202424;
+    --secondary-text-color: #FFFFFF;
+    --arrows-back: #202424;
+    --arrows-hover: #2a3030;
+    --arrows-border:  1px solid #5D6565;
+    --background-color-2: #353A3A;
+}
+
+html {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.main_page_second_section_wrapper {
+    background: var(--background-color);
+    transition: 0.3s;
+}
+
+.main_page_second_section_content_slider_card_rating_mark {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_second_section_content_slider_card_profession {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.rec.rec-arrow {
+    background-color: var(--arrows-back);
+    border: var(--arrows-border);
+    transition: 0.3s;
+   
+}
+
+.rec.rec-arrow:hover {
+    background-color: var(--arrows-hover) !important;
+    transition: 0.3s;
+    
+}
+
+.rec.rec-arrow:focus {
+    background-color: var(--arrows-back) !important;
+    transition: 0.3s;
+}
+
+.main_page_middle_block__search-input {
+    background-color: var(--background-color) ;
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.main_page_third_section_wrapper {
+    background-color: var(--background-color-2);
+    transition: 0.3s;
+}
+
+.main_page_third_section_content_slider_card_rating_count_likes {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_survey_section_content_survey_table {
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.main_page_survey_section_content_survey_table_label {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_last_comments_section_wrapper {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.main_page_last_comments_section_content_comment_content {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_about_section_wrapper {
+    background-color: var(--background-color-2);
+    transition: 0.3s;
+}
+
+.main_page_about_section_content_card_title {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_about_section_content_card_text__2_first {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_about_section_content_card_text__2 {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_survey_section_adv_title {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_popular_photos_section_wrapper {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.main_page_survey_section_wrapper {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.main_page_survey_section_adv_info {
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.main_page_survey_section_adv_link:hover {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_header_loc_select_popup {
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.main_page_header_loc_select_popup_content_cities_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.css-u4i9lb-MuiFormControl-root .MuiFilledInput-root {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.common_text_input {
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+    background-color: var(--background-color) !important;
+    transition: 0.3s;
+}
+
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+    color: var(--secondary-text-color) !important;
+    transition: 0.3s;
+}
+
+.main_page_header_top_row_popup {
+    background-color: var(--background-color);
+        border: var(--arrows-border);
+    transition: 0.3s;
+    
+}
+
+.main_page_header_top_row_popup_top_name {
+    color: var(--secondary-text-color);
+
+    transition: 0.3s;
+}
+
+.reg_auth_content {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.reg_auth_header_title {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.reg_auth_content_input{
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.common_checkbox+label {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_page_profile_popup_wrapper {
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.main_page_profile_popup_li {
+    color: var(--secondary-text-color);
+  
+    transition: 0.3s; }
+
+.main_page_profile_popup_li:hover {
+    background-color: var(--background-color-2);
+    transition: 0.3s;
+    
+}
+
+.main_basis {
+    background-color: var(--background-color);
+    transition: 0.3s;
+    
+}
+
+.css-lqr6jm-MuiFormControl-root .MuiFilledInput-root {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.css-lqr6jm-MuiFormControl-root {
+    border: var(--arrows-border) !important;
+    transition: 0.3s;
+}
+
+.main_photo_header_sorts_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.css-kt9gza-MuiFormControl-root #demo-simple-select-filled {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.profile_card_info_third_category {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.profile_card_info_second_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+    fill: var(--secondary-text-color) !important;
+    transition: 0.3s;
+}
+
+.css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon {
+    fill: var(--secondary-text-color) !important;
+    transition: 0.3s;
+}
+
+.css-1ogz18x-MuiButtonBase-root-MuiPaginationItem-root {
+    color: var(--secondary-text-color) !important;
+    transition: 0.3s;
+}
+
+.profile_card {
+    border-bottom: var(--arrows-border) !important;
+    transition: 0.3s;
+}
+
+.main_photo_header_sorts {
+    border-bottom: var(--arrows-border) !important;
+    transition: 0.3s;
+}
+
+.sessions_card_info_comm_likes_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.sessions_card_profile_name {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.sessions_card_info_comm_comments_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.sessions_card_info_comm_fave_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.sessions_card_info {
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.main_photo_header_fields_map_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.main_page_header_bottom_row_left {
+    height: 32px;
+}
+
+.my_profile_common_data_content_left_li {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.profile_basis_module_choice_p.active {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.profile_basis_module_choice_p:hover {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.profile_basis_module_choice_li:hover {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_header_middle_row_registered_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_header_middle_row_status_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_common_data_content_right_li {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_header_upper_row_name {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_header_upper_row_rating_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_about_content_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_stats_content_upper_key {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_stats_content_upper_value {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_stats_content_lower_key {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_stats_content_lower_value {
+color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_requests_content_upper_key {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_requests_content_upper_value {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.messages_header_h1 {
+color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.messages_chat_info_low_left_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.chat_message_content {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.chat_lower_table {
+    background-color: var(--background-color-2);
+    transition: 0.3s;
+}
+
+.messages_chat_wrapper:hover {
+    background-color: var(--background-color-2);
+    transition: 0.3s;
+}
+
+.my_profile_header_middle_row_buttons_mail_p {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_contacts_content_row_p.black {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.public_view_profile_header_left_name {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.public_view_profile_header_right_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photos_header_title_first.active {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+
+.albums_header_title_first.active {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.albums_card_info_comm_count {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.albums_card_info {
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.albums_view_lower_header_left_title {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.albums_view_lower_header_left_desc {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photos_card_info_comm_likes_p, .photos_card_info_comm_comments_p, .photos_card_info_comm_fave_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photos_card_info {
+    border: var(--arrows-border);
+        transition: 0.3s;
+}
+
+.photo_view_content_left_activities_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photo_view_content_right_geo_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+    
+}
+.photo_view_content_right_spec_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photo_view_content_left_title {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photo_view_content_left_description {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photo_view_content_left_textarea_field {
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.photo_view_content_right_categories_title {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photo_view_content_right_categories_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.photo_view_content_right_albums_title {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.reviews_comment_lower_article {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.requests_public_preview_data_middle {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.requests_public_preview_data_lower_status_p {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.favorites_header_title_first.active {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_geolocation_popup {
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.my_profile_geolocation_popup_content_upper_title {
+color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_geolocation_popup_content_table_left {
+color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_geolocation_popup_content_table_right {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.my_profile_geolocation_popup_content_message {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+}
+
+.my_profile_about_textarea {
+    color: var(--secondary-text-color);
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+        transition: 0.3s;
+}
+
+.reg_auth_content {
+    border: var(--arrows-border);
+        transition: 0.3s;
+}
+
+.chat_request_first_message_data_body_left_p {
+    color: var(--secondary-text-color);
+       
+        transition: 0.3s;
+}
+
+.chat_request_first_message_data_body_right_p {
+    color: var(--secondary-text-color);
+
+    transition: 0.3s;
+}
+
+.messages_chat_info_request_status_p {
+    color: var(--secondary-text-color);
+    
+        transition: 0.3s;
+}
+
+.photos_options_left_p {
+    color: var(--secondary-text-color);
+    
+        transition: 0.3s;
+}
+
+.add_photo_left_content_textarea {
+    color: var(--secondary-text-color);
+        background-color: var(--background-color);
+        border: var(--arrows-border);
+        transition: 0.3s;
+}
+
+.css-di1djx-MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
+    background-color: var(--background-color) !important;
+    color: var(--secondary-text-color) !important;
+
+    transition: 0.3s;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+    fill: var(--secondary-text-color) !important;
+}
+
+.css-1pysi21-MuiFormLabel-root-MuiInputLabel-root {
+    color: var(--secondary-text-color) !important;
+    font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border: var(--arrows-border) !important;
+}
+
+.MuiAutocomplete-listbox {
+    background-color: var(--background-color);
+}
+
+.MuiAutocomplete-option {
+    color: var(--secondary-text-color) !important;
+    
+        transition: 0.3s;
+}
+
+.add_photo_right_content_window {
+    background-color: var(--background-color-2);
+}
+
+.places_options_left_p {
+    color: var(--secondary-text-color) !important;
+    
+        transition: 0.3s;
+}
+
+.sessions_options_left_p {
+    color: var(--secondary-text-color) !important;
+    
+        transition: 0.3s;
+}
+
+.sessions_header_title {
+    color: var(--secondary-text-color) !important;
+    
+        transition: 0.3s;
+}
+
+.places_header_title {
+    color: var(--secondary-text-color) !important;
+    
+        transition: 0.3s;
+}
+
+.add_session_left_content_textarea {
+    color: var(--secondary-text-color);
+        background-color: var(--background-color);
+        border: var(--arrows-border);
+        transition: 0.3s;
+}
+
+.add_session_right_content_window {
+    background-color: var(--background-color-2);
+    transition: 0.3s;
+}
+
+.css-u4i9lb-MuiFormControl-root {
+    border: var(--arrows-border) !important;
+    transition: 0.3s;
+}
+
+.add_session_left_content_date {
+    color: var(--secondary-text-color);
+        background-color: var(--background-color);
+        border: var(--arrows-border);
+        transition: 0.3s;
+}
+
+.css-cex1ht-MuiFormControl-root {
+    border: var(--arrows-border) !important;
+    transition: 0.3s;
+}
+
+.css-cex1ht-MuiFormControl-root .MuiFilledInput-root {
+    color: var(--secondary-text-color) !important;
+    transition: 0.3s;
+}
+
+.css-1ofa2g1-MuiFormControl-root {
+    color: var(--secondary-text-color);
+        transition: 0.3s;
+        border: var(--arrows-border) !important;
+}
+
+.css-1ofa2g1-MuiFormControl-root .MuiFilledInput-root {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-1auycx3-MuiAutocomplete-root .MuiOutlinedInput-root {
+    background-color: var(--background-color) !important;
+    transition: 0.3s;
+}
+
+.css-ptiqhd-MuiSvgIcon-root {
+    fill: var(--secondary-text-color) !important;
+    transition: 0.3s;
+}
+
+.common_location_input {
+    color: var(--secondary-text-color);
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+    transition: 0.3s;
+}
+
+.css-1auycx3-MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
+    background-color: var(--background-color) !important;
+    transition: 0.3s;
+}
+
+.bm-menu {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.bm-item.menu-item {
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}
+
+.main_photo_body {
+    background-color: var(--background-color);
+    transition: 0.3s;
+}
+
+.main_photo_header_middle_filters {
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+    transition: 0.3s;
+}

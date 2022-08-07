@@ -89,6 +89,6 @@ function MUISwitch(props) {
   );
 }
 
-export default function UseSwitchesCustom() {
-  return <MUISwitch defaultChecked />;
+export default function UseSwitchesCustom(onChange, value) {
+  return <MUISwitch onChange={onChange} value={value} defaultChecked />;
 }

@@ -181,7 +181,7 @@ const AddSession = () => {
       dispatch(openErrorAlert("Не указано местоположение!"));
       return;
     } else if (!category) {
-      dispatch(openErrorAlert("Не указана категория!"));
+      dispatch(openErrorAlert("Не указан тип фотосессии!"));
       return;
     } else if (!date) {
       dispatch(openErrorAlert("Не указана дата съемки!"));

@@ -46,10 +46,12 @@ import {
   Requests,
   RequestChat,
   EditSession,
+  EditPlace,
 } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import { ScreenLoader } from "../../components";
 import { useSelector } from "react-redux";
+import { ThemeContext, themes } from "../../components/Theme/ThemeContext";
 
 const ProfileBasis = ({ mainSocket }) => {
   const params = useParams();
@@ -72,7 +74,11 @@ const ProfileBasis = ({ mainSocket }) => {
 
   return (
     <div>
-      <Header styled={"themed"} />
+      <ThemeContext.Consumer>
+        {({ theme, setTheme }) => (
+          <Header styled={theme === "dark" ? "main" : "themed"} border={true} />
+        )}
+      </ThemeContext.Consumer>
       <div className="profile_basis">
         <div className="profile_basis_content">
           <div className="profile_basis_module_choice">
@@ -377,6 +383,7 @@ const ProfileBasis = ({ mainSocket }) => {
             {component === "edit-session" && (
               <EditSession component={component} />
             )}
+            {component === "edit-place" && <EditPlace component={component} />}
           </div>
         </div>
       </div>

@@ -57,6 +57,7 @@ const RequestWindow = ({ active, setActive, user, width, notAlign }) => {
       })
         .then(() => {
           dispatch(openSuccessAlert("Запрос успешно отправлен!"));
+          setActive(false);
         })
         .catch(() => dispatch(openErrorAlert("Произошла ошибка")));
     } else {
@@ -99,7 +100,11 @@ const RequestWindow = ({ active, setActive, user, width, notAlign }) => {
           <div className="reg_auth_header">
             <h1 className="reg_auth_header_title">Запрос на съемку</h1>
             <svg
-              style={{ padding: "5px", boxSizing: "content-box" }}
+              style={{
+                padding: "5px",
+                boxSizing: "content-box",
+                cursor: "pointer",
+              }}
               onClick={() => setActive(false)}
               width="14"
               height="14"

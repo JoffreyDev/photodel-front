@@ -748,6 +748,45 @@ export class Requests {
     }).then((res) => res);
   }
 
+  static async updateFilmPlace({
+    name_place,
+    place_image,
+    description,
+    photo_camera,
+    cost,
+    payment,
+    place_location,
+    string_place_location,
+    is_hidden,
+    category,
+    main_photo,
+    id,
+  }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        name_place: name_place,
+        place_image: place_image,
+        description: description,
+        photo_camera: photo_camera,
+        cost: cost,
+        payment: payment,
+        place_location: place_location,
+        string_place_location: string_place_location,
+        is_hidden: is_hidden,
+        category: category,
+        main_photo: main_photo,
+      },
+
+      url: `api/film_places/update/${id}/`,
+    }).then((res) => res);
+  }
+
   static async getPlacesList(id, sortField, sortType) {
     return $api({
       method: "GET",
@@ -1348,7 +1387,7 @@ export class Requests {
     session_location,
     string_session_location,
     session_date,
-    session_сategory,
+    session_category,
     photos,
     is_hidden,
     main_photo,
@@ -1366,7 +1405,7 @@ export class Requests {
         session_location: session_location,
         string_session_location: string_session_location,
         session_date: session_date,
-        session_сategory: session_сategory,
+        session_category: session_category,
         main_photo: main_photo,
 
         photos: photos,

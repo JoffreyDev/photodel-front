@@ -555,7 +555,7 @@ const PublicSessionView = ({ setProfileId }) => {
         changePhoto={changePhoto}
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
-        slider
+        slider={photos && photos.length > 1}
       />
     </div>
   );

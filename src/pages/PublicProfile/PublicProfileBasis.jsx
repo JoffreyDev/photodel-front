@@ -36,6 +36,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import PublicProfile from "./PublicProfile";
 import { ScreenLoader } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
+import { ThemeContext, themes } from "../../components/Theme/ThemeContext";
 
 const PublicProfileBasis = ({ mainSocket }) => {
   const params = useParams();
@@ -56,7 +57,11 @@ const PublicProfileBasis = ({ mainSocket }) => {
 
   return (
     <div>
-      <Header styled={"themed"} />
+      <ThemeContext.Consumer>
+        {({ theme, setTheme }) => (
+          <Header styled={theme === "dark" ? "main" : "themed"} border={true} />
+        )}
+      </ThemeContext.Consumer>
       <div className="profile_basis">
         <div className="profile_basis_content">
           <div className="profile_basis_module_choice">

@@ -7,39 +7,44 @@ import {
   GreenButton,
   SelectInput,
   PhotosPreviewCheckbox,
+  AutoCompleteInput,
 } from "../../components";
 import AddImage from "../../img/sessions/add.svg";
 import "../../styles/Profile/AddSession.scss";
 import Requests from "../../http/axios-requests";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { openSuccessAlert, openErrorAlert } from "../../redux/actions/userData";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const EditSession = () => {
+const AddPlace = () => {
   let parsedFiles = [];
-
   const [sendPhotosArray, setSendPhotosArray] = React.useState([]);
 
   const params = useParams();
-  const sessionId = params.id;
+  const placeId = params.id;
 
-  const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
   //состояния для полей и фото
   const [coords, setCoords] = React.useState();
   const [addressLine, setAddressLine] = React.useState();
   const [title, setTitle] = React.useState();
   const [description, setDescription] = React.useState();
-  const [date, setDate] = React.useState();
   const [category, setCategory] = React.useState();
+  const [categories, setCategories] = React.useState();
+  const [camera, setCamera] = React.useState();
+  const [cost, setCost] = React.useState();
+  const [paymentType, setPaymentType] = React.useState();
 
   const [mainPhoto, setMainPhoto] = React.useState(0);
   const [selectedPhotos, setSelectedPhotos] = React.useState([]);
   const [key, setKey] = React.useState();
   const [action, setAction] = React.useState("");
   const [allPhotosSelected, setAllPhotosSelected] = React.useState(false);
-  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
-  const [mapMounted, setMapMounted] = React.useState(false);
+  const uploadedPhotos = [];
+  let mainPhotoId;
+
+  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const navigate = useNavigate();
 
@@ -60,7 +65,6 @@ const EditSession = () => {
           {
             center: [55.753994, 37.622093],
             zoom: 9,
-            controls: ["fullscreenControl", "geolocationControl"],
           },
           {
             searchControlProvider: "yandex#search",
@@ -135,10 +139,7 @@ const EditSession = () => {
 
   //прогружаем карту после подключения скрипта
   React.useEffect(() => {
-    if (!mapMounted) {
-      setTimeout(() => handleLoad(), 3000);
-      setMapMounted(true);
-    }
+    setTimeout(() => handleLoad(), 3000);
   }, []);
 
   //получение base64 фото
@@ -150,32 +151,29 @@ const EditSession = () => {
     reader.readAsDataURL(file);
   }
 
-  //обработчик добавления фотографий
-  const handlePhotoRead = (e) => {
-    if (sendPhotosArray.length + e.target.files.length > 10) {
-      dispatch(openErrorAlert("Максимум 10 изображений!"));
-      return;
-    }
-    parsedFiles = Array.from(e.target.files);
-    parsedFiles.forEach((file) => {
-      if (file.size > 4.9e6) {
-        dispatch(
-          openErrorAlert("Вес одной картинки не может превышать 5 мегабайт!")
-        );
-        return;
-      }
-
-      getBase64(file, function (base64Data) {
-        sendPhotosArray.push(base64Data);
-        setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
-        forceUpdate();
-      });
+  React.useEffect(() => {
+    Requests.getSinglePlace(placeId).then((res) => {
+      setTitle(res.data.name_place);
+      setDescription(res.data.description);
+      setAddressLine(res.data.string_place_location);
+      setCoords(res.data.place_location);
+      setCamera(res.data.photo_camera);
+      setPaymentType(res.data.payment);
+      setCategory(
+        res.data.category.map((category) => {
+          return {
+            id: category.id,
+            name: category.name_category,
+          };
+        })
+      );
+      setCost(res.data.cost);
     });
-  };
+  }, []);
 
   const handleCreate = () => {
-    if (!sendPhotosArray) {
-      dispatch(openErrorAlert("Загрузите фото!"));
+    if (!title) {
+      dispatch(openErrorAlert("Не указано название!"));
       return;
     } else if (!title) {
       dispatch(openErrorAlert("Не указано название!"));
@@ -187,27 +185,35 @@ const EditSession = () => {
       dispatch(openErrorAlert("Не указано местоположение!"));
       return;
     } else if (!category) {
-      dispatch(openErrorAlert("Не указан тип фотосессии!"));
+      dispatch(openErrorAlert("Не указана категория!"));
       return;
-    } else if (!date) {
-      dispatch(openErrorAlert("Не указана дата съемки!"));
-      return;
+    } else if (!cost) {
+      dispatch(openErrorAlert("Указание стоимости обязательно!"));
+    } else if (!camera) {
+      dispatch(openErrorAlert("Указание камеры обязательно!"));
     }
-    Requests.updateSession({
-      session_name: title,
-      session_description: description,
-      session_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
-      string_session_location: addressLine,
-      session_date: date,
-      session_category: category,
-      id: sessionId,
+    Requests.updateFilmPlace({
+      name_place: title,
+      description: description,
+      place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
+      string_place_location: addressLine,
+      photo_camera: camera,
+      cost: cost,
+      payment: paymentType,
+      category: category.map((category) => category.id),
+      main_photo: mainPhotoId,
+      id: placeId,
     })
       .then(() => {
-        dispatch(openSuccessAlert("Фотосессия успешно обновлена!"));
-        navigate("/profile/sessions");
+        dispatch(openSuccessAlert("Место для съемки успешно обновлено!"));
+        navigate("/profile/places");
       })
       .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
+
+  React.useEffect(() => {
+    Requests.getPlacesCategories().then((res) => setCategories(res.data));
+  }, []);
 
   React.useEffect(() => {
     if (action === 1) {
@@ -229,33 +235,15 @@ const EditSession = () => {
     }
   }, [sendPhotosArray]);
 
-  React.useEffect(() => {
-    Requests.getSingleSession(sessionId).then((res) => {
-      setTitle(res.data.session_name);
-      setDescription(res.data.session_description);
-      setCoords(
-        res.data.session_location
-          .split("(")[1]
-          .split(")")[0]
-          .split(" ")
-          .reverse()
-          .map(Number)
-      );
-      setAddressLine(res.data.string_session_location);
-      setDate(res.data.session_date);
-      setCategory(res.data.session_category);
-    });
-  }, [sessionId]);
-
   return (
     <div className="add_session">
       <div className="add_session_header">
         <img src={Back} alt="back" className="add_session_header_arrow" />
         <p
-          onClick={() => navigate("/profile/sessions")}
+          onClick={() => navigate("/profile/places")}
           className="add_session_header_p"
         >
-          Все фотосессии
+          Все места для съемок
         </p>
       </div>
       {sendPhotosArray && sendPhotosArray.length >= 1 && (
@@ -291,6 +279,8 @@ const EditSession = () => {
 
           <div className="photos_options_right">
             <SelectInput
+              label={"Выберите действие"}
+              labelId="demo-multiple-name-label"
               width={200}
               marginBottom={"10px"}
               values={[
@@ -299,8 +289,6 @@ const EditSession = () => {
                   value: "Удалить",
                 },
               ]}
-              label={"Выберите действие"}
-              labelId="demo-multiple-name-label"
               value={action}
               onChange={(e) => setAction(e.target.value)}
             />
@@ -325,10 +313,13 @@ const EditSession = () => {
                         selectedPhotos.splice(selectedPhotos.indexOf(photo), 1);
                         setSelectedPhotos(selectedPhotos);
                         forceUpdate();
+
+                        console.log(selectedPhotos);
                       } else {
                         selectedPhotos.push(photo);
                         setSelectedPhotos(selectedPhotos);
                         forceUpdate();
+                        console.log(selectedPhotos);
                       }
                     }}
                   />
@@ -354,44 +345,67 @@ const EditSession = () => {
             width={"100%"}
             height={"38px"}
             placeholder="Местоположение"
-            label={"Введите местоположение или выберите на карте"}
+            label={"Укажите местоположение на карте, после чего закройте карту"}
             callback={setAddressLine}
             value={addressLine}
           />
           <div id="map" style={{ height: "135px", width: "100%" }}></div>
           <h1 className="add_session_left_content_h1 margin">
-            Данные о фотосессии
+            Данные о съемке
           </h1>
-          <div className="add_session_left_content_date_wrapper">
-            <label
-              htmlFor="date"
-              className="add_session_left_content_date_label"
-            >
-              Дата проведения
-            </label>
-            <input
-              placeholder="Выберите дату"
-              type="date"
-              className="add_session_left_content_date"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          <SelectInput
-            values={
-              prosSpecs &&
-              prosSpecs.map((item) => {
-                return { id: item.id, value: item.name_spec };
-              })
-            }
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            setValue={setCategory}
-            label={"Тип фотосессии"}
+          <TextInput
             width={"100%"}
+            height={"38px"}
+            placeholder="Введите данные"
+            label={"Фотоаппарат"}
+            callback={setCamera}
+            value={camera}
           />
+
+          <TextInput
+            width={"100%"}
+            height={"38px"}
+            placeholder="Введите данные"
+            label={"Стоимость"}
+            callback={setCost}
+            value={cost}
+          />
+
+          {paymentType !== undefined && (
+            <SelectInput
+              values={[
+                { id: "По предоплате", value: "По предоплате" },
+                { id: "По постоплате", value: "По постоплате" },
+                { id: "TFP", value: "TFP" },
+              ]}
+              value={paymentType}
+              onChange={(e) => setPaymentType(e.target.value)}
+              setValue={setPaymentType}
+              label={"Порядок оплаты"}
+              width={"100%"}
+            />
+          )}
+
+          {categories && category !== undefined && (
+            <AutoCompleteInput
+              values={
+                categories &&
+                categories.map((item) => {
+                  return {
+                    id: item.id,
+                    name: item.name_category,
+                  };
+                })
+              }
+              value={category}
+              onChange={(e, value) => {
+                setCategory(value.map((item) => item));
+                console.log(value.map((item) => item));
+              }}
+              placeholder={"Выберите категории"}
+              width={"100%"}
+            />
+          )}
         </div>
       </div>
 
@@ -416,4 +430,4 @@ const EditSession = () => {
   );
 };
 
-export default EditSession;
+export default AddPlace;

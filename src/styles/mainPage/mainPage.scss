@@ -380,7 +380,7 @@
           font-style: normal;
           font-weight: 500;
           font-size: 13px;
-          color: $white;
+          color: black;
         }
 
         &.disabled {
@@ -398,7 +398,7 @@
           font-style: normal;
           font-weight: 500;
           font-size: 13px;
-          color: $white;
+          color: black;
         }
 
         &.disabled {
@@ -1691,4 +1691,17 @@
     .main_page_second_section_content_lower_table {
         justify-content: flex-start;
     }
+
+        .main_page_header_bottom_row_left.mobile {
+          width: 25px;
+          height: 14px;
+        }
+
+        .main_page_header_theme_select {
+          display: none;
+        }
+
+        .main_page_header_theme_select.mobile {
+          display: flex !important;
+        }
 }

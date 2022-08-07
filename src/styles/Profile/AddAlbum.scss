@@ -9,9 +9,11 @@
     align-items: center;
     border-bottom: 1px solid #d2d9d8;
     padding-bottom: 10px;
+          cursor: pointer;
 
     &_arrow {
       margin-right: 9px;
+            cursor: pointer;
     }
 
     &_p {

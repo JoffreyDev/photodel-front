@@ -62,11 +62,19 @@
       flex-direction: column;
 
       &_image {
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          transition: 0.3s;
+          transform: scale(1.01);
+        }
 
         &_arrow {
           position: absolute;
           z-index: 2;
           transition: 0.2s;
+          cursor: pointer;
 
           
 

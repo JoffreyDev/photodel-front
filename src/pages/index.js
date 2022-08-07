@@ -6,6 +6,7 @@ export { default as Sessions } from "./Profile/Sessions";
 export { default as Photos } from "./Profile/Photos";
 export { default as Albums } from "./Profile/Albums";
 export { default as Places } from "./Profile/Places";
+export { default as EditPlace } from "./Profile/EditPlace";
 export { default as EditAlbum } from "./Profile/EditAlbum";
 export { default as AddAlbum } from "./Profile/AddAlbum";
 export { default as AddPhoto } from "./Profile/AddPhoto";

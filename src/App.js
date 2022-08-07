@@ -22,6 +22,9 @@ import Requests, {
 } from "./http/axios-requests";
 import Alert from "./components/PagesArchitecture/Alert";
 import MainBasis from "./pages/Main/MainBasis";
+import "./styles/themes.css";
+import { ThemeContext, themes } from "./components/Theme/ThemeContext";
+import { UseSwitchesCustom } from "./components";
 
 function App() {
   const dispatch = useDispatch();

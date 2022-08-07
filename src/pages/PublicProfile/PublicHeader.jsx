@@ -11,13 +11,15 @@ function PublicHeader({ profile }) {
   const navigate = useNavigate();
   return (
     <div className="public_view_profile_header">
-      <div className="public_view_profile_header_left">
+      <div
+        onClick={() => navigate(`/public/profile/${profile.id}`)}
+        className="public_view_profile_header_left"
+      >
         {profile && (
           <img
             src={profile && `data:image/png;base64,${profile.avatar}`}
             alt="avatar"
             className="public_view_profile_header_left_avatar"
-            onClick={() => navigate(`/public/profile/${profile.id}`)}
           />
         )}
 

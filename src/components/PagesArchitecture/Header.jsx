@@ -26,8 +26,9 @@ import MenuImg from "../../img/commonImages/menu.svg";
 import MenuGreenImg from "../../img/commonImages/menuGreen.svg";
 import { slide as Menu } from "react-burger-menu";
 import "../../styles/mainPage/burger.css";
+import { ThemeContext, themes } from "../Theme/ThemeContext";
 
-const Header = ({ styled }) => {
+const Header = ({ styled, border }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -93,6 +94,32 @@ const Header = ({ styled }) => {
           >
             Фотографии
           </a>
+          <div className="main_page_header_theme_select mobile">
+            <ThemeContext.Consumer>
+              {({ theme, setTheme }) => (
+                <p className="main_page_header_theme_p__left disabled">
+                  Темная
+                </p>
+              )}
+            </ThemeContext.Consumer>
+
+            <ThemeContext.Consumer>
+              {({ theme, setTheme }) =>
+                UseSwitchesCustom(() => {
+                  if (theme === themes.light) setTheme(themes.dark);
+                  if (theme === themes.dark) setTheme(themes.light);
+                }, theme === themes.dark)
+              }
+            </ThemeContext.Consumer>
+
+            <ThemeContext.Consumer>
+              {({ theme, setTheme }) => (
+                <p className="main_page_header_theme_p__left disabled">
+                  Светлая
+                </p>
+              )}
+            </ThemeContext.Consumer>
+          </div>
         </Menu>
       </div>
       <div className="main_page_header_container">
@@ -100,20 +127,33 @@ const Header = ({ styled }) => {
           <div className="main_page_header_top_row">
             <div className="main_page_header_top_row_left">
               <LocationPopUp styled={styled} />
-              {false && (
-                <div className="main_page_header_theme_select">
-                  <p className="main_page_header_theme_p__left disabled">
-                    Темная
-                  </p>
-                  {UseSwitchesCustom()}
-                  <p
-                    style={styled === "themed" ? { color: "#000000" } : {}}
-                    className="main_page_header_theme_p__right active"
-                  >
-                    Светлая
-                  </p>
-                </div>
-              )}
+
+              <div className="main_page_header_theme_select">
+                <ThemeContext.Consumer>
+                  {({ theme, setTheme }) => (
+                    <p className="main_page_header_theme_p__left disabled">
+                      Темная
+                    </p>
+                  )}
+                </ThemeContext.Consumer>
+
+                <ThemeContext.Consumer>
+                  {({ theme, setTheme }) =>
+                    UseSwitchesCustom(() => {
+                      if (theme === themes.light) setTheme(themes.dark);
+                      if (theme === themes.dark) setTheme(themes.light);
+                    }, theme === themes.dark)
+                  }
+                </ThemeContext.Consumer>
+
+                <ThemeContext.Consumer>
+                  {({ theme, setTheme }) => (
+                    <p className="main_page_header_theme_p__left disabled">
+                      Светлая
+                    </p>
+                  )}
+                </ThemeContext.Consumer>
+              </div>
             </div>
             <div className="main_page_header_top_row_right">
               {false && (
@@ -206,7 +246,13 @@ const Header = ({ styled }) => {
             </div>
           </div>
           <hr
-            style={styled === "main" ? { opacity: 0 } : {}}
+            style={
+              styled === "themed" && border
+                ? { opacity: 100 }
+                : styled === "main" && border
+                ? { opacity: 100, backgroundColor: "#5D6565" }
+                : { opacity: 0 }
+            }
             className="main_page_header_top_row_hr"
           ></hr>
 
@@ -328,7 +374,13 @@ const Header = ({ styled }) => {
             </div>
           </div>
           <hr
-            style={styled === "main" ? { opacity: 0 } : {}}
+            style={
+              styled === "themed" && border
+                ? { opacity: 100 }
+                : styled === "main" && border
+                ? { opacity: 100, backgroundColor: "#5D6565" }
+                : { opacity: 0 }
+            }
             className="main_page_header_bottom_row_hr"
           ></hr>
         </div>

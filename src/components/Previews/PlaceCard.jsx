@@ -70,6 +70,7 @@ const PlaceCard = ({
               src={Edit}
               alt="edit"
               className="sessions_card_info_title_img"
+              onClick={() => navigate(`/profile/edit-place/${place.id}`)}
             />
           )}
         </div>

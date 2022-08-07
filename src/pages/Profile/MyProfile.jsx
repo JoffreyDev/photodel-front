@@ -313,7 +313,7 @@ const MyProfile = () => {
                 </tr>
               )}
 
-              {userData && JSON.parse(userData.languages.length) >= 1 && (
+              {userData && JSON.parse(userData.languages).length >= 1 && (
                 <tr>
                   <td className="my_profile_common_data_content_left_li">
                     {" "}

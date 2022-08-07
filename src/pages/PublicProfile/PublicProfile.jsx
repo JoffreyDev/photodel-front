@@ -346,19 +346,20 @@ const PublicProfile = ({ setProfileId }) => {
                   </tr>
                 )}
 
-                {profileData && profileData.spec_model_or_photographer && (
-                  <tr>
-                    <td className="my_profile_common_data_content_left_li">
-                      Специализация:
-                    </td>
-                    <td className="my_profile_common_data_content_right_li">
-                      {profileData &&
-                        profileData.spec_model_or_photographer
-                          .map((spec) => spec.name_spec)
-                          .join(", ")}
-                    </td>
-                  </tr>
-                )}
+                {profileData &&
+                  profileData.spec_model_or_photographer.length >= 1 && (
+                    <tr>
+                      <td className="my_profile_common_data_content_left_li">
+                        Специализация:
+                      </td>
+                      <td className="my_profile_common_data_content_right_li">
+                        {profileData &&
+                          profileData.spec_model_or_photographer
+                            .map((spec) => spec.name_spec)
+                            .join(", ")}
+                      </td>
+                    </tr>
+                  )}
 
                 {profileData && profileData.filming_geo.length >= 1 && (
                   <tr>
