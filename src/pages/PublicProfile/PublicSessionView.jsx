@@ -130,6 +130,7 @@ const PublicSessionView = ({ setProfileId }) => {
       Requests.getSinglePhoto(sessionId)
         .then((res) => {
           setSession(res.data);
+          setComment("");
         })
         .then(() => {
           Requests.getPhotoComments(sessionId).then((res) => {

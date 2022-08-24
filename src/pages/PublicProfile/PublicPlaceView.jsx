@@ -129,6 +129,7 @@ const PublicPlaceView = ({ setProfileId }) => {
       Requests.getSinglePlace(placeId)
         .then((res) => {
           setPlace(res.data);
+          setComment("");
         })
         .then(() => {
           Requests.getPlaceComments(placeId).then((res) => {

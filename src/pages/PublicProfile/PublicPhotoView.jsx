@@ -135,6 +135,7 @@ const PublicPhotoView = ({ setProfileId }) => {
   const handleComment = () => {
     Requests.createPhotoComment(photoId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
+      setComment("");
       Requests.getSinglePhoto(photoId)
         .then((res) => {
           setPhoto(res.data);
