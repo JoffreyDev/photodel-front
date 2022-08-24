@@ -191,7 +191,7 @@ const PublicProfile = ({ setProfileId }) => {
                               .split("")
                               .splice(5, 2)
                               .join("") === "08"
-                          ? "авугста"
+                          ? "августа"
                           : profileData.date_register
                               .split("")
                               .splice(5, 2)

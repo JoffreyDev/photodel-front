@@ -60,7 +60,7 @@ const ChatBlock = ({ data }) => {
                     ? "июля"
                     : data.date_last_message.split("").splice(5, 2).join("") ===
                       "08"
-                    ? "авугста"
+                    ? "августа"
                     : data.date_last_message.split("").splice(5, 2).join("") ===
                       "09"
                     ? "сентября"

@@ -42,7 +42,7 @@ const RequestFirstMessageBlock = ({ message }) => {
                 : message.timestamp.split("").splice(5, 2).join("") === "07"
                 ? "июля"
                 : message.timestamp.split("").splice(5, 2).join("") === "08"
-                ? "авугста"
+                ? "августа"
                 : message.timestamp.split("").splice(5, 2).join("") === "09"
                 ? "сентября"
                 : message.timestamp.split("").splice(5, 2).join("") === "10"

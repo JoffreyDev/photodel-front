@@ -137,7 +137,7 @@ const MyProfile = () => {
                               .split("")
                               .splice(5, 2)
                               .join("") === "08"
-                          ? "авугста"
+                          ? "августа"
                           : userData.date_register
                               .split("")
                               .splice(5, 2)

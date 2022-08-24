@@ -108,7 +108,7 @@ const Header = ({ styled, border }) => {
                 UseSwitchesCustom(() => {
                   if (theme === themes.light) setTheme(themes.dark);
                   if (theme === themes.dark) setTheme(themes.light);
-                }, theme === themes.dark)
+                }, theme === themes.light)
               }
             </ThemeContext.Consumer>
 
@@ -142,7 +142,7 @@ const Header = ({ styled, border }) => {
                     UseSwitchesCustom(() => {
                       if (theme === themes.light) setTheme(themes.dark);
                       if (theme === themes.dark) setTheme(themes.light);
-                    }, theme === themes.dark)
+                    }, theme === themes.light)
                   }
                 </ThemeContext.Consumer>
 

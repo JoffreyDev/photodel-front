@@ -41,7 +41,7 @@ const Comment = ({ comment }) => {
                 : comment.timestamp.split("").splice(5, 2).join("") === "07"
                 ? "июля"
                 : comment.timestamp.split("").splice(5, 2).join("") === "08"
-                ? "авугста"
+                ? "августа"
                 : comment.timestamp.split("").splice(5, 2).join("") === "09"
                 ? "сентября"
                 : comment.timestamp.split("").splice(5, 2).join("") === "10"

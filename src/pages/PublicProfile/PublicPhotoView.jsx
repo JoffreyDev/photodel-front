@@ -217,7 +217,7 @@ const PublicPhotoView = ({ setProfileId }) => {
                     : photo.was_added.split("").splice(5, 2).join("") === "07"
                     ? "июля"
                     : photo.was_added.split("").splice(5, 2).join("") === "08"
-                    ? "авугста"
+                    ? "августа"
                     : photo.was_added.split("").splice(5, 2).join("") === "09"
                     ? "сентября"
                     : photo.was_added.split("").splice(5, 2).join("") === "10"

@@ -258,7 +258,7 @@ const PublicPlaceView = ({ setProfileId }) => {
                     : place.was_added.split("").splice(5, 2).join("") === "07"
                     ? "июля"
                     : place.was_added.split("").splice(5, 2).join("") === "08"
-                    ? "авугста"
+                    ? "августа"
                     : place.was_added.split("").splice(5, 2).join("") === "09"
                     ? "сентября"
                     : place.was_added.split("").splice(5, 2).join("") === "10"

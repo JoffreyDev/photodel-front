@@ -73,7 +73,7 @@ const Chat = () => {
   }, [socketReconnect]);
 
   const keyDownHandler = (event) => {
-    if (!message) {
+    if (!message.trim()) {
       return;
     }
     if (event.keyCode === 13) {
@@ -89,7 +89,7 @@ const Chat = () => {
   };
 
   const sendMessageHandle = (event) => {
-    if (!message) {
+    if (!message.trim()) {
       return;
     }
     mainSocket.current.send(

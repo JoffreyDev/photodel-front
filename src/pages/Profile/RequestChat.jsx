@@ -80,7 +80,7 @@ const RequestChat = () => {
   }, [socketReconnect]);
 
   const keyDownHandler = (event) => {
-    if (!message) {
+    if (!message.trim()) {
       return;
     }
     if (event.keyCode === 13) {
@@ -96,7 +96,7 @@ const RequestChat = () => {
   };
 
   const sendMessageHandle = (event) => {
-    if (!message) {
+    if (!message.trim()) {
       return;
     }
     mainSocket.current.send(

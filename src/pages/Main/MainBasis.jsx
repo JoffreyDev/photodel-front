@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { MainPhoto, MainPlaces, MainProfiles } from "..";
 import "../../styles/Main/MainBasis.scss";
 import { ThemeContext, themes } from "../../components/Theme/ThemeContext";
-import { ThemeProvider } from "styled-components";
 
 const MainBasis = () => {
   const params = useParams();

@@ -529,6 +529,7 @@ const ProfileEdit = ({ setActiveModule }) => {
                     returnValue={"range"}
                     selectRange={true}
                     value={tempDate}
+                    activeStartDate={new Date()}
                   />
                 </div>
               </div>

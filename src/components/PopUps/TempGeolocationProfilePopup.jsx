@@ -96,18 +96,20 @@ const TempGeolocationProfilePopup = ({
                   {string_location}
                 </td>
               </tr>
-              <tr>
-                <td className="my_profile_geolocation_popup_content_table_left">
-                  Даты пребывания
-                </td>
-                <td className="my_profile_geolocation_popup_content_table_right">
-                  {`${date_stay_start
-                    .split("T")[0]
-                    .replaceAll("-", ".")} - ${date_stay_end
-                    .split("T")[0]
-                    .replaceAll("-", ".")}`}
-                </td>
-              </tr>
+              {date_stay_start && date_stay_end && (
+                <tr>
+                  <td className="my_profile_geolocation_popup_content_table_left">
+                    Даты пребывания
+                  </td>
+                  <td className="my_profile_geolocation_popup_content_table_right">
+                    {`${date_stay_start
+                      .split("T")[0]
+                      .replaceAll("-", ".")} - ${date_stay_end
+                      .split("T")[0]
+                      .replaceAll("-", ".")}`}
+                  </td>
+                </tr>
+              )}
             </table>
             <p className="my_profile_geolocation_popup_content_message">
               {message}

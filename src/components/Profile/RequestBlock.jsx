@@ -76,7 +76,7 @@ const RequestBlock = ({ request }) => {
                         .split("")
                         .splice(5, 2)
                         .join("") === "08"
-                    ? "авугста"
+                    ? "августа"
                     : request.date_last_message
                         .split("")
                         .splice(5, 2)

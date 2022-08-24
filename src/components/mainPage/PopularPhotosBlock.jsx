@@ -19,7 +19,7 @@ const PopularPhotosBlock = () => {
         <div className="main_page_popular_photos_section_content_upper_row">
           <div className="main_page_popular_photos_section_content_upper_row_left">
             <h2 className="main_page_popular_photos_section_content_upper_row_left_h2">
-              Популярные фотографии
+              Популярные фото
             </h2>
           </div>
         </div>

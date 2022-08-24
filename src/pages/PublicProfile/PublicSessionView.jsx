@@ -266,7 +266,7 @@ const PublicSessionView = ({ setProfileId }) => {
                     ? "июля"
                     : session.session_date.split("").splice(5, 2).join("") ===
                       "08"
-                    ? "авугста"
+                    ? "августа"
                     : session.session_date.split("").splice(5, 2).join("") ===
                       "09"
                     ? "сентября"
@@ -380,7 +380,7 @@ const PublicSessionView = ({ setProfileId }) => {
                       ? "июля"
                       : session.session_date.split("").splice(5, 2).join("") ===
                         "08"
-                      ? "авугста"
+                      ? "августа"
                       : session.session_date.split("").splice(5, 2).join("") ===
                         "09"
                       ? "сентября"
@@ -514,7 +514,7 @@ const PublicSessionView = ({ setProfileId }) => {
                       ? "июля"
                       : session.session_date.split("").splice(5, 2).join("") ===
                         "08"
-                      ? "авугста"
+                      ? "августа"
                       : session.session_date.split("").splice(5, 2).join("") ===
                         "09"
                       ? "сентября"
