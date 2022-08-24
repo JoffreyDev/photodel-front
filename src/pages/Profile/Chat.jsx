@@ -42,6 +42,15 @@ const Chat = () => {
           command: "fetch_messages",
         })
       );
+      if (window.location.href.includes("?message")) {
+        mainSocket.current.send(
+          JSON.stringify({
+            message: decodeURI(window.location.href.split("?message=")[1]),
+            command: "new_message",
+            author_id: userData.id,
+          })
+        );
+      }
     };
 
     mainSocket.current.onmessage = function (e) {

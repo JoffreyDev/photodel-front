@@ -80,6 +80,16 @@
         align-items: center;
         margin-top: 11px;
 
+        &_income {
+          width: 30px;
+          margin-right: 10px;
+
+          &.reverse {
+            transform: rotate(180deg);
+            filter: sepia(100%);
+          }
+        }
+
         &_img {
           margin-right: 8px;
         }

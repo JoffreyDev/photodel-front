@@ -301,7 +301,7 @@ const MainPhoto = () => {
               <Map
                 onClick={closeCurrentBalloon}
                 defaultState={{
-                  center: [55.751574, 37.573856],
+                  center: userCoords ? userCoords : [55.751574, 37.573856],
                   zoom: 5,
                   controls: ["fullscreenControl", "geolocationControl"],
                   panelMaxMapArea: 0,
@@ -553,7 +553,7 @@ const MainPhoto = () => {
               <Map
                 onClick={closeCurrentBalloon}
                 defaultState={{
-                  center: [55.751574, 37.573856],
+                  center: userCoords ? userCoords : [55.751574, 37.573856],
                   zoom: 5,
                   controls: ["fullscreenControl", "geolocationControl"],
                 }}

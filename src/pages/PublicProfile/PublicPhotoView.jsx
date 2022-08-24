@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { PublicHeader } from "..";
 import Fullscreen from "../../img/commonImages/fullscreen.svg";
 import Skeleton from "@mui/material/Skeleton";
+import { useSelector } from "react-redux";
 
 const PublicPhotoView = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ const PublicPhotoView = ({ setProfileId }) => {
 
   const params = useParams();
   const photoId = params.id;
+
+  const { userData } = useSelector(({ userData }) => userData);
 
   const [loaded, setLoaded] = React.useState();
   const [photo, setPhoto] = React.useState();
@@ -69,6 +72,27 @@ const PublicPhotoView = ({ setProfileId }) => {
           });
         });
   }, [loaded, photoId]);
+
+  const photoBuyProcess = () => {
+    Requests.createNewChat({
+      sender: userData.id,
+      receiver: Number(photo.profile.id),
+    })
+      .then((res) =>
+        navigate(
+          `/profile/chat/${res.data.id}?message=Привет! Заинтересовала ваша фотография - ${photo.name_image}.`
+        )
+      )
+      .catch((err) => {
+        navigate(
+          `/profile/chat/${Number(
+            err.response.data.message.split("id=")[1]
+          )}?message=Привет! Заинтересовала ваша фотография - ${
+            photo.name_image
+          }.`
+        );
+      });
+  };
 
   React.useEffect(() => {
     photo && setProfileId(photo.profile.id);
@@ -369,15 +393,12 @@ const PublicPhotoView = ({ setProfileId }) => {
             {photo &&
               photo.album.map((album) => <PhotoViewAlbum album={album} />)}
           </div>
-          {window.screen.width <= 576 && (
+          {window.screen.width <= 576 && userData.id && (
             <GreenButton
               width={"180px"}
               height={"38px"}
-              disabled
               text={"Купить фото"}
-              callback={() =>
-                navigate(`/profile/edit-photo/${photo && photo.id}`)
-              }
+              callback={photoBuyProcess}
               margin={"20px 0 20px  0"}
             />
           )}
@@ -538,15 +559,12 @@ const PublicPhotoView = ({ setProfileId }) => {
               Становилось 3 раза
             </p>
           </div>
-          {window.screen.width > 576 && (
+          {window.screen.width > 576 && userData.id && (
             <GreenButton
               width={"180px"}
               height={"38px"}
-              disabled
               text={"Купить фото"}
-              callback={() =>
-                navigate(`/profile/edit-photo/${photo && photo.id}`)
-              }
+              callback={photoBuyProcess}
               margin={"20px 0 0 0"}
             />
           )}

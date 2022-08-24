@@ -8,10 +8,13 @@ import New from "../../img/requests/new.svg";
 import Accepted from "../../img/requests/add.svg";
 import Completed from "../../img/requests/check.svg";
 import Uncompleted from "../../img/requests/uncheсk.svg";
+import Incoming from "../../img/requests/incoming.png";
+import { useSelector } from "react-redux";
 
 const RequestBlock = ({ request }) => {
   const navigate = useNavigate();
 
+  const { userData } = useSelector(({ userData }) => userData);
   return (
     <div
       onClick={() => navigate(`/profile/request/${request.id}`)}
@@ -121,6 +124,15 @@ const RequestBlock = ({ request }) => {
           </p>
         </div>
         <div className="messages_chat_info_request_status">
+          <img
+            src={Incoming}
+            alt="status"
+            className={
+              request.sender_id === userData.id
+                ? "messages_chat_info_request_status_income"
+                : "messages_chat_info_request_status_income reverse"
+            }
+          />
           <img
             src={
               request.request_status === "NEW"
