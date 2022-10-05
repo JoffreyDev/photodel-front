@@ -30,6 +30,7 @@ const AddPhoto = () => {
   const [category, setCategory] = React.useState(undefined);
   const [albums, setAlbums] = React.useState(undefined);
   const [loadedPhoto, setLoadedPhoto] = React.useState();
+  const [canBuy, setCanBuy] = React.useState(false);
 
   const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
   const { userData } = useSelector(({ userData }) => userData);
@@ -157,6 +158,11 @@ const AddPhoto = () => {
   const handlePhotoRead = (e) => {
     let parsedFile = e.target.files[0];
 
+    if (parsedFile.size > 4e5) {
+      dispatch(openErrorAlert("Вес одной картинки не может превышать 400Кб!"));
+      return;
+    }
+
     EXIF.getData(e.target.files[0], function () {
       var allMetaData = EXIF.getAllTags(this);
       setExifData(allMetaData);
@@ -227,6 +233,7 @@ const AddPhoto = () => {
         album: albums.map((album) => album.id),
         aperture: aperture,
         iso: ISO,
+        is_sell: canBuy,
       }).then((res) => {
         dispatch(openSuccessAlert("Фото успешно опубликовано!"));
         navigate("/profile/photos");
@@ -395,7 +402,15 @@ const AddPhoto = () => {
                 </div>
               </li>
               <li className="add_photo_right_content_li">
-                <Checkbox marginBottom={"0px"} label={"Можно купить"} />
+                <Checkbox
+                  marginBottom={"0px"}
+                  label={"Можно купить"}
+                  value={canBuy}
+                  callback={() => {
+                    setCanBuy(!canBuy);
+                    console.log(canBuy);
+                  }}
+                />
               </li>
             </ul>
           </div>

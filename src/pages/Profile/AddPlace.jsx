@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const AddPlace = () => {
   let parsedFiles = [];
+  const upsendPhotosArray = [];
   const [sendPhotosArray, setSendPhotosArray] = React.useState([]);
 
   //состояния для полей и фото
@@ -155,9 +156,9 @@ const AddPlace = () => {
     }
     parsedFiles = Array.from(e.target.files);
     parsedFiles.forEach((file) => {
-      if (file.size > 4.9e6) {
+      if (file.size > 4e5) {
         dispatch(
-          openErrorAlert("Вес одной картинки не может превышать 5 мегабайт!")
+          openErrorAlert("Вес одной картинки не может превышать 400Кб!")
         );
         return;
       }
@@ -191,20 +192,33 @@ const AddPlace = () => {
     } else if (!camera) {
       dispatch(openErrorAlert("Указание камеры обязательно!"));
     }
-    Requests.createFilmPlace({
-      name_place: title,
-      description: description,
-      place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
-      string_place_location: addressLine,
-      session_сategory: category,
-      photo_camera: camera,
-      cost: cost,
-      payment: paymentType,
-      category: category.map((category) => category.id),
-      main_photo: mainPhotoId,
-    }).then(() => {
-      dispatch(openSuccessAlert("Место для съемки успешно обновлено!"));
-      navigate("/profile/places");
+    sendPhotosArray.forEach((photo, idx) => {
+      Requests.createImage(photo).then((res) => {
+        upsendPhotosArray.push(res.data.id);
+        if (idx === mainPhoto) {
+          mainPhotoId = res.data.id;
+        }
+        if (upsendPhotosArray.length === sendPhotosArray.length) {
+          Requests.createFilmPlace({
+            name_place: title,
+            description: description,
+            place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
+            string_place_location: addressLine,
+            session_сategory: category,
+            photo_camera: camera,
+            cost: cost,
+            payment: paymentType,
+            category: category.map((category) => category.id),
+            main_photo: mainPhotoId,
+            place_image: upsendPhotosArray,
+          })
+            .then(() => {
+              dispatch(openSuccessAlert("Место для съемки успешно добавлено!"));
+              navigate("/profile/places");
+            })
+            .catch((err) => openErrorAlert(err.response.data.error));
+        } else return;
+      });
     });
   };
 

@@ -77,7 +77,7 @@ const RequestFirstMessageBlock = ({ message }) => {
                   .splice(8, 2)
                   .join("")}.${message.filming_timestamp
                   .split("")
-                  .splice(2, 2)
+                  .splice(5, 2)
                   .join("")}.${message.filming_timestamp
                   .split("")
                   .splice(0, 4)

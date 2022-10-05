@@ -4,12 +4,16 @@ import Carousel from "react-elastic-carousel";
 import Requests from "../../http/axios-requests";
 
 const LastCommentsBlock = () => {
-  const [lastComments, setLastComments] = React.useState();
+  const [lastPlaceComment, setLastPlaceComment] = React.useState();
+  const [lastPhotoComment, setLastPhotoComment] = React.useState();
+  const [lastSessionComment, setLastSessionComment] = React.useState();
 
   React.useEffect(() => {
-    Requests.getLastComments().then((res) =>
-      setLastComments([res.data.photo_comment])
-    );
+    Requests.getLastComments().then((res) => {
+      setLastPhotoComment(res.data.photo_comment);
+      setLastPlaceComment(res.data.place_comment);
+      setLastSessionComment(res.data.photo_session_comment);
+    });
   }, []);
 
   return (
@@ -23,16 +27,9 @@ const LastCommentsBlock = () => {
           </div>
         </div>
         <div className="main_page_last_comments_section_content_comments_wrapper">
-          <Carousel
-            itemsToShow={window.screen.width <= 576 ? 3 : 1.2}
-            pagination={false}
-            showArrows={false}
-          >
-            {lastComments &&
-              lastComments.map((comment, idx) => (
-                <LastCommentComponent comment={comment} key={idx} />
-              ))}
-          </Carousel>
+          <LastCommentComponent subj={"photo"} comment={lastPhotoComment} />
+          <LastCommentComponent subj={"place"} comment={lastPlaceComment} />
+          <LastCommentComponent subj={"session"} comment={lastSessionComment} />
         </div>
       </div>
     </section>

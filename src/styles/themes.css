@@ -818,3 +818,23 @@ color: var(--secondary-text-color);
 .css-16y9h98 {
     color: var(--secondary-text-color) !important;
 }
+
+.css-u4i9lb-MuiFormControl-root #demo-simple-select-filled {
+        width: 100%;
+}
+
+.photo_view_content_right_data_p {
+    color: var(--secondary-text-color) !important;
+}
+
+.reviews_comment {
+    border-bottom: var(--arrows-border) !important;
+}
+
+.additional_wrapper p {
+    color: var(--secondary-text-color) !important;
+}
+
+.main_page_middle_block__search-input {
+    color: var(--secondary-text-color) !important;
+}

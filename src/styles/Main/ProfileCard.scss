@@ -29,8 +29,11 @@
 
     &_first {
       display: flex;
+      align-items: center;
       &_online {
         margin-right: 6px;
+        width: 6px;
+        height: 6px;
       }
 
       &_name {

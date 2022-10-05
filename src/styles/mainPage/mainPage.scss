@@ -1265,6 +1265,8 @@
 
           &_profile_online {
             margin-right: 6px;
+            width: 6px;
+              height: 6px;
           }
 
           &_profile_name {
@@ -1582,6 +1584,7 @@
 
         &_link {
           width: 100%;
+              margin-bottom: 50px;
         }
 
         &_image {
@@ -1703,5 +1706,17 @@
 
         .main_page_header_theme_select.mobile {
           display: flex !important;
+        }
+                .main_page_last_comments_section_content_comment_wrapper {
+                  min-width: 300px;
+                }
+
+    .main_page_last_comments_section_content {
+      width: 100%;
+    }
+
+        .main_page_last_comments_section_content_comments_wrapper {
+              padding-bottom: 20px;
+              overflow: scroll;
         }
 }

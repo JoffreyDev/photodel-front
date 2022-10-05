@@ -27,7 +27,7 @@ const RequestBlock = ({ request }) => {
       />
       <div className="messages_chat_info">
         <div className="messages_chat_info_top">
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <img
               src={request.online ? Online : Offline}
               alt="online"
@@ -116,7 +116,7 @@ const RequestBlock = ({ request }) => {
                 .splice(8, 2)
                 .join("")}.${request.filming_timestamp
                 .split("")
-                .splice(2, 2)
+                .splice(5, 2)
                 .join("")}.${request.filming_timestamp
                 .split("")
                 .splice(0, 4)

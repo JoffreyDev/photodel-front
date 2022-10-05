@@ -152,9 +152,9 @@ const AddSession = () => {
     }
     parsedFiles = Array.from(e.target.files);
     parsedFiles.forEach((file) => {
-      if (file.size > 4.9e6) {
+      if (file.size > 4e5) {
         dispatch(
-          openErrorAlert("Вес одной картинки не может превышать 5 мегабайт!")
+          openErrorAlert("Вес одной картинки не может превышать 400Кб!")
         );
         return;
       }

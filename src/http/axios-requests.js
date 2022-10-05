@@ -4,7 +4,7 @@ export const rootAddress = "https://photodel.ru";
 export const rootSocketAddress = "photodel.ru";
 
 const $api = axios.create({
-  baseURL: rootAddress,
+  baseURL: "https://photodel.ru",
 });
 
 export class Requests {

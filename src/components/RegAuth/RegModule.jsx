@@ -2,6 +2,7 @@ import React from "react";
 import ModalWindow from "./ModalWindow";
 import { GreenButton, Checkbox } from "..";
 import Requests from "../../http/axios-requests";
+import { useNavigate } from "react-router-dom";
 
 const RegModule = ({
   regModuleActive,
@@ -9,6 +10,7 @@ const RegModule = ({
   switchModals,
   setEmailSentModalActive,
 }) => {
+  const navigate = useNavigate();
   const passRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
   const contactEmailRegExp =
     /^((([0-9A-Za-z]{1}[-0-9A-z.]{0,30}[0-9A-Za-z]?)|([0-9А-Яа-я]{1}[-0-9А-я.]{0,30}[0-9А-Яа-я]?))@([-A-Za-z]{1,}\.){1,}[-A-Za-z]{2,})$/;
@@ -22,6 +24,7 @@ const RegModule = ({
   const [surname, setSurname] = React.useState();
   const [olderThan18, setOlderThan18] = React.useState(false);
   const [regAsProfi, setRegAsProfi] = React.useState(false);
+  const [agree, setAgree] = React.useState(false);
 
   //обработчик отправки запроса на регистрацию
   const onClickSubmit = () => {
@@ -162,13 +165,40 @@ const RegModule = ({
             value={regAsProfi}
             label={"Я регистрируюсь как Профи"}
           />
+          <Checkbox
+            callback={() => setAgree(!agree)}
+            value={agree}
+            label={
+              <p>
+                Я принимаю{" "}
+                <a
+                  style={{ color: "rgba(80, 163, 152, 0.7)" }}
+                  href="/rules"
+                  target="_blank"
+                >
+                  Правила
+                </a>{" "}
+                и
+                <a
+                  style={{ color: "rgba(80, 163, 152, 0.7)" }}
+                  href="/agreement"
+                  target="_blank"
+                >
+                  {" "}
+                  Пользовательское соглашение
+                </a>
+              </p>
+            }
+          />
         </div>
         <GreenButton
           callback={onClickSubmit}
           text="Зарегистрироваться"
           width={"100%"}
           height={"38px"}
+          disabled={!agree}
         />
+
         <p className="reg_auth_content_lower_p" onClick={() => switchModals()}>
           У меня уже есть аккаунт
         </p>

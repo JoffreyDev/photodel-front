@@ -156,7 +156,7 @@ const RequestChat = () => {
             .reverse()}
       </div>
       {messages &&
-        userData.id !== Number(messages[0].customer) &&
+        userData.id !== Number(messages[0].author_id) &&
         messages[0].filming_status === "NEW" && (
           <div className="chat_request_buttons">
             <GreyButton
@@ -176,7 +176,7 @@ const RequestChat = () => {
         )}
 
       {messages &&
-        userData.avatar === messages[0].avatar &&
+        userData.id === messages[0].author_id &&
         messages[0].filming_status === "ACCEPTED" && (
           <div className="chat_request_buttons">
             <RedButton

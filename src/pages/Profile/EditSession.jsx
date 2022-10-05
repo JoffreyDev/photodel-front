@@ -243,7 +243,7 @@ const EditSession = () => {
       );
       setAddressLine(res.data.string_session_location);
       setDate(res.data.session_date);
-      setCategory(res.data.session_category);
+      setCategory(res.data.session_category.id);
     });
   }, [sessionId]);
 
@@ -379,19 +379,21 @@ const EditSession = () => {
             />
           </div>
 
-          <SelectInput
-            values={
-              prosSpecs &&
-              prosSpecs.map((item) => {
-                return { id: item.id, value: item.name_spec };
-              })
-            }
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            setValue={setCategory}
-            label={"Тип фотосессии"}
-            width={"100%"}
-          />
+          {category && (
+            <SelectInput
+              values={
+                prosSpecs &&
+                prosSpecs.map((item) => {
+                  return { id: item.id, value: item.name_spec };
+                })
+              }
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              setValue={setCategory}
+              label={"Тип фотосессии"}
+              width={"100%"}
+            />
+          )}
         </div>
       </div>
 

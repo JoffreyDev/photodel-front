@@ -1,13 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <section className="main_page_footer_section_wrapper">
       <div className="main_page_footer_section_content">
         <ul className="main_page_footer_section_content_ul">
           <li className="main_page_footer_section_content_li first">Сервис</li>
           <li className="main_page_footer_section_content_li">О сервисе</li>
-          <li className="main_page_footer_section_content_li">
+          <li
+            onClick={() => navigate("/rules")}
+            className="main_page_footer_section_content_li"
+          >
             Правила использования
           </li>
           <li className="main_page_footer_section_content_li">
@@ -16,8 +21,11 @@ const Footer = () => {
           <li className="main_page_footer_section_content_li">
             Вопросы и ответы
           </li>
-          <li className="main_page_footer_section_content_li">
-            Рекламодателям
+          <li
+            onClick={() => navigate("/agreement")}
+            className="main_page_footer_section_content_li"
+          >
+            Пользовательское соглашение
           </li>
         </ul>
         <ul className="main_page_footer_section_content_ul">
@@ -45,7 +53,7 @@ const Footer = () => {
         </ul>
         <div className="main_page_footer_section_content_contacts">
           <p className="main_page_footer_section_content_contacts_p">
-            © photodel.ru, 2020-2021
+            © photodel.ru, 2020-2022
           </p>
           <div className="main_page_footer_section_content_contacts_back_wrapper">
             <svg

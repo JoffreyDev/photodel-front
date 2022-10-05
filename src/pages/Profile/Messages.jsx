@@ -19,7 +19,7 @@ const Messages = ({}) => {
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
-      `wss://${rootSocketAddress}/ws/?token=${localStorage.getItem("access")}`
+      `  ws://${rootSocketAddress}/ws/?token=${localStorage.getItem("access")}`
     );
 
     mainSocket.current.onopen = function () {

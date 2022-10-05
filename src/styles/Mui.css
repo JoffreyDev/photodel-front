@@ -9,7 +9,7 @@
 .MuiMenuItem-root {
   border-radius: 10px !important;
   background-color: transparent !important;
-  width: 301px !important;
+  width: 100% !important;
   height: 38px !important;
   font-family: Montserrat !important;
   font-style: normal !important;

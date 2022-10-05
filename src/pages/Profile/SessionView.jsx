@@ -67,7 +67,7 @@ const SessionView = () => {
           setSession(res.data);
         })
         .then(() => {
-          Requests.getPhotoComments(sessionId).then((res) => {
+          Requests.getSessionComments(sessionId).then((res) => {
             setComments(res.data);
             setLoaded(true);
           });
@@ -109,14 +109,14 @@ const SessionView = () => {
   };
 
   const handleComment = () => {
-    Requests.createPhotoComment(sessionId, comment).then(() => {
+    Requests.createSessionComment(sessionId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      Requests.getSinglePhoto(sessionId)
+      Requests.getSingleSession(sessionId)
         .then((res) => {
           setSession(res.data);
         })
         .then(() => {
-          Requests.getPhotoComments(sessionId).then((res) => {
+          Requests.getSessionComments(sessionId).then((res) => {
             setComments(res.data);
             setLoaded(true);
           });
@@ -514,7 +514,7 @@ const SessionView = () => {
             <p className="photo_view_content_right_data_p">
               Тип съемки:{" "}
               <span className="photo_view_content_right_data_span">
-                Свадебная
+                {session && session.session_category.name_spec}
               </span>
             </p>
             <p className="photo_view_content_right_data_p">

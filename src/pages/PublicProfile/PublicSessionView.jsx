@@ -125,15 +125,15 @@ const PublicSessionView = ({ setProfileId }) => {
   };
 
   const handleComment = () => {
-    Requests.createPhotoComment(sessionId, comment).then(() => {
+    Requests.createSessionComment(sessionId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      Requests.getSinglePhoto(sessionId)
+      Requests.getSingleSession(sessionId)
         .then((res) => {
           setSession(res.data);
           setComment("");
         })
         .then(() => {
-          Requests.getPhotoComments(sessionId).then((res) => {
+          Requests.getSessionComments(sessionId).then((res) => {
             setComments(res.data);
             setLoaded(true);
           });
