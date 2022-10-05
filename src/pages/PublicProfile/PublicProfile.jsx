@@ -310,7 +310,7 @@ const PublicProfile = ({ setProfileId }) => {
                 />
                 <p
                   onClick={() => setReqWindowActive(true)}
-                  className="my_profile_header_middle_row_buttons_mail_p"
+                  className="my_profile_header_middle_row_buttons_mail_p notheme"
                 >
                   Отправить запрос
                 </p>
@@ -323,7 +323,7 @@ const PublicProfile = ({ setProfileId }) => {
                 />
                 <p
                   onClick={addToFavorite}
-                  className="my_profile_header_middle_row_buttons_mail_p"
+                  className="my_profile_header_middle_row_buttons_mail_p notheme"
                 >
                   Добавить в Избранное
                 </p>
