@@ -1,6 +1,6 @@
 @import '../variables.scss';
 
-.sessions {
+.training {
   &_header {
     width: 100%;
     display: flex;
@@ -91,8 +91,8 @@
 
   &_card {
     margin-top: 10px;
+    height: 394px;
     width: 255px;
-    height: 255px;
     margin-bottom: 20px;
     cursor: pointer;
 
@@ -102,24 +102,40 @@
 
     &_profile {
       display: flex;
-      align-items: center;
       margin-top: 5px;
+      flex-direction: column;
 
-      &_avatar {
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
-        object-fit: cover;
-        margin-right: 5px;
+      &_title {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #3c8278;
+        margin-bottom: 1px;
       }
 
-      &_name {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
+      &_prof {
+        display: flex;
+        flex-direction: row;
+        margin-top: 5px;
+        align-items: center;
+        margin-bottom: 1px;
+        &_avatar {
+          width: 24px;
+          height: 24px;
+          border-radius: 4px;
+          object-fit: cover;
+          margin-right: 5px;
+        }
 
-        color: #202424;
+        &_name {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+
+          color: #202424;
+        }
       }
     }
 
@@ -223,6 +239,97 @@
         }
       }
     }
+    &_properties {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 11px;
+      margin-bottom: 10px;
+
+      &_column {
+        display: flex;
+        flex-direction: column;
+
+        &_left {
+          width: 130px;
+          display: flex;
+          flex-direction: row;
+          &_text {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: #202424;
+          }
+          &_date {
+            width: 18px;
+            margin-right: 6px;
+          }
+
+          &_type {
+            width: 18px;
+            margin-right: 6px;
+          }
+        }
+        &_right {
+          display: flex;
+          flex-direction: row;
+          &_text {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: #202424;
+          }
+
+          &_price {
+            width: 17px;
+            margin-right: 5px;
+          }
+
+          &_members {
+            width: 17px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    &_manager {
+      display: flex;
+      flex-direction: column;
+
+      &_title {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #3c8278;
+        margin-bottom: 1px;
+      }
+      &_account {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 5px;
+
+        &_avatar {
+          width: 24px;
+          height: 24px;
+          border-radius: 4px;
+          object-fit: cover;
+          margin-right: 5px;
+        }
+
+        &_name {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+
+          color: #202424;
+        }
+      }
+    }
 
     &.map_active:not(:nth-child(2n + 2)) {
       margin-right: 15px;
@@ -247,7 +354,7 @@
 }
 
 @media (max-width: 576px) {
-  .sessions {
+  .training {
     &_options {
       margin-top: 0px;
       flex-direction: column-reverse;

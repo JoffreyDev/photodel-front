@@ -425,6 +425,10 @@ color: var(--secondary-text-color);
     transition: 0.3s;
 }
 
+.my_profile_header_middle_row_buttons_mail_p.notheme {
+    color: #FFFFFF !important;
+}
+
 .my_profile_contacts_content_row_p.black {
     color: var(--secondary-text-color);
     transition: 0.3s;
@@ -836,5 +840,9 @@ color: var(--secondary-text-color);
 }
 
 .main_page_middle_block__search-input {
+    color: var(--secondary-text-color) !important;
+}
+
+.css-1oml8th {
     color: var(--secondary-text-color) !important;
 }

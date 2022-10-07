@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@import './variables.scss';
 
 .common_green_button {
   width: 276px;
@@ -195,7 +195,7 @@
   }
 
   & + label::before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 1.2em;
     height: 1.2em;
@@ -211,7 +211,7 @@
   }
 
   &:checked + label::before {
-    background-image: url("../img/mainPage/chb_check.svg");
+    background-image: url('../img/mainPage/chb_check.svg');
     background-size: cover;
     border-color: rgba(80, 163, 152, 1);
   }

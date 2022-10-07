@@ -1,6 +1,6 @@
 import React from 'react';
-import { SelectInput, TextInput, GreenButton, PlaceCardMain } from '../../components';
-import '../../styles/Main/MainPhoto.scss';
+import { SelectInput, TextInput, GreenButton, PlaceCardMain, GreyButton } from '../../components';
+import '../../styles/Main/MainTraining.scss';
 import { useSelector } from 'react-redux';
 import SortImage from '../../img/sessions/sort.svg';
 import SortImageInvert from '../../img/commonImages/sort-.svg';
@@ -18,8 +18,9 @@ import Loading from '../../img/commonImages/loading.gif';
 import Filter from '../../img/commonImages/filter.svg';
 
 import { slide as Menu } from 'react-burger-menu';
+import TrainingCardMain from '../../components/Previews/TrainingCardMain';
 
-const MainPlaces = () => {
+const MainTraining = () => {
   const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
@@ -190,14 +191,13 @@ const MainPlaces = () => {
 
   React.useEffect(() => {
     window.scroll(0, 0);
-    document.title = 'Места для съемок';
+    document.title = 'Обучение';
   }, []);
-
   return (
-    <div className='main_photo'>
-      <div className='main_photo_menu'>
+    <div className='main_training'>
+      <div className='main_training_menu'>
         <Menu isOpen={menuOpened} onClose={() => setMenuOpened(false)}>
-          <div className='main_photo_header_fields mobile'>
+          <div className='main_training_header_fields mobile'>
             <TextInput
               height={'38px'}
               width={'255px'}
@@ -237,7 +237,7 @@ const MainPlaces = () => {
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
-            <div className='main_photo_header_sorts mobile'>
+            <div className='main_training_header_sorts mobile'>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
                   src={sortType === '+' ? SortImage : sortType === '-' ? SortImageInvert : ''}
@@ -277,17 +277,10 @@ const MainPlaces = () => {
           </div>
         </Menu>
       </div>
-      <div className={mapViewActive ? 'main_photo_content map_active' : 'main_photo_content'}>
-        <div className='main_photo_header'>
-          <h1 className='main_photo_header_h1'>Места для съемок</h1>
-          <div className='main_photo_header_middle'>
-            <div onClick={() => setMenuOpened(true)} className='main_photo_header_middle_filters'>
-              <img src={Filter} alt={'filter'} className='main_photo_header_middle_filters_img' />
-              <p className='main_photo_header_middle_filters_'>Все фильтры</p>
-            </div>
-            <p className='main_photo_header_sorts_p'>{countItems && countItems} найдено</p>
-          </div>
-          <div className='main_photo_map mobile'>
+      <div className={mapViewActive ? 'main_training_content map_active' : 'main_training_content'}>
+        <div className='main_training_header'>
+          <h1 className='main_training_header_h1'>Обучение</h1>
+          <div className='main_training_map mobile'>
             <YMaps>
               <Map
                 onClick={closeCurrentBalloon}
@@ -327,7 +320,7 @@ const MainPlaces = () => {
               </Map>
             </YMaps>
           </div>
-          <div className='main_photo_header_fields'>
+          <div className='main_training_header_fields'>
             <TextInput
               height={'38px'}
               width={'255px'}
@@ -339,21 +332,7 @@ const MainPlaces = () => {
             <SelectInput
               height={'38px'}
               width={'255px'}
-              label={'Категория фото'}
-              values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
-                  return { id: item.id, value: item.name_spec };
-                })
-              }
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              getName
-            />
-            <SelectInput
-              height={'38px'}
-              width={'255px'}
-              label={'Радиус нахождения автора'}
+              label={'Радиус'}
               values={[
                 { id: '10000000000', value: 'Без ограничения' },
                 { id: '5000', value: 'В переделах 5км' },
@@ -366,6 +345,21 @@ const MainPlaces = () => {
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
+            <SelectInput
+              height={'38px'}
+              width={'255px'}
+              label={'Категория'}
+              values={
+                prosSpecs &&
+                prosSpecs.map((item) => {
+                  return { id: item.id, value: item.name_spec };
+                })
+              }
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              getName
+            />
+
             <GreenButton height={'38px'} width={'180px'} text={'Найти'} callback={handleSearch} />
           </div>
           {!mapViewActive && (
@@ -375,14 +369,14 @@ const MainPlaces = () => {
                 setCountPositions(4);
                 setPage(1);
               }}
-              className='main_photo_header_fields_map'>
-              <img src={MapImg} alt='map' className='main_photo_header_fields_map_img' />
-              <p className='main_photo_header_fields_map_p'>Показать карту</p>
+              className='main_training_header_fields_map'>
+              <img src={MapImg} alt='map' className='main_training_header_fields_map_img' />
+              <p className='main_training_header_fields_map_p'>Показать карту</p>
             </div>
           )}
         </div>
-        <div className='main_photo_header_sorts'>
-          <p className='main_photo_header_sorts_p'>{countItems && countItems} найдено</p>
+        <div className='main_training_header_sorts'>
+          <p className='main_training_header_sorts_p'>{countItems && countItems} найдено</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img
               src={sortType === '+' ? SortImage : sortType === '-' ? SortImageInvert : ''}
@@ -410,14 +404,14 @@ const MainPlaces = () => {
             />
           </div>
         </div>
-        <div className={mapViewActive ? 'main_photo_body' : 'main_photo_body map_disabled'}>
+        <div className={mapViewActive ? 'main_training_body' : 'main_training_body map_disabled'}>
           {places &&
             !fetching &&
             places.map((place, idx) => (
-              <PlaceCardMain
+              <TrainingCardMain
                 disableCheck
                 disableEdit
-                notAuthor
+                // notAuthor
                 key={idx}
                 place={place}
                 halfContent={mapViewActive}
@@ -448,12 +442,12 @@ const MainPlaces = () => {
                 alignItems: 'center',
                 minHeight: '580px',
               }}>
-              <h1 className='main_photo_header_h1'>Мы не нашли подходящих мест :(</h1>
+              <h1 className='main_training_header_h1'>Мы не нашли подходящих мест :(</h1>
             </div>
           )}
         </div>
         {places && !fetching && places && places.length !== 0 && (
-          <div className='main_photo_body_pagination'>
+          <div className='main_training_body_pagination'>
             <ThemeProvider theme={theme}>
               <Pagination
                 count={mapViewActive ? Math.ceil(countItems / 4) : Math.ceil(countItems / 8)}
@@ -466,7 +460,7 @@ const MainPlaces = () => {
         )}
       </div>
       {mapViewActive && (
-        <div className='main_photo_map'>
+        <div className='main_training_map'>
           <div
             style={{
               height: '100%',
@@ -479,9 +473,9 @@ const MainPlaces = () => {
                 setMapViewActive(false);
                 setPage(1);
               }}
-              className='main_photo_map_hide'>
-              <img src={Shape} alt='close' className='main_photo_map_hide_img' />
-              <p className='main_photo_map_hide_p'>Скрыть карту</p>
+              className='main_training_map_hide'>
+              <img src={Shape} alt='close' className='main_training_map_hide_img' />
+              <p className='main_training_map_hide_p'>Скрыть карту</p>
             </div>
             <YMaps>
               <Map
@@ -524,4 +518,4 @@ const MainPlaces = () => {
   );
 };
 
-export default MainPlaces;
+export default MainTraining;

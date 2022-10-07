@@ -1,6 +1,6 @@
 @import '../variables.scss';
 
-.main_photo {
+.main_training {
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -67,7 +67,13 @@
     flex-direction: column;
 
     &_middle {
-      display: none;
+      display: flex;
+      flex-direction: row;
+
+      &_filters {
+        display: flex;
+        flex-direction: row;
+      }
     }
 
     &_h1 {
@@ -230,7 +236,7 @@
     padding: 0;
   }
 
-  .main_photo {
+  .main_training {
     flex-direction: column;
 
     &_menu {
@@ -250,6 +256,8 @@
       padding-top: 20px;
 
       &_photo {
+        // &_wrapper {
+        // }
         height: 100px;
         width: 100% !important;
       }

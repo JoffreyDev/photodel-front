@@ -19,7 +19,7 @@
     "react-image-gallery": "^1.2.11",
     "react-redux": "^7.2.9",
     "react-router-dom": "^6.4.1",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "react-yandex-maps": "^4.6.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
