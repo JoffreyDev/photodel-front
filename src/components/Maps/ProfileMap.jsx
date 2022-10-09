@@ -1,8 +1,11 @@
 import { MuiModal } from "..";
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useDispatch } from "react-redux";
+import { openSuccessAlert } from "../../redux/actions/userData";
 
 const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
+  const dispatch = useDispatch();
   const handleLoad = () => {
     window.ymaps.ready(init);
 
@@ -63,6 +66,10 @@ const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
               "," +
               res.geoObjects.get(0).getAddressLine().split(",")[1]
           );
+          dispatch(openSuccessAlert("Местонахождение выбрано!"));
+          setTimeout(() => {
+            setOpen(false);
+          }, 500);
           var firstGeoObject = res.geoObjects.get(0);
 
           myPlacemark.properties.set({

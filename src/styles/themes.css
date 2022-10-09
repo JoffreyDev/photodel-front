@@ -859,3 +859,17 @@ color: var(--secondary-text-color);
 .main_page_footer_section_content_contacts_social_img {
     filter: brightness(160%)
 }
+
+.css-8fzd4f  {
+    width: 100% !important;
+    border: var(--arrows-border) !important;
+}
+
+.css-1kxbtff-MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input {
+    color:var(--secondary-text-color)
+}
+
+.css-1iwjfd1 .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input {
+    z-index: 2 !important;
+    color: var(--secondary-text-color) !important;
+}
