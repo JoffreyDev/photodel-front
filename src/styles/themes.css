@@ -865,7 +865,7 @@ color: var(--secondary-text-color);
 }
 
 .css-8fzd4f {
-    border: var(--secondary-text-color);
+    border: var(--secondary-text-color) !important;
 }
 
 .css-u4i9lb-MuiFormControl-root #demo-simple-select-filled {
