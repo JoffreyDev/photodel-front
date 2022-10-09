@@ -417,6 +417,18 @@ const MainTraining = () => {
                 halfContent={mapViewActive}
               />
             ))}
+          {places &&
+            !fetching &&
+            places.map((place, idx) => (
+              <TrainingCardMain
+                disableCheck
+                disableEdit
+                // notAuthor
+                key={idx}
+                place={place}
+                halfContent={mapViewActive}
+              />
+            ))}
 
           {(!places || fetching) && (
             <div

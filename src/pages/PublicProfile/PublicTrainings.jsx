@@ -2,15 +2,16 @@ import React from 'react';
 import SortImage from '../../img/sessions/sort.svg';
 import { SelectInput, Checkbox, SessionCard } from '../../components';
 import AddImage from '../../img/sessions/add.svg';
-import '../../styles/Profile/Sessions.scss';
+import '../../styles/Profile/Training.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import Requests from '../../http/axios-requests';
 import { useSelector, useDispatch } from 'react-redux';
 import { openSuccessAlert } from '../../redux/actions/userData';
 import { PublicHeader } from '..';
 import { ScreenLoader } from '../../components';
+import TrainingCardMain from '../../components/Previews/TrainingCardMain';
 
-const Sessions = () => {
+const Training = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,12 +43,12 @@ const Sessions = () => {
   }, [profileId]);
 
   return (
-    <div className='sessions'>
+    <div className='training'>
       <PublicHeader profile={profileData} />
-      <div className='sessions_header'>
-        <h1 className='sessions_header_title'>ФОТОСЕССИИ</h1>
-        <div className='sessions_header_select'>
-          <img src={SortImage} alt='sort' className='sessions_header_select_image' />
+      <div className='training_header'>
+        <h1 className='training_header_title'>ОБУЧЕНИЕ</h1>
+        <div className='training_header_select'>
+          <img src={SortImage} alt='sort' className='training_header_select_image' />
           <SelectInput
             values={[
               {
@@ -66,18 +67,18 @@ const Sessions = () => {
           />
         </div>
       </div>
-      <div className='sessions_options'>
-        <div className='sessions_options_left'>
-          <p className='sessions_options_left_p'>
+      <div className='training_options'>
+        <div className='training_options_left'>
+          <p className='training_options_left_p'>
             Всего:{' '}
-            <span className='sessions_options_left_p_span'>{sessions && sessions.length}</span>
+            <span className='training_options_left_p_span'>{sessions && sessions.length}</span>
           </p>
         </div>
       </div>
-      <div className='sessions_cards'>
+      <div className='training_cards'>
         {sessions &&
           sessions.map((session, idx) => (
-            <SessionCard
+            <TrainingCardMain
               session={session}
               key={idx}
               callback={setSelectedSessions}
@@ -89,7 +90,7 @@ const Sessions = () => {
           ))}
         {sessions && sessions.length === 0 && (
           <div className='photos_cards_empty'>
-            <h1 className='photos_cards_empty_title'>Нам жаль, фотосессий не найдено :(</h1>
+            <h1 className='photos_cards_empty_title'>Нам жаль, обучений не найдено :(</h1>
           </div>
         )}
         {dataLoading && <ScreenLoader height={'30%'} />}
@@ -98,4 +99,4 @@ const Sessions = () => {
   );
 };
 
-export default Sessions;
+export default Training;
