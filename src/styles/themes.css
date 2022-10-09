@@ -862,6 +862,7 @@ color: var(--secondary-text-color);
 
 .css-8fzd4f #demo-simple-select-filled  {
     width: 100% !important;
+    border: var(--arrows-border);
 }
 
 .css-u4i9lb-MuiFormControl-root #demo-simple-select-filled {
