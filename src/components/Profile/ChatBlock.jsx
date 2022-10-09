@@ -22,7 +22,7 @@ const ChatBlock = ({ data }) => {
       />
       <div className="messages_chat_info">
         <div className="messages_chat_info_top">
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <img
               src={data.online ? Online : Offline}
               alt="online"
@@ -84,7 +84,7 @@ const ChatBlock = ({ data }) => {
               <img
                 src={
                   data.is_last_message
-                    ? `${rootAddress}${userData.avatar_last_message}`
+                    ? `${rootAddress}${data.avatar_last_message}`
                     : `${rootAddress}${data.avatar_last_message}`
                 }
                 alt="avatar"

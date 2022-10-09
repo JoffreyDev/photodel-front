@@ -770,9 +770,6 @@ color: var(--secondary-text-color);
     transition: 0.3s;
 }
 
-.css-vubbuv {
-    fill: var(--secondary-text-color) !important;
-}
 
 .css-igs3ac {
     background-color: var(--background-color) !important;
@@ -845,4 +842,20 @@ color: var(--secondary-text-color);
 
 .css-1oml8th {
     color: var(--secondary-text-color) !important;
+}
+
+.css-1auycx3-MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input {
+    color: var(--secondary-text-color);
+}
+
+.css-1636szt {
+    color: var(--secondary-text-color);
+}
+
+.MuiOutlinedInput-root {
+    background: var(--background-color) !important;
+}
+
+.main_page_footer_section_content_contacts_social_img {
+    filter: brightness(160%)
 }

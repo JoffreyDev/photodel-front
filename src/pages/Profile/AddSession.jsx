@@ -342,6 +342,7 @@ const AddSession = () => {
             label={"Укажите местоположение на карте, после чего закройте карту"}
             callback={setAddressLine}
             value={addressLine}
+            disabled
           />
           <div id="map" style={{ height: "135px", width: "100%" }}></div>
           <h1 className="add_session_left_content_h1 margin">

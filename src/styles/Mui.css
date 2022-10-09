@@ -31,7 +31,6 @@
 }
 
 .MuiOutlinedInput-root {
-  background: #ffffff !important;
   box-sizing: border-box !important;
   border-radius: 30px !important;
   outline: none !important;
@@ -60,6 +59,7 @@
   font-weight: 500 !important;
   font-size: 12px !important;
   line-height: 16px !important;
+  z-index: 2;
   color: white !important;
 }
 
@@ -99,4 +99,8 @@
   font-weight: normal !important;
   font-size: 13px !important;
   color: #9ca3a1 !important;
+}
+
+.css-u4i9lb-MuiFormControl-root #demo-simple-select-filled {
+  width: 100%;
 }

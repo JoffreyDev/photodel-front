@@ -8,6 +8,7 @@ const TextInput = ({
   label,
   placeholder,
   type,
+  disabled,
 }) => {
   return (
     <div
@@ -22,6 +23,7 @@ const TextInput = ({
         type={type === "pass" ? "password" : "text"}
         className="common_text_input"
         placeholder={placeholder ? placeholder : ""}
+        disabled={disabled}
       />
     </div>
   );
