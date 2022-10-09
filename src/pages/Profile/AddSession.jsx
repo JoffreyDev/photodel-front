@@ -365,19 +365,21 @@ const AddSession = () => {
             />
           </div>
 
-          <SelectInput
-            values={
-              prosSpecs &&
-              prosSpecs.map((item) => {
-                return { id: item.id, value: item.name_spec };
-              })
-            }
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            setValue={setCategory}
-            label={"Тип фотосессии"}
-            width={"100%"}
-          />
+          {prosSpecs && (
+            <SelectInput
+              values={
+                prosSpecs &&
+                prosSpecs.map((item) => {
+                  return { id: item.id, value: item.name_spec };
+                })
+              }
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              setValue={setCategory}
+              label={"Тип фотосессии"}
+              width={"100%"}
+            />
+          )}
         </div>
 
         <div className="add_session_right_content">

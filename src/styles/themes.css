@@ -860,9 +860,12 @@ color: var(--secondary-text-color);
     filter: brightness(160%)
 }
 
-.css-8fzd4f  {
+.css-8fzd4f #demo-simple-select-filled  {
     width: 100% !important;
-    border: var(--arrows-border) !important;
+}
+
+.css-u4i9lb-MuiFormControl-root #demo-simple-select-filled {
+    width: 100% !important;
 }
 
 .css-1kxbtff-MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input {
