@@ -49,7 +49,7 @@ const PublicPlaceView = ({ setProfileId }) => {
 
   React.useEffect(() => {
     !loaded &&
-      localStorage.getItem("key") &&
+      localStorage.getItem("access") &&
       Requests.getSinglePlace(placeId)
         .then((res) => {
           setLoaded(true);
@@ -67,7 +67,7 @@ const PublicPlaceView = ({ setProfileId }) => {
         });
 
     !loaded &&
-      !localStorage.getItem("key") &&
+      !localStorage.getItem("access") &&
       Requests.getSinglePlaceUnauth(placeId)
         .then((res) => {
           setLoaded(true);
@@ -218,7 +218,10 @@ const PublicPlaceView = ({ setProfileId }) => {
                 className="photo_view_content_left_activities_img"
                 onClick={likeHandle}
               />
-              <p className="photo_view_content_left_activities_p">
+              <p
+                onClick={likeHandle}
+                className="photo_view_content_left_activities_p"
+              >
                 {place && place.likes}
               </p>
 

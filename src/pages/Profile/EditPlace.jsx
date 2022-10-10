@@ -156,7 +156,13 @@ const AddPlace = () => {
       setTitle(res.data.name_place);
       setDescription(res.data.description);
       setAddressLine(res.data.string_place_location);
-      setCoords(res.data.place_location);
+      setCoords(
+        res.data.place_location
+          .split("(")[1]
+          .split(")")[0]
+          .split(" ")
+          .map(Number)
+      );
       setCamera(res.data.photo_camera);
       setPaymentType(res.data.payment);
       setCategory(

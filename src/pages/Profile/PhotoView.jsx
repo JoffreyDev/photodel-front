@@ -49,7 +49,7 @@ const PhotoView = () => {
 
   React.useEffect(() => {
     !loaded &&
-      localStorage.getItem("key") &&
+      localStorage.getItem("access") &&
       Requests.getSinglePhoto(photoId)
         .then((res) => {
           setPhoto(res.data);
@@ -65,7 +65,7 @@ const PhotoView = () => {
         });
 
     !loaded &&
-      !localStorage.getItem("key") &&
+      !localStorage.getItem("access") &&
       Requests.getSinglePhotoUnauth(photoId)
         .then((res) => {
           setPhoto(res.data);

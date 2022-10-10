@@ -52,7 +52,26 @@ const PlaceView = () => {
 
   React.useEffect(() => {
     !loaded &&
+      localStorage.getItem("access") &&
       Requests.getSinglePlace(placeId)
+        .then((res) => {
+          setLoaded(true);
+          setPlace(res.data);
+          setPhotos(
+            res.data.place_image.map((photo) => `${rootAddress}${photo.photo}`)
+          );
+          setDataLoading(false);
+        })
+        .then(() => {
+          Requests.getPlaceComments(placeId).then((res) => {
+            setComments(res.data);
+            setLoaded(true);
+          });
+        });
+
+    !loaded &&
+      !localStorage.getItem("access") &&
+      Requests.getSinglePlaceUnauth(placeId)
         .then((res) => {
           setLoaded(true);
           setPlace(res.data);
@@ -156,9 +175,7 @@ const PlaceView = () => {
           width={"180px"}
           height={"38px"}
           text={"Редактировать"}
-          callback={() =>
-            navigate(`/profile/edit-session/${place && place.id}`)
-          }
+          callback={() => navigate(`/profile/edit-place/${place && place.id}`)}
         />
       </div>
       <div className="photo_view_content">
@@ -428,7 +445,7 @@ const PlaceView = () => {
               height={"38px"}
               text={"Редактировать"}
               callback={() =>
-                navigate(`/profile/edit-session/${place && place.id}`)
+                navigate(`/profile/edit-place/${place && place.id}`)
               }
             />
           </div>

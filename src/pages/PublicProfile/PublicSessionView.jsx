@@ -49,7 +49,7 @@ const PublicSessionView = ({ setProfileId }) => {
 
   React.useEffect(() => {
     !loaded &&
-      localStorage.getItem("key") &&
+      localStorage.getItem("access") &&
       Requests.getSingleSession(sessionId).then((res) => {
         setLoaded(true);
         setSession(res.data);
@@ -60,7 +60,7 @@ const PublicSessionView = ({ setProfileId }) => {
       });
 
     !loaded &&
-      !localStorage.getItem("key") &&
+      !localStorage.getItem("access") &&
       Requests.getSingleSessionUnauth(sessionId).then((res) => {
         setLoaded(true);
         setSession(res.data);

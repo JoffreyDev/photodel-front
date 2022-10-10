@@ -238,7 +238,6 @@ const EditSession = () => {
           .split("(")[1]
           .split(")")[0]
           .split(" ")
-          .reverse()
           .map(Number)
       );
       setAddressLine(res.data.string_session_location);

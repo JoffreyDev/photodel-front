@@ -167,6 +167,13 @@
 
         &_img {
           margin-right: 5px;
+          transition: .3s;
+          cursor: pointer;
+
+          &:hover {
+            transform: scale(1.1);
+            transition: .3s;
+          }
         }
 
         &_p {
@@ -175,6 +182,12 @@
           font-style: normal;
           font-weight: 500;
           font-size: 12px;
+          cursor: pointer;
+
+          &:hover {
+              transform: scale(1.1);
+              transition: .3s;
+            }
         }
       }
 

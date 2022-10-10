@@ -168,7 +168,7 @@ const AddSession = () => {
   };
 
   const handleCreate = () => {
-    if (!sendPhotosArray) {
+    if (!upsendPhotosArray) {
       dispatch(openErrorAlert("Загрузите фото!"));
       return;
     } else if (!title) {
@@ -200,7 +200,7 @@ const AddSession = () => {
             session_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
             string_session_location: addressLine,
             session_date: date,
-            session_сategory: category,
+            session_category: category,
             photos: upsendPhotosArray,
             main_photo: mainPhotoId,
           }).then(() => {
@@ -374,7 +374,10 @@ const AddSession = () => {
                 })
               }
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                console.log(e);
+              }}
               setValue={setCategory}
               label={"Тип фотосессии"}
               width={"100%"}

@@ -50,7 +50,19 @@ const SessionView = () => {
 
   React.useEffect(() => {
     !loaded &&
+      localStorage.getItem("access") &&
       Requests.getSingleSession(sessionId).then((res) => {
+        setLoaded(true);
+        setSession(res.data);
+        setPhotos(
+          res.data.photos.map((photo) => `${rootAddress}${photo.photo}`)
+        );
+        setDataLoading(false);
+      });
+
+    !loaded &&
+      !localStorage.getItem("access") &&
+      Requests.getSingleSessionUnauth(sessionId).then((res) => {
         setLoaded(true);
         setSession(res.data);
         setPhotos(
@@ -514,7 +526,7 @@ const SessionView = () => {
             <p className="photo_view_content_right_data_p">
               Тип съемки:{" "}
               <span className="photo_view_content_right_data_span">
-                {session && session.session_category.name_spec}
+                {session && session.session_category?.name_spec}
               </span>
             </p>
             <p className="photo_view_content_right_data_p">

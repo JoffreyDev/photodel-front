@@ -45,7 +45,7 @@ const PublicPhotoView = ({ setProfileId }) => {
 
   React.useEffect(() => {
     !loaded &&
-      localStorage.getItem("key") &&
+      localStorage.getItem("access") &&
       Requests.getSinglePhoto(photoId)
         .then((res) => {
           setPhoto(res.data);
@@ -59,7 +59,7 @@ const PublicPhotoView = ({ setProfileId }) => {
         });
 
     !loaded &&
-      !localStorage.getItem("key") &&
+      !localStorage.getItem("access") &&
       Requests.getSinglePhotoUnauth(photoId)
         .then((res) => {
           setPhoto(res.data);

@@ -296,7 +296,6 @@ export class Requests {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
-
       url: `api/gallery/photo/${id}/`,
     }).then((res) => res);
   }
@@ -470,7 +469,7 @@ export class Requests {
     session_location,
     string_session_location,
     session_date,
-    session_сategory,
+    session_category,
     photos,
     is_hidden,
     main_photo,
@@ -487,7 +486,7 @@ export class Requests {
         session_location: session_location,
         string_session_location: string_session_location,
         session_date: session_date,
-        session_сategory: session_сategory,
+        session_category: session_category,
         main_photo: main_photo,
 
         photos: photos,
@@ -973,7 +972,7 @@ export class Requests {
 
   static async unlikePlace(id) {
     return $api({
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
@@ -1000,7 +999,7 @@ export class Requests {
 
   static async deleteFavoritePlace(id) {
     return $api({
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
