@@ -880,3 +880,18 @@ color: var(--secondary-text-color);
     z-index: 2 !important;
     color: var(--secondary-text-color) !important;
 }
+
+.edit_album_left_content_textarea {
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+    border: var(--arrows-border);
+}
+
+.edit_album_popup_content {
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+}
+
+.albums_options_left_p {
+    color: var(--secondary-text-color);
+}

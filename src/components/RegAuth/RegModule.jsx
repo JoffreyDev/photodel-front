@@ -3,6 +3,8 @@ import ModalWindow from "./ModalWindow";
 import { GreenButton, Checkbox } from "..";
 import Requests from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 const RegModule = ({
   regModuleActive,
@@ -11,6 +13,7 @@ const RegModule = ({
   setEmailSentModalActive,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const passRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
   const contactEmailRegExp =
     /^((([0-9A-Za-z]{1}[-0-9A-z.]{0,30}[0-9A-Za-z]?)|([0-9А-Яа-я]{1}[-0-9А-я.]{0,30}[0-9А-Яа-я]?))@([-A-Za-z]{1,}\.){1,}[-A-Za-z]{2,})$/;
@@ -29,30 +32,35 @@ const RegModule = ({
   //обработчик отправки запроса на регистрацию
   const onClickSubmit = () => {
     if (!name) {
-      alert("Не указано имя!");
+      dispatch(openErrorAlert("Не указано имя!"));
       return;
     } else if (!surname) {
-      alert("Не указана фамилия!");
+      dispatch(openErrorAlert("Не указана фамилия!"));
       return;
     } else if (!email) {
-      alert("Не указана почта!");
+      dispatch(openErrorAlert("Не указана почта!"));
       return;
     } else if (!password) {
-      alert("Не указан пароль!");
+      dispatch(openErrorAlert("Не указан пароль!"));
       return;
     } else if (!passwordSubmit) {
-      alert("Пароль не подтвержден!");
+      dispatch(openErrorAlert("Пароль не подтвержден!"));
       return;
     } else if (passwordSubmit !== password) {
-      alert("Пароли не совпадают!");
+      dispatch(openErrorAlert("Пароли не совпадают!"));
       return;
     } else if (!passRegExp.test(password)) {
-      alert(
-        "Пароль должен содержать 8 символов, 1 строчную букву, 1 заглавную букву, 1 цифру!"
+      dispatch(
+        openErrorAlert(
+          "Пароль должен содержать 8 символов, 1 строчную букву, 1 заглавную букву, 1 цифру!"
+        )
       );
       return;
     } else if (!contactEmailRegExp.test(email)) {
-      alert("Введен некорректный Email!");
+      dispatch(openErrorAlert("Введен некорректный Email!"));
+      return;
+    } else if (!agree) {
+      dispatch(openErrorAlert("Необходимо принять правила и условия!"));
       return;
     }
 
@@ -76,7 +84,11 @@ const RegModule = ({
             setSurname("");
           })
           .catch(() =>
-            alert("Ошибка регистрации. Проверьте правильность ввода полей")
+            dispatch(
+              openErrorAlert(
+                "Ошибка регистрации. Проверьте правильность ввода полей"
+              )
+            )
           );
       });
     });
@@ -196,7 +208,6 @@ const RegModule = ({
           text="Зарегистрироваться"
           width={"100%"}
           height={"38px"}
-          disabled={!agree}
         />
 
         <p className="reg_auth_content_lower_p" onClick={() => switchModals()}>

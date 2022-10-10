@@ -52,7 +52,12 @@ const AlbumView = () => {
             {album && album[0].custom_album.description_album}
           </div>
         </div>
-        <GreenButton height={"38px"} width={"180px"} text={"Редактировать"} />
+        <GreenButton
+          height={"38px"}
+          width={"180px"}
+          text={"Редактировать"}
+          disabled
+        />
       </div>
       <div className="albums_cards">
         {album &&

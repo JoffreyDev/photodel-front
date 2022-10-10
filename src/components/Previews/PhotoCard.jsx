@@ -26,7 +26,7 @@ const PhotoCard = ({
     <div
       className="photos_card"
       onClick={() => {
-        if (mainPhoto) {
+        if (changeMainPhoto) {
           changeMainPhoto(photo.id, photo.gallery_image.id);
         }
       }}

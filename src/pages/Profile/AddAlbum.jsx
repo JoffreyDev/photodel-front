@@ -41,10 +41,6 @@ const AddAlbum = ({ setActiveModule }) => {
   };
 
   React.useEffect(() => {
-    setMainPhoto(photosToDisplay && photosToDisplay[0]);
-  }, [photosToDisplay]);
-
-  React.useEffect(() => {
     userData.id &&
       Requests.getPhotosList(userData.id).then((res) => {
         setUserPhotos(res.data);
@@ -61,6 +57,13 @@ const AddAlbum = ({ setActiveModule }) => {
     } else if (!photosToDisplay) {
       dispatch(
         openErrorAlert("Не выбраны фотографии для добавления в альбом!")
+      );
+      return;
+    } else if (!imageId) {
+      dispatch(
+        openErrorAlert(
+          "Выберите главное фото для альбома! Кликните по нужной фотографии."
+        )
       );
       return;
     }

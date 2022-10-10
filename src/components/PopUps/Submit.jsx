@@ -2,7 +2,7 @@ import React from "react";
 import ModalWindow from "../RegAuth/ModalWindow";
 import { GreenButton } from "..";
 
-const Submit = ({ modalActive, setModalActive, callback, setAction }) => {
+const Submit = ({ modalActive, setModalActive, callback, setAction, text }) => {
   return (
     <ModalWindow moduleActive={modalActive} setModuleActive={setModalActive}>
       <div className="reg_auth_header">
@@ -31,7 +31,9 @@ const Submit = ({ modalActive, setModalActive, callback, setAction }) => {
       </div>
       <div className="reg_auth_content_fields">
         <p className="reg_auth_content_lower_p" style={{ textAlign: "center" }}>
-          Удалить выбранные фото? Данное действие невозможно отменить!
+          {text
+            ? text
+            : "Удалить выбранные фото? Данное действие невозможно отменить!"}
         </p>
         <GreenButton
           callback={() => callback()}

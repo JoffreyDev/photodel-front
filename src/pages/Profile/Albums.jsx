@@ -257,6 +257,9 @@ const Albums = ({ component }) => {
         setModalActive={setSubmitActive}
         callback={deleteHandle}
         setAction={setAction}
+        text={
+          "Вы действительно хотите удалить альбом(-ы)? Действие нельзя отменить."
+        }
       />
     </div>
   );

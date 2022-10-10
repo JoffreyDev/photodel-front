@@ -511,7 +511,7 @@ const MainProfiles = () => {
               }}
             >
               <h1 className="main_photo_header_h1">
-                Мы не нашли подходящих мест :(
+                Мы не нашли подходящих профи :(
               </h1>
             </div>
           )}
