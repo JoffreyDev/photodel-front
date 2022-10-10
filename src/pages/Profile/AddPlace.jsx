@@ -193,32 +193,36 @@ const AddPlace = () => {
       dispatch(openErrorAlert("Указание камеры обязательно!"));
     }
     sendPhotosArray.forEach((photo, idx) => {
-      Requests.createImage(photo).then((res) => {
-        upsendPhotosArray.push(res.data.id);
-        if (idx === mainPhoto) {
-          mainPhotoId = res.data.id;
-        }
-        if (upsendPhotosArray.length === sendPhotosArray.length) {
-          Requests.createFilmPlace({
-            name_place: title,
-            description: description,
-            place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
-            string_place_location: addressLine,
-            session_сategory: category,
-            photo_camera: camera,
-            cost: cost,
-            payment: paymentType,
-            category: category.map((category) => category.id),
-            main_photo: mainPhotoId,
-            place_image: upsendPhotosArray,
-          })
-            .then(() => {
-              dispatch(openSuccessAlert("Место для съемки успешно добавлено!"));
-              navigate("/profile/places");
+      Requests.createImage(photo)
+        .then((res) => {
+          upsendPhotosArray.push(res.data.id);
+          if (idx === mainPhoto) {
+            mainPhotoId = res.data.id;
+          }
+          if (upsendPhotosArray.length === sendPhotosArray.length) {
+            Requests.createFilmPlace({
+              name_place: title,
+              description: description,
+              place_location: `SRID=4326;POINT (${coords[0]} ${coords[1]})`,
+              string_place_location: addressLine,
+              session_сategory: category,
+              photo_camera: camera,
+              cost: cost,
+              payment: paymentType,
+              category: category.map((category) => category.id),
+              main_photo: mainPhotoId,
+              place_image: upsendPhotosArray,
             })
-            .catch((err) => openErrorAlert(err.response.data.error));
-        } else return;
-      });
+              .then(() => {
+                dispatch(
+                  openSuccessAlert("Место для съемки успешно добавлено!")
+                );
+                navigate("/profile/places");
+              })
+              .catch((err) => openErrorAlert(err.response.data.error));
+          } else return;
+        })
+        .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
     });
   };
 
