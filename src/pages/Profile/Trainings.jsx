@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Requests from '../../http/axios-requests';
 import { useSelector, useDispatch } from 'react-redux';
 import { openSuccessAlert } from '../../redux/actions/userData';
-import { PublicHeader } from '..';
 import { ScreenLoader } from '../../components';
 import TrainingCardMain from '../../components/Previews/TrainingCardMain';
 
@@ -44,7 +43,6 @@ const Trainings = () => {
 
   return (
     <div className='training'>
-      <PublicHeader profile={profileData} />
       <div className='training_header'>
         <h1 className='training_header_title'>ОБУЧЕНИЕ</h1>
         <div className='training_header_select'>
@@ -69,10 +67,13 @@ const Trainings = () => {
       </div>
       <div className='training_options'>
         <div className='training_options_left'>
-          <p className='training_options_left_p'>
-            Всего:{' '}
-            <span className='training_options_left_p_span'>{sessions && sessions.length}</span>
-          </p>
+          <div className='training_options_right'>
+            <p className='training_options_left_p'>
+              Всего:{' '}
+              <span className='training_options_left_p_span'>{sessions && sessions.length}</span>
+            </p>
+            <Checkbox marginBottom={1} label={'Выбрать все'} value={'0'} />
+          </div>
           <div className='training_options_right'>
             <div className='training_options_right_add'>
               <img src={AddImage} alt='add' className='training_options_right_add_image' />
@@ -88,10 +89,11 @@ const Trainings = () => {
               values={[
                 {
                   id: 1,
-                  value: 'Удалить',
+                  value: 'Выберите действие',
                 },
               ]}
               value={action}
+              placeholder={'Выберите действие'}
               onChange={(e) => setAction(e.target.value)}
               label={'Выберите действие'}
               labelId='demo-multiple-name-label'

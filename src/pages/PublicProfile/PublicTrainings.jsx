@@ -1,37 +1,27 @@
 import React from 'react';
 import SortImage from '../../img/sessions/sort.svg';
 import { SelectInput, Checkbox, SessionCard } from '../../components';
-import AddImage from '../../img/sessions/add.svg';
 import '../../styles/Profile/Training.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import Requests from '../../http/axios-requests';
 import { useSelector, useDispatch } from 'react-redux';
-import { openSuccessAlert } from '../../redux/actions/userData';
 import { PublicHeader } from '..';
 import { ScreenLoader } from '../../components';
 import TrainingCardMain from '../../components/Previews/TrainingCardMain';
 
 const Training = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const params = useParams();
   const profileId = params.id;
 
   const { userData } = useSelector(({ userData }) => userData);
-
-  const [sessions, setSessions] = React.useState();
-
-  const [selectedSessions, setSelectedSessions] = React.useState([]);
   const [allSessionsSelected, setAllSessionsSelected] = React.useState(false);
   const [action, setAction] = React.useState('');
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
-
+  const [sessions, setSessions] = React.useState();
+  const [selectedSessions, setSelectedSessions] = React.useState([]);
   const [dataLoading, setDataLoading] = React.useState(true);
-
   const [profileData, setPorfileData] = React.useState();
-
   React.useEffect(() => {
     profileId &&
       Requests.getSessions(profileId).then((res) => {

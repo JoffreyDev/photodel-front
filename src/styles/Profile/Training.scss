@@ -30,14 +30,13 @@
   }
 
   &_options {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-top: 30px;
 
     &_left {
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
       &_p {
         font-family: Montserrat;

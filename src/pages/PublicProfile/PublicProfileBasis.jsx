@@ -32,6 +32,8 @@ import {
   PublicFavorites,
   PublicRequests,
   PublicTrainings,
+  PublicReviews,
+  PublicTeam,
 } from '..';
 import { useParams, useNavigate } from 'react-router-dom';
 import PublicProfile from './PublicProfile';
@@ -86,25 +88,23 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 </p>
               </li>
 
-              {false && (
-                <li
-                  onClick={() => navigate('/profile/reviews')}
-                  className='profile_basis_module_choice_li'>
-                  <img
-                    src={component === 'reviews' ? ReviewActive : ReviewDis}
-                    className='profile_basis_module_choice_img'
-                    alt='menu choice'
-                  />
-                  <p
-                    className={
-                      component === 'reviews'
-                        ? 'profile_basis_module_choice_p active'
-                        : 'profile_basis_module_choice_p'
-                    }>
-                    Отзывы
-                  </p>
-                </li>
-              )}
+              <li
+                onClick={() => navigate(`/public/reviews/${profileId}`)}
+                className='profile_basis_module_choice_li'>
+                <img
+                  src={component === 'reviews' ? ReviewActive : ReviewDis}
+                  className='profile_basis_module_choice_img'
+                  alt='menu choice'
+                />
+                <p
+                  className={
+                    component === 'reviews'
+                      ? 'profile_basis_module_choice_p active'
+                      : 'profile_basis_module_choice_p'
+                  }>
+                  Отзывы
+                </p>
+              </li>
 
               <li
                 onClick={() => navigate(`/public/photos/${profileId}`)}
@@ -176,26 +176,23 @@ const PublicProfileBasis = ({ mainSocket }) => {
                   Обучение
                 </p>
               </li>
-
-              {false && (
-                <li
-                  onClick={() => navigate('/profile/team')}
-                  className='profile_basis_module_choice_li'>
-                  <img
-                    src={component === 'team' ? TeamActive : TeamDis}
-                    className='profile_basis_module_choice_img'
-                    alt='menu choice'
-                  />
-                  <p
-                    className={
-                      component === 'team'
-                        ? 'profile_basis_module_choice_p active'
-                        : 'profile_basis_module_choice_p'
-                    }>
-                    Команда
-                  </p>
-                </li>
-              )}
+              <li
+                onClick={() => navigate(`/public/team/${profileId}`)}
+                className='profile_basis_module_choice_li'>
+                <img
+                  src={component === 'team' ? TeamActive : TeamDis}
+                  className='profile_basis_module_choice_img'
+                  alt='menu choice'
+                />
+                <p
+                  className={
+                    component === 'team'
+                      ? 'profile_basis_module_choice_p active'
+                      : 'profile_basis_module_choice_p'
+                  }>
+                  Команда
+                </p>
+              </li>
 
               <li
                 onClick={() => navigate(`/public/requests/${profileId}`)}
@@ -271,7 +268,12 @@ const PublicProfileBasis = ({ mainSocket }) => {
             {component === 'albums' && (
               <PublicAlbums setProfileId={setProfileId} component={component} />
             )}
-
+            {component === 'reviews' && (
+              <PublicReviews setProfileId={setProfileId} component={component} />
+            )}
+            {component === 'team' && (
+              <PublicTeam setProfileId={setProfileId} component={component} />
+            )}
             {component === 'photo' && <PublicPhotoView setProfileId={setProfileId} />}
             {component === 'album' && <PublicAlbumView setProfileId={setProfileId} />}
             {component === 'place' && <PublicPlaceView setProfileId={setProfileId} />}

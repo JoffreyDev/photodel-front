@@ -57,6 +57,8 @@ import Trainings from './Trainings';
 import TrainingView from './TrainingView';
 import EditTraining from './EditTraining';
 import AddTraining from './AddTraining';
+import Team from './Team';
+import Reviews from './Reviews';
 
 const ProfileBasis = ({ mainSocket }) => {
   const params = useParams();
@@ -258,6 +260,48 @@ const ProfileBasis = ({ mainSocket }) => {
                   Обучение
                 </p>
               </li>
+              <li
+                onClick={() => navigate('/profile/team')}
+                className={
+                  component === 'team'
+                    ? 'profile_basis_module_choice_li active'
+                    : 'profile_basis_module_choice_li'
+                }>
+                <img
+                  src={component === 'team' ? TeamActive : TeamDis}
+                  className='profile_basis_module_choice_img'
+                  alt='menu choice'
+                />
+                <p
+                  className={
+                    component === 'team'
+                      ? 'profile_basis_module_choice_p active'
+                      : 'profile_basis_module_choice_p'
+                  }>
+                  Команда
+                </p>
+              </li>
+              <li
+                onClick={() => navigate('/profile/reviews')}
+                className={
+                  component === 'reviews'
+                    ? 'profile_basis_module_choice_li active'
+                    : 'profile_basis_module_choice_li'
+                }>
+                <img
+                  src={component === 'reviews' ? ReviewActive : ReviewDis}
+                  className='profile_basis_module_choice_img'
+                  alt='menu choice'
+                />
+                <p
+                  className={
+                    component === 'reviews'
+                      ? 'profile_basis_module_choice_p active'
+                      : 'profile_basis_module_choice_p'
+                  }>
+                  Отзывы
+                </p>
+              </li>
               {false && (
                 <li
                   onClick={() => navigate('/profile/settings')}
@@ -277,42 +321,6 @@ const ProfileBasis = ({ mainSocket }) => {
                   </p>
                 </li>
               )}
-              <li
-                onClick={() => navigate('/profile/team')}
-                className='profile_basis_module_choice_li'
-                style={{ opacity: 0.4, pointerEvents: 'none' }}>
-                <img
-                  src={component === 'team' ? TeamActive : TeamDis}
-                  className='profile_basis_module_choice_img'
-                  alt='menu choice'
-                />
-                <p
-                  className={
-                    component === 'team'
-                      ? 'profile_basis_module_choice_p active'
-                      : 'profile_basis_module_choice_p'
-                  }>
-                  Команда
-                </p>
-              </li>
-              <li
-                onClick={() => navigate('/profile/reviews')}
-                className='profile_basis_module_choice_li'
-                style={{ opacity: 0.4, pointerEvents: 'none' }}>
-                <img
-                  src={component === 'reviews' ? ReviewActive : ReviewDis}
-                  className='profile_basis_module_choice_img'
-                  alt='menu choice'
-                />
-                <p
-                  className={
-                    component === 'reviews'
-                      ? 'profile_basis_module_choice_p active'
-                      : 'profile_basis_module_choice_p'
-                  }>
-                  Отзывы
-                </p>
-              </li>
               <li
                 onClick={() => navigate('/profile/finance')}
                 className='profile_basis_module_choice_li'
@@ -346,6 +354,7 @@ const ProfileBasis = ({ mainSocket }) => {
             {component === 'add-session' && <AddSession />}
             {component === 'session' && <SessionView />}
             {component === 'training' && <TrainingView />}
+            {component === 'team' && <Team />}
             {component === 'places' && <Places />}
             {component === 'add-place' && <AddPlace component={component} />}
             {component === 'messages' && <Messages mainSocket={mainSocket} />}
@@ -358,6 +367,7 @@ const ProfileBasis = ({ mainSocket }) => {
             {component === 'edit-training' && <EditTraining component={component} />}
             {component === 'edit-session' && <EditSession component={component} />}
             {component === 'edit-place' && <EditPlace component={component} />}
+            {component === 'reviews' && <Reviews component={component} />}
           </div>
         </div>
       </div>

@@ -40,3 +40,5 @@ export { default as PublicSessions } from './PublicProfile/PublicSessions';
 export { default as PublicTrainings } from './PublicProfile/PublicTrainings';
 export { default as PublicSessionView } from './PublicProfile/PublicSessionView';
 export { default as PublicRequests } from './PublicProfile/PublicRequests';
+export { default as PublicReviews } from './PublicProfile/PublicReviews';
+export { default as PublicTeam } from './PublicProfile/PublicTeam';

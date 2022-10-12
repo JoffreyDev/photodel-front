@@ -1,0 +1,309 @@
+@import '../variables.scss';
+
+.reviews {
+  &_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 10px;
+
+    &_wrapper {
+      display: flex;
+    }
+
+    &_body {
+      margin-bottom: 20px;
+    }
+
+    &_title_first {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+      color: $black;
+      cursor: pointer;
+      padding-bottom: 6px;
+      padding-top: 30px;
+      border-bottom: 1px solid #d2d9d8;
+      padding: 20px 10px 7px 10px;
+      transition: 0.2s;
+    }
+
+    &_select {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: flex-end;
+      border-bottom: 1px solid #d2d9d8;
+    }
+  }
+  &_card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d2d9d8;
+    cursor: pointer;
+
+    &_head {
+      height: 32px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      text-align: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+
+      &_left {
+        display: flex;
+        flex-direction: row;
+        &_avatar {
+          border-radius: 8px;
+          width: 32px;
+          height: 32px;
+          margin-right: 6px;
+        }
+        &_online {
+          margin-right: 6px;
+        }
+        &_pro {
+          margin-right: 7px;
+        }
+
+        &_name {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 32px;
+          color: #50a398;
+          margin-right: 7px;
+        }
+
+        &_time {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 32px;
+          color: #9ca3a1;
+          text-align: center;
+        }
+      }
+      &_right {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+    &_main {
+      display: flex;
+      flex-direction: column;
+      width: 820px;
+
+      &_review {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: $black;
+        margin-bottom: 16px;
+      }
+      &_photos {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        &_photo {
+          width: 160px;
+          height: 96px;
+          border-radius: 8px;
+          margin-right: 30px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+    &_addMore {
+      display: flex;
+      flex-direction: row;
+
+      &_plus {
+        margin-right: 5px;
+      }
+      &_p {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        color: $darkAzure;
+        padding-top: 4px;
+      }
+    }
+  }
+  &_add {
+    margin-bottom: 10px;
+    &_header {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #d2d9d8;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+
+      &_arrow {
+        margin-right: 9px;
+        cursor: pointer;
+      }
+
+      &_p {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        color: $darkAzure;
+        cursor: pointer;
+      }
+      &_search {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  &_options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    &_left {
+      display: flex;
+      align-items: center;
+
+      &.mobile {
+        display: none;
+      }
+
+      &_p {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 16px;
+        color: $black;
+        margin-right: 40px;
+
+        &_span {
+          font-weight: 600;
+        }
+
+        &.mobile {
+          display: none;
+        }
+      }
+    }
+
+    &_right {
+      display: flex;
+      align-items: center;
+
+      &_add {
+        display: flex;
+        margin-right: 30px;
+        cursor: pointer;
+
+        &_image {
+          margin-right: 5px;
+          width: 20px;
+          height: 20px;
+        }
+
+        &_p {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 16px;
+          color: $darkAzure;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .team {
+    &_header {
+      margin-bottom: 10px;
+
+      &_title {
+        white-space: nowrap;
+      }
+    }
+
+    &_options {
+      margin-top: 0px;
+      flex-direction: column-reverse;
+
+      &_left_p.mobile {
+        padding: 23px 0 5px 0px;
+        margin-right: 0px;
+        border-bottom: 1px solid #d2d9d8;
+        width: 100%;
+        text-align: right;
+      }
+
+      &_right {
+        width: 100%;
+        justify-content: space-between;
+        transform: scale(0.9);
+
+        &_add {
+          white-space: nowrap;
+          margin-left: -12px;
+        }
+      }
+
+      &_left {
+        width: 109%;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        white-space: nowrap;
+        transform: scale(0.9);
+
+        &_p {
+          display: none;
+
+          &.mobile {
+            display: block;
+          }
+        }
+      }
+    }
+
+    &_cards {
+      margin-top: 0;
+    }
+
+    &_header_select {
+      display: none;
+
+      &.mobile {
+        display: flex;
+        border-bottom: none;
+      }
+    }
+  }
+
+  .photos_options {
+    &_left.favorites {
+      display: none;
+    }
+  }
+}

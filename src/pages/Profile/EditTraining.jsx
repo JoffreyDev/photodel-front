@@ -241,7 +241,7 @@ const EditTraining = () => {
       <div className='add_training_header'>
         <img src={Back} alt='back' className='add_training_header_arrow' />
         <p onClick={() => navigate('/profile/photos')} className='add_training_header_p'>
-          Все фотографии
+          Все мероприятия
         </p>
       </div>
       <div className='add_training_content'>
