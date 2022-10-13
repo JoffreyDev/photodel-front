@@ -42,3 +42,6 @@ export { default as PublicSessionView } from './PublicProfile/PublicSessionView'
 export { default as PublicRequests } from './PublicProfile/PublicRequests';
 export { default as PublicReviews } from './PublicProfile/PublicReviews';
 export { default as PublicTeam } from './PublicProfile/PublicTeam';
+export { default as MyTeam } from './Profile/MyTeam';
+export { default as Recommend } from './Profile/Recommend';
+export { default as Recommended } from './Profile/Recommended';

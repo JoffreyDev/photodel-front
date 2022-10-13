@@ -1,26 +1,22 @@
 import React from 'react';
+import '../../styles/Profile/Team.scss';
 import SortImage from '../../img/sessions/sort.svg';
-import {
-  Checkbox,
-  PhotoCard,
-  PlaceCard,
-  SessionCard,
-  TextInput,
-  SelectInput,
-} from '../../components';
+import { Checkbox, SelectInput } from '../../components';
 import '../../styles/Profile/Team.scss';
 import Requests from '../../http/axios-requests';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ScreenLoader } from '../../components';
 import AddImage from '../../img/sessions/add.svg';
-import TeamCard from '../../components/Previews/TeamCard';
 import { useParams } from 'react-router-dom';
-import PublicHeader from './PublicHeader';
+import PublicHeader from '../PublicProfile/PublicHeader';
+import { MyTeamCard } from '../../components';
 
-function Team({ component, setProfileId }) {
+function MyTeam({ component, setProfileId }) {
   const navigate = useNavigate();
   const { userData } = useSelector(({ userData }) => userData);
+  const [profiles, setProfiles] = React.useState();
+  const [photos, setPhotos] = React.useState();
+  const [places, setPlaces] = React.useState();
   const [sortType, setSortType] = React.useState(1);
   const [action, setAction] = React.useState(1);
   const [selectedPositions, setSelectedPositions] = React.useState([]);
@@ -39,7 +35,6 @@ function Team({ component, setProfileId }) {
 
     Requests.getPublicProfile(profileId).then((res) => setPorfileData(res.data));
   }, [profileId]);
-
   return (
     <div className='team'>
       <PublicHeader profile={profileData} />
@@ -136,9 +131,10 @@ function Team({ component, setProfileId }) {
           component === 'profiles' &&
           !dataLoading &&
           profiles.map((profile, idx) => ( */}
-        <TeamCard
+        <MyTeamCard
           array={selectedPositions}
           callback={setSelectedPositions}
+          component={component}
           // profile={profile}
           // key={idx}
         />
@@ -147,4 +143,4 @@ function Team({ component, setProfileId }) {
   );
 }
 
-export default Team;
+export default MyTeam;

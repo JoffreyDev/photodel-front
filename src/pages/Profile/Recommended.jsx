@@ -1,26 +1,23 @@
 import React from 'react';
-import SortImage from '../../img/sessions/sort.svg';
-import {
-  Checkbox,
-  PhotoCard,
-  PlaceCard,
-  SessionCard,
-  TextInput,
-  SelectInput,
-} from '../../components';
 import '../../styles/Profile/Team.scss';
-import Requests from '../../http/axios-requests';
-import { useSelector } from 'react-redux';
+import Avatar from '../../img/profile/avatar.png';
 import { useNavigate } from 'react-router-dom';
-import { ScreenLoader } from '../../components';
-import AddImage from '../../img/sessions/add.svg';
-import TeamCard from '../../components/Previews/TeamCard';
+import { RecommendedCard } from '../../components';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import PublicHeader from './PublicHeader';
+import Requests from '../../http/axios-requests';
+import Online from '../../img/commonImages/online.svg';
+import PublicHeader from '../PublicProfile/PublicHeader';
+import SortImage from '../../img/sessions/sort.svg';
+import { Checkbox, SelectInput } from '../../components';
+import AddImage from '../../img/sessions/add.svg';
 
-function Team({ component, setProfileId }) {
+function Recommended({ component, setProfileId }) {
   const navigate = useNavigate();
   const { userData } = useSelector(({ userData }) => userData);
+  const [profiles, setProfiles] = React.useState();
+  const [photos, setPhotos] = React.useState();
+  const [places, setPlaces] = React.useState();
   const [sortType, setSortType] = React.useState(1);
   const [action, setAction] = React.useState(1);
   const [selectedPositions, setSelectedPositions] = React.useState([]);
@@ -136,7 +133,7 @@ function Team({ component, setProfileId }) {
           component === 'profiles' &&
           !dataLoading &&
           profiles.map((profile, idx) => ( */}
-        <TeamCard
+        <RecommendedCard
           array={selectedPositions}
           callback={setSelectedPositions}
           // profile={profile}
@@ -147,4 +144,4 @@ function Team({ component, setProfileId }) {
   );
 }
 
-export default Team;
+export default Recommended;

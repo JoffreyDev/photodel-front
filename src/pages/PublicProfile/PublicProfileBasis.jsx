@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Footer } from '../../components';
+import { Header, Footer, MyTeamCard, RecommendCard, RecommendedCard } from '../../components';
 import ProfileDis from '../../img/profile/profile-dis.svg';
 import ProfileActive from '../../img/profile/profile-active.svg';
 import ReviewDis from '../../img/profile/review-dis.svg';
@@ -34,6 +34,9 @@ import {
   PublicTrainings,
   PublicReviews,
   PublicTeam,
+  MyTeam,
+  Recommend,
+  Recommended,
 } from '..';
 import { useParams, useNavigate } from 'react-router-dom';
 import PublicProfile from './PublicProfile';
@@ -180,13 +183,17 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 onClick={() => navigate(`/public/team/${profileId}`)}
                 className='profile_basis_module_choice_li'>
                 <img
-                  src={component === 'team' ? TeamActive : TeamDis}
+                  src={
+                    component === 'team' || component === 'recommend' || component === 'recommended'
+                      ? TeamActive
+                      : TeamDis
+                  }
                   className='profile_basis_module_choice_img'
                   alt='menu choice'
                 />
                 <p
                   className={
-                    component === 'team'
+                    component === 'team' || component === 'recommend' || component === 'recommended'
                       ? 'profile_basis_module_choice_p active'
                       : 'profile_basis_module_choice_p'
                   }>
@@ -273,6 +280,13 @@ const PublicProfileBasis = ({ mainSocket }) => {
             )}
             {component === 'team' && (
               <PublicTeam setProfileId={setProfileId} component={component} />
+            )}
+            {component === 'myTeam' && <MyTeam setProfileId={setProfileId} component={component} />}
+            {component === 'recommend' && (
+              <Recommend setProfileId={setProfileId} component={component} />
+            )}
+            {component === 'recommended' && (
+              <Recommended setProfileId={setProfileId} component={component} />
             )}
             {component === 'photo' && <PublicPhotoView setProfileId={setProfileId} />}
             {component === 'album' && <PublicAlbumView setProfileId={setProfileId} />}
