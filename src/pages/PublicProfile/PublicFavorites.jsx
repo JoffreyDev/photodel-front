@@ -173,7 +173,13 @@ function PublicFavorites() {
             component === "places" &&
             !dataLoading &&
             places.map((place, idx) => (
-              <PlaceCard disableCheck place={place.place} key={idx} />
+              <PlaceCard
+                disableCheck
+                place={place.place}
+                key={idx}
+                notAuthor
+                disableEdit
+              />
             ))}
           {places &&
             component === "places" &&
@@ -196,6 +202,8 @@ function PublicFavorites() {
                 disableCheck
                 session={session.photo_session}
                 key={idx}
+                disableEdit
+                notAuthor
               />
             ))}
           {sessions &&

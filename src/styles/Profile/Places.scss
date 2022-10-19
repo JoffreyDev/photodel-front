@@ -23,6 +23,10 @@
       align-items: center;
       justify-content: center;
 
+      &_image {
+        cursor: pointer;
+      }
+
       &.mobile {
         display: none;
       }

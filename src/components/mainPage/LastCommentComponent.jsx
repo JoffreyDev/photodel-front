@@ -10,7 +10,7 @@ const LastCommentComponent = ({ comment, subj }) => {
       <h3
         onClick={() =>
           navigate(
-            `/public/photo/${
+            `/public/${subj}/${
               comment && subj === "photo"
                 ? comment && comment.gallery__id
                 : subj === "place"

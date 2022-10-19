@@ -81,20 +81,23 @@ function ProfileCard({ profile, callback, array, disableCheck }) {
         </div>
         <div className="profile_card_info_third">
           <p className="profile_card_info_third_category">
-            {profile && profile.receiver_favorite.type_pro.name_category}
+            {profile && profile.receiver_favorite.type_pro?.name_category}
           </p>
           <p className="profile_card_info_third_specs">
             {" "}
             {profile &&
               profile.receiver_favorite.spec_model_or_photographer
-                .map((spec) => spec.name_spec)
+                ?.map((spec) => spec.name_spec)
                 .join(", ")}
           </p>
         </div>
-        <p className="profile_card_info_fourth">
-          {profile && profile.receiver_favorite.string_location.split(", ")[1]}{" "}
-          | 5км
-        </p>
+        {profile.receiver_favorite.string_location && (
+          <p className="profile_card_info_fourth">
+            {profile &&
+              profile.receiver_favorite.string_location?.split(", ")[1]}{" "}
+            | 5км
+          </p>
+        )}
       </div>
     </div>
   );

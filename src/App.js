@@ -44,10 +44,15 @@ function App() {
   //проверка на авторизацию
   React.useEffect(() => {
     if (acessToken) {
-      Requests.getOwnProfile().then((res) => {
-        dispatch(setUserData(res.data));
-        dispatch(toggleIsLoggenIn(true));
-      });
+      Requests.getOwnProfile()
+        .then((res) => {
+          dispatch(setUserData(res.data));
+          dispatch(toggleIsLoggenIn(true));
+        })
+        .catch(() => {
+          localStorage.removeItem("access");
+          window.location.reload();
+        });
     } else dispatch(toggleIsLoggenIn(false));
   }, [acessToken, dispatch]);
 

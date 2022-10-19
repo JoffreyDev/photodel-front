@@ -36,7 +36,7 @@ const MainProfiles = () => {
   const [searchDist, setSearchDist] = React.useState(10000000000);
   const [category, setCategory] = React.useState("Все");
   const [places, setPlaces] = React.useState();
-  const [sortField, setSortField] = React.useState(1);
+  const [sortField, setSortField] = React.useState(2);
   const [sortType, setSortType] = React.useState("-");
 
   const [mapViewActive, setMapViewActive] = React.useState(true);
@@ -124,7 +124,7 @@ const MainProfiles = () => {
         ? decodeURI(window.location.href.split("?req=")[1])
         : searchReq,
       distance: searchDist,
-      sortField: sortField === 1 ? "id" : sortField === 2 ? "views" : "",
+      sortField: sortField === 1 ? "id" : sortField === 2 ? "likes" : "",
       sortType: sortType,
       count_positions: countPositions,
       page: page,
@@ -152,7 +152,7 @@ const MainProfiles = () => {
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
-      sortField: sortField === 1 ? "id" : sortField === 2 ? "views" : "",
+      sortField: sortField === 1 ? "id" : sortField === 2 ? "likes" : "",
       sortType: sortType,
       count_positions: countPositions,
       page: page,

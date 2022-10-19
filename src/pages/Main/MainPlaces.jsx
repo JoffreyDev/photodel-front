@@ -34,7 +34,7 @@ const MainPlaces = () => {
   const [category, setCategory] = React.useState("Все");
   const [places, setPlaces] = React.useState();
   const [placesMarks, setPlacesMarks] = React.useState();
-  const [sortField, setSortField] = React.useState(1);
+  const [sortField, setSortField] = React.useState(2);
   const [sortType, setSortType] = React.useState("-");
 
   const [fetching, setFetching] = React.useState(false);
@@ -124,7 +124,7 @@ const MainPlaces = () => {
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
-      sortField: sortField === 1 ? "id" : sortField === 2 ? "views" : "",
+      sortField: sortField === 1 ? "id" : sortField === 2 ? "likesStat" : "",
       sortType: sortType,
       count_positions: countPositions,
       page: page,
@@ -170,7 +170,7 @@ const MainPlaces = () => {
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
-      sortField: sortField === 1 ? "id" : sortField === 2 ? "views" : "",
+      sortField: sortField === 1 ? "id" : sortField === 2 ? "likesStat" : "",
       sortType: sortType,
       count_positions: countPositions,
       page: page,
