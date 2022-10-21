@@ -3,8 +3,10 @@ import Avatar from "../../img/photoView/avatar.png";
 import Online from "../../img/photoView/online.svg";
 import Pro from "../../img/photoView/pro.svg";
 import "../../styles/Modules/Reviews.scss";
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({ comment }) => {
+  const navigate = useNavigate();
   return (
     <div className="reviews_comment">
       <div className="reviews_comment_upper">
@@ -12,6 +14,10 @@ const Comment = ({ comment }) => {
           src={`data:image/png;base64,${comment.sender_comment.avatar}`}
           alt="avatar"
           className="reviews_comment_upper_avatar"
+          onClick={() =>
+            navigate(`/public/profile/${comment.sender_comment.id}`)
+          }
+          style={{ cursor: "pointer" }}
         />
         {comment.sender_comment.user_channel_name && (
           <img
@@ -20,7 +26,13 @@ const Comment = ({ comment }) => {
             className="reviews_comment_upper_online"
           />
         )}
-        <p className="reviews_comment_upper_name">{`${comment.sender_comment.name} ${comment.sender_comment.surname}`}</p>
+        <p
+          onClick={() =>
+            navigate(`/public/profile/${comment.sender_comment.id}`)
+          }
+          style={{ cursor: "pointer" }}
+          className="reviews_comment_upper_name"
+        >{`${comment.sender_comment.name} ${comment.sender_comment.surname}`}</p>
         {/*   <img src={Pro} alt="pro" className="reviews_comment_upper_pro" /> */}
         <p className="reviews_comment_upper_date">
           {" "}

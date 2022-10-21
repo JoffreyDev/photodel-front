@@ -662,7 +662,6 @@ export class Requests {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
 
       url: `api/gallery/photo/comment/list/${id}/`,
@@ -674,7 +673,6 @@ export class Requests {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
 
       url: `api/gallery/photo_session/comment/list/${id}/`,
@@ -829,9 +827,7 @@ export class Requests {
         sortField ? `&filter_field=${sortField}` : ""
       }${
         sortType ? `&sort_type=${sortType}` : ""
-      }${`&count_positions=${count_positions}`}${
-        sortType ? `&sort_type=${sortType}` : ""
-      }${`&page=${page}`}`,
+      }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
     }).then((res) => res);
   }
 
