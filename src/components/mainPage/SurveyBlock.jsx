@@ -27,19 +27,19 @@ const SurveyBlock = () => {
         {advert && (
           <div className="main_page_survey_section_adv">
             <a
-              onClick={() => Requests.clickAdvert(advert[0]?.id)}
-              href={advert[0]?.ad_link}
+              onClick={() => Requests.clickAdvert(advert && advert.id)}
+              href={advert && advert.ad_link}
               target="_blank"
               rel="noreferrer"
               className="main_page_survey_section_adv_link"
             >
               <img
-                src={`${rootAddress}${advert[0]?.ad_image}`}
+                src={`${rootAddress}${advert.ad_image}`}
                 className="main_page_survey_section_adv_image"
               />
               <div className="main_page_survey_section_adv_info">
                 <h1 className="main_page_survey_section_adv_title">
-                  {advert[0]?.ad_title}
+                  {advert && advert.ad_title}
                 </h1>
                 <a
                   href={advert[0]?.ad_link}

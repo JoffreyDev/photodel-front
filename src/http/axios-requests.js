@@ -7,6 +7,13 @@ const $api = axios.create({
   baseURL: "https://photodel.ru",
 });
 
+/* export const rootAddress = "http://localhost:8000";
+export const rootSocketAddress = "localhost:8000";
+
+const $api = axios.create({
+  baseURL: "http://localhost:8000",
+}); */
+
 export class Requests {
   static async login(email, password) {
     return $api({
