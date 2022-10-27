@@ -411,7 +411,7 @@ export class Requests {
         "Content-Type": "application/json",
       },
 
-      url: `api/gallery/album/list_photos/${id}/`,
+      url: `api/gallery/album/${id}/`,
     }).then((res) => res);
   }
 
@@ -1496,6 +1496,23 @@ export class Requests {
       },
 
       url: `api/additional_entities/add_answer/`,
+    }).then((res) => res);
+  }
+
+  static async updateAlbum({ id, name_album, description_album }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        name_album: name_album,
+        description_album: description_album,
+      },
+
+      url: `api/gallery/album/update/${id}/`,
     }).then((res) => res);
   }
 }

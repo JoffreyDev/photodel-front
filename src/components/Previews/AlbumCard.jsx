@@ -2,6 +2,8 @@ import React from "react";
 import Edit from "../../img/sessions/edit.svg";
 import { rootAddress } from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 import { Checkbox } from "..";
 
@@ -14,6 +16,7 @@ const AlbumCard = ({
   array,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [key, setKey] = React.useState(Math.random);
 
@@ -57,7 +60,18 @@ const AlbumCard = ({
         <div className="albums_card_info_title_wrapper">
           <p className="albums_card_info_title">{album.name_album}</p>
           {!disableEdit && (
-            <img src={Edit} alt="edit" className="albums_card_info_title_img" />
+            <img
+              onClick={() =>
+                dispatch(
+                  openErrorAlert(
+                    "Редактирование альбома на данный момент недоступно"
+                  )
+                )
+              }
+              src={Edit}
+              alt="edit"
+              className="albums_card_info_title_img"
+            />
           )}
         </div>
         <div className="albums_card_info_comm">

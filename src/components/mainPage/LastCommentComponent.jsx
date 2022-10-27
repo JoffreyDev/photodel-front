@@ -33,19 +33,6 @@ const LastCommentComponent = ({ comment, subj }) => {
           : ""}
       </h3>
       <p
-        onClick={() =>
-          navigate(
-            `/public/photo/${
-              comment && subj === "photo"
-                ? comment && comment.gallery__id
-                : subj === "place"
-                ? comment && comment.place__id
-                : subj === "session"
-                ? comment && comment.photo_session__id
-                : ""
-            }`
-          )
-        }
         style={{ cursor: "pointer" }}
         className="main_page_last_comments_section_content_comment_content"
       >

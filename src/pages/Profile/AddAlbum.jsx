@@ -132,18 +132,10 @@ const AddAlbum = ({ setActiveModule }) => {
               alt="add"
               className="photos_options_right_add_image"
             />
-            <p className="photos_options_right_add_p">Добавить фото</p>
+            <p className="photos_options_right_add_p">
+              Добавить/изменить фотографии
+            </p>
           </div>
-          <SelectInput
-            width={200}
-            marginBottom={"10px"}
-            values={[
-              {
-                id: 1,
-                value: "Удалить",
-              },
-            ]}
-          />
         </div>
       </div>
       <div className="edit_album_photos">

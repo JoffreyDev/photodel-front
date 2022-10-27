@@ -5,8 +5,12 @@ import Requests from "../../http/axios-requests";
 import { useNavigate, useParams } from "react-router-dom";
 import { GreenButton, PhotoCard } from "../../components";
 import Back from "../../img/addModules/arrow-back.svg";
+import { useDispatch } from "react-redux";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 const AlbumView = () => {
+  const dispatch = useDispatch();
+
   const [album, setAlbum] = React.useState();
 
   const [loaded, setLoaded] = React.useState(false);
@@ -56,7 +60,13 @@ const AlbumView = () => {
           height={"38px"}
           width={"180px"}
           text={"Редактировать"}
-          disabled
+          callback={() =>
+            dispatch(
+              openErrorAlert(
+                "Редактирование альбома на данный момент недоступно"
+              )
+            )
+          }
         />
       </div>
       <div className="albums_cards">

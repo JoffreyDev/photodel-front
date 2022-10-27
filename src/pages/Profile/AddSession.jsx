@@ -14,6 +14,7 @@ import Requests from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
 import { openSuccessAlert, openErrorAlert } from "../../redux/actions/userData";
 import { useDispatch, useSelector } from "react-redux";
+import Resizer from "react-image-file-resizer";
 
 const AddSession = () => {
   let parsedFiles = [];
@@ -135,6 +136,34 @@ const AddSession = () => {
     setTimeout(() => handleLoad(), 3000);
   }, []);
 
+  //прогружаем карту после подключения скрипта
+  React.useEffect(() => {
+    setTimeout(() => handleLoad(), 3000);
+  }, []);
+
+  //ресайз
+  const resizeFile = (file, weight) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        1200,
+        1200,
+        "JPEG",
+        weight > 2e6 ? 60 : weight > 1e6 ? 80 : 100,
+        0,
+        (uri) => {
+          resolve(uri);
+          sendPhotosArray.push(uri);
+          setSendPhotosArray(sendPhotosArray);
+          forceUpdate();
+          dispatch(
+            openSuccessAlert("Фото было сжато, так как вес превышал 400Кб")
+          );
+        },
+        "base64"
+      );
+    });
+
   //получение base64 фото
   function getBase64(file, callback) {
     const reader = new FileReader();
@@ -153,17 +182,16 @@ const AddSession = () => {
     parsedFiles = Array.from(e.target.files);
     parsedFiles.forEach((file) => {
       if (file.size > 4e5) {
-        dispatch(
-          openErrorAlert("Вес одной картинки не может превышать 400Кб!")
-        );
-        return;
+        resizeFile(file, file.size);
       }
 
-      getBase64(file, function (base64Data) {
-        sendPhotosArray.push(base64Data);
-        setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
-        forceUpdate();
-      });
+      if (!file.size > 4e5) {
+        getBase64(file, function (base64Data) {
+          sendPhotosArray.push(base64Data);
+          setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
+          forceUpdate();
+        });
+      }
     });
   };
 
