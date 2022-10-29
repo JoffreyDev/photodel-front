@@ -148,7 +148,7 @@ const AddPlace = () => {
         1200,
         1200,
         "JPEG",
-        weight > 2e6 ? 60 : weight > 1e6 ? 80 : 100,
+        weight > 2e6 ? 60 : weight > 1e6 ? 80 : weight > 4e5 ? 90 : 100,
         0,
         (uri) => {
           resolve(uri);
@@ -184,7 +184,7 @@ const AddPlace = () => {
         resizeFile(file, file.size);
       }
 
-      if (!file.size > 4e5) {
+      if (file.size <= 4e5) {
         getBase64(file, function (base64Data) {
           sendPhotosArray.push(base64Data);
           setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
