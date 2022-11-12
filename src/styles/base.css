@@ -1,8 +1,9 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
 #root {
-  overflow-x: hidden ;
+  overflow: hidden ;
 }
+
 
 .hidden_file_input {
   opacity: 0;

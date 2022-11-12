@@ -833,7 +833,9 @@ export class Requests {
       }${`&distance=${distance}`}${
         sortField ? `&filter_field=${sortField}` : ""
       }${
-        sortType ? `&sort_type=${sortType}` : ""
+        sortType
+          ? `&sort_type=${sortType === "+" ? "" : sortType === "-" ? "-" : ""}`
+          : ""
       }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
     }).then((res) => res);
   }
@@ -1181,7 +1183,7 @@ export class Requests {
         "Content-Type": "application/json",
       },
 
-      url: `api/accounts/profile/popular/`,
+      url: `api/accounts/profile/list/?user_coords=53.9246997%2027.59311&distance=10000000000&filter_field=likes&sort_type=-&count_positions=12&page=1`,
     }).then((res) => res);
   }
 

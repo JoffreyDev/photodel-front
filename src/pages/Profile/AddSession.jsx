@@ -136,11 +136,6 @@ const AddSession = () => {
     setTimeout(() => handleLoad(), 3000);
   }, []);
 
-  //прогружаем карту после подключения скрипта
-  React.useEffect(() => {
-    setTimeout(() => handleLoad(), 3000);
-  }, []);
-
   //ресайз
   const resizeFile = (file, weight) =>
     new Promise((resolve) => {

@@ -67,6 +67,7 @@ const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
               res.geoObjects.get(0).getAddressLine().split(",")[1]
           );
           dispatch(openSuccessAlert("Местонахождение выбрано!"));
+          myMap.destroy();
           setTimeout(() => {
             setOpen(false);
           }, 500);
@@ -94,7 +95,7 @@ const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
 
   React.useEffect(() => {
     setTimeout(() => handleLoad(), 3000);
-  });
+  }, []);
 
   return (
     <MuiModal open={open} setOpen={setOpen}>

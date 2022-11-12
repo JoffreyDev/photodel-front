@@ -37,7 +37,6 @@ const Home = () => {
   }, []);
 
   React.useEffect(() => {
-    window.scroll(0, 0);
     document.title = "Фотодел";
   }, []);
 

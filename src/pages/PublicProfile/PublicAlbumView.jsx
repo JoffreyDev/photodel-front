@@ -58,7 +58,6 @@ const PublicAlbumView = ({ setProfileId }) => {
         {album &&
           album.map((photo, idx) => (
             <PhotoCard
-              disableCheck
               photo={photo}
               key={idx}
               disableEdit
