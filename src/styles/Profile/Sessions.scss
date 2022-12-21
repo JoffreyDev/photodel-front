@@ -1,4 +1,4 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
 .sessions {
   &_header {
@@ -23,12 +23,10 @@
       align-items: center;
       justify-content: center;
 
-        &.mobile {
-          display: none;
-        }
+      &.mobile {
+        display: none;
+      }
     }
-
-  
   }
 
   &_options {
@@ -96,7 +94,7 @@
     width: 255px;
     height: 255px;
     margin-bottom: 20px;
-        cursor: pointer;
+    cursor: pointer;
 
     &:not(:nth-child(3n + 3)) {
       margin-right: 39px;
@@ -116,7 +114,7 @@
       }
 
       &_name {
-        font-family: "Montserrat";
+        font-family: 'Montserrat';
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
@@ -250,45 +248,41 @@
 
 @media (max-width: 576px) {
   .sessions {
-
     &_options {
       margin-top: 0px;
       flex-direction: column-reverse;
-    
+
       &_left_p.mobile {
         padding: 23px 0 5px 0px;
         margin-right: 0px;
         border-bottom: 1px solid #d2d9d8;
         width: 100%;
         text-align: right;
-    
       }
-    
+
       &_right {
         width: 100%;
         justify-content: space-between;
         transform: scale(0.9);
-    
+
         &_add {
           white-space: nowrap;
           margin-left: -12px;
         }
       }
-    
+
       &_left {
         width: 109%;
         justify-content: space-between;
         flex-direction: row-reverse;
         white-space: nowrap;
         transform: scale(0.9);
-    
-    
+
         &_p {
           display: none;
-    
+
           &.mobile {
             display: block;
-    
           }
         }
       }
@@ -296,7 +290,7 @@
 
     &_header {
       margin-bottom: 10px;
-    
+
       &_title {
         white-space: nowrap;
       }
@@ -314,18 +308,17 @@
         width: 55%;
         height: 120px;
       }
-      
+
       &.map_active {
         display: flex;
-       
       }
 
       &_photo {
         object-fit: cover;
 
         &_checkbox {
-              bottom: 63px;
-              left: 126px;
+          bottom: 63px;
+          left: 126px;
         }
 
         &_wrapper {
@@ -338,16 +331,14 @@
         border-radius: 8px 0 0 8px;
       }
     }
-    
+
     &_header_select {
       display: none;
-    
+
       &.mobile {
         display: flex;
         border-bottom: none;
       }
     }
   }
-
-
 }

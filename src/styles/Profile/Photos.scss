@@ -1,4 +1,4 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
 .photos {
   &_header {
@@ -23,7 +23,7 @@
       cursor: pointer;
       padding: 0px 10px;
 
-      padding-bottom: 6px;
+      padding-bottom: 5px;
       padding-top: 22px;
       border-bottom: 1px solid #d2d9d8;
       transition: 0.2s;
@@ -108,7 +108,7 @@
       &_add {
         display: flex;
         margin-right: 30px;
-                      cursor: pointer;
+        cursor: pointer;
 
         &_image {
           margin-right: 5px;
@@ -123,7 +123,6 @@
           font-size: 13px;
           line-height: 16px;
           color: $darkAzure;
-         
         }
       }
     }
@@ -143,12 +142,12 @@
       justify-content: center;
 
       &_title {
-        font-family: "Comfortaa";
-          font-style: normal;
-          font-weight: 700;
-          font-size: 20px;
-          line-height: 28px;
-          color: #50a398;
+        font-family: 'Comfortaa';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 28px;
+        color: #50a398;
       }
     }
   }
@@ -268,7 +267,6 @@
 
 @media (max-width: 576px) {
   .photos {
-
     &_cards {
       justify-content: space-between;
     }
@@ -287,7 +285,6 @@
           left: 134px;
           z-index: 2;
         }
-
       }
 
       &_wrapper {
@@ -314,7 +311,6 @@
         &.noBorder {
           border-bottom: none;
         }
-       
       }
 
       &_right {
@@ -322,10 +318,10 @@
         justify-content: space-between;
         transform: scale(0.9);
 
-          &_add {
-            white-space: nowrap;
-            margin-left: -12px;
-          }
+        &_add {
+          white-space: nowrap;
+          margin-left: -12px;
+        }
       }
 
       &_left {
@@ -333,34 +329,29 @@
         justify-content: space-between;
         flex-direction: row-reverse;
         white-space: nowrap;
-         transform: scale(0.9);
-
+        transform: scale(0.9);
 
         &_p {
           display: none;
 
           &.mobile {
             display: block;
+          }
         }
+      }
 
-         
+      &_cards {
+        margin-top: 0;
       }
     }
 
-    &_cards {
-      margin-top: 0;
-    }
+    &_header_select {
+      display: none;
 
-   
-  }
-
-  &_header_select {
-    display: none;
-  
-    &.mobile {
-      display: flex;
-      border-bottom: none;
+      &.mobile {
+        display: flex;
+        border-bottom: none;
+      }
     }
   }
-}
 }

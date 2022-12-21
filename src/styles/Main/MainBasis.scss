@@ -1,4 +1,4 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
 .main_basis {
   display: flex;
@@ -10,5 +10,6 @@
     width: 1150px;
     padding: 0 0 0 20px;
     min-height: calc(100vh - 400px);
+    // height: 1270px;
   }
 }
