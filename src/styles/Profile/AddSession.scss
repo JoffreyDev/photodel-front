@@ -95,6 +95,11 @@
       margin-top: 5px;
       color: black;
 
+      &_wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+
       &_label {
         font-family: Montserrat;
         font-style: normal;
@@ -194,6 +199,67 @@
 }
 
 @media (max-width: 576px) {
+
+  .sessions {
+    &_options {
+        margin-top: 20px;
+        flex-direction: row;
+    
+        &_left.mobile {
+          display: flex;
+        }
+    
+        &_left_p.mobile {
+          padding: 23px 0 5px 0px;
+          margin-right: 0px;
+          border-bottom: 1px solid #d2d9d8;
+          width: 100%;
+          text-align: right;
+    
+          &.noBorder {
+            border-bottom: none;
+          }
+    
+        }
+    
+        &_right {
+          width: 100%;
+          justify-content: space-between;
+          transform: scale(0.9);
+    
+          &_add {
+            white-space: nowrap;
+            margin-left: -12px;
+          }
+        }
+    
+        &_left {
+          width: 109%;
+          justify-content: space-between;
+          flex-direction: row;
+          white-space: nowrap;
+          transform: scale(0.9);
+    
+    
+          &_p {
+            display: none;
+    
+            &.mobile {
+              display: block;
+            }
+    
+    
+          }
+        }
+    
+        &_cards {
+          margin-top: 0;
+        }
+    
+    
+      }
+  }
+
   .add_session {
 
     &_buttons {

@@ -297,9 +297,8 @@
     }
 
     &_options {
-      margin-top: 20px;
-      flex-direction: row;
-      justify-content: space-between;
+      margin-top: 0px;
+      flex-direction: column-reverse;
 
       &_left.mobile {
         display: flex;
@@ -332,6 +331,7 @@
       &_left {
         width: 109%;
         justify-content: space-between;
+        flex-direction: row-reverse;
         white-space: nowrap;
          transform: scale(0.9);
 

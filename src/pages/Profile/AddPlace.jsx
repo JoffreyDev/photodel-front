@@ -287,11 +287,11 @@ const AddPlace = () => {
       {sendPhotosArray &&
         sendPhotosArray.length >= 1 &&
         window.screen.width > 576 && (
-          <div className="photos_options">
-            <div className="photos_options_left">
-              <p className="photos_options_left_p">
+          <div className="sessions_options">
+            <div className="sessions_options_left">
+              <p className="sessions_options_left_p">
                 Всего:{" "}
-                <span className="photos_options_left_p_span">
+                <span className="sessions_options_left_p_span">
                   {sendPhotosArray && sendPhotosArray.length}
                 </span>
               </p>
@@ -317,7 +317,7 @@ const AddPlace = () => {
               />
             </div>
 
-            <div className="photos_options_right">
+            <div className="sessions_options_right">
               <SelectInput
                 label={"Выберите действие"}
                 labelId="demo-multiple-name-label"
@@ -451,15 +451,15 @@ const AddPlace = () => {
           >
             <ul className="add_session_right_content_ul">
               <li className="add_session_right_content_li">
-                <div className="photos_options_right_add">
+                <div className="sessions_options_right_add">
                   <img
                     src={AddImage}
                     alt="add"
-                    className="photos_options_right_add_image"
+                    className="sessions_options_right_add_image"
                   />
                   <label
                     htmlFor="file_input"
-                    className="photos_options_right_add_p"
+                    className="sessions_options_right_add_p"
                   >
                     Загрузить фотографии
                   </label>
@@ -477,11 +477,11 @@ const AddPlace = () => {
           {sendPhotosArray &&
             sendPhotosArray.length >= 1 &&
             window.screen.width <= 576 && (
-              <div className="photos_options">
-                <div className="photos_options_left">
-                  <p className="photos_options_left_p">
+              <div className="sessions_options">
+                <div className="sessions_options_left">
+                  <p className="sessions_options_left_p">
                     Всего:{" "}
-                    <span className="photos_options_left_p_span">
+                    <span className="sessions_options_left_p_span">
                       {sendPhotosArray && sendPhotosArray.length}
                     </span>
                   </p>
@@ -507,7 +507,7 @@ const AddPlace = () => {
                   />
                 </div>
 
-                <div className="photos_options_right">
+                <div className="sessions_options_right">
                   <SelectInput
                     width={200}
                     marginBottom={"10px"}
