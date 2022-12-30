@@ -192,3 +192,37 @@
     margin-top: 30px;
   }
 }
+
+@media (max-width: 576px) {
+  .add_session {
+
+    &_buttons {
+      align-self: center;
+    }
+
+    &_content {
+      flex-direction: column-reverse;
+    }
+
+    &_left_content {
+      width: 100%;
+    }
+
+    &_right_content {
+      &_window {
+        width: 100%;
+        flex-direction: row;
+        height: 64px;
+      }
+
+      &_ul {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      &_li {
+        margin-bottom: 0px !important;
+      }
+    }
+  }
+}

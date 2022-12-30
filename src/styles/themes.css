@@ -895,3 +895,15 @@ color: var(--secondary-text-color);
 .albums_options_left_p {
     color: var(--secondary-text-color);
 }
+
+.add_photo_left_content_h1 {
+    color: var(--secondary-text-color);
+}
+
+.add_photo_left_content_h1.margin {
+    color: var(--secondary-text-color);
+}
+
+.add_session_left_content_h1 {
+    color: var(--secondary-text-color);}
+

@@ -274,66 +274,68 @@ const AddPlace = () => {
   }, [sendPhotosArray]);
 
   return (
-    <div className="add_session">
-      <div className="add_session_header">
-        <img src={Back} alt="back" className="add_session_header_arrow" />
+    <div className="add_photo">
+      <div className="add_photo_header">
+        <img src={Back} alt="back" className="add_photo_header_arrow" />
         <p
           onClick={() => navigate("/profile/places")}
-          className="add_session_header_p"
+          className="add_photo_header_p"
         >
           Все места для съемок
         </p>
       </div>
-      {sendPhotosArray && sendPhotosArray.length >= 1 && (
-        <div className="photos_options">
-          <div className="photos_options_left">
-            <p className="photos_options_left_p">
-              Всего:{" "}
-              <span className="photos_options_left_p_span">
-                {sendPhotosArray && sendPhotosArray.length}
-              </span>
-            </p>
-            <Checkbox
-              value={allPhotosSelected}
-              callback={() => {
-                if (allPhotosSelected) {
-                  setSelectedPhotos([]);
-                  setAllPhotosSelected(false);
-                  forceUpdate();
-                } else {
-                  sendPhotosArray.forEach((photo) =>
-                    selectedPhotos.push(photo)
-                  );
-                  setSelectedPhotos(selectedPhotos);
-                  setAllPhotosSelected(true);
-                  console.log(selectedPhotos);
-                  forceUpdate();
-                }
-              }}
-              marginBottom={"0px"}
-              label={"Выбрать все"}
-            />
-          </div>
+      {sendPhotosArray &&
+        sendPhotosArray.length >= 1 &&
+        window.screen.width > 576 && (
+          <div className="photos_options">
+            <div className="photos_options_left">
+              <p className="photos_options_left_p">
+                Всего:{" "}
+                <span className="photos_options_left_p_span">
+                  {sendPhotosArray && sendPhotosArray.length}
+                </span>
+              </p>
+              <Checkbox
+                value={allPhotosSelected}
+                callback={() => {
+                  if (allPhotosSelected) {
+                    setSelectedPhotos([]);
+                    setAllPhotosSelected(false);
+                    forceUpdate();
+                  } else {
+                    sendPhotosArray.forEach((photo) =>
+                      selectedPhotos.push(photo)
+                    );
+                    setSelectedPhotos(selectedPhotos);
+                    setAllPhotosSelected(true);
+                    console.log(selectedPhotos);
+                    forceUpdate();
+                  }
+                }}
+                marginBottom={"0px"}
+                label={"Выбрать все"}
+              />
+            </div>
 
-          <div className="photos_options_right">
-            <SelectInput
-              label={"Выберите действие"}
-              labelId="demo-multiple-name-label"
-              width={200}
-              marginBottom={"10px"}
-              values={[
-                {
-                  id: 1,
-                  value: "Удалить",
-                },
-              ]}
-              value={action}
-              onChange={(e) => setAction(e.target.value)}
-            />
+            <div className="photos_options_right">
+              <SelectInput
+                label={"Выберите действие"}
+                labelId="demo-multiple-name-label"
+                width={200}
+                marginBottom={"10px"}
+                values={[
+                  {
+                    id: 1,
+                    value: "Удалить",
+                  },
+                ]}
+                value={action}
+                onChange={(e) => setAction(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-      )}
-      <div className="add_session_content">
+        )}
+      <div className="add_photo_content">
         <div className="add_session_left_content">
           {sendPhotosArray && sendPhotosArray.length >= 1 && (
             <div className="add_session_left_content_photo_div">
@@ -472,6 +474,57 @@ const AddPlace = () => {
               </li>
             </ul>
           </div>
+          {sendPhotosArray &&
+            sendPhotosArray.length >= 1 &&
+            window.screen.width <= 576 && (
+              <div className="photos_options">
+                <div className="photos_options_left">
+                  <p className="photos_options_left_p">
+                    Всего:{" "}
+                    <span className="photos_options_left_p_span">
+                      {sendPhotosArray && sendPhotosArray.length}
+                    </span>
+                  </p>
+                  <Checkbox
+                    value={allPhotosSelected}
+                    callback={() => {
+                      if (allPhotosSelected) {
+                        setSelectedPhotos([]);
+                        setAllPhotosSelected(false);
+                        forceUpdate();
+                      } else {
+                        sendPhotosArray.forEach((photo) =>
+                          selectedPhotos.push(photo)
+                        );
+                        setSelectedPhotos(selectedPhotos);
+                        setAllPhotosSelected(true);
+                        console.log(selectedPhotos);
+                        forceUpdate();
+                      }
+                    }}
+                    marginBottom={"0px"}
+                    label={"Выбрать все"}
+                  />
+                </div>
+
+                <div className="photos_options_right">
+                  <SelectInput
+                    width={200}
+                    marginBottom={"10px"}
+                    values={[
+                      {
+                        id: 1,
+                        value: "Удалить",
+                      },
+                    ]}
+                    label={"Выберите действие"}
+                    labelId="demo-multiple-name-label"
+                    value={action}
+                    onChange={(e) => setAction(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
         </div>
       </div>
 
