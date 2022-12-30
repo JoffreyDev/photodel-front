@@ -1517,6 +1517,61 @@ export class Requests {
       url: `api/gallery/album/update/${id}/`,
     }).then((res) => res);
   }
+
+  static async getTrainingsCategories() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/trainings/category/list/`,
+    }).then((res) => res);
+  }
+
+  static async createTraining({
+    title,
+    description,
+    place,
+    cost,
+    firstPayment,
+    mainPhoto,
+    category,
+    startDate,
+    endDate,
+    addressLine,
+    upsendPhotosArray,
+    coords,
+    countPlaces,
+    placeLocation,
+  }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        training_title: title,
+        training_description: description,
+        place: place,
+        cost: cost,
+        first_payment: firstPayment,
+        main_photo: mainPhoto,
+        training_images: upsendPhotosArray,
+        string_place_location: addressLine,
+        place_location: coords,
+        training_category: category,
+        start_date: startDate + "T00:00",
+        end_date: endDate + "T00:00",
+        summary_members: countPlaces,
+        place_location: placeLocation,
+      },
+
+      url: `api/trainings/create/`,
+    }).then((res) => res);
+  }
 }
 
 export default Requests;

@@ -180,11 +180,11 @@ const AddPlace = () => {
     }
     parsedFiles = Array.from(e.target.files);
     parsedFiles.forEach((file) => {
-      if (file.size > 4e5) {
+      if (file.size >= 4e5) {
         resizeFile(file, file.size);
       }
 
-      if (file.size <= 4e5) {
+      if (file.size < 4e5) {
         getBase64(file, function (base64Data) {
           sendPhotosArray.push(base64Data);
           setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh

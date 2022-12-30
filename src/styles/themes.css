@@ -895,3 +895,25 @@ color: var(--secondary-text-color);
 .albums_options_left_p {
     color: var(--secondary-text-color);
 }
+
+.add_training_left_content_textarea {
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+    color: var(--secondary-text-color);
+}
+
+.add_training_right_content_window {
+    background-color: var(--background-color-2);
+}
+
+.add_training_left_content_h1 {
+color: var(--secondary-text-color);
+}
+
+.add_photo_left_content_h1 {
+    color: var(--secondary-text-color);
+}
+
+.add_session_left_content_h1 {
+    color: var(--secondary-text-color);
+}
