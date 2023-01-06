@@ -104,11 +104,11 @@ const Sessions = () => {
           />
         </div>
       </div>
-      <div className="sessions_options">
-        <div className="sessions_options_left">
-          <p className="sessions_options_left_p">
+      <div className="places_options">
+        <div className="places_options_left">
+          <p className="places_options_left_p">
             Всего:{" "}
-            <span className="sessions_options_left_p_span">
+            <span className="places_options_left_p_span">
               {sessions && sessions.length}
             </span>
           </p>
@@ -169,16 +169,16 @@ const Sessions = () => {
           </div>
         </div>
 
-        <div className="sessions_options_right">
-          <div className="sessions_options_right_add">
+        <div className="places_options_right">
+          <div className="places_options_right_add">
             <img
               src={AddImage}
               alt="add"
-              className="sessions_options_right_add_image"
+              className="places_options_right_add_image"
             />
             <p
               onClick={() => navigate("/profile/add-session")}
-              className="sessions_options_right_add_p"
+              className="places_options_right_add_p"
             >
               Добавить фотосессию
             </p>
