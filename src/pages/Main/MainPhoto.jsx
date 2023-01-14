@@ -368,7 +368,7 @@ const MainPhoto = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Радиус нахождения автора"}
+              label={"Радиус нахождения места"}
               values={[
                 { id: "10000000000", value: "Без ограничения" },
                 { id: "5000", value: "В переделах 5км" },

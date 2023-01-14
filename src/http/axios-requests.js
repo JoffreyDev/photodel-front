@@ -545,15 +545,19 @@ export class Requests {
     }).then((res) => res);
   }
 
-  static async deleteFavoritePhoto(id) {
+  static async deleteFavoritePhoto(ids) {
     return $api({
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
 
-      url: `api/gallery/photo/favorite/delete/${id}/`,
+      data: {
+        gallery_favorites: ids,
+      },
+
+      url: `api/gallery/photo/favorite/delete/`,
     }).then((res) => res);
   }
 
@@ -1151,7 +1155,7 @@ export class Requests {
 
       data: {
         filming_timestamp: filming_timestamp,
-        hours_duration: hours_duration + "часов",
+        hours_duration: hours_duration + "часа (-ов)",
         filming_type: filming_type,
         filming_status: filming_status,
         count_person: count_person,

@@ -343,7 +343,12 @@ const ProfileEdit = ({ setActiveModule }) => {
                 }
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                label={"Категория"}
+                label={
+                  <span>
+                    Категория{" "}
+                    <span style={{ color: "red", opacity: "0.8" }}>*</span>
+                  </span>
+                }
                 setValue={setCategory}
               />
             )}
@@ -427,7 +432,9 @@ const ProfileEdit = ({ setActiveModule }) => {
       </div>
 
       <div className="my_profile_about">
-        <p className="my_profile_about_title">Обо мне</p>
+        <p className="my_profile_about_title">
+          Обо мне <span style={{ color: "red", opacity: "0.8" }}>*</span>
+        </p>
         <div className="my_profile_about_content">
           <textarea
             value={about}
@@ -444,7 +451,12 @@ const ProfileEdit = ({ setActiveModule }) => {
             <LocationInput
               width={"350px"}
               height={"38px"}
-              label={"Местонахождение"}
+              label={
+                <span>
+                  Местонахождение{" "}
+                  <span style={{ color: "red", opacity: "0.8" }}>*</span>
+                </span>
+              }
               addressLine={locationString}
               setAddressLine={setLocationString}
               coords={location}

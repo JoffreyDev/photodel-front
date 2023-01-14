@@ -100,7 +100,7 @@ const PhotoView = () => {
 
   const favoriteHandle = () => {
     if (photo.in_favorite) {
-      Requests.deleteFavoritePhoto(photoId).then(() => {
+      Requests.deleteFavoritePhoto([photoId]).then(() => {
         Requests.getSinglePhoto(photoId).then((res) => {
           setLoaded(true);
           setPhoto(res.data);

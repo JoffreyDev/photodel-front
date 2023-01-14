@@ -220,4 +220,10 @@
       width: 100%;
     }
   }
+
+    .chat_request_buttons {
+      display: flex;
+      align-self: center;
+      transform: scale(0.9);
+    }
 }
