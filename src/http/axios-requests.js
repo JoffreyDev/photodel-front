@@ -1535,7 +1535,7 @@ export class Requests {
     place,
     cost,
     firstPayment,
-    mainPhoto,
+    main_photo,
     category,
     startDate,
     endDate,
@@ -1558,7 +1558,7 @@ export class Requests {
         place: place,
         cost: cost,
         first_payment: firstPayment,
-        main_photo: mainPhoto,
+        main_photo: main_photo,
         training_images: upsendPhotosArray,
         string_place_location: addressLine,
         place_location: coords,
@@ -1570,6 +1570,164 @@ export class Requests {
       },
 
       url: `api/trainings/create/`,
+    }).then((res) => res);
+  }
+
+  static async getTrainingsList(id, sortField, sortType) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/trainings/list/${id}/${
+        sortField ? `?filter_field=${sortField}` : ""
+      }${sortType ? `&sort_type=${sortType}` : ""}`,
+    }).then((res) => res);
+  }
+
+  static async deleteTraining(ids) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        trainings_id: ids,
+      },
+
+      url: `api/trainings/delete/`,
+    }).then((res) => res);
+  }
+
+  static async getAllTrainingsList() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/trainings/list/`,
+    }).then((res) => res);
+  }
+
+  static async getAllTrainingsListMap() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/trainings/list_map/`,
+    }).then((res) => res);
+  }
+
+  static async getSingleTraining(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/trainings/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getSingleTrainingUnauth(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/trainings/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async likeTraining(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        training: id,
+      },
+
+      url: `api/trainings/like/create/`,
+    }).then((res) => res);
+  }
+
+  static async unlikeTraining(id) {
+    return $api({
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/trainings/like/delete/${id}`,
+    }).then((res) => res);
+  }
+
+  static async addFavoriteTraining(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        training: id,
+      },
+
+      url: `api/trainings/favorite/create/`,
+    }).then((res) => res);
+  }
+
+  static async deleteFavoriteTraining(ids) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        training_favorites: ids,
+      },
+      url: `api/trainings/favorite/delete/`,
+    }).then((res) => res);
+  }
+
+  static async addTrainingComment(id, content) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        training: id,
+        content: content,
+      },
+
+      url: `api/trainings/comment/create/`,
+    }).then((res) => res);
+  }
+
+  static async getTrainingComments(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/trainings/comment/list/${id}/`,
     }).then((res) => res);
   }
 }

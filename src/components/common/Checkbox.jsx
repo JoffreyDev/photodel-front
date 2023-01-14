@@ -17,6 +17,7 @@ const Checkbox = ({ label, callback, value, marginBottom }) => {
         id={`common_checkbox${id}`}
         checked={value}
         onChange={callback}
+        onClick={(e) => e.preventDefault()}
       />
       <label htmlFor={`common_checkbox${id}`} className="common_checkbox_label">
         {label}

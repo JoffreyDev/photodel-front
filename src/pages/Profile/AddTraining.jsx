@@ -367,7 +367,7 @@ const AddTraining = () => {
             width={"100%"}
             height={"38px"}
             placeholder="Местоположение"
-            label={"Введите местоположение или выберите на карте"}
+            label={"Укажите местоположение на карте, после чего закройте карту"}
             callback={setAddressLine}
             value={addressLine}
           />

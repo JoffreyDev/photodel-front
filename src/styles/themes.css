@@ -896,7 +896,6 @@ color: var(--secondary-text-color);
     color: var(--secondary-text-color);
 }
 
-<<<<<<< HEAD
 .add_training_left_content_textarea {
     background-color: var(--background-color);
     border: var(--arrows-border);
@@ -911,17 +910,10 @@ color: var(--secondary-text-color);
 color: var(--secondary-text-color);
 }
 
-=======
->>>>>>> main
 .add_photo_left_content_h1 {
     color: var(--secondary-text-color);
 }
 
-<<<<<<< HEAD
-.add_session_left_content_h1 {
-    color: var(--secondary-text-color);
-}
-=======
 .add_photo_left_content_h1.margin {
     color: var(--secondary-text-color);
 }
@@ -929,4 +921,3 @@ color: var(--secondary-text-color);
 .add_session_left_content_h1 {
     color: var(--secondary-text-color);}
 
->>>>>>> main

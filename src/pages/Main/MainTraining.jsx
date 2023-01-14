@@ -1,59 +1,67 @@
-import React from 'react';
-import { SelectInput, TextInput, GreenButton, PlaceCardMain, GreyButton } from '../../components';
-import '../../styles/Main/MainTraining.scss';
-import { useSelector } from 'react-redux';
-import SortImage from '../../img/sessions/sort.svg';
-import SortImageInvert from '../../img/commonImages/sort-.svg';
-import Requests, { rootAddress } from '../../http/axios-requests';
-import { createRoutesFromChildren, useNavigate } from 'react-router-dom';
-import { YMaps, Placemark, Map } from 'react-yandex-maps';
-import Shape from '../../img/commonImages/shape.svg';
-import MapImg from '../../img/commonImages/map.svg';
-import CircularProgress from '@mui/material/CircularProgress';
-import Pagination from '@mui/material/Pagination';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
-import Like from '../../img/commonImages/like.svg';
-import Loading from '../../img/commonImages/loading.gif';
-import Filter from '../../img/commonImages/filter.svg';
+import React from "react";
+import {
+  SelectInput,
+  TextInput,
+  GreenButton,
+  PlaceCardMain,
+  GreyButton,
+} from "../../components";
+import "../../styles/Main/MainTraining.scss";
+import { useSelector } from "react-redux";
+import SortImage from "../../img/sessions/sort.svg";
+import SortImageInvert from "../../img/commonImages/sort-.svg";
+import Requests, { rootAddress } from "../../http/axios-requests";
+import { createRoutesFromChildren, useNavigate } from "react-router-dom";
+import { YMaps, Placemark, Map } from "react-yandex-maps";
+import Shape from "../../img/commonImages/shape.svg";
+import MapImg from "../../img/commonImages/map.svg";
+import CircularProgress from "@mui/material/CircularProgress";
+import Pagination from "@mui/material/Pagination";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { purple } from "@mui/material/colors";
+import Like from "../../img/commonImages/like.svg";
+import Loading from "../../img/commonImages/loading.gif";
+import Filter from "../../img/commonImages/filter.svg";
 
-import { slide as Menu } from 'react-burger-menu';
-import TrainingCardMain from '../../components/Previews/TrainingCardMain';
+import { slide as Menu } from "react-burger-menu";
+import TrainingCardMain from "../../components/Previews/TrainingCardMain";
 
 const MainTraining = () => {
-  const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
 
   const [searchReq, setSearchReq] = React.useState();
   const [searchDist, setSearchDist] = React.useState(10000000000);
-  const [category, setCategory] = React.useState('Все');
-  const [places, setPlaces] = React.useState();
-  const [placesMarks, setPlacesMarks] = React.useState();
+  const [category, setCategory] = React.useState("Все");
+  const [trainings, setTrainings] = React.useState();
+  const [trainingsMarks, setTrainingsMarks] = React.useState();
   const [sortField, setSortField] = React.useState(1);
-  const [sortType, setSortType] = React.useState('-');
+  const [sortType, setSortType] = React.useState("-");
 
   const [fetching, setFetching] = React.useState(false);
   const [countPositions, setCountPositions] = React.useState(4);
   const [page, setPage] = React.useState(1);
   const [countItems, setCountItems] = React.useState();
   const [menuOpened, setMenuOpened] = React.useState(false);
+  const [categories, setCategories] = React.useState([]);
 
   const [mapViewActive, setMapViewActive] = React.useState(true);
 
   const [balloonDataLoading, setBalloonDataLoading] = React.useState(true);
 
-  const [title, setTitle] = React.useState('');
-  const [id, setId] = React.useState('');
-  const [image, setImage] = React.useState('');
-  const [likes, setLikes] = React.useState('');
+  const [title, setTitle] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [image, setImage] = React.useState("");
+  const [likes, setLikes] = React.useState("");
 
   const [selectAdded, setSelectAdded] = React.useState(false);
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   function closeCurrentBalloon() {
-    let close = document.querySelector('ymaps[class$="-balloon__close-button"]');
+    let close = document.querySelector(
+      'ymaps[class$="-balloon__close-button"]'
+    );
     if (close != null) {
       close.click();
     }
@@ -94,7 +102,7 @@ const MainTraining = () => {
       </div>
       </a>
           `,
-    ].join(''),
+    ].join(""),
   };
 
   const theme = createTheme({
@@ -105,35 +113,26 @@ const MainTraining = () => {
       },
       secondary: {
         // This is green.A700 as hex.
-        main: '#50A398',
-        contrastText: '#fff',
+        main: "#50A398",
+        contrastText: "#fff",
       },
     },
   });
 
   React.useEffect(() => {
     setFetching(true);
-    Requests.getAllPlaces({
-      userCoords: userCoords,
-      name_category: category,
-      search_words: searchReq,
-      distance: searchDist,
-      sortField: sortField === 1 ? 'id' : sortField === 2 ? 'views' : '',
-      sortType: sortType,
-      count_positions: countPositions,
-      page: page,
-    }).then((res) => {
+    Requests.getAllTrainingsList().then((res) => {
       setFetching(false);
-      setPlaces(res.data);
-      setCountItems(Number(res.headers['count-filter-items']));
+      setTrainings(res.data);
+      setCountItems(Number(res.headers["count-filter-items"]));
     });
 
-    Requests.getAllPlacesMarks({
+    Requests.getAllTrainingsListMap({
       userCoords: userCoords,
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
-    }).then((res) => setPlacesMarks(res.data));
+    }).then((res) => setTrainingsMarks(res.data));
   }, [sortType, sortField, mapViewActive, page]);
 
   let MyBalloonLayout;
@@ -144,9 +143,9 @@ const MainTraining = () => {
         '<a class="close" href="#">&times;</a>' +
         '<div class="arrow"></div>' +
         '<div class="popover-inner">' +
-        '$[[options.contentLayout observeSize minWidth=235 maxWidth=235 maxHeight=350]]' +
-        '</div>' +
-        '</div>',
+        "$[[options.contentLayout observeSize minWidth=235 maxWidth=235 maxHeight=350]]" +
+        "</div>" +
+        "</div>"
     );
   };
 
@@ -159,61 +158,62 @@ const MainTraining = () => {
   const handleSearch = () => {
     setFetching(true);
     setMenuOpened(false);
-    Requests.getAllPlaces({
+    Requests.getAllTrainingsList({
       userCoords: userCoords,
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
-      sortField: sortField === 1 ? 'id' : sortField === 2 ? 'views' : '',
+      sortField: sortField === 1 ? "id" : sortField === 2 ? "views" : "",
       sortType: sortType,
       count_positions: countPositions,
       page: page,
     }).then((res) => {
       setFetching(false);
-      setPlaces(res.data);
-      setCountItems(Number(res.headers['count-filter-items']));
+      setTrainings(res.data);
+      setCountItems(Number(res.headers["count-filter-items"]));
     });
 
-    Requests.getAllPlacesMarks({
+    Requests.getAllTrainingsListMap({
       userCoords: userCoords,
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
-    }).then((res) => setPlacesMarks(res.data));
+    }).then((res) => setTrainingsMarks(res.data));
   };
 
   React.useEffect(() => {
-    if (prosSpecs && !selectAdded) {
-      prosSpecs.unshift({ id: 100, name_spec: 'Все' });
+    Requests.getTrainingsCategories().then((res) => setCategories(res.data));
+    if (categories.length !== 0 && !selectAdded) {
+      categories.unshift({ id: 100, name_category: "Все" });
       setSelectAdded(true);
     }
-  }, [prosSpecs]);
+  }, [categories]);
 
   React.useEffect(() => {
     window.scroll(0, 0);
-    document.title = 'Обучение';
+    document.title = "Обучение";
   }, []);
   return (
-    <div className='main_training'>
-      <div className='main_training_menu'>
+    <div className="main_training">
+      <div className="main_training_menu">
         <Menu isOpen={menuOpened} onClose={() => setMenuOpened(false)}>
-          <div className='main_training_header_fields mobile'>
+          <div className="main_training_header_fields mobile">
             <TextInput
-              height={'38px'}
-              width={'255px'}
-              label={'Простой поиск'}
-              placeholder={'Введите что-нибудь'}
+              height={"38px"}
+              width={"255px"}
+              label={"Простой поиск"}
+              placeholder={"Введите что-нибудь"}
               value={searchReq}
               callback={setSearchReq}
             />
             <SelectInput
-              height={'38px'}
-              width={'255px'}
-              label={'Категория'}
+              height={"38px"}
+              width={"255px"}
+              label={"Категория"}
               values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
-                  return { id: item.id, value: item.name_spec };
+                categories &&
+                categories.map((item) => {
+                  return { id: item.id, value: item.name_category };
                 })
               }
               value={category}
@@ -222,97 +222,117 @@ const MainTraining = () => {
               getName
             />
             <SelectInput
-              height={'38px'}
-              width={'255px'}
-              label={'Радиус нахождения автора'}
+              height={"38px"}
+              width={"255px"}
+              label={"Радиус нахождения автора"}
               values={[
-                { id: '10000000000', value: 'Без ограничения' },
-                { id: '5000', value: 'В переделах 5км' },
-                { id: '10000', value: 'В переделах 10км' },
-                { id: '25000', value: 'В переделах 25км' },
-                { id: '50000', value: 'В переделах 50км' },
-                { id: '100000', value: 'В переделах 100км' },
+                { id: "10000000000", value: "Без ограничения" },
+                { id: "5000", value: "В переделах 5км" },
+                { id: "10000", value: "В переделах 10км" },
+                { id: "25000", value: "В переделах 25км" },
+                { id: "50000", value: "В переделах 50км" },
+                { id: "100000", value: "В переделах 100км" },
               ]}
               value={searchDist}
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
-            <div className='main_training_header_sorts mobile'>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="main_training_header_sorts mobile">
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <img
-                  src={sortType === '+' ? SortImage : sortType === '-' ? SortImageInvert : ''}
-                  alt='sort'
-                  className='places_header_select_image'
-                  onClick={() => setSortType(sortType === '+' ? '-' : sortType === '-' ? '+' : '')}
+                  src={
+                    sortType === "+"
+                      ? SortImage
+                      : sortType === "-"
+                      ? SortImageInvert
+                      : ""
+                  }
+                  alt="sort"
+                  className="places_header_select_image"
+                  onClick={() =>
+                    setSortType(
+                      sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                    )
+                  }
                 />
                 <SelectInput
                   values={[
                     {
                       id: 1,
-                      value: 'По дате добавления',
+                      value: "По дате добавления",
                     },
                     {
                       id: 2,
-                      value: 'По популярности',
+                      value: "По популярности",
                     },
                   ]}
                   width={190}
                   nonBorder={true}
-                  fontSize={'13px'}
-                  marginBottom={'0px'}
+                  fontSize={"13px"}
+                  marginBottom={"0px"}
                   value={sortField}
                   onChange={(e) => setSortField(e.target.value)}
                 />
               </div>
             </div>
-            <div style={{ alignSelf: 'center' }}>
+            <div style={{ alignSelf: "center" }}>
               <GreenButton
-                height={'38px'}
-                width={'180px'}
-                text={'Найти'}
+                height={"38px"}
+                width={"180px"}
+                text={"Найти"}
                 callback={handleSearch}
-                margin={'15px 0 0 0'}
+                margin={"15px 0 0 0"}
               />
             </div>
           </div>
         </Menu>
       </div>
-      <div className={mapViewActive ? 'main_training_content map_active' : 'main_training_content'}>
-        <div className='main_training_header'>
-          <h1 className='main_training_header_h1'>Обучение</h1>
-          <div className='main_training_map mobile'>
+      <div
+        className={
+          mapViewActive
+            ? "main_training_content map_active"
+            : "main_training_content"
+        }
+      >
+        <div className="main_training_header">
+          <h1 className="main_training_header_h1">Обучение</h1>
+          <div className="main_training_map mobile">
             <YMaps>
               <Map
                 onClick={closeCurrentBalloon}
                 defaultState={{
                   center: userCoords ? userCoords : [55.751574, 37.573856],
                   zoom: 5,
-                  controls: ['fullscreenControl', 'geolocationControl'],
+                  controls: ["fullscreenControl", "geolocationControl"],
                   panelMaxMapArea: 0,
                 }}
                 options={{
-                  geolocationControlFloat: 'right',
+                  geolocationControlFloat: "right",
                 }}
-                width='100%'
-                height={'100%'}
-                modules={['package.full']}>
-                {placesMarks &&
-                  placesMarks.map((place) => (
+                width="100%"
+                height={"100%"}
+                modules={["package.full"]}
+              >
+                {trainingsMarks &&
+                  trainingsMarks.map((place) => (
                     <Placemark
                       options={{
-                        iconLayout: 'default#image',
+                        iconLayout: "default#image",
                         // Своё изображение иконки метки.
-                        iconImageHref: './media/marker.svg',
+                        iconImageHref: "./media/marker.svg",
                         // Размеры метки.
                         iconImageSize: [30, 42],
                         balloonPanelMaxMapArea: 0,
                       }}
                       properties={pointData}
-                      modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
+                      modules={[
+                        "geoObject.addon.balloon",
+                        "geoObject.addon.hint",
+                      ]}
                       geometry={place.place_location
-                        .split('(')[1]
-                        .split(')')[0]
-                        .split(' ')
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" ")
                         .map((elem) => Number(elem))}
                       onBalloonOpen={() => getPlaceData(place.id)}
                     />
@@ -320,39 +340,39 @@ const MainTraining = () => {
               </Map>
             </YMaps>
           </div>
-          <div className='main_training_header_fields'>
+          <div className="main_training_header_fields">
             <TextInput
-              height={'38px'}
-              width={'255px'}
-              label={'Простой поиск'}
-              placeholder={'Введите что-нибудь'}
+              height={"38px"}
+              width={"255px"}
+              label={"Простой поиск"}
+              placeholder={"Введите что-нибудь"}
               value={searchReq}
               callback={setSearchReq}
             />
             <SelectInput
-              height={'38px'}
-              width={'255px'}
-              label={'Радиус'}
+              height={"38px"}
+              width={"255px"}
+              label={"Радиус"}
               values={[
-                { id: '10000000000', value: 'Без ограничения' },
-                { id: '5000', value: 'В переделах 5км' },
-                { id: '10000', value: 'В переделах 10км' },
-                { id: '25000', value: 'В переделах 25км' },
-                { id: '50000', value: 'В переделах 50км' },
-                { id: '100000', value: 'В переделах 100км' },
+                { id: "10000000000", value: "Без ограничения" },
+                { id: "5000", value: "В переделах 5км" },
+                { id: "10000", value: "В переделах 10км" },
+                { id: "25000", value: "В переделах 25км" },
+                { id: "50000", value: "В переделах 50км" },
+                { id: "100000", value: "В переделах 100км" },
               ]}
               value={searchDist}
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
             <SelectInput
-              height={'38px'}
-              width={'255px'}
-              label={'Категория'}
+              height={"38px"}
+              width={"255px"}
+              label={"Категория"}
               values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
-                  return { id: item.id, value: item.name_spec };
+                categories &&
+                categories.map((item) => {
+                  return { id: item.id, value: item.name_category };
                 })
               }
               value={category}
@@ -360,7 +380,12 @@ const MainTraining = () => {
               getName
             />
 
-            <GreenButton height={'38px'} width={'180px'} text={'Найти'} callback={handleSearch} />
+            <GreenButton
+              height={"38px"}
+              width={"180px"}
+              text={"Найти"}
+              callback={handleSearch}
+            />
           </div>
           {!mapViewActive && (
             <div
@@ -369,102 +394,124 @@ const MainTraining = () => {
                 setCountPositions(4);
                 setPage(1);
               }}
-              className='main_training_header_fields_map'>
-              <img src={MapImg} alt='map' className='main_training_header_fields_map_img' />
-              <p className='main_training_header_fields_map_p'>Показать карту</p>
+              className="main_training_header_fields_map"
+            >
+              <img
+                src={MapImg}
+                alt="map"
+                className="main_training_header_fields_map_img"
+              />
+              <p className="main_training_header_fields_map_p">
+                Показать карту
+              </p>
             </div>
           )}
         </div>
-        <div className='main_training_header_sorts'>
-          <p className='main_training_header_sorts_p'>{countItems && countItems} найдено</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="main_training_header_sorts">
+          <p className="main_training_header_sorts_p">
+            {countItems && countItems} найдено
+          </p>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <img
-              src={sortType === '+' ? SortImage : sortType === '-' ? SortImageInvert : ''}
-              alt='sort'
-              className='places_header_select_image'
-              onClick={() => setSortType(sortType === '+' ? '-' : sortType === '-' ? '+' : '')}
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              alt="sort"
+              className="places_header_select_image"
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
             />
             <SelectInput
               values={[
                 {
                   id: 1,
-                  value: 'По дате добавления',
+                  value: "По дате добавления",
                 },
                 {
                   id: 2,
-                  value: 'По популярности',
+                  value: "По популярности",
                 },
               ]}
               width={190}
               nonBorder={true}
-              fontSize={'13px'}
-              marginBottom={'0px'}
+              fontSize={"13px"}
+              marginBottom={"0px"}
               value={sortField}
               onChange={(e) => setSortField(e.target.value)}
             />
           </div>
         </div>
-        <div className={mapViewActive ? 'main_training_body' : 'main_training_body map_disabled'}>
-          {places &&
+        <div
+          className={
+            mapViewActive
+              ? "main_training_body"
+              : "main_training_body map_disabled"
+          }
+        >
+          {trainings &&
             !fetching &&
-            places.map((place, idx) => (
+            trainings.map((training, idx) => (
               <TrainingCardMain
                 disableCheck
                 disableEdit
-                // notAuthor
+                notAuthor
                 key={idx}
-                place={place}
+                training={training}
                 halfContent={mapViewActive}
-              />
-            ))}
-          {places &&
-            !fetching &&
-            places.map((place, idx) => (
-              <TrainingCardMain
-                disableCheck
-                disableEdit
-                // notAuthor
-                key={idx}
-                place={place}
-                halfContent={mapViewActive}
+                showDistance
               />
             ))}
 
-          {(!places || fetching) && (
+          {(!trainings || fetching) && (
             <div
               style={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '582px',
-              }}>
-              <CircularProgress color='success' />
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "582px",
+              }}
+            >
+              <CircularProgress color="success" />
             </div>
           )}
 
-          {!fetching && places && places.length === 0 && (
+          {!fetching && trainings && trainings.length === 0 && (
             <div
               style={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '580px',
-              }}>
-              <h1 className='main_training_header_h1'>Мы не нашли подходящих мест :(</h1>
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "580px",
+              }}
+            >
+              <h1 className="main_training_header_h1">
+                Мы не нашли подходящих обучений :(
+              </h1>
             </div>
           )}
         </div>
-        {places && !fetching && places && places.length !== 0 && (
-          <div className='main_training_body_pagination'>
+        {trainings && !fetching && trainings && trainings.length !== 0 && (
+          <div className="main_training_body_pagination">
             <ThemeProvider theme={theme}>
               <Pagination
-                count={mapViewActive ? Math.ceil(countItems / 4) : Math.ceil(countItems / 8)}
+                count={
+                  mapViewActive
+                    ? Math.ceil(countItems / 4)
+                    : Math.ceil(countItems / 8)
+                }
                 page={page}
-                color='secondary'
+                color="secondary"
                 onChange={(event, value) => setPage(value)}
               />
             </ThemeProvider>
@@ -472,22 +519,28 @@ const MainTraining = () => {
         )}
       </div>
       {mapViewActive && (
-        <div className='main_training_map'>
+        <div className="main_training_map">
           <div
             style={{
-              height: '100%',
-              width: '100%',
-              position: 'relative',
-            }}>
+              height: "100%",
+              width: "100%",
+              position: "relative",
+            }}
+          >
             <div
               onClick={() => {
                 setCountPositions(8);
                 setMapViewActive(false);
                 setPage(1);
               }}
-              className='main_training_map_hide'>
-              <img src={Shape} alt='close' className='main_training_map_hide_img' />
-              <p className='main_training_map_hide_p'>Скрыть карту</p>
+              className="main_training_map_hide"
+            >
+              <img
+                src={Shape}
+                alt="close"
+                className="main_training_map_hide_img"
+              />
+              <p className="main_training_map_hide_p">Скрыть карту</p>
             </div>
             <YMaps>
               <Map
@@ -495,28 +548,32 @@ const MainTraining = () => {
                 defaultState={{
                   center: userCoords ? userCoords : [55.751574, 37.573856],
                   zoom: 5,
-                  controls: ['fullscreenControl', 'geolocationControl'],
+                  controls: ["fullscreenControl", "geolocationControl"],
                 }}
-                modules={['package.full']}
-                width='100%'
-                options={{ geolocationControlFloat: 'right' }}
-                height={'100%'}>
-                {placesMarks &&
-                  placesMarks.map((place) => (
+                modules={["package.full"]}
+                width="100%"
+                options={{ geolocationControlFloat: "right" }}
+                height={"100%"}
+              >
+                {trainingsMarks &&
+                  trainingsMarks.map((place) => (
                     <Placemark
                       options={{
-                        iconLayout: 'default#image',
+                        iconLayout: "default#image",
                         // Своё изображение иконки метки.
-                        iconImageHref: './media/marker.svg',
+                        iconImageHref: "./media/marker.svg",
                         // Размеры метки.
                         iconImageSize: [30, 42],
                       }}
                       properties={pointData}
-                      modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
+                      modules={[
+                        "geoObject.addon.balloon",
+                        "geoObject.addon.hint",
+                      ]}
                       geometry={place.place_location
-                        .split('(')[1]
-                        .split(')')[0]
-                        .split(' ')
+                        .split("(")[1]
+                        .split(")")[0]
+                        .split(" ")
                         .map((elem) => Number(elem))}
                       onBalloonOpen={() => getPlaceData(place.id)}
                     />

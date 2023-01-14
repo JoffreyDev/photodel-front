@@ -180,11 +180,7 @@ const AddSession = () => {
         resizeFile(file, file.size);
       }
 
-<<<<<<< HEAD
       if (file.size < 4e5) {
-=======
-      if (file.size <= 4e5) {
->>>>>>> main
         getBase64(file, function (base64Data) {
           sendPhotosArray.push(base64Data);
           setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh

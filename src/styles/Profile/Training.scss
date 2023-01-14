@@ -257,6 +257,7 @@
           width: 130px;
           display: flex;
           flex-direction: row;
+          margin-bottom: 5px;
           &_text {
             font-family: 'Montserrat';
             font-style: normal;
@@ -277,6 +278,7 @@
         &_right {
           display: flex;
           flex-direction: row;
+              margin-bottom: 5px;
           &_text {
             font-family: 'Montserrat';
             font-style: normal;
@@ -450,5 +452,12 @@
         border-bottom: none;
       }
     }
+  }
+}
+
+.training_view_content_right {
+  &_categories {
+    display: flex;
+    margin-bottom: 5px;
   }
 }
