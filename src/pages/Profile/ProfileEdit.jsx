@@ -6,7 +6,6 @@ import {
   AutoCompleteInput,
   GreenButton,
   GreyButton,
-  DatesInput,
   LocationInput,
 } from "../../components";
 import Requests from "../../http/axios-requests";
@@ -17,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import Resizer from "react-image-file-resizer";
 
 const ProfileEdit = ({ setActiveModule }) => {
   const handleEditCancel = () => {
@@ -37,7 +37,7 @@ const ProfileEdit = ({ setActiveModule }) => {
 
   const dispatch = useDispatch();
 
-  const { userData } = useSelector(({ userData }) => userData);
+  const { userData, userCoords } = useSelector(({ userData }) => userData);
 
   const [categories, setCategories] = React.useState();
   const [specs, setSpecs] = React.useState();
@@ -161,6 +161,27 @@ const ProfileEdit = ({ setActiveModule }) => {
     setStatus(userData.ready_status);
   }, [userData]);
 
+  //ресайз
+  const resizeFile = (file, weight) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        1200,
+        1200,
+        "JPEG",
+        weight > 2e6 ? 60 : weight > 1e6 ? 80 : weight > 4e5 ? 90 : 100,
+        0,
+        (uri) => {
+          resolve(uri);
+          setLoadedPhoto(uri);
+          dispatch(
+            openSuccessAlert("Фото было сжато, так как вес превышал 400Кб")
+          );
+        },
+        "base64"
+      );
+    });
+
   //получить фото в base64
   function getBase64(file, callback) {
     const reader = new FileReader();
@@ -175,15 +196,17 @@ const ProfileEdit = ({ setActiveModule }) => {
   }, []);
 
   const photoHandler = (e) => {
-    if (e.target.files[0].size > 4.9e6) {
-      dispatch(alert("Вес картинки не может превышать 5 мегабайт!"));
+    if (e.target.files[0].size > 4e5) {
+      resizeFile(e.target.files[0], e.target.files[0].size);
       return;
     }
     setLoadedPhoto(URL.createObjectURL(e.target.files[0]));
 
-    getBase64(e.target.files[0], function (base64Data) {
-      setLoadedPhotoBase64(base64Data); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
-    });
+    if (e.target.files[0].size <= 4e5) {
+      getBase64(e.target.files[0], function (base64Data) {
+        setLoadedPhotoBase64(base64Data); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
+      });
+    }
   };
 
   const handleUpdate = () => {
@@ -343,7 +366,12 @@ const ProfileEdit = ({ setActiveModule }) => {
                 }
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                label={"Категория"}
+                label={
+                  <span>
+                    Категория{" "}
+                    <span style={{ color: "red", opacity: "0.8" }}>*</span>
+                  </span>
+                }
                 setValue={setCategory}
               />
             )}
@@ -427,7 +455,9 @@ const ProfileEdit = ({ setActiveModule }) => {
       </div>
 
       <div className="my_profile_about">
-        <p className="my_profile_about_title">Обо мне</p>
+        <p className="my_profile_about_title">
+          Обо мне <span style={{ color: "red", opacity: "0.8" }}>*</span>
+        </p>
         <div className="my_profile_about_content">
           <textarea
             value={about}
@@ -444,7 +474,12 @@ const ProfileEdit = ({ setActiveModule }) => {
             <LocationInput
               width={"350px"}
               height={"38px"}
-              label={"Местонахождение"}
+              label={
+                <span>
+                  Местонахождение{" "}
+                  <span style={{ color: "red", opacity: "0.8" }}>*</span>
+                </span>
+              }
               addressLine={locationString}
               setAddressLine={setLocationString}
               coords={location}

@@ -6,6 +6,7 @@ import Edit from "../../img/sessions/edit.svg";
 import { Checkbox } from "..";
 import { rootAddress } from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
+import { NuPhotoSubmit } from "../../components";
 
 const SessionCard = ({
   session,
@@ -18,6 +19,7 @@ const SessionCard = ({
 }) => {
   const navigate = useNavigate();
   const [key, setKey] = React.useState(Math.random);
+  const [nuModalActive, setNuModalActive] = React.useState(false);
 
   return (
     <div className="sessions_card">
@@ -25,14 +27,21 @@ const SessionCard = ({
         <img
           src={`${rootAddress}${session.main_photo.photo}`}
           alt="card"
-          className="sessions_card_photo"
+          className={
+            session.session_category === 19 && !localStorage.getItem("nu")
+              ? "sessions_card_photo blured"
+              : "sessions_card_photo"
+          }
           onClick={() =>
             !disableRedirect &&
-            navigate(
-              !notAuthor
-                ? `/profile/session/${session.id}`
-                : `/public/session/${session.id}`
-            )
+            session.session_category === 19 &&
+            !localStorage.getItem("nu")
+              ? setNuModalActive(true)
+              : navigate(
+                  !notAuthor
+                    ? `/profile/session/${session.id}`
+                    : `/public/session/${session.id}`
+                )
           }
         />
         {!disableCheck && (
@@ -103,6 +112,19 @@ const SessionCard = ({
           </div>
         </div>
       </div>
+      {session && (
+        <NuPhotoSubmit
+          nuModalActive={nuModalActive}
+          setNuModalActive={setNuModalActive}
+          callback={() =>
+            navigate(
+              notAuthor
+                ? `/public/session/${session.id}`
+                : `/profile/session/${session.id}`
+            )
+          }
+        />
+      )}
     </div>
   );
 };

@@ -129,6 +129,10 @@
       height: 152px;
       object-fit: cover;
 
+      &.blured {
+        filter: blur(5px);
+      }
+
       &_wrapper {
         position: relative;
       }

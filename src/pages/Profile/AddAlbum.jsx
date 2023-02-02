@@ -71,12 +71,16 @@ const AddAlbum = ({ setActiveModule }) => {
       name_album: name,
       description_album: description,
       main_photo_id: imageId,
-    }).then((res) => {
-      Requests.addPhotosToAlbum(photosToDisplay, res.data.id).then(() => {
-        dispatch(openSuccessAlert("Альбом создан!"));
-        navigate("/profile/albums");
-      });
-    });
+    })
+      .then((res) => {
+        Requests.addPhotosToAlbum(photosToDisplay, res.data.id)
+          .then(() => {
+            dispatch(openSuccessAlert("Альбом создан!"));
+            navigate("/profile/albums");
+          })
+          .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
 
   React.useEffect(() => {

@@ -22,3 +22,8 @@ export const setUserCoords = (coords) => ({
   type: "SET_USER_COORDS",
   payload: coords,
 });
+
+export const setNotifications = (obj) => ({
+  type: "SET_USER_NOTIFICATIONS",
+  payload: obj,
+});

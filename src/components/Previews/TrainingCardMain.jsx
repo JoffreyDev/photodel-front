@@ -227,19 +227,24 @@ const TrainingCardMain = ({
             </div>
           </div>
         </div>
-        <div className="training_card_manager">
-          <p className="training_card_manager_title">Организатор</p>
-          <div className="training_card_manager_account">
-            <img
-              src={`data:image/png;base64,${training?.profile?.avatar}`}
-              alt="avatar"
-              className="training_card_manager_account_avatar"
-            />
-            <p className="training_card_manager_account_name">
-              {training?.profile?.name + " " + training?.profile?.surname}
-            </p>
+        {training?.training_orgs[0] && (
+          <div className="training_card_manager">
+            <p className="training_card_manager_title">Организатор</p>
+            <div className="training_card_manager_account">
+              <img
+                src={`data:image/png;base64,${training?.training_orgs[0].avatar}`}
+                alt="avatar"
+                className="training_card_manager_account_avatar"
+              />
+              <p className="training_card_manager_account_name">
+                {training?.training_orgs[0].name +
+                  " " +
+                  training?.training_orgs[0].surname}
+              </p>
+              <p className="training_card_manager_account_count">+1</p>
+            </div>
           </div>
-        </div>
+        )}
         <div className="training_card_profile">
           <p className="training_card_profile_title">Автор</p>
           <div className="training_card_profile_prof">

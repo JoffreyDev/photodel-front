@@ -1,9 +1,9 @@
 import React from "react";
 import SortImage from "../../img/sessions/sort.svg";
-import { SelectInput, Checkbox, SessionCard } from "../../components";
+import { SelectInput, Checkbox } from "../../components";
 import AddImage from "../../img/trainings/add.svg";
 import "../../styles/Profile/Training.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
@@ -32,8 +32,6 @@ const Trainings = () => {
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const [dataLoading, setDataLoading] = React.useState(true);
-
-  const [profileData, setPorfileData] = React.useState();
 
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");

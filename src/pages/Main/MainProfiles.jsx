@@ -39,7 +39,9 @@ const MainProfiles = () => {
   const [sortField, setSortField] = React.useState(2);
   const [sortType, setSortType] = React.useState("-");
 
-  const [mapViewActive, setMapViewActive] = React.useState(true);
+  const [mapViewActive, setMapViewActive] = React.useState(
+    localStorage.getItem("mapActive") === "true"
+  );
   const [profilesMarks, setProfilesMarks] = React.useState();
 
   const [fetching, setFetching] = React.useState(false);
@@ -414,6 +416,7 @@ const MainProfiles = () => {
                 setMapViewActive(true);
                 setCountPositions(5);
                 setPage(1);
+                localStorage.setItem("mapActive", true);
               }}
               className="main_photo_header_fields_map"
             >
@@ -547,6 +550,7 @@ const MainProfiles = () => {
                 setCountPositions(10);
                 setMapViewActive(false);
                 setPage(1);
+                localStorage.setItem("mapActive", false);
               }}
               className="main_photo_map_hide"
             >

@@ -35,7 +35,9 @@ const MainPhoto = () => {
   const [sortField, setSortField] = React.useState(1);
   const [sortType, setSortType] = React.useState("-");
 
-  const [mapViewActive, setMapViewActive] = React.useState(true);
+  const [mapViewActive, setMapViewActive] = React.useState(
+    localStorage.getItem("mapActive") === "true"
+  );
   const [photosMarks, setPhotosMarks] = React.useState();
 
   const [fetching, setFetching] = React.useState(false);
@@ -368,7 +370,7 @@ const MainPhoto = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Радиус нахождения автора"}
+              label={"Радиус нахождения места"}
               values={[
                 { id: "10000000000", value: "Без ограничения" },
                 { id: "5000", value: "В переделах 5км" },
@@ -394,6 +396,7 @@ const MainPhoto = () => {
                 setMapViewActive(true);
                 setCountPositions(6);
                 setPage(1);
+                localStorage.setItem("mapActive", true);
               }}
               className="main_photo_header_fields_map"
             >
@@ -539,6 +542,7 @@ const MainPhoto = () => {
                 setCountPositions(16);
                 setMapViewActive(false);
                 setPage(1);
+                localStorage.setItem("mapActive", false);
               }}
               className="main_photo_map_hide"
             >

@@ -22,6 +22,8 @@ const AddPlace = () => {
   const upsendPhotosArray = [];
   const [sendPhotosArray, setSendPhotosArray] = React.useState([]);
 
+  const { userData, userCoords } = useSelector(({ userData }) => userData);
+
   //состояния для полей и фото
   const [coords, setCoords] = React.useState();
   const [addressLine, setAddressLine] = React.useState();
@@ -61,7 +63,7 @@ const AddPlace = () => {
         myMap = new window.ymaps.Map(
           "map",
           {
-            center: [55.753994, 37.622093],
+            center: userCoords ? userCoords : [55.751574, 37.573856],
             zoom: 9,
           },
           {
@@ -200,9 +202,6 @@ const AddPlace = () => {
       return;
     } else if (!title) {
       dispatch(openErrorAlert("Не указано название!"));
-      return;
-    } else if (!description) {
-      dispatch(openErrorAlert("Не указано описание!"));
       return;
     } else if (!coords) {
       dispatch(openErrorAlert("Не указано местоположение!"));

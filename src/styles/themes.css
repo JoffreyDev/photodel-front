@@ -921,3 +921,207 @@ color: var(--secondary-text-color);
 .add_session_left_content_h1 {
     color: var(--secondary-text-color);}
 
+.team_card_info_third_category {
+    color: var(--secondary-text-color);
+}
+
+.team_card {
+    border-bottom: var(--arrows-border);
+}
+
+.team_header_title_first.active {
+    color: var(--secondary-text-color);
+}
+
+.training_card_properties_column_left_text {
+    color: var(--secondary-text-color);
+}
+
+.training_card_properties_column_right_text {
+    color: var(--secondary-text-color);
+}
+
+.training_card_manager_account_name {
+    color: var(--secondary-text-color);
+}
+
+.training_card_profile_prof_name.training_card_profile_prof_name {
+    color: var(--secondary-text-color);
+}
+
+.training_card_info_comm_likes_p {
+    color: var(--secondary-text-color);
+}
+
+.training_card_info_comm_comments_p {
+    color: var(--secondary-text-color);
+}
+
+.training_card_info_comm_fave_p {
+    color: var(--secondary-text-color);
+}
+
+.training_options_left_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_right_team_single_title {
+    border-bottom: var(--arrows-border);
+}
+
+.training_card_info {
+    border: var(--arrows-border);
+}
+
+.training_view_content_right_table {
+    background-color: var(--background-color-2);
+}
+
+.training_view_content_right_table_row_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_right_spec_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_right_categories_title {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_left_textarea_field {
+    background-color: var(--background-color);
+    border: var(--arrows-border);
+}
+
+.main_training_header_sorts_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_right_geo_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_right_categories_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_left_activities_p {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_left_title {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_left_description {
+    color: var(--secondary-text-color);
+}
+
+.training_view_content_right_team_single_title {
+    color: var(--secondary-text-color);
+}
+
+.training_card_manager_account_count {
+    color: var(--secondary-text-color);
+}
+
+.main_training_header_fields_map_p {
+    color: var(--secondary-text-color);
+    cursor: pointer;
+}
+
+.main_training_header_sorts {
+    border-bottom: var(--arrows-border);
+    
+}
+.messages_chat_wrapper {
+    border-bottom: var(--arrows-border);
+}
+
+.main_page_header_top_row_popup_top {
+    border-bottom: var(--arrows-border);
+}
+
+.main_page_header_top_row_popup_stroke:not(:last-child) {
+    border-bottom: var(--arrows-border);
+}
+
+.my_profile_common_data_title {
+    border-bottom: var(--arrows-border);
+}
+
+.my_profile_about_title {
+    border-bottom: var(--arrows-border);
+}
+
+.my_profile_contacts_title {
+    border-bottom: var(--arrows-border);
+}
+
+.my_profile_stats_title {
+    border-bottom: var(--arrows-border);
+}
+
+.my_profile_requests_title {
+    border-bottom: var(--arrows-border);
+}
+
+.profile_basis_module_choice_li {
+border-bottom: var(--arrows-border);
+    
+}
+
+.reviews_options_left_p {
+    color: var(--secondary-text-color);
+}
+
+.reviews_card_main_review {
+    color: var(--secondary-text-color);
+}
+
+.reviews_card {
+    border-bottom: var(--arrows-border);
+}
+
+.reviews_header_title_first {
+    color: var(--secondary-text-color);
+}
+
+.css-1c99szj-MuiRating-icon {
+    color: var(--secondary-text-color) !important;
+}
+
+.training_header_title {
+    color: var(--secondary-text-color) ;
+}
+
+.dropdown-notify-menu-content {
+    background-color: var(--background-color);
+}
+
+.dropdown-notify-menu-wrapper.active {
+border: var(--arrows-border);
+}
+
+.last_message_notification_wrapper {
+    background-color: var(--background-color-2);
+}
+
+.last_message_notification_wrapper p {
+        color: var(--secondary-text-color);
+
+}
+
+.dropdown_notify_menu_notification_wrapper {
+    border-bottom: var(--arrows-border);
+}
+
+.notifications_counter_wrapper p {
+    color: var(--secondary-text-color);
+}
+
+.dropdown_notify_menu_notification_wrapper:hover {
+background-color: var(--background-color-2);
+transition: 0.3s;
+}

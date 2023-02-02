@@ -8,6 +8,7 @@ import {
   setUserData,
   toggleIsLoggenIn,
   setUserCoords,
+  setNotifications,
 } from "./redux/actions/userData";
 import {
   setProsSpecs,
@@ -37,7 +38,7 @@ function App() {
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
-      `  wss://${rootSocketAddress}/ws/?token=${localStorage.getItem("access")}`
+      `  ws://${rootSocketAddress}/ws/?token=${localStorage.getItem("access")}`
     );
   }, [socketReconnect]);
 
@@ -48,6 +49,9 @@ function App() {
         .then((res) => {
           dispatch(setUserData(res.data));
           dispatch(toggleIsLoggenIn(true));
+          Requests.getNotifications().then((res) =>
+            dispatch(setNotifications(res.data))
+          );
         })
         .catch(() => {
           localStorage.removeItem("access");
@@ -73,6 +77,10 @@ function App() {
     Requests.getLanguages().then((res) => {
       dispatch(setLanguages(res.data));
     });
+
+    if (!localStorage.getItem("mapActive")) {
+      localStorage.setItem("mapActive", true);
+    }
   });
 
   React.useEffect(() => {

@@ -12,10 +12,10 @@ import View from "../../img/sessions/view.svg";
 import Lock from "../../img/photoView/lock.svg";
 import Geo from "../../img/photoView/map.svg";
 import Timer from "../../img/photoView/timer.svg";
-import { Comment } from "../../components";
+import { AddToTrainingCard, Comment } from "../../components";
 import { GreenButton, PhotoFullScreen } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
-import { openSuccessAlert } from "../../redux/actions/userData";
+import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
 import Camera from "../../img/placeView/photo.svg";
 import Money from "../../img/placeView/money.svg";
@@ -30,10 +30,13 @@ import money from "../../img/trainings/money.svg";
 import types from "../../img/trainings/type.svg";
 import users from "../../img/trainings/users.svg";
 import calendar from "../../img/trainings/calendar.svg";
+import { useSelector } from "react-redux";
 
 const PublicTrainingView = ({ setProfileId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { userData, isLoggedIn } = useSelector(({ userData }) => userData);
 
   const params = useParams();
   const trainingId = params.id;
@@ -79,6 +82,7 @@ const PublicTrainingView = ({ setProfileId }) => {
         .then((res) => {
           setLoaded(true);
           setTraining(res.data);
+          console.log(res.data);
           setPhotos(
             res.data.training_images.map(
               (photo) => `${rootAddress}${photo.photo}`
@@ -147,6 +151,19 @@ const PublicTrainingView = ({ setProfileId }) => {
           });
         });
     });
+  };
+
+  const handleRequest = () => {
+    if (!isLoggedIn) {
+      dispatch(
+        openErrorAlert("Запись доступна только авторизованным пользователям!")
+      );
+    }
+    Requests.sendTrainingRequest(userData.id, trainingId)
+      .then((res) =>
+        dispatch(openSuccessAlert("Запрос на обучение успешно отправлен!"))
+      )
+      .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
 
   const changePhoto = (dir) => {
@@ -664,180 +681,51 @@ const PublicTrainingView = ({ setProfileId }) => {
               width={"180px"}
               height={"38px"}
               text={"Записаться"}
-              callback={() => setReqWindowActive(true)}
+              callback={handleRequest}
               margin={"20px 0 20px 0 "}
             />
           )}
           <div className="training_view_content_right_team">
-            <div className="training_view_content_right_team_single">
-              <p className="training_view_content_right_team_single_title">
-                Организаторы
-              </p>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_name">
-                  <div className="training_view_content_right_team_single_account_name_online" />
-                  <p className="training_view_content_right_team_single_account_name_p">
-                    Вася Пупкин
-                  </p>
-                </div>
-                <img
-                  src={Pro}
-                  alt="pro"
-                  className="training_view_content_right_team_single_account_pro_organiser"
-                />
+            {training && training.training_orgs.length > 0 && (
+              <div className="training_view_content_right_team_single">
+                <p className="training_view_content_right_team_single_title">
+                  Организаторы
+                </p>
+                {training &&
+                  training.training_orgs.length > 0 &&
+                  training.training_orgs.map((org, idx) => {
+                    return <AddToTrainingCard profile={org} key={idx} view />;
+                  })}
               </div>
-            </div>
-            <div className="training_view_content_right_team_single">
-              <p className="training_view_content_right_team_single_title">
-                Команда
-              </p>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality">
-                  <div className="training_view_content_right_team_single_account_speciality_name">
-                    <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                    <p className="training_view_content_right_team_single_account_speciality_name_p">
-                      Пупок Васи
-                    </p>
-                    <img
-                      src={Pro}
-                      alt="pro"
-                      className="training_view_content_right_team_single_account_pro"
-                    />
-                  </div>
-                  <p className="training_view_content_right_team_single_account_speciality_name_spec">
-                    фотограф
-                  </p>
-                </div>
+            )}
+            {training && training.training_team.length > 0 && (
+              <div className="training_view_content_right_team_single">
+                <p className="training_view_content_right_team_single_title">
+                  Команда
+                </p>
+                {training &&
+                  training.training_team.length > 0 &&
+                  training.training_team.map((member, idx) => {
+                    return (
+                      <AddToTrainingCard profile={member} key={idx} view />
+                    );
+                  })}
               </div>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality">
-                  <div className="training_view_content_right_team_single_account_speciality_name">
-                    <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                    <p className="training_view_content_right_team_single_account_speciality_name_p">
-                      Пупок Васи
-                    </p>
-                    <img
-                      src={Pro}
-                      alt="pro"
-                      className="training_view_content_right_team_single_account_pro"
-                    />
-                  </div>
-                  <p className="training_view_content_right_team_single_account_speciality_name_spec">
-                    фотограф
-                  </p>
-                </div>
+            )}
+            {training && training.training_members.length > 0 && (
+              <div className="training_view_content_right_team_single">
+                <p className="training_view_content_right_team_single_title">
+                  Участники
+                </p>
+                {training &&
+                  training.training_members.length > 0 &&
+                  training.training_members.map((member, idx) => {
+                    return (
+                      <AddToTrainingCard profile={member} key={idx} view />
+                    );
+                  })}
               </div>
-            </div>
-            <div className="training_view_content_right_team_single">
-              <p className="training_view_content_right_team_single_title">
-                Участники
-              </p>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality_name">
-                  <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                  <p className="training_view_content_right_team_single_account_speciality_name_p">
-                    Пупок Васи
-                  </p>
-                </div>
-                <img
-                  src={Pro}
-                  alt="pro"
-                  className="training_view_content_right_team_single_account_pro"
-                />
-              </div>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality_name">
-                  <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                  <p className="training_view_content_right_team_single_account_speciality_name_p">
-                    Пупок Васи
-                  </p>
-                </div>
-                <img
-                  src={Pro}
-                  alt="pro"
-                  className="training_view_content_right_team_single_account_pro"
-                />
-              </div>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality_name">
-                  <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                  <p className="training_view_content_right_team_single_account_speciality_name_p">
-                    Пупок Васи
-                  </p>
-                </div>
-                <img
-                  src={Pro}
-                  alt="pro"
-                  className="training_view_content_right_team_single_account_pro"
-                />
-              </div>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality_name">
-                  <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                  <p className="training_view_content_right_team_single_account_speciality_name_p">
-                    Пупок Васи
-                  </p>
-                </div>
-                <img
-                  src={Pro}
-                  alt="pro"
-                  className="training_view_content_right_team_single_account_pro"
-                />
-              </div>
-              <div className="training_view_content_right_team_single_account">
-                <img
-                  src={Lock}
-                  alt="avatar"
-                  className="training_view_content_right_team_single_account_avatar"
-                />
-                <div className="training_view_content_right_team_single_account_speciality_name">
-                  <div className="training_view_content_right_team_single_account_speciality_name_online" />
-                  <p className="training_view_content_right_team_single_account_speciality_name_p">
-                    Пупок Васи
-                  </p>
-                </div>
-                <img
-                  src={Pro}
-                  alt="pro"
-                  className="training_view_content_right_team_single_account_pro"
-                />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

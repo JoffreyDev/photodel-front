@@ -4,6 +4,7 @@ const initialState = {
   successAlertMessage: "",
   errorAlertMessage: "",
   userCoords: [55.751574, 37.573856],
+  notifications: {},
 };
 
 const userData = (state = initialState, action) => {
@@ -36,6 +37,12 @@ const userData = (state = initialState, action) => {
       return {
         ...state,
         errorAlertMessage: action.payload,
+      };
+
+    case "SET_USER_NOTIFICATIONS":
+      return {
+        ...state,
+        notifications: action.payload,
       };
 
     default:

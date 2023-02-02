@@ -34,7 +34,7 @@ const AddPhoto = () => {
   const [canBuy, setCanBuy] = React.useState(false);
 
   const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
-  const { userData } = useSelector(({ userData }) => userData);
+  const { userData, userCoords } = useSelector(({ userData }) => userData);
   const [loaded, setLoaded] = React.useState(false);
 
   const [loadedAlbums, setLoadedAlbums] = React.useState();
@@ -67,7 +67,7 @@ const AddPhoto = () => {
         myMap = new window.ymaps.Map(
           "map",
           {
-            center: [55.753994, 37.622093],
+            center: userCoords ? userCoords : [55.751574, 37.573856],
             zoom: 9,
           },
           {
@@ -228,9 +228,6 @@ const AddPhoto = () => {
       return;
     } else if (!title) {
       dispatch(openErrorAlert("Не указано название!"));
-      return;
-    } else if (!description) {
-      dispatch(openErrorAlert("Не указано описание!"));
       return;
     } else if (!coords) {
       dispatch(openErrorAlert("Не указано местоположение!"));

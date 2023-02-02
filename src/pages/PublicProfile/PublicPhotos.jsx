@@ -1,21 +1,14 @@
 import React from "react";
 import SortImage from "../../img/sessions/sort.svg";
-import {
-  SelectInput,
-  Checkbox,
-  PhotoCard,
-  GalleryPhotoPreview,
-} from "../../components";
-import AddImage from "../../img/sessions/add.svg";
+import { SelectInput, GalleryPhotoPreview } from "../../components";
 import "../../styles/Profile/Photos.scss";
 import Requests from "../../http/axios-requests";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { PublicHeader } from "..";
 import { ScreenLoader } from "../../components";
+import SortImageInvert from "../../img/commonImages/sort-.svg";
 
 const PublicPhotos = ({ component, setProfileId }) => {
-  const { userData } = useSelector(({ userData }) => userData);
   const params = useParams();
   const profileId = params.id;
 
@@ -23,6 +16,8 @@ const PublicPhotos = ({ component, setProfileId }) => {
   const [loaded, setLoaded] = React.useState(false);
   const [profileData, setProfileData] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(true);
+  const [sortField, setSortField] = React.useState(1);
+  const [sortType, setSortType] = React.useState("+");
 
   const navigate = useNavigate();
 
@@ -70,11 +65,20 @@ const PublicPhotos = ({ component, setProfileId }) => {
           </h1>
         </div>
 
-        <div className="photos_header_select">
+        <div className="reviews_header_select">
           <img
-            src={SortImage}
+            src={
+              sortType === "+"
+                ? SortImage
+                : sortType === "-"
+                ? SortImageInvert
+                : ""
+            }
             alt="sort"
-            className="photos_header_select_image"
+            className="places_header_select_image"
+            onClick={() =>
+              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
+            }
           />
           <SelectInput
             values={[
@@ -91,6 +95,8 @@ const PublicPhotos = ({ component, setProfileId }) => {
             nonBorder={true}
             fontSize={"13px"}
             marginBottom={"0px"}
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
           />
         </div>
       </div>

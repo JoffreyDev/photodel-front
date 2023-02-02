@@ -43,7 +43,9 @@ const MainPlaces = () => {
   const [countItems, setCountItems] = React.useState();
   const [menuOpened, setMenuOpened] = React.useState(false);
 
-  const [mapViewActive, setMapViewActive] = React.useState(true);
+  const [mapViewActive, setMapViewActive] = React.useState(
+    localStorage.getItem("mapActive") === "true"
+  );
 
   const [balloonDataLoading, setBalloonDataLoading] = React.useState(true);
 
@@ -231,7 +233,7 @@ const MainPlaces = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Радиус нахождения автора"}
+              label={"Радиус нахождения места"}
               values={[
                 { id: "10000000000", value: "Без ограничения" },
                 { id: "5000", value: "В переделах 5км" },
@@ -413,6 +415,7 @@ const MainPlaces = () => {
                 setMapViewActive(true);
                 setCountPositions(4);
                 setPage(1);
+                localStorage.setItem("mapActive", true);
               }}
               className="main_photo_header_fields_map"
             >
@@ -547,6 +550,7 @@ const MainPlaces = () => {
                 setCountPositions(8);
                 setMapViewActive(false);
                 setPage(1);
+                localStorage.setItem("mapActive", false);
               }}
               className="main_photo_map_hide"
             >

@@ -51,7 +51,7 @@ const RequestChat = () => {
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
-      `wss://${rootSocketAddress}/ws/request_chat/${chatId}/?token=${localStorage.getItem(
+      `ws://${rootSocketAddress}/ws/request_chat/${chatId}/?token=${localStorage.getItem(
         "access"
       )}`
     );
@@ -166,7 +166,9 @@ const RequestChat = () => {
               callback={() => updateStatus("REJECTED")}
             />
             <GreenButton
-              margin={"0 0 0 15px"}
+              margin={
+                window.screen.width <= 576 ? "13px 0px 0px 10px" : "0 0 0 15px"
+              }
               width={"180px"}
               height={"38px"}
               text={"Принять запрос"}
@@ -186,7 +188,9 @@ const RequestChat = () => {
               callback={() => updateStatus("UNCOMPLETED")}
             />
             <GreenButton
-              margin={"0 0 0 15px"}
+              margin={
+                window.screen.width <= 576 ? "13px 0px 0px 10px" : "0 0 0 15px"
+              }
               width={"200px"}
               height={"38px"}
               text={"Запрос завершен"}

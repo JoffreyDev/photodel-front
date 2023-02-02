@@ -31,7 +31,7 @@ const Chat = () => {
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
-      `wss://${rootSocketAddress}/ws/chat/${chatId}/?token=${localStorage.getItem(
+      `ws://${rootSocketAddress}/ws/chat/${chatId}/?token=${localStorage.getItem(
         "access"
       )}`
     );

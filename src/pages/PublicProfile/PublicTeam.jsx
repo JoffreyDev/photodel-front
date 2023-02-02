@@ -1,150 +1,169 @@
-import React from 'react';
-import SortImage from '../../img/sessions/sort.svg';
-import {
-  Checkbox,
-  PhotoCard,
-  PlaceCard,
-  SessionCard,
-  TextInput,
-  SelectInput,
-} from '../../components';
-import '../../styles/Profile/Team.scss';
-import Requests from '../../http/axios-requests';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { ScreenLoader } from '../../components';
-import AddImage from '../../img/sessions/add.svg';
-import TeamCard from '../../components/Previews/TeamCard';
-import { useParams } from 'react-router-dom';
-import PublicHeader from './PublicHeader';
+import React from "react";
+import SortImage from "../../img/sessions/sort.svg";
+import { Checkbox, SelectInput, ProfileMainPreview } from "../../components";
+import "../../styles/Profile/Team.scss";
+import Requests from "../../http/axios-requests";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { ScreenLoader } from "../../components";
+import AddImage from "../../img/sessions/add.svg";
+import TeamCard from "../../components/Previews/TeamCard";
+import SortImageInvert from "../../img/commonImages/sort-.svg";
 
-function Team({ component, setProfileId }) {
-  const navigate = useNavigate();
-  const { userData } = useSelector(({ userData }) => userData);
-  const [sortType, setSortType] = React.useState(1);
-  const [action, setAction] = React.useState(1);
-  const [selectedPositions, setSelectedPositions] = React.useState([]);
-
+function PublicTeam() {
   const params = useParams();
   const profileId = params.id;
-  const [sessions, setSessions] = React.useState();
-  const [dataLoading, setDataLoading] = React.useState(true);
-  const [profileData, setPorfileData] = React.useState();
-  React.useEffect(() => {
-    profileId &&
-      Requests.getSessions(profileId).then((res) => {
-        setDataLoading(false);
-        setSessions(res.data);
-      });
 
-    Requests.getPublicProfile(profileId).then((res) => setPorfileData(res.data));
-  }, [profileId]);
+  const navigate = useNavigate();
+  const { userCoords, userData } = useSelector(({ userData }) => userData);
+  const [team, setTeam] = React.useState([]);
+  const [requests, setRequests] = React.useState([]);
+  const [component, setComponent] = React.useState("team");
+  const [sortField, setSortField] = React.useState(1);
+  const [sortType, setSortType] = React.useState("+");
+
+  const [posCount, setPosCount] = React.useState("-");
+
+  const [dataLoading, setDataLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    setDataLoading(true);
+    Requests.getTeamList(profileId, userCoords).then((res) => {
+      setTeam(res.data);
+      setPosCount(res.data.length);
+      setDataLoading(false);
+    });
+  }, [component, userData]);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("access")) navigate("/");
+  }, []);
 
   return (
-    <div className='team'>
-      <PublicHeader profile={profileData} />
-      <div className='team_header'>
-        <div className='team_header_wrapper'>
+    <div className="team">
+      <div className="team_header">
+        <div className="team_header_wrapper">
           <h1
             className={
-              component === 'team' ? 'team_header_title_first active' : 'team_header_title_first'
+              component === "team"
+                ? "team_header_title_first active"
+                : "team_header_title_first"
             }
-            onClick={() => navigate(`/public/team/${profileId}`)}>
+            onClick={() => setComponent("team")}
+          >
             МОЯ КОМАНДА
           </h1>
-          <h1
-            className={
-              component === 'recommend'
-                ? 'team_header_title_first active'
-                : 'team_header_title_first'
-            }
-            onClick={() => navigate(`/public/recommend/${profileId}`)}>
-            РЕКОМЕНДУЮ
-          </h1>
-          <h1
-            className={
-              component === 'recommended'
-                ? 'team_header_title_first active'
-                : 'team_header_title_first'
-            }
-            onClick={() => navigate(`/public/recommended/${profileId}`)}>
-            МЕНЯ РЕКОМЕНДУЮТ
-          </h1>
+          {false && (
+            <h1
+              className={
+                component === "requests"
+                  ? "team_header_title_first active"
+                  : "team_header_title_first"
+              }
+              onClick={() => setComponent("requests")}
+            >
+              ЗАПРОСЫ
+            </h1>
+          )}
+          {false && (
+            <h1
+              className={
+                component === "recs"
+                  ? "team_header_title_first active"
+                  : "team_header_title_first"
+              }
+              onClick={() => setComponent("recs")}
+            >
+              РЕКОМЕНДАЦИИ
+            </h1>
+          )}
         </div>
-        <div className='team_header_select'>
-          <img src={SortImage} alt='sort' className='team_header_select_image' />
+        <div className="team_header_select">
+          <img
+            src={
+              sortType === "+"
+                ? SortImage
+                : sortType === "-"
+                ? SortImageInvert
+                : ""
+            }
+            alt="sort"
+            onClick={() =>
+              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
+            }
+            className="places_header_select_image"
+          />
           <SelectInput
             values={[
               {
                 id: 1,
-                value: 'По дате добавления',
+                value: "По дате добавления",
               },
               {
                 id: 2,
-                value: 'По популярности',
+                value: "По популярности",
               },
             ]}
             width={190}
             nonBorder={true}
-            fontSize={'13px'}
-            marginBottom={'0px'}
-            value={sortType}
+            fontSize={"13px"}
+            marginBottom={"0px"}
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
           />
         </div>
       </div>
-      <div className='photos_options'>
-        <div className='photos_options_left favorites'>
-          <p className='photos_options_left_p'>
-            Всего: <span className='photos_options_left_p_span'>0</span>
+      <div className="photos_options">
+        <div
+          className="photos_options_left favorites"
+          style={{ marginBottom: "20px" }}
+        >
+          <p className="photos_options_left_p">
+            Всего:{" "}
+            <span className="photos_options_left_p_span">{posCount}</span>
           </p>
-          <Checkbox marginBottom={'0px'} label={'Выбрать все'} />
+          <div style={{ opacity: "0", pointerEvents: "none" }}>
+            <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
+          </div>
         </div>
 
-        <div className='photos_options_right'>
-          <div className='training_options_right_add'>
-            <img src={AddImage} alt='add' className='training_options_right_add_image' />
-            <p
-              onClick={() => navigate('/profile/add-training')}
-              className='training_options_right_add_p'>
-              Добавить в команду
+        <div className="photos_options_right">
+          <div
+            style={{
+              opacity: "0",
+              pointerEvents: "none",
+              position: "absolute",
+            }}
+          ></div>
+          <div className="photos_options_left mobile">
+            <p className="photos_options_left_p">
+              Всего:{" "}
+              <span className="photos_options_left_p_span">{posCount}</span>
             </p>
-          </div>
-          <SelectInput
-            width={window.screen.width <= 576 ? 170 : 200}
-            marginBottom={'10px'}
-            values={[
-              {
-                id: 1,
-                value: 'Удалить',
-              },
-            ]}
-            onChange={(e) => setAction(e.target.value)}
-            label={'Выберите действие'}
-            labelId='demo-multiple-name-label'
-          />
-          <div className='photos_options_left mobile'>
-            <p className='photos_options_left_p'>
-              Всего: <span className='photos_options_left_p_span'>0</span>
-            </p>
-            <Checkbox marginBottom={'0px'} label={'Выбрать все'} />
+            <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
           </div>
         </div>
       </div>
-      <div className='team_header_add'></div>
-      <div className='team_body'>
-        {/* {profiles &&
-          component === 'profiles' &&
+      <div className="team_header_add"></div>
+      <div className="team_body">
+        {team &&
+          component === "team" &&
           !dataLoading &&
-          profiles.map((profile, idx) => ( */}
-        <TeamCard
-          array={selectedPositions}
-          callback={setSelectedPositions}
-          // profile={profile}
-          // key={idx}
-        />
+          team.map((profile, idx) => (
+            <ProfileMainPreview key={idx} profile={profile} />
+          ))}
+        {team && component === "team" && team.length === 0 && !dataLoading && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">Нет команды.</h1>
+          </div>
+        )}
+
+        {dataLoading && <ScreenLoader height={"30%"} />}
+
+        <div style={{ display: "flex", flexWrap: "wrap" }}></div>
       </div>
     </div>
   );
 }
 
-export default Team;
+export default PublicTeam;

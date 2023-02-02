@@ -484,7 +484,7 @@ const PublicSessionView = ({ setProfileId }) => {
             <p className="photo_view_content_right_data_p">
               Тип съемки:{" "}
               <span className="photo_view_content_right_data_span">
-                Свадебная
+                {session?.session_category.name_spec}
               </span>
             </p>
             <p className="photo_view_content_right_data_p">

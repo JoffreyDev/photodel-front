@@ -149,6 +149,10 @@
       border-radius: 8px;
       margin: 2px;
 
+      &.blured {
+        filter: blur(5px);
+      }
+
       &_wrapper {
         position: relative;
       }

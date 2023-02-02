@@ -110,6 +110,10 @@
         margin-right: 30px;
         cursor: pointer;
 
+        &.review_span {
+          font-size: 11px;
+        }
+
         &_image {
           margin-right: 5px;
           width: 20px;

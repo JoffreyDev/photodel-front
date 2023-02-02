@@ -1,6 +1,40 @@
 @import '../variables.scss';
 
 .team {
+
+  &_body {
+    display: flex;
+      flex-direction: column;
+  }
+
+  &_invite {
+    display: flex;
+    flex-direction: column;
+
+    &_footer {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    &_cards {
+      margin-top: 20px;
+    }
+
+    &_fields {
+      &_upper {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &_buttons {
+        display: flex;
+        align-self: flex-end;
+      }
+    }
+  }
+
   &_header {
     width: 100%;
     display: flex;
@@ -172,6 +206,12 @@
           color: #f2cf74;
           border: 2px solid #f2cf74;
         }
+
+                 &.rejected {
+                   width: 100px;
+                   color: #f63100;
+                   border: 2px solid #f63100;
+                 }
       }
     }
   }

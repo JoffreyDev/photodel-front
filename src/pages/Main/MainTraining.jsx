@@ -45,7 +45,9 @@ const MainTraining = () => {
   const [menuOpened, setMenuOpened] = React.useState(false);
   const [categories, setCategories] = React.useState([]);
 
-  const [mapViewActive, setMapViewActive] = React.useState(true);
+  const [mapViewActive, setMapViewActive] = React.useState(
+    localStorage.getItem("mapActive") === "true"
+  );
 
   const [balloonDataLoading, setBalloonDataLoading] = React.useState(true);
 
@@ -69,10 +71,10 @@ const MainTraining = () => {
 
   const getPlaceData = (id) => {
     setBalloonDataLoading(true);
-    Requests.getSinglePlaceUnauth(id).then((res) => {
-      setImage(`${rootAddress}${res.data.place_image[0].photo}`);
+    Requests.getSingleTrainingUnauth(id).then((res) => {
+      setImage(`${rootAddress}${res.data.training_images[0].photo}`);
       setLikes(res.data.likes);
-      setTitle(res.data.name_place);
+      setTitle(res.data.training_title);
       setId(id);
       forceUpdate();
       setBalloonDataLoading(false);
@@ -120,6 +122,7 @@ const MainTraining = () => {
   });
 
   React.useEffect(() => {
+    Requests.getTrainingsCategories().then((res) => setCategories(res.data));
     setFetching(true);
     Requests.getAllTrainingsList().then((res) => {
       setFetching(false);
@@ -182,7 +185,6 @@ const MainTraining = () => {
   };
 
   React.useEffect(() => {
-    Requests.getTrainingsCategories().then((res) => setCategories(res.data));
     if (categories.length !== 0 && !selectAdded) {
       categories.unshift({ id: 100, name_category: "Все" });
       setSelectAdded(true);
@@ -393,6 +395,7 @@ const MainTraining = () => {
                 setMapViewActive(true);
                 setCountPositions(4);
                 setPage(1);
+                localStorage.setItem("mapActive", true);
               }}
               className="main_training_header_fields_map"
             >
@@ -532,6 +535,7 @@ const MainTraining = () => {
                 setCountPositions(8);
                 setMapViewActive(false);
                 setPage(1);
+                localStorage.setItem("mapActive", false);
               }}
               className="main_training_map_hide"
             >

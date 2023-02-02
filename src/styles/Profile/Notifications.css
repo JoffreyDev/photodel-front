@@ -1,0 +1,132 @@
+.dropdown-notify-menu-wrapper {
+    z-index: 5;
+    position: absolute;
+    display: inline-block;
+    opacity: 0;
+    pointer-events: none;
+    right: -10px;
+    top: 37px;
+}
+
+.dropdown-notify-menu-wrapper.active {
+    opacity: 1;
+    pointer-events: all;
+    min-height: 140px;
+        max-height: 600px;
+        overflow-y: scroll;
+}
+
+.dropdown-notify-menu-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    padding: 10px 10px;
+    z-index: 5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+        min-height: 140px;
+}
+
+.dropdown_notify_menu_notification_wrapper {
+    padding: 10px 5px;
+    cursor: pointer;
+}
+
+
+.dropdown_notify_menu_notification_wrapper {
+    width: 100%;
+}
+
+.dropdown_notify_menu_notification_content {
+    width: 100%;
+}
+
+.notification_upper_row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.last_message_notification_wrapper {
+    padding: 5px;
+    border-radius: 8px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.dropdown_notify_item_p {
+    margin-top: 5px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.dropdown_notify_main_p {
+font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    color: #3C8278;
+}
+
+.last_message_notification_wrapper p {
+font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+
+}
+
+.notifications_counter_wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 5px;
+    width: 16px;
+    height: 16px;
+background: #50A398;
+    border-radius: 139px;
+    font-size: 10px;
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    cursor: pointer;
+    font-size: 9px;
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+}
+
+.notifications_counter_wrapper.profile {
+    position: inherit;
+    margin-left: 10px;
+}
+
+@media (max-width: 576px) {
+    .dropdown-notify-menu-wrapper.active {
+        width: 80vw;
+    }
+}
+

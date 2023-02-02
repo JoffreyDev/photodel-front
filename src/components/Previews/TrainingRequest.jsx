@@ -10,7 +10,15 @@ import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import RedButton from "../common/RedButton";
 import { rootAddress } from "../../http/axios-requests";
 
-function TeamCard({ profile, status, toMe, type, request_id, reload }) {
+function TrainingRequest({
+  profile,
+  status,
+  toMe,
+  type,
+  request_id,
+  reload,
+  request,
+}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userData } = useSelector(({ userData }) => userData);
@@ -26,22 +34,22 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
       .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
 
-  const changeInviteStatus = (status) => {
-    Requests.changeInviteStatus({
-      request_id: request_id,
-      request_status: status,
+  const changeRequestStatus = (status) => {
+    Requests.changeTrainingRequestStatus({
+      request: request_id,
+      status: status,
     })
       .then((res) => {
         dispatch(
           openSuccessAlert(
             status === "ACCEPTED"
-              ? "Приглашение в команду принято!"
+              ? "Участник добавлен в обчуние!"
               : status === "REJECTED"
-              ? "Приглашение в команду отклонено!"
+              ? "Запрос на обучение отклонен!"
               : ""
           )
         );
-        reload();
+        reload(!reload);
       })
       .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
@@ -50,7 +58,7 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
     <div className="team_card">
       <div className="team_card_avatar_wrapper">
         <img
-          src={profile && `${rootAddress}${profile && profile.avatar}`}
+          src={`data:image/png;base64,${profile.avatar}`}
           alt="avatar"
           className="team_card_avatar"
           onClick={() => navigate(`/public/profile/${profile.id}`)}
@@ -72,34 +80,37 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
         </div>
         <div className="team_card_info_third">
           <p className="team_card_info_third_category">
-            {profile && profile.type_pro?.name_category}
+            Запрос на{" "}
+            {request.training.profile.id === userData.id ? "Ваше" : ""} обучение
+            "{request.training.training_title}"{" "}
+            {request.training.profile.id === userData.id
+              ? ""
+              : `пользователя ${
+                  request.training.profile.name +
+                  " " +
+                  request.training.profile.surname
+                }`}
           </p>
           <p className="team_card_info_third_specs">
             {profile && profile.string_location?.split(", ")[1]}
           </p>
         </div>
-        {type === "search" && (
-          <GreenButton
-            text={"Отправить запрос"}
-            width={"180px"}
-            height={"38px"}
-            margin={"10px 0 0 0"}
-            callback={inviteToTeam}
-          />
-        )}
-        {type === "request" && toMe && status !== "AWAITING" && (
+        {type === "request" && toMe && (
           <p className="team_card_info_fourth">Запрос мне</p>
+        )}
+        {type === "request" && !toMe && (
+          <p className="team_card_info_fourth">Запрос от меня</p>
         )}
         {/* <p className='team_card_info_fourth delete'>Удалить из списка</p> */}
         {/* <p className='team_card_info_fourth reccomend'>Рекомендовать</p> */}
         {/* <p className='team_card_info_fourth reccomended'>Рекомендован</p> */}
-        {type === "request" && status === "ACCEPTED" && !toMe && (
+        {type === "request" && status === "ACCEPTED" && (
           <p className="team_card_info_status accepted">ОДОБРЕН</p>
         )}
         {type === "request" && status === "AWAITING" && !toMe && (
           <p className="team_card_info_status pending">НА РАССМОТРЕНИИ</p>
         )}
-        {type === "request" && status === "REJECTED" && !toMe && (
+        {type === "request" && status === "REJECTED" && (
           <p className="team_card_info_status rejected">ОТКЛОНЕН</p>
         )}
         {type === "request" && toMe && status === "AWAITING" && (
@@ -109,7 +120,7 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
               width={"180px"}
               height={"38px"}
               margin={"10px 10px 0 0"}
-              callback={() => changeInviteStatus("ACCEPTED")}
+              callback={() => changeRequestStatus("ACCEPTED")}
             />
 
             <RedButton
@@ -117,7 +128,7 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
               width={"180px"}
               height={"38px"}
               margin={"10px 0 0 0"}
-              callback={() => changeInviteStatus("REJECTED")}
+              callback={() => changeRequestStatus("REJECTED")}
             />
           </div>
         )}
@@ -126,4 +137,4 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
   );
 }
 
-export default TeamCard;
+export default TrainingRequest;

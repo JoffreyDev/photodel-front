@@ -1,34 +1,26 @@
 import React from "react";
 import SortImage from "../../img/sessions/sort.svg";
-import { SelectInput, Checkbox, PlaceCard } from "../../components";
-import AddImage from "../../img/sessions/add.svg";
+import { SelectInput, PlaceCard } from "../../components";
 import "../../styles/Profile/Places.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Requests from "../../http/axios-requests";
-import { useSelector, useDispatch } from "react-redux";
-import { openSuccessAlert } from "../../redux/actions/userData";
 import { PublicHeader } from "..";
 import { ScreenLoader } from "../../components";
+import SortImageInvert from "../../img/commonImages/sort-.svg";
 
 const Places = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const params = useParams();
   const profileId = params.id;
-
-  const { userData } = useSelector(({ userData }) => userData);
 
   const [places, setPlaces] = React.useState();
 
   const [selectedPlaces, setSelectedPlaces] = React.useState([]);
-  const [allPlacesSelected, setAllPlacesSelected] = React.useState(false);
-  const [action, setAction] = React.useState("");
   const [profileData, setPorfileData] = React.useState();
 
   const [dataLoading, setDataLoading] = React.useState(true);
 
-  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
+  const [sortField, setSortField] = React.useState(1);
+  const [sortType, setSortType] = React.useState("+");
 
   React.useEffect(() => {
     profileId &&
@@ -49,8 +41,17 @@ const Places = () => {
         <h1 className="places_header_title">МЕСТА ДЛЯ СЪЕМОК</h1>
         <div className="places_header_select">
           <img
-            src={SortImage}
+            src={
+              sortType === "+"
+                ? SortImage
+                : sortType === "-"
+                ? SortImageInvert
+                : ""
+            }
             alt="sort"
+            onClick={() =>
+              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
+            }
             className="places_header_select_image"
           />
           <SelectInput
@@ -68,6 +69,8 @@ const Places = () => {
             nonBorder={true}
             fontSize={"13px"}
             marginBottom={"0px"}
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
           />
         </div>
       </div>

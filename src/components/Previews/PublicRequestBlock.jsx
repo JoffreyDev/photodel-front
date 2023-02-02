@@ -41,11 +41,11 @@ function PublicRequestBlock({ request }) {
               .splice(8, 2)
               .join("")}.${request.filming_timestamp
               .split("")
-              .splice(2, 2)
+              .splice(5, 2)
               .join("")}.${request.filming_timestamp
               .split("")
               .splice(0, 4)
-              .join("")} | ${request.hours_duration}`}
+              .join("")} | ${request.hours_duration.split("ч").join(" ч")}`}
         </p>
         <div className="requests_public_preview_data_lower">
           <img

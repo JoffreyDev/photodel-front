@@ -5,9 +5,12 @@ import Comment from "../../img/photoView/comment.svg";
 import { rootAddress } from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
+import { NuPhotoSubmit } from "../../components";
 
 function GalleryPhotoPreview({ photo, isAuthor, width, height, wrapperWidth }) {
   const navigate = useNavigate();
+  const [nuModalActive, setNuModalActive] = React.useState(false);
+
   return (
     <div
       style={wrapperWidth ? { width: width } : {}}
@@ -16,7 +19,11 @@ function GalleryPhotoPreview({ photo, isAuthor, width, height, wrapperWidth }) {
       {photo && (
         <img
           style={width ? { height: height, width: width } : {}}
-          className="main_photo_body_photo"
+          className={
+            photo.category[0] === 19 && !localStorage.getItem("nu")
+              ? "main_photo_body_photo blured"
+              : "main_photo_body_photo"
+          }
           src={`${rootAddress}${photo.gallery_image.photo}`}
         />
       )}
@@ -30,7 +37,11 @@ function GalleryPhotoPreview({ photo, isAuthor, width, height, wrapperWidth }) {
       )}
       {photo && (
         <div
-          onClick={() => navigate(`/public/photo/${photo.id}`)}
+          onClick={() =>
+            photo.category[0] === 19 && !localStorage.getItem("nu")
+              ? setNuModalActive(true)
+              : navigate(`/public/photo/${photo.id}`)
+          }
           className="main_photo_body_photo_layout"
         >
           <div className="main_photo_body_photo_layout_top">
@@ -68,6 +79,13 @@ function GalleryPhotoPreview({ photo, isAuthor, width, height, wrapperWidth }) {
             </div>
           )}
         </div>
+      )}
+      {photo && (
+        <NuPhotoSubmit
+          nuModalActive={nuModalActive}
+          setNuModalActive={setNuModalActive}
+          callback={() => navigate(`/public/photo/${photo.id}`)}
+        />
       )}
     </div>
   );

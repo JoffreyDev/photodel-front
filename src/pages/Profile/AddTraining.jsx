@@ -8,6 +8,9 @@ import {
   AutoCompleteInput,
   SelectInput,
   PhotosPreviewCheckbox,
+  AddToTrainingCard,
+  AddTeamMembers,
+  AddOrgsToTraining,
 } from "../../components";
 import { useSelector } from "react-redux";
 import "../../styles/Profile/AddTraining.scss";
@@ -18,8 +21,6 @@ import { useDispatch } from "react-redux";
 import Delete from "../../img/photoView/delete.svg";
 import Lock from "../../img/photoView/lock.svg";
 import Add from "../../img/trainings/add.svg";
-import Pro from "../../img/trainings/pro.svg";
-import Trash from "../../img/trainings/trash.svg";
 import Resizer from "react-image-file-resizer";
 
 const AddTraining = () => {
@@ -55,12 +56,39 @@ const AddTraining = () => {
   const [endDate, setEndDate] = React.useState(null);
   const [placesCount, setPlacesCount] = React.useState(null);
 
+  const [membersToDisplay, setMembersToDisplay] = React.useState([]);
+
+  const [selectedMembers, setSelectedMembers] = React.useState([]);
+
+  const [userTeamMembers, setUserTeamMembers] = React.useState();
+  const [modalActive, setModalActive] = React.useState();
+
+  const [modalOrgsActive, setModalOrgsActive] = React.useState(false);
+  const [orgsToDisplay, setOrgsToDisplay] = React.useState([]);
+  const [selectedOrgs, setSelectedOrgs] = React.useState([]);
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const params = useParams();
   const trainingId = params.id;
+
+  const deleteTeamMember = (id) => {
+    let array;
+    array = membersToDisplay;
+    array.splice(array.indexOf(id), 1);
+    setMembersToDisplay(array);
+    setKey(Math.random);
+  };
+
+  const deleteOrgMember = (id) => {
+    let array;
+    array = orgsToDisplay;
+    array.splice(array.indexOf(id), 1);
+    setOrgsToDisplay(array);
+    setKey(Math.random);
+  };
 
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
@@ -75,7 +103,7 @@ const AddTraining = () => {
         myMap = new window.ymaps.Map(
           "map",
           {
-            center: [55.753994, 37.622093],
+            center: userCoords ? userCoords : [55.751574, 37.573856],
             zoom: 9,
           },
           {
@@ -227,9 +255,6 @@ const AddTraining = () => {
     } else if (!title) {
       dispatch(openErrorAlert("Не указано название!"));
       return;
-    } else if (!description) {
-      dispatch(openErrorAlert("Не указано описание!"));
-      return;
     } else if (!coords) {
       dispatch(openErrorAlert("Не указано местоположение!"));
       return;
@@ -275,6 +300,8 @@ const AddTraining = () => {
             startDate: startDate,
             endDate: endDate,
             countPlaces: placesCount,
+            training_orgs: selectedOrgs,
+            training_team: selectedMembers,
           })
             .then(() => {
               dispatch(openSuccessAlert("Мероприятие успешно запланировано!"));
@@ -305,6 +332,14 @@ const AddTraining = () => {
       setSelectedPhotos([]);
     }
   }, [sendPhotosArray]);
+
+  const { userCoords } = useSelector(({ userData }) => userData);
+
+  React.useEffect(() => {
+    Requests.getTeamList(userData.id, userCoords).then((res) => {
+      setUserTeamMembers(res.data);
+    });
+  }, [userData]);
 
   return (
     <div className="add_training">
@@ -486,19 +521,31 @@ const AddTraining = () => {
                 Организаторы
               </p>
             </div>
-            <div className="training_options_right_add teamAdd">
+            <div
+              onClick={() => setModalOrgsActive(true)}
+              className="training_options_right_add teamAdd"
+            >
               <img
                 src={Add}
                 alt="add"
                 className="training_options_right_add_image"
               />
-              <p
-                onClick={() => navigate("/profile/add-place")}
-                className="training_options_right_add_p"
-              >
+              <p className="training_options_right_add_p">
                 Добавить в организаторы
               </p>
             </div>
+            {userTeamMembers &&
+              userTeamMembers.map((member, idx) => {
+                if (orgsToDisplay.includes(member.id)) {
+                  return (
+                    <AddToTrainingCard
+                      profile={member}
+                      key={idx}
+                      callback={() => deleteOrgMember(member.id)}
+                    />
+                  );
+                }
+              })}
             <div className="training_view_content_right_team_single">
               <p className="training_view_content_right_team_single_title">
                 Команда
@@ -511,12 +558,24 @@ const AddTraining = () => {
                 className="training_options_right_add_image"
               />
               <p
-                onClick={() => navigate("/profile/add-place")}
+                onClick={() => setModalActive(true)}
                 className="training_options_right_add_p"
               >
                 Добавить в команду
               </p>
             </div>
+            {userTeamMembers &&
+              userTeamMembers.map((member, idx) => {
+                if (membersToDisplay.includes(member.id)) {
+                  return (
+                    <AddToTrainingCard
+                      profile={member}
+                      key={idx}
+                      callback={() => deleteTeamMember(member.id)}
+                    />
+                  );
+                }
+              })}
           </div>
         </div>
         <div className="add_training_right_content">
@@ -566,6 +625,22 @@ const AddTraining = () => {
           callback={handleCreate}
         />
       </div>
+      <AddTeamMembers
+        modalActive={modalActive}
+        setModalActive={setModalActive}
+        userTeamMembers={userTeamMembers}
+        setMembersToDisplay={setMembersToDisplay}
+        selectedMembers={selectedMembers}
+        setSelectedMembers={setSelectedMembers}
+      />
+      <AddOrgsToTraining
+        modalActive={modalOrgsActive}
+        setModalActive={setModalOrgsActive}
+        userTeamMembers={userTeamMembers}
+        setOrgsToDisplay={setOrgsToDisplay}
+        selectedOrgs={selectedOrgs}
+        setSelectedOrgs={setSelectedOrgs}
+      />
     </div>
   );
 };

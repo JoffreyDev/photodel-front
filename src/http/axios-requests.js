@@ -7,11 +7,18 @@ const $api = axios.create({
   baseURL: "https://photodel.ru",
 }); */
 
-export const rootAddress = "http://localhost:8000";
+/* export const rootAddress = "http://localhost:8000";
 export const rootSocketAddress = "localhost:8000";
 
 const $api = axios.create({
   baseURL: "http://localhost:8000",
+}); */
+
+export const rootAddress = "http://88.214.236.197";
+export const rootSocketAddress = "88.214.236.197";
+
+const $api = axios.create({
+  baseURL: "http://88.214.236.197",
 });
 
 export class Requests {
@@ -545,15 +552,19 @@ export class Requests {
     }).then((res) => res);
   }
 
-  static async deleteFavoritePhoto(id) {
+  static async deleteFavoritePhoto(ids) {
     return $api({
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
 
-      url: `api/gallery/photo/favorite/delete/${id}/`,
+      data: {
+        gallery_favorites: ids,
+      },
+
+      url: `api/gallery/photo/favorite/delete/`,
     }).then((res) => res);
   }
 
@@ -1151,7 +1162,7 @@ export class Requests {
 
       data: {
         filming_timestamp: filming_timestamp,
-        hours_duration: hours_duration + "часов",
+        hours_duration: hours_duration + "часа (-ов)",
         filming_type: filming_type,
         filming_status: filming_status,
         count_person: count_person,
@@ -1544,6 +1555,8 @@ export class Requests {
     coords,
     countPlaces,
     placeLocation,
+    training_team,
+    training_orgs,
   }) {
     return $api({
       method: "POST",
@@ -1567,6 +1580,8 @@ export class Requests {
         end_date: endDate + "T00:00",
         summary_members: countPlaces,
         place_location: placeLocation,
+        training_team: training_team,
+        training_orgs: training_orgs,
       },
 
       url: `api/trainings/create/`,
@@ -1728,6 +1743,229 @@ export class Requests {
       },
 
       url: `api/trainings/comment/list/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getProfilesForTeamSearch({
+    category,
+    spec,
+    location,
+    name,
+    page,
+  }) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/accounts/profile/list/?${name ? `&search_words=${name}` : ""}${
+        category !== "Все" ? `&name_category=${category}` : ""
+      }${spec !== "Все" ? `&name_spec=${spec}` : ""}${
+        location ? `&address=${location}` : ""
+      }${`&count_positions=${8}`}${`&page=${page}`}${`&filter_field=likes`}${`&sort_type=${"-"}`}`,
+    }).then((res) => res);
+  }
+
+  static async inviteToTeam({ receiver_id, sender_id }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        invite_sender: sender_id,
+        invite_receiver: receiver_id,
+      },
+
+      url: `api/accounts/team/send_invite/`,
+    }).then((res) => res);
+  }
+
+  static async getIncomingTeamRequests(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/accounts/team/incoming_invites_list/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getOutgoingTeamRequests(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/accounts/team/outgoing_invites_list/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async changeInviteStatus({ request_id, request_status }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        request_id: request_id,
+        status: request_status,
+      },
+
+      url: `api/accounts/team/change_invite_status/`,
+    }).then((res) => res);
+  }
+
+  static async getTeamList(id, userCoords) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/accounts/team/list/${id}/${
+        userCoords && `?user_coords=${userCoords.join(" ")}`
+      }`,
+    }).then((res) => res);
+  }
+
+  static async sendTrainingRequest(user, training) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        request_user: user,
+        training: Number(training),
+      },
+
+      url: `api/trainings/requests/create/`,
+    }).then((res) => res);
+  }
+
+  static async getIncomingTrainingRequests(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/trainings/requests/list_incoming/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getOutgoingTrainingRequests(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/trainings/requests/list_outgoing/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async changeTrainingRequestStatus({ request, status }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        request_id: request,
+        status: status,
+      },
+
+      url: `api/trainings/requests/change_request_status/`,
+    }).then((res) => res);
+  }
+
+  static async addReview({ senderUser, receiverUser, mark, content, photos }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        sender_profile: senderUser,
+        receiver_profile: receiverUser,
+        mark: mark,
+        content: content,
+        images: photos,
+      },
+
+      url: `api/gallery/review/create/`,
+    }).then((res) => res);
+  }
+
+  static async updateReview({ photos, id }) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        images: photos,
+      },
+
+      url: `api/gallery/review/update/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getReviewsList(id) {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      url: `api/gallery/review/list/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getNotifications() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/accounts/profile/notifications/list/`,
+    }).then((res) => res);
+  }
+
+  static async readNotifications(list) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        notifications: list,
+      },
+
+      url: `api/accounts/profile/notifications/read/`,
     }).then((res) => res);
   }
 }

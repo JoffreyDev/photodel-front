@@ -163,6 +163,10 @@
       align-self: center;
       justify-self: center;
 
+      &.team {
+        width: 40vw;
+      }
+
       &_button {
         align-self: center;
       }
@@ -213,6 +217,11 @@
         overflow-y: scroll;
         height: 100%;
         margin-bottom: 50px;
+
+        &.team {
+          display: block;
+          height: auto;
+        }
       }
     }
   }

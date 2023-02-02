@@ -1,11 +1,12 @@
 import { MuiModal } from "..";
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openSuccessAlert } from "../../redux/actions/userData";
 
 const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
   const dispatch = useDispatch();
+  const { userCoords } = useSelector(({ userData }) => userData);
   const handleLoad = () => {
     window.ymaps.ready(init);
 
@@ -14,7 +15,7 @@ const ProfileMap = ({ open, setOpen, setAddressLine, setCoords }) => {
         myMap = new window.ymaps.Map(
           "map",
           {
-            center: [55.753994, 37.622093],
+            center: userCoords ? userCoords : [55.751574, 37.573856],
             zoom: 9,
           },
           {
