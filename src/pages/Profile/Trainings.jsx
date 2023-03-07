@@ -22,7 +22,7 @@ const Trainings = () => {
 
   const [submitActive, setSubmitActive] = React.useState(false);
 
-  const [selectedTrainings, setSelectedtrainings] = React.useState([]);
+  const [selectedTrainings, setSelectedTrainings] = React.useState([]);
   const [allTrainingsSelected, setAlltrainingsSelected] = React.useState(false);
   const [action, setAction] = React.useState("");
 
@@ -57,7 +57,7 @@ const Trainings = () => {
 
   const deleteHandle = () => {
     Requests.deleteTraining(selectedTrainings).then((res) => {
-      setSelectedtrainings([]);
+      setSelectedTrainings([]);
       setAction("");
       Requests.getTrainingsList(userData.id).then((res) =>
         setTrainings(res.data)
@@ -70,9 +70,9 @@ const Trainings = () => {
 
   return (
     <div className="training">
-      <div className="training_header">
-        <h1 className="training_header_title">ОБУЧЕНИЕ</h1>
-        <div className="training_header_select">
+      <div className="sessions_header">
+        <h1 className="sessions_header_title">ОБУЧЕНИЯ</h1>
+        <div className="sessions_header_select">
           <img
             src={
               sortType === "+"
@@ -107,65 +107,99 @@ const Trainings = () => {
           />
         </div>
       </div>
-      <div className="training_options">
-        <div className="training_options_left">
-          <div className="training_options_right">
-            <p className="training_options_left_p">
-              Всего:{" "}
-              <span className="training_options_left_p_span">
-                {trainings && trainings.length}
-              </span>
-            </p>
-            <Checkbox
-              value={allTrainingsSelected}
-              callback={() => {
-                if (allTrainingsSelected) {
-                  setSelectedtrainings([]);
-                  setAlltrainingsSelected(false);
-                  forceUpdate();
-                } else {
-                  trainings.forEach((training) =>
-                    selectedTrainings.push(training.id)
-                  );
-                  setSelectedtrainings(selectedTrainings);
-                  setAlltrainingsSelected(true);
-                  forceUpdate();
-                }
-              }}
-              marginBottom={"0px"}
-              label={"Выбрать все"}
+      <div className="places_options">
+        <div className="places_options_left">
+          <p className="places_options_left_p">
+            Всего:{" "}
+            <span className="places_options_left_p_span">
+              {trainings && trainings.length}
+            </span>
+          </p>
+          <Checkbox
+            value={allTrainingsSelected}
+            callback={() => {
+              if (allTrainingsSelected) {
+                allTrainingsSelected([]);
+                setAlltrainingsSelected(false);
+                forceUpdate();
+              } else {
+                trainings.forEach((training) =>
+                  selectedTrainings.push(training.id)
+                );
+                allTrainingsSelected(selectedTrainings);
+                setAlltrainingsSelected(true);
+                forceUpdate();
+              }
+            }}
+            marginBottom={"0px"}
+            label={"Выбрать все"}
+          />
+          <div className="sessions_header_select mobile">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+              alt="sort"
+              className="sessions_header_select_image"
             />
-          </div>
-          <div className="training_options_right">
-            <div className="training_options_right_add">
-              <img
-                src={AddImage}
-                alt="add"
-                className="training_options_right_add_image"
-              />
-              <p
-                onClick={() => navigate("/profile/add-training")}
-                className="training_options_right_add_p"
-              >
-                Добавить мероприятие
-              </p>
-            </div>
             <SelectInput
-              width={200}
-              marginBottom={"10px"}
               values={[
                 {
                   id: 1,
-                  value: "Удалить",
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
                 },
               ]}
-              value={action}
-              placeholder={"Выберите действие"}
-              onChange={(e) => setAction(e.target.value)}
-              label={"Выберите действие"}
-              labelId="demo-multiple-name-label"
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
             />
           </div>
+        </div>
+
+        <div className="places_options_right">
+          <div className="places_options_right_add">
+            <img
+              src={AddImage}
+              alt="add"
+              className="places_options_right_add_image"
+            />
+            <p
+              onClick={() => navigate("/profile/add-training")}
+              className="places_options_right_add_p"
+            >
+              Добавить мероприятие
+            </p>
+          </div>
+          <SelectInput
+            width={window.screen.width <= 576 ? 170 : 200}
+            marginBottom={"10px"}
+            values={[
+              {
+                id: 1,
+                value: "Удалить",
+              },
+            ]}
+            value={action}
+            onChange={(e) => setAction(e.target.value)}
+            label={"Выберите действие"}
+            labelId="demo-multiple-name-label"
+          />
         </div>
       </div>
       <div className="training_cards">
@@ -174,8 +208,9 @@ const Trainings = () => {
             <TrainingCardMain
               training={training}
               key={idx}
-              callback={setSelectedtrainings}
+              callback={setSelectedTrainings}
               array={selectedTrainings}
+              halfContent={true}
             />
           ))}
         {trainings && trainings.length === 0 && (

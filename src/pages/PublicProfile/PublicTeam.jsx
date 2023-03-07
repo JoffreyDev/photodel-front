@@ -35,10 +35,6 @@ function PublicTeam() {
     });
   }, [component, userData]);
 
-  React.useEffect(() => {
-    if (!localStorage.getItem("access")) navigate("/");
-  }, []);
-
   return (
     <div className="team">
       <div className="team_header">

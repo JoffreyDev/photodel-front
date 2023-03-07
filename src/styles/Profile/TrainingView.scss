@@ -1,5 +1,21 @@
 @import '../variables.scss';
 
+    .training_properties_mobile {
+      display: none;
+    }
+  
+    .training_properties_pc {
+      display: block;
+    }
+
+ .training_view_content_right_team {
+   display: block;
+ }
+
+ .training_view_content_right_team.mobile {
+   display: none;
+ }
+
 .training_view {
   display: flex;
   flex-direction: column;
@@ -538,6 +554,23 @@
 }
 
 @media (max-width: 576px) {
+
+  .training_properties_mobile {
+    display: block;
+  }
+
+  .training_properties_pc {
+    display: none;
+  }
+
+  .training_view_content_right_team {
+    display: none;
+  }
+
+    .training_view_content_right_team.mobile {
+      display: block;
+    }
+
   .training_view {
     &_fullscreen_content_image {
       margin-right: 0px;
@@ -561,7 +594,7 @@
         }
 
         &_map {
-          display: none;
+          
           width: 100%;
 
           &.mobile {
@@ -570,7 +603,7 @@
         }
 
         &_data {
-          display: none;
+         
           width: 100%;
 
           &.mobile {
@@ -580,7 +613,7 @@
         }
 
         &_categories {
-          display: none;
+         
 
           &.mobile {
             display: flex;
@@ -588,7 +621,7 @@
         }
 
         &_albums {
-          display: none;
+         
           flex-direction: column;
           margin-bottom: 20px;
 
@@ -598,7 +631,7 @@
         }
 
         &_specs {
-          display: none;
+         
 
           &.mobile {
             display: flex;
@@ -606,7 +639,7 @@
         }
 
         &_table {
-          display: none;
+         
 
           &_row {
             margin-right: 10px;

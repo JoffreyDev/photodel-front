@@ -158,6 +158,7 @@ const PublicTrainingView = ({ setProfileId }) => {
       dispatch(
         openErrorAlert("Запись доступна только авторизованным пользователям!")
       );
+      return;
     }
     Requests.sendTrainingRequest(userData.id, trainingId)
       .then((res) =>
@@ -184,7 +185,7 @@ const PublicTrainingView = ({ setProfileId }) => {
       <div className="training_view_header">
         <img src={Back} alt="back" className="add_photo_header_arrow" />
         <p
-          onClick={() => navigate(`/public/places/${training.profile.id}`)}
+          onClick={() => navigate(`/public/trainings/${training.profile.id}`)}
           className="training_view_header_p"
         >
           Все мероприятия
@@ -335,94 +336,316 @@ const PublicTrainingView = ({ setProfileId }) => {
               {training && training.string_place_location}
             </p>
           </div>
-          <div className="training_view_content_right_map mobile">
-            {training && training.place_location && !dataLoading && (
-              <YMaps>
-                <Map
-                  width={"100%"}
-                  height={"110px"}
-                  defaultState={{
-                    center:
-                      training &&
-                      training.place_location
-                        .split("(")[1]
-                        .split(")")[0]
-                        .split(" "),
-                    zoom: 12,
-                  }}
+          <div className="training_properties_mobile">
+            <div className="training_view_content_right_map mobile">
+              {training && training.place_location && !dataLoading && (
+                <YMaps>
+                  <Map
+                    width={"100%"}
+                    height={"100px"}
+                    defaultState={{
+                      center:
+                        training &&
+                        training.place_location
+                          .split("(")[1]
+                          .split(")")[0]
+                          .split(" "),
+                      zoom: 12,
+                    }}
+                  >
+                    <Placemark
+                      geometry={
+                        training &&
+                        training.place_location
+                          .split("(")[1]
+                          .split(")")[0]
+                          .split(" ")
+                      }
+                    />
+                  </Map>
+                </YMaps>
+              )}
+              {dataLoading && (
+                <Skeleton
+                  sx={{ borderRadius: 3 }}
+                  variant="rectangular"
+                  height={100}
+                />
+              )}
+            </div>
+            <div>
+              <div className="training_view_content_right_specs">
+                <div
+                  title="Камера"
+                  className="training_view_content_right_spec"
                 >
-                  <Placemark
-                    geometry={
-                      training &&
-                      training.place_location
-                        .split("(")[1]
-                        .split(")")[0]
-                        .split(" ")
-                    }
+                  <img
+                    src={types}
+                    title="Место проведения"
+                    alt="Место"
+                    className="training_view_content_right_spec_img"
                   />
-                </Map>
-              </YMaps>
-            )}
-            {dataLoading && (
-              <Skeleton
-                sx={{ borderRadius: 3 }}
-                variant="rectangular"
-                height={100}
-              />
-            )}
-          </div>
-          <div className="training_view_content_right_specs mobile">
-            <div title="Камера" className="training_view_content_right_spec">
-              <img
-                src={Camera}
-                alt="camera"
-                className="training_view_content_right_spec_img"
-              />
-              <p className="training_view_content_right_spec_p">
-                {training && training.photo_camera
-                  ? training.photo_camera
-                  : "нет"}
-              </p>
-            </div>
+                  <p className="training_view_content_right_spec_p">
+                    {training && training?.place === "Online"
+                      ? "Онлайн"
+                      : training?.place === "Offline"
+                      ? "Оффлайн"
+                      : "-"}
+                  </p>
+                </div>
 
-            <div className="training_view_content_right_spec_row">
-              <div
-                title="Стоимость"
-                className="training_view_content_right_spec"
-              >
-                <img
-                  src={Money}
-                  alt="cost"
-                  className="training_view_content_right_spec_img"
-                />
-                <p className="training_view_content_right_spec_p">
-                  {training && training.cost ? training.cost : "нет"}
+                <div className="training_view_content_right_spec_row">
+                  <div
+                    title="Даты"
+                    className="training_view_content_right_spec"
+                  >
+                    <img
+                      src={calendar}
+                      alt="даты"
+                      className="training_view_content_right_spec_img"
+                    />
+                    <p className="training_view_content_right_spec_p">
+                      {training &&
+                        training.start_date &&
+                        `${
+                          training.start_date.split("").splice(8, 2)[0] === "0"
+                            ? training.start_date
+                                .split("")
+                                .splice(9, 1)
+                                .join("")
+                            : training.start_date
+                                .split("")
+                                .splice(8, 2)
+                                .join("")
+                        } ${
+                          training.start_date
+                            .split("")
+                            .splice(5, 2)
+                            .join("") === "01"
+                            ? "янв"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "02"
+                            ? "фев"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "03"
+                            ? "мар"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "04"
+                            ? "апр"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "05"
+                            ? "мая"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "06"
+                            ? "июня"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "07"
+                            ? "июля"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "08"
+                            ? "авг"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "09"
+                            ? "сент"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "10"
+                            ? "окт"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "11"
+                            ? "ноя"
+                            : training.start_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "12"
+                            ? "дек"
+                            : ""
+                        }`}{" "}
+                      -{" "}
+                      {training &&
+                        training.end_date &&
+                        `${
+                          training.end_date.split("").splice(8, 2)[0] === "0"
+                            ? training.end_date.split("").splice(9, 1).join("")
+                            : training.end_date.split("").splice(8, 2).join("")
+                        } ${
+                          training.end_date.split("").splice(5, 2).join("") ===
+                          "01"
+                            ? "янв"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "02"
+                            ? "фев"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "03"
+                            ? "мар"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "04"
+                            ? "апр"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "05"
+                            ? "мая"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "06"
+                            ? "июня"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "07"
+                            ? "июля"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "08"
+                            ? "авг"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "09"
+                            ? "сент"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "10"
+                            ? "окт"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "11"
+                            ? "ноя"
+                            : training.end_date
+                                .split("")
+                                .splice(5, 2)
+                                .join("") === "12"
+                            ? "дек"
+                            : ""
+                        }`}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="training_view_content_right_spec_row">
+                  <div
+                    title="Стоимость"
+                    className="training_view_content_right_spec"
+                  >
+                    <img
+                      src={money}
+                      alt="payment"
+                      className="training_view_content_right_spec_img"
+                    />
+                    <p className="training_view_content_right_spec_p">
+                      {training && training.cost ? training.cost : "нет"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="training_view_content_right_categories">
+                <p className="training_view_content_right_categories_title">
+                  Категория:
+                </p>
+                <p className="training_view_content_right_categories_p">
+                  {training && training?.training_category?.name_category}
                 </p>
               </div>
-            </div>
 
-            <div className="training_view_content_right_spec_row">
-              <div title="Оплата" className="training_view_content_right_spec">
-                <img
-                  src={Work}
-                  alt="payment"
-                  className="training_view_content_right_spec_img"
-                />
-                <p className="training_view_content_right_spec_p">
-                  {training && training.payment ? training.payment : "нет"}
+              <div className="training_view_content_right_categories">
+                <p className="training_view_content_right_categories_title">
+                  Предоплата:
+                </p>
+                <p className="training_view_content_right_categories_p">
+                  {training?.first_payment}
                 </p>
               </div>
+              <div className="training_view_content_right_places">
+                <p className="training_view_content_right_places_p">
+                  {training?.summary_members - training?.reserved_places} ИЗ{" "}
+                  {training?.summary_members} МЕСТ СВОБОДНО
+                </p>
+              </div>
+
+              <GreenButton
+                width={"180px"}
+                height={"38px"}
+                text={"Записаться"}
+                callback={handleRequest}
+                margin={"20px 0 20px 0 "}
+              />
+            </div>
+
+            <div className="training_view_content_right_team mobile">
+              {training && training.training_orgs.length > 0 && (
+                <div className="training_view_content_right_team_single">
+                  <p className="training_view_content_right_team_single_title">
+                    Организаторы
+                  </p>
+                  {training &&
+                    training.training_orgs.length > 0 &&
+                    training.training_orgs.map((org, idx) => {
+                      return <AddToTrainingCard profile={org} key={idx} view />;
+                    })}
+                </div>
+              )}
+              {training && training.training_team.length > 0 && (
+                <div className="training_view_content_right_team_single">
+                  <p className="training_view_content_right_team_single_title">
+                    Команда
+                  </p>
+                  {training &&
+                    training.training_team.length > 0 &&
+                    training.training_team.map((member, idx) => {
+                      return (
+                        <AddToTrainingCard profile={member} key={idx} view />
+                      );
+                    })}
+                </div>
+              )}
+              {training && training.training_members.length > 0 && (
+                <div className="training_view_content_right_team_single">
+                  <p className="training_view_content_right_team_single_title">
+                    Участники
+                  </p>
+                  {training &&
+                    training.training_members.length > 0 &&
+                    training.training_members.map((member, idx) => {
+                      return (
+                        <AddToTrainingCard profile={member} key={idx} view />
+                      );
+                    })}
+                </div>
+              )}
             </div>
           </div>
-          {window.screen.width <= 576 && (
-            <GreenButton
-              width={"180px"}
-              height={"38px"}
-              text={"Запрос на съемку"}
-              callback={() => setReqWindowActive(true)}
-              margin={"20px 0 20px 0 "}
-            />
-          )}
+
           {localStorage.getItem("access") && (
             <div className="training_view_content_left_textarea">
               <textarea
@@ -459,232 +682,257 @@ const PublicTrainingView = ({ setProfileId }) => {
               {training && training.string_place_location}
             </p>
           </div>
-          <div className="training_view_content_right_map">
-            {training && training.place_location && !dataLoading && (
-              <YMaps>
-                <Map
-                  width={"255px"}
-                  height={"110px"}
-                  defaultState={{
-                    center:
-                      training &&
-                      training.place_location
-                        .split("(")[1]
-                        .split(")")[0]
-                        .split(" "),
-                    zoom: 12,
-                  }}
-                >
-                  <Placemark
-                    geometry={
-                      training &&
-                      training.place_location
-                        .split("(")[1]
-                        .split(")")[0]
-                        .split(" ")
-                    }
+          <div className="training_properties_pc">
+            <div className="training_view_content_right_map">
+              {training && training.place_location && !dataLoading && (
+                <YMaps>
+                  <Map
+                    width={"255px"}
+                    height={"110px"}
+                    defaultState={{
+                      center:
+                        training &&
+                        training.place_location
+                          .split("(")[1]
+                          .split(")")[0]
+                          .split(" "),
+                      zoom: 12,
+                    }}
+                  >
+                    <Placemark
+                      geometry={
+                        training &&
+                        training.place_location
+                          .split("(")[1]
+                          .split(")")[0]
+                          .split(" ")
+                      }
+                    />
+                  </Map>
+                </YMaps>
+              )}
+              {dataLoading && (
+                <Skeleton
+                  sx={{ borderRadius: 3 }}
+                  variant="rectangular"
+                  height={100}
+                />
+              )}
+            </div>
+            <div className="training_view_content_right_specs">
+              <div title="Камера" className="training_view_content_right_spec">
+                <img
+                  src={types}
+                  title="Место проведения"
+                  alt="Место"
+                  className="training_view_content_right_spec_img"
+                />
+                <p className="training_view_content_right_spec_p">
+                  {training && training?.place === "Online"
+                    ? "Онлайн"
+                    : training?.place === "Offline"
+                    ? "Оффлайн"
+                    : "-"}
+                </p>
+              </div>
+
+              <div className="training_view_content_right_spec_row">
+                <div title="Даты" className="training_view_content_right_spec">
+                  <img
+                    src={calendar}
+                    alt="даты"
+                    className="training_view_content_right_spec_img"
                   />
-                </Map>
-              </YMaps>
-            )}
-            {dataLoading && (
-              <Skeleton
-                sx={{ borderRadius: 3 }}
-                variant="rectangular"
-                height={100}
-              />
-            )}
-          </div>
-          <div className="training_view_content_right_specs">
-            <div title="Камера" className="training_view_content_right_spec">
-              <img
-                src={types}
-                title="Место проведения"
-                alt="Место"
-                className="training_view_content_right_spec_img"
-              />
-              <p className="training_view_content_right_spec_p">
-                {training && training?.place === "Online"
-                  ? "Онлайн"
-                  : training?.place === "Offline"
-                  ? "Оффлайн"
-                  : "-"}
+                  <p className="training_view_content_right_spec_p">
+                    {training &&
+                      training.start_date &&
+                      `${
+                        training.start_date.split("").splice(8, 2)[0] === "0"
+                          ? training.start_date.split("").splice(9, 1).join("")
+                          : training.start_date.split("").splice(8, 2).join("")
+                      } ${
+                        training.start_date.split("").splice(5, 2).join("") ===
+                        "01"
+                          ? "янв"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "02"
+                          ? "фев"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "03"
+                          ? "мар"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "04"
+                          ? "апр"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "05"
+                          ? "мая"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "06"
+                          ? "июня"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "07"
+                          ? "июля"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "08"
+                          ? "авг"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "09"
+                          ? "сент"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "10"
+                          ? "окт"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "11"
+                          ? "ноя"
+                          : training.start_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "12"
+                          ? "дек"
+                          : ""
+                      }`}{" "}
+                    -{" "}
+                    {training &&
+                      training.end_date &&
+                      `${
+                        training.end_date.split("").splice(8, 2)[0] === "0"
+                          ? training.end_date.split("").splice(9, 1).join("")
+                          : training.end_date.split("").splice(8, 2).join("")
+                      } ${
+                        training.end_date.split("").splice(5, 2).join("") ===
+                        "01"
+                          ? "янв"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "02"
+                          ? "фев"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "03"
+                          ? "мар"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "04"
+                          ? "апр"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "05"
+                          ? "мая"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "06"
+                          ? "июня"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "07"
+                          ? "июля"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "08"
+                          ? "авг"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "09"
+                          ? "сент"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "10"
+                          ? "окт"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "11"
+                          ? "ноя"
+                          : training.end_date
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "12"
+                          ? "дек"
+                          : ""
+                      }`}
+                  </p>
+                </div>
+              </div>
+
+              <div className="training_view_content_right_spec_row">
+                <div
+                  title="Стоимость"
+                  className="training_view_content_right_spec"
+                >
+                  <img
+                    src={money}
+                    alt="payment"
+                    className="training_view_content_right_spec_img"
+                  />
+                  <p className="training_view_content_right_spec_p">
+                    {training && training.cost ? training.cost : "нет"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="training_view_content_right_categories">
+              <p className="training_view_content_right_categories_title">
+                Категория:
+              </p>
+              <p className="training_view_content_right_categories_p">
+                {training && training?.training_category?.name_category}
               </p>
             </div>
 
-            <div className="training_view_content_right_spec_row">
-              <div title="Даты" className="training_view_content_right_spec">
-                <img
-                  src={calendar}
-                  alt="даты"
-                  className="training_view_content_right_spec_img"
-                />
-                <p className="training_view_content_right_spec_p">
-                  {training &&
-                    training.start_date &&
-                    `${
-                      training.start_date.split("").splice(8, 2)[0] === "0"
-                        ? training.start_date.split("").splice(9, 1).join("")
-                        : training.start_date.split("").splice(8, 2).join("")
-                    } ${
-                      training.start_date.split("").splice(5, 2).join("") ===
-                      "01"
-                        ? "янв"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "02"
-                        ? "фев"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "03"
-                        ? "мар"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "04"
-                        ? "апр"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "05"
-                        ? "мая"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "06"
-                        ? "июня"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "07"
-                        ? "июля"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "08"
-                        ? "авг"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "09"
-                        ? "сент"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "10"
-                        ? "окт"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "11"
-                        ? "ноя"
-                        : training.start_date
-                            .split("")
-                            .splice(5, 2)
-                            .join("") === "12"
-                        ? "дек"
-                        : ""
-                    }`}{" "}
-                  -{" "}
-                  {training &&
-                    training.end_date &&
-                    `${
-                      training.end_date.split("").splice(8, 2)[0] === "0"
-                        ? training.end_date.split("").splice(9, 1).join("")
-                        : training.end_date.split("").splice(8, 2).join("")
-                    } ${
-                      training.end_date.split("").splice(5, 2).join("") === "01"
-                        ? "янв"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "02"
-                        ? "фев"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "03"
-                        ? "мар"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "04"
-                        ? "апр"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "05"
-                        ? "мая"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "06"
-                        ? "июня"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "07"
-                        ? "июля"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "08"
-                        ? "авг"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "09"
-                        ? "сент"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "10"
-                        ? "окт"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "11"
-                        ? "ноя"
-                        : training.end_date.split("").splice(5, 2).join("") ===
-                          "12"
-                        ? "дек"
-                        : ""
-                    }`}
-                </p>
-              </div>
+            <div className="training_view_content_right_categories">
+              <p className="training_view_content_right_categories_title">
+                Предоплата:
+              </p>
+              <p className="training_view_content_right_categories_p">
+                {training?.first_payment}
+              </p>
             </div>
-
-            <div className="training_view_content_right_spec_row">
-              <div
-                title="Стоимость"
-                className="training_view_content_right_spec"
-              >
-                <img
-                  src={money}
-                  alt="payment"
-                  className="training_view_content_right_spec_img"
-                />
-                <p className="training_view_content_right_spec_p">
-                  {training && training.cost ? training.cost : "нет"}
-                </p>
-              </div>
+            <div className="training_view_content_right_places">
+              <p className="training_view_content_right_places_p">
+                {training?.summary_members - training?.reserved_places} ИЗ{" "}
+                {training?.summary_members} МЕСТ СВОБОДНО
+              </p>
             </div>
+            {window.screen.width > 576 && (
+              <GreenButton
+                width={"180px"}
+                height={"38px"}
+                text={"Записаться"}
+                callback={handleRequest}
+                margin={"20px 0 20px 0 "}
+              />
+            )}
           </div>
-
-          <div className="training_view_content_right_categories">
-            <p className="training_view_content_right_categories_title">
-              Категория:
-            </p>
-            <p className="training_view_content_right_categories_p">
-              {training && training?.training_category?.name_category}
-            </p>
-          </div>
-
-          <div className="training_view_content_right_categories">
-            <p className="training_view_content_right_categories_title">
-              Предоплата:
-            </p>
-            <p className="training_view_content_right_categories_p">
-              {training?.first_payment}
-            </p>
-          </div>
-          <div className="training_view_content_right_places">
-            <p className="training_view_content_right_places_p">
-              {training?.summary_members - training?.reserved_places} ИЗ{" "}
-              {training?.summary_members} МЕСТ СВОБОДНО
-            </p>
-          </div>
-          {window.screen.width > 576 && (
-            <GreenButton
-              width={"180px"}
-              height={"38px"}
-              text={"Записаться"}
-              callback={handleRequest}
-              margin={"20px 0 20px 0 "}
-            />
-          )}
           <div className="training_view_content_right_team">
             {training && training.training_orgs.length > 0 && (
               <div className="training_view_content_right_team_single">

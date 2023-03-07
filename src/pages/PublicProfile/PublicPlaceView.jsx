@@ -516,6 +516,10 @@ const PublicPlaceView = ({ setProfileId }) => {
             />
           )}
         </div>
+        <h1 className="photos_rights_title">
+          Объект авторского права. Использование без разрешения правообладателя
+          запрещено.
+        </h1>
       </div>
       <RequestWindow
         user={place && place.profile}

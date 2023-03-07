@@ -10,7 +10,7 @@ import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import RedButton from "../common/RedButton";
 import { rootAddress } from "../../http/axios-requests";
 
-function TeamCard({ profile, status, toMe, type, request_id, reload }) {
+function TeamCard({ profile, status, toMe, type, request_id, reload, base64 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userData } = useSelector(({ userData }) => userData);
@@ -50,7 +50,11 @@ function TeamCard({ profile, status, toMe, type, request_id, reload }) {
     <div className="team_card">
       <div className="team_card_avatar_wrapper">
         <img
-          src={profile && `${rootAddress}${profile && profile.avatar}`}
+          src={
+            !base64
+              ? profile && `${rootAddress}${profile && profile.avatar}`
+              : `data:image/png;base64,${profile && profile.avatar}`
+          }
           alt="avatar"
           className="team_card_avatar"
           onClick={() => navigate(`/public/profile/${profile.id}`)}

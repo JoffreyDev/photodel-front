@@ -365,6 +365,7 @@
 }
 
 @media (max-width: 576px) {
+
   .training {
     &_options {
       margin-top: 0px;
@@ -435,8 +436,8 @@
         object-fit: cover;
 
         &_checkbox {
-          bottom: 63px;
-          left: 126px;
+    bottom: 95px;
+      left: 99px;
         }
 
         &_wrapper {
@@ -459,6 +460,50 @@
       }
     }
   }
+
+     .training_card {
+       height: 153px;
+       width: 100%;
+
+       &_profile {
+        display: none;
+       }
+  
+       &_photo_wrapper {
+         width: 45%;
+         height: 153px;
+       }
+  
+       &_photo {
+         object-fit: cover;
+         width: 100%;
+         height: 153px;
+         border-radius: 8px 0 0 8px;
+       }
+  
+       &_info {
+         width: 79%;
+         height: 153px;
+       }
+  
+       &_properties {
+         display: flex;
+         flex-direction: row;
+         margin-top: 11px;
+         margin-bottom: 20px;
+         margin-left: 17px;
+         flex-wrap: nowrap;
+  
+         &_column {
+           display: flex;
+           flex-direction: column;
+           transform: scale(0.8);
+           margin-left: -30px;
+         }
+       }
+  
+  
+     }
 }
 
 .training_view_content_right {
@@ -541,4 +586,5 @@
       cursor: pointer;
     }
   }
+
 }

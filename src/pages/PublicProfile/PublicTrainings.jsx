@@ -95,6 +95,7 @@ const Training = () => {
               notAuthor
               disableCheck
               disableEdit
+              halfContent={true}
             />
           ))}
         {trainings && trainings.length === 0 && (

@@ -1125,3 +1125,11 @@ border: var(--arrows-border);
 background-color: var(--background-color-2);
 transition: 0.3s;
 }
+
+.main_training_body {
+    background-color: var(--background-color);
+}
+
+.photos_rights_title {
+color: var(--secondary-text-color) !important;
+}

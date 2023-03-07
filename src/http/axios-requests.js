@@ -14,11 +14,11 @@ const $api = axios.create({
   baseURL: "http://localhost:8000",
 }); */
 
-export const rootAddress = "http://88.214.236.197";
-export const rootSocketAddress = "88.214.236.197";
+export const rootAddress = "http://88.214.236.178";
+export const rootSocketAddress = "88.214.236.178";
 
 const $api = axios.create({
-  baseURL: "http://88.214.236.197",
+  baseURL: "http://88.214.236.178",
 });
 
 export class Requests {

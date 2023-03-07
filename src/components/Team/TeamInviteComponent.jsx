@@ -229,7 +229,7 @@ const TeamInviteComponent = () => {
         {!fetching &&
           profiles &&
           profiles.map((profile, idx) => (
-            <TeamCard type="search" profile={profile} key={idx} />
+            <TeamCard type="search" profile={profile} key={idx} base64 />
           ))}
 
         {(!profiles || fetching) && (
@@ -267,7 +267,7 @@ const TeamInviteComponent = () => {
       <div className="team_invite_footer">
         <ThemeProvider theme={theme}>
           <Pagination
-            count={countItems}
+            count={Math.ceil(countItems / 8)}
             page={page}
             color="secondary"
             onChange={(event, value) => setPage(value)}

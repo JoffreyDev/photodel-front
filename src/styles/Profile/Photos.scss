@@ -1,6 +1,18 @@
 @import '../variables.scss';
 
 .photos {
+
+  &_rights_title {
+    width: 300px;
+
+    color: #d2d9d8;
+    font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+      margin-top: 20px;
+  }
   &_header {
     width: 100%;
     display: flex;
@@ -321,6 +333,7 @@
         width: 100%;
         justify-content: space-between;
         transform: scale(0.9);
+        margin-bottom: 20px;
 
         &_add {
           white-space: nowrap;
