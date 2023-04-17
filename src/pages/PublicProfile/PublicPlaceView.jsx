@@ -515,11 +515,11 @@ const PublicPlaceView = ({ setProfileId }) => {
               margin={"20px 0 0 0 "}
             />
           )}
+          <h1 className="photos_rights_title">
+            Объект авторского права. Использование без разрешения
+            правообладателя запрещено.
+          </h1>
         </div>
-        <h1 className="photos_rights_title">
-          Объект авторского права. Использование без разрешения правообладателя
-          запрещено.
-        </h1>
       </div>
       <RequestWindow
         user={place && place.profile}

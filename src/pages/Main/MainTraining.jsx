@@ -124,7 +124,16 @@ const MainTraining = () => {
   React.useEffect(() => {
     Requests.getTrainingsCategories().then((res) => setCategories(res.data));
     setFetching(true);
-    Requests.getAllTrainingsList().then((res) => {
+    Requests.getAllTrainingsList({
+      userCoords: userCoords,
+      search_words: searchReq,
+      name_category: category,
+      distance: searchDist,
+      sortField: sortField,
+      sortType: sortType,
+      count_positions: countPositions,
+      page: page,
+    }).then((res) => {
       setFetching(false);
       setTrainings(res.data);
       setCountItems(Number(res.headers["count-filter-items"]));

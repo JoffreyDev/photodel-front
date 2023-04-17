@@ -608,13 +608,15 @@ const TrainingView = ({ setProfileId }) => {
                 </p>
               </div>
 
-              <GreenButton
-                width={"180px"}
-                height={"38px"}
-                text={"Записаться"}
-                callback={handleRequest}
-                margin={"20px 0 20px 0 "}
-              />
+              {training?.reserved_places < training?.summary_members && (
+                <GreenButton
+                  width={"180px"}
+                  height={"38px"}
+                  text={"Записаться"}
+                  callback={handleRequest}
+                  margin={"20px 0 20px 0 "}
+                />
+              )}
             </div>
 
             <div className="training_view_content_right_team mobile">
@@ -938,15 +940,16 @@ const TrainingView = ({ setProfileId }) => {
                 {training?.summary_members} МЕСТ СВОБОДНО
               </p>
             </div>
-            {window.screen.width > 576 && (
-              <GreenButton
-                width={"180px"}
-                height={"38px"}
-                text={"Записаться"}
-                callback={handleRequest}
-                margin={"20px 0 20px 0 "}
-              />
-            )}
+            {window.screen.width > 576 &&
+              training?.reserved_places < training?.summary_members && (
+                <GreenButton
+                  width={"180px"}
+                  height={"38px"}
+                  text={"Записаться"}
+                  callback={handleRequest}
+                  margin={"20px 0 20px 0 "}
+                />
+              )}
           </div>
           <div className="training_view_content_right_team">
             {training && training.training_orgs.length > 0 && (

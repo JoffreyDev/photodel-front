@@ -7,19 +7,19 @@ const $api = axios.create({
   baseURL: "https://photodel.ru",
 }); */
 
-/* export const rootAddress = "http://localhost:8000";
+export const rootAddress = "http://localhost:8000";
 export const rootSocketAddress = "localhost:8000";
 
 const $api = axios.create({
   baseURL: "http://localhost:8000",
-}); */
+});
 
-export const rootAddress = "http://88.214.236.178";
+/* export const rootAddress = "http://88.214.236.178";
 export const rootSocketAddress = "88.214.236.178";
 
 const $api = axios.create({
   baseURL: "http://88.214.236.178",
-});
+}); */
 
 export class Requests {
   static async login(email, password) {
@@ -880,7 +880,7 @@ export class Requests {
       }${`&distance=${distance}`}${
         sortField ? `&filter_field=${sortField}` : ""
       }${
-        sortType ? `&sort_type=${sortType}` : ""
+        sortType === "-" ? `&sort_type=${sortType}` : ""
       }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
     }).then((res) => res);
   }
@@ -914,7 +914,7 @@ export class Requests {
       }${`&distance=${distance}`}${
         sortField ? `&filter_field=${sortField}` : ""
       }${
-        sortType ? `&sort_type=${sortType}` : ""
+        sortType === "-" ? `&sort_type=${sortType}` : ""
       }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
     }).then((res) => res);
   }
@@ -1616,14 +1616,37 @@ export class Requests {
     }).then((res) => res);
   }
 
-  static async getAllTrainingsList() {
+  static async getAllTrainingsList({
+    userCoords,
+    search_words,
+    name_category,
+    distance,
+    sortField,
+    sortType,
+    count_positions,
+    page,
+  }) {
     return $api({
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
 
-      url: `api/trainings/list/`,
+      url: `api/trainings/list/${
+        userCoords && `?user_coords=${userCoords.join(" ")}`
+      }${
+        userCoords && search_words
+          ? `&search_words=${search_words}`
+          : !userCoords && search_words
+          ? `&search_words=${search_words}`
+          : ""
+      }${
+        name_category !== "Все" ? `&name_category=${name_category}` : ""
+      }${`&distance=${distance}`}${
+        sortField ? `&filter_field=${sortField}` : ""
+      }${
+        sortType === "-" ? `&sort_type=${sortType}` : ""
+      }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
     }).then((res) => res);
   }
 

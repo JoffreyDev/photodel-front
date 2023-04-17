@@ -542,11 +542,11 @@ const PublicSessionView = ({ setProfileId }) => {
               callback={() => setReqWindowActive(true)}
             />
           )}
+          <h1 className="photos_rights_title">
+            Объект авторского права. Использование без разрешения
+            правообладателя запрещено.
+          </h1>
         </div>
-        <h1 className="photos_rights_title">
-          Объект авторского права. Использование без разрешения правообладателя
-          запрещено.
-        </h1>
       </div>
       <RequestWindow
         user={session && session.profile}
