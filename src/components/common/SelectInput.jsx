@@ -14,12 +14,23 @@ const SelectInput = ({
   fontSize,
   marginBottom,
   getName,
+  lock,
 }) => {
   return (
     <div
       style={marginBottom ? { marginBottom: marginBottom } : {}}
-      className="common_text_input_wrapper"
+      className={
+        lock ? "common_text_input_wrapper lock" : "common_text_input_wrapper"
+      }
     >
+      {lock && (
+        <div className="common_text_input_wrapper_lock">
+          <h1 className="common_text_input_wrapper_lock_h1">
+            {" "}
+            Доступно только для Pro
+          </h1>
+        </div>
+      )}
       <label className="common_text_input_label">{label}</label>
       <FormControl
         variant="filled"

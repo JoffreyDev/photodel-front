@@ -9,12 +9,23 @@ const TextInput = ({
   placeholder,
   type,
   disabled,
+  lock,
 }) => {
   return (
     <div
       style={width ? { width: `${width}` } : {}}
-      className="common_text_input_wrapper"
+      className={
+        lock ? "common_text_input_wrapper lock" : "common_text_input_wrapper"
+      }
     >
+      {lock && (
+        <div className="common_text_input_wrapper_lock center">
+          <h1 className="common_text_input_wrapper_lock_h1">
+            {" "}
+            Доступно только для Pro
+          </h1>
+        </div>
+      )}
       <label className="common_text_input_label">{label}</label>
       <input
         style={width ? { width: `${width}`, height: `${height}` } : {}}

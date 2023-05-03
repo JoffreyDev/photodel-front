@@ -11,6 +11,7 @@ import { ScreenLoader } from "../../components";
 import TrainingCardMain from "../../components/Previews/TrainingCardMain";
 import { Submit } from "../../components";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 const Trainings = () => {
   const navigate = useNavigate();
@@ -180,7 +181,26 @@ const Trainings = () => {
               className="places_options_right_add_image"
             />
             <p
-              onClick={() => navigate("/profile/add-training")}
+              onClick={() => {
+                if (userData.pro_account === 0) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить обучение, пожалуйста, обновитесь до пакета Стандарт"
+                    )
+                  );
+                  return;
+                } else if (
+                  trainings.length >= 1 &&
+                  userData?.pro_account === 1
+                ) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше одного обучения, пожалуйста, обновитесь до пакета Максимум"
+                    )
+                  );
+                  return;
+                } else navigate("/profile/add-training");
+              }}
               className="places_options_right_add_p"
             >
               Добавить мероприятие

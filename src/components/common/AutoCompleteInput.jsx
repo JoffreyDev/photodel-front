@@ -45,6 +45,7 @@ const AutoCompleteInput = ({
         renderInput={(params) => (
           <TextField {...params} label={placeholder ? placeholder : ""} />
         )}
+        autoHighlight
       />
     </div>
   );

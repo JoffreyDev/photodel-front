@@ -6,6 +6,7 @@ import Fave from "../../img/commonImages/fave.svg";
 import Rate from "../../img/commonImages/rate.svg";
 import Like from "../../img/commonImages/like.svg";
 import { useNavigate } from "react-router-dom";
+import Pro from "../../img/profile/pro.svg";
 
 function ProfileMainPreview({ profile, width, marginRight, disableBorder }) {
   const navigate = useNavigate();
@@ -38,9 +39,19 @@ function ProfileMainPreview({ profile, width, marginRight, disableBorder }) {
             alt="online"
             className="profile_card_info_first_online"
           />
-          <p className="profile_card_info_first_name">
+          <p
+            className="profile_card_info_first_name"
+            style={{ marginRight: "10px" }}
+          >
             {`${profile && profile.name}  ${profile && profile.surname}`}
           </p>
+          {profile?.pro_account > 0 && (
+            <img
+              src={Pro}
+              alt="Pro status"
+              className="my_profile_header_upper_row_pro"
+            />
+          )}
         </div>
         <div className="profile_card_info_second">
           <img src={Rate} alt="rate" className="profile_card_info_second_img" />

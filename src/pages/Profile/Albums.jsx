@@ -211,7 +211,30 @@ const Albums = ({ component }) => {
               className="albums_options_right_add_image"
             />
             <p
-              onClick={() => navigate("/profile/add-album")}
+              onClick={() => {
+                if (albums.length >= 3 && userData.pro_account === 0) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше 3 альбомов, пожалуйста, обновитесь до пакета Стандарт"
+                    )
+                  );
+                  return;
+                } else if (albums.length >= 10 && userData.pro_account === 1) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше 10 альбомов, пожалуйста, обновитесь до пакета Максимум"
+                    )
+                  );
+                  return;
+                } else if (albums.length >= 30 && userData.pro_account === 2) {
+                  dispatch(
+                    openErrorAlert(
+                      "Достигнуто максимальное количество альбомов"
+                    )
+                  );
+                  return;
+                } else navigate("/profile/add-album");
+              }}
               className="albums_options_right_add_p"
             >
               Добавить альбом

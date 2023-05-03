@@ -1,14 +1,6 @@
 import React from "react";
 import SortImage from "../../img/sessions/sort.svg";
-import {
-  Checkbox,
-  PhotoCard,
-  PlaceCard,
-  SessionCard,
-  TextInput,
-  SelectInput,
-  ProfileMainPreview,
-} from "../../components";
+import { Checkbox, SelectInput, ProfileMainPreview } from "../../components";
 import "../../styles/Profile/Team.scss";
 import Requests from "../../http/axios-requests";
 import { useSelector } from "react-redux";
@@ -16,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { ScreenLoader } from "../../components";
 import AddImage from "../../img/sessions/add.svg";
 import TeamCard from "../../components/Previews/TeamCard";
-import GreyButton from "../../components/common/GreyButton";
-import GreenButton from "../../components/common/GreenButton";
-import Back from "../../img/addModules/arrow-back.svg";
+import { openErrorAlert } from "../../redux/actions/userData";
+import { useDispatch } from "react-redux";
 
 function Team() {
   const navigate = useNavigate();
   const { userData } = useSelector(({ userData }) => userData);
+  const dispatch = useDispatch();
   const [recs, setRecs] = React.useState([]);
   const [team, setTeam] = React.useState([]);
   const [requests, setRequests] = React.useState([]);
@@ -160,7 +152,16 @@ function Team() {
               className="training_options_right_add_image"
             />
             <p
-              onClick={() => navigate("/profile/invite-to-team")}
+              onClick={() => {
+                if (userData?.pro_account === 0) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить кого-то в команду, пожалуйста, обновитесь до пакета Стандарт"
+                    )
+                  );
+                  return;
+                } else navigate("/profile/invite-to-team");
+              }}
               className="training_options_right_add_p"
             >
               Добавить в команду

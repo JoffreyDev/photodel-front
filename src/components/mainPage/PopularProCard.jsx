@@ -2,6 +2,7 @@ import React from "react";
 import profileImage from "../../img/mainPage/profile.png";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
+import Pro from "../../img/profile/pro.svg";
 
 const PopularProCard = ({ profile }) => {
   const navigate = useNavigate();
@@ -53,6 +54,15 @@ const PopularProCard = ({ profile }) => {
             {profile.name}
           </p>
         )}
+        {profile?.pro_account > 0 && (
+          <img
+            src={Pro}
+            alt="Pro status"
+            className="my_profile_header_upper_row_pro"
+            style={{ margin: "5px 0" }}
+          />
+        )}
+
         {!profile && <Skeleton variant="text" width={55} />}
       </div>
       {profile && (

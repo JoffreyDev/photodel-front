@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import RedButton from "../common/RedButton";
 import { rootAddress } from "../../http/axios-requests";
+import Pro from "../../img/profile/pro.svg";
 
 function TeamCard({ profile, status, toMe, type, request_id, reload, base64 }) {
   const navigate = useNavigate();
@@ -70,9 +71,17 @@ function TeamCard({ profile, status, toMe, type, request_id, reload, base64 }) {
           <p
             className="team_card_info_first_name"
             onClick={() => navigate(`/public/profile/${profile.id}`)}
+            style={{ marginRight: "10px" }}
           >
             {`${profile && profile.name}  ${profile && profile.surname}`}
           </p>
+          {profile?.pro_account > 0 && (
+            <img
+              src={Pro}
+              alt="Pro status"
+              className="my_profile_header_upper_row_pro"
+            />
+          )}
         </div>
         <div className="team_card_info_third">
           <p className="team_card_info_third_category">

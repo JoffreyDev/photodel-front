@@ -59,34 +59,111 @@ const MyProfile = () => {
                   <p className="my_profile_header_upper_row_name">
                     {userData.name + " " + userData.surname}
                   </p>
-                  {false && (
+                  {userData?.pro_account > 0 && userData?.status === 2 && (
                     <img
                       src={Pro}
                       alt="Pro status"
                       className="my_profile_header_upper_row_pro"
                     />
                   )}
-                  {false && (
-                    <p className="my_profile_header_upper_row_pro_period">
-                      до 12.03.2021
-                    </p>
-                  )}
-                  {false && (
+                  <p className="my_profile_header_upper_row_pro_period">
+                    {userData?.pro_subscription_expiration &&
+                      userData?.status === 2 &&
+                      userData?.pro_subscription_expiration &&
+                      `до ${
+                        userData?.pro_subscription_expiration
+                          .split("")
+                          .splice(8, 2)[0] === "0"
+                          ? userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(9, 1)
+                              .join("")
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(8, 2)
+                              .join("")
+                      } ${
+                        userData?.pro_subscription_expiration
+                          .split("")
+                          .splice(5, 2)
+                          .join("") === "01"
+                          ? "января"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "02"
+                          ? "февраля"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "03"
+                          ? "марта"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "04"
+                          ? "апреля"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "05"
+                          ? "мая"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "06"
+                          ? "июня"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "07"
+                          ? "июля"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "08"
+                          ? "августа"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "09"
+                          ? "сентября"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "10"
+                          ? "октября"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "11"
+                          ? "ноября"
+                          : userData?.pro_subscription_expiration
+                              .split("")
+                              .splice(5, 2)
+                              .join("") === "12"
+                          ? "декабря"
+                          : ""
+                      }`}
+                  </p>
+                  {userData?.status === 2 && (
                     <p className="my_profile_header_upper_row_pro_prolong">
                       Продлить
                     </p>
                   )}
                 </div>
-                <div className="my_profile_header_upper_row_right">
-                  <img
-                    src={Rating}
-                    alt="Rating"
-                    className="my_profile_header_upper_row_rating_img"
-                  />
-                  <p className="my_profile_header_upper_row_rating_p">
-                    {userData && userData.rating}
-                  </p>
-                </div>
+                {userData?.status === 2 && (
+                  <div className="my_profile_header_upper_row_right">
+                    <img
+                      src={Rating}
+                      alt="Rating"
+                      className="my_profile_header_upper_row_rating_img"
+                    />
+                    <p className="my_profile_header_upper_row_rating_p">
+                      {userData && userData.rating}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="my_profile_header_middle_row">
                 <div className="my_profile_header_middle_row_registered">
@@ -213,22 +290,25 @@ const MyProfile = () => {
                     Категория:
                   </td>
                   <td className="my_profile_common_data_content_right_li">
-                    {isJson(userData.type_pro) &&
-                      JSON.parse(userData.type_pro).map((item, index) => {
-                        if (
-                          index + 1 !==
-                          JSON.parse(userData.type_pro).length
-                        ) {
-                          return Object.values(item)[0] + ", ";
-                        } else {
-                          return Object.values(item)[0];
-                        }
-                      })}
+                    {userData?.status === 2
+                      ? isJson(userData.type_pro) &&
+                        JSON.parse(userData.type_pro).map((item, index) => {
+                          if (
+                            index + 1 !==
+                            JSON.parse(userData.type_pro).length
+                          ) {
+                            return Object.values(item)[0] + ", ";
+                          } else {
+                            return Object.values(item)[0];
+                          }
+                        })
+                      : "Пользователь"}
                   </td>
                 </tr>
               )}
 
               {userData &&
+                userData?.status === 2 &&
                 JSON.parse(userData.spec_model_or_photographer).length >= 1 && (
                   <tr>
                     <td className="my_profile_common_data_content_left_li">
@@ -254,28 +334,30 @@ const MyProfile = () => {
                   </tr>
                 )}
 
-              {userData && JSON.parse(userData.filming_geo).length >= 1 && (
-                <tr>
-                  <td className="my_profile_common_data_content_left_li">
-                    География съемок:
-                  </td>
-                  <td className="my_profile_common_data_content_right_li">
-                    {isJson(userData.filming_geo) &&
-                      JSON.parse(userData.filming_geo).map((item, index) => {
-                        if (
-                          index + 1 !==
-                          JSON.parse(userData.filming_geo).length
-                        ) {
-                          return Object.values(item)[0] + ", ";
-                        } else {
-                          return Object.values(item)[0];
-                        }
-                      })}
-                  </td>
-                </tr>
-              )}
+              {userData &&
+                userData?.status === 2 &&
+                JSON.parse(userData.filming_geo).length >= 1 && (
+                  <tr>
+                    <td className="my_profile_common_data_content_left_li">
+                      География съемок:
+                    </td>
+                    <td className="my_profile_common_data_content_right_li">
+                      {isJson(userData.filming_geo) &&
+                        JSON.parse(userData.filming_geo).map((item, index) => {
+                          if (
+                            index + 1 !==
+                            JSON.parse(userData.filming_geo).length
+                          ) {
+                            return Object.values(item)[0] + ", ";
+                          } else {
+                            return Object.values(item)[0];
+                          }
+                        })}
+                    </td>
+                  </tr>
+                )}
 
-              {userData.cost_services && (
+              {userData.cost_services && userData?.status === 2 && (
                 <tr>
                   <td className="my_profile_common_data_content_left_li">
                     Стоимость услуг:
@@ -287,7 +369,7 @@ const MyProfile = () => {
                 </tr>
               )}
 
-              {userData.work_condition && (
+              {userData.work_condition && userData?.status === 2 && (
                 <tr>
                   <td className="my_profile_common_data_content_left_li">
                     {" "}
@@ -300,7 +382,7 @@ const MyProfile = () => {
                 </tr>
               )}
 
-              {userData.photo_technics && (
+              {userData.photo_technics && userData?.status === 2 && (
                 <tr>
                   <td className="my_profile_common_data_content_left_li">
                     {" "}
@@ -368,7 +450,7 @@ const MyProfile = () => {
                     </tr>
                   )}
 
-                  {userData.phone && (
+                  {userData.phone && userData?.status === 2 && (
                     <tr>
                       <td className="my_profile_common_data_content_left_li">
                         {" "}
@@ -380,7 +462,7 @@ const MyProfile = () => {
                     </tr>
                   )}
 
-                  {userData.site && (
+                  {userData.site && userData?.status === 2 && (
                     <tr>
                       <td className="my_profile_common_data_content_left_li">
                         Сайт:
@@ -396,7 +478,7 @@ const MyProfile = () => {
           )}
 
           <div>
-            {userData.location_now && (
+            {userData.location_now && userData?.status === 2 && (
               <div className="my_profile_temp_location">
                 <p className="my_profile_temp_location_title">
                   Временная геолокация
@@ -444,67 +526,71 @@ const MyProfile = () => {
               </div>
             )}
 
-            <div className="my_profile_stats">
-              <p className="my_profile_stats_title">Статистика</p>
-              <div className="my_profile_stats_content">
-                <div className="my_profile_stats_content_upper">
-                  <div className="my_profile_stats_content_upper_stat">
-                    <p className="my_profile_stats_content_upper_key">
-                      Просмотры:
-                    </p>
-                    <p className="my_profile_stats_content_upper_value">
-                      {" "}
-                      {userData && userData.statistics.me_count_views}
-                    </p>
+            {userData?.status === 2 && (
+              <div className="my_profile_stats">
+                <p className="my_profile_stats_title">Статистика</p>
+                <div className="my_profile_stats_content">
+                  <div className="my_profile_stats_content_upper">
+                    <div className="my_profile_stats_content_upper_stat">
+                      <p className="my_profile_stats_content_upper_key">
+                        Просмотры:
+                      </p>
+                      <p className="my_profile_stats_content_upper_value">
+                        {" "}
+                        {userData && userData.statistics.me_count_views}
+                      </p>
+                    </div>
+
+                    <div className="my_profile_stats_content_upper_stat">
+                      <p className="my_profile_stats_content_upper_key">
+                        Комментарии:
+                      </p>
+                      <p className="my_profile_stats_content_upper_value">
+                        {userData && userData.statistics.my_count_commetns}
+                      </p>
+                    </div>
+
+                    <div className="my_profile_stats_content_upper_stat">
+                      <p className="my_profile_stats_content_upper_key">
+                        В избранном:
+                      </p>
+                      <p className="my_profile_stats_content_upper_value">
+                        {" "}
+                        {userData && userData.statistics.me_count_favorites}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="my_profile_stats_content_upper_stat">
-                    <p className="my_profile_stats_content_upper_key">
-                      Комментарии:
-                    </p>
-                    <p className="my_profile_stats_content_upper_value">
-                      {userData && userData.statistics.my_count_commetns}
-                    </p>
-                  </div>
+                  <div className="my_profile_stats_content_lower">
+                    <div className="my_profile_stats_content_lower_stat">
+                      <p className="my_profile_stats_content_lower_key">
+                        Лайки:
+                      </p>
+                      <p className="my_profile_stats_content_lower_value">
+                        {userData && userData.statistics.me_count_likes}
+                      </p>
+                    </div>
 
-                  <div className="my_profile_stats_content_upper_stat">
-                    <p className="my_profile_stats_content_upper_key">
-                      В избранном:
-                    </p>
-                    <p className="my_profile_stats_content_upper_value">
-                      {" "}
-                      {userData && userData.statistics.me_count_favorites}
-                    </p>
-                  </div>
-                </div>
+                    <div className="my_profile_stats_content_lower_stat">
+                      <p className="my_profile_stats_content_lower_key">
+                        Отзывы:
+                      </p>
+                      <p className="my_profile_stats_content_lower_value">0</p>
+                    </div>
 
-                <div className="my_profile_stats_content_lower">
-                  <div className="my_profile_stats_content_lower_stat">
-                    <p className="my_profile_stats_content_lower_key">Лайки:</p>
-                    <p className="my_profile_stats_content_lower_value">
-                      {userData && userData.statistics.me_count_likes}
-                    </p>
-                  </div>
-
-                  <div className="my_profile_stats_content_lower_stat">
-                    <p className="my_profile_stats_content_lower_key">
-                      Отзывы:
-                    </p>
-                    <p className="my_profile_stats_content_lower_value">0</p>
-                  </div>
-
-                  <div className="my_profile_stats_content_lower_stat">
-                    <p className="my_profile_stats_content_lower_key">
-                      Избранные:
-                    </p>
-                    <p className="my_profile_stats_content_lower_value">
-                      {" "}
-                      {userData && userData.statistics.me_count_favorites}
-                    </p>
+                    <div className="my_profile_stats_content_lower_stat">
+                      <p className="my_profile_stats_content_lower_key">
+                        Избранные:
+                      </p>
+                      <p className="my_profile_stats_content_lower_value">
+                        {" "}
+                        {userData && userData.statistics.me_count_favorites}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
             <div className="my_profile_requests">
               <p className="my_profile_requests_title">Запросы</p>
               <div className="my_profile_requests_content">

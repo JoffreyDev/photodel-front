@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { openSuccessAlert } from "../../redux/actions/userData";
 import { Submit } from "../../components";
 import { ScreenLoader } from "../../components";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 const Photos = ({ component }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -208,7 +209,28 @@ const Photos = ({ component }) => {
               className="photos_options_right_add_image"
             />
             <p
-              onClick={() => navigate("/profile/add-photo")}
+              onClick={() => {
+                if (photos.length >= 15 && userData.pro_account === 0) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше 15 фотографий, пожалуйста, обновитесь до пакета Стандарт"
+                    )
+                  );
+                  return;
+                } else if (photos.length >= 100 && userData.pro_account === 1) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше 100 фотографий, пожалуйста, обновитесь до пакета Максимум"
+                    )
+                  );
+                  return;
+                } else if (photos.length >= 300 && userData.pro_account === 2) {
+                  dispatch(
+                    openErrorAlert("Достигнуто максимальное количество фото")
+                  );
+                  return;
+                } else navigate("/profile/add-photo");
+              }}
               className="photos_options_right_add_p"
             >
               Добавить  фото

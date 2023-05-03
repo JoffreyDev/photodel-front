@@ -6,7 +6,7 @@ import "../../styles/Profile/Sessions.scss";
 import { useNavigate } from "react-router-dom";
 import Requests from "../../http/axios-requests";
 import { useSelector, useDispatch } from "react-redux";
-import { openSuccessAlert } from "../../redux/actions/userData";
+import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
 import { ScreenLoader } from "../../components";
@@ -177,7 +177,23 @@ const Sessions = () => {
               className="places_options_right_add_image"
             />
             <p
-              onClick={() => navigate("/profile/add-session")}
+              onClick={() => {
+                if (sessions.length >= 1 && userData.pro_account === 0) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше 1 фотосессии, пожалуйста, обновитесь до пакета Стандарт"
+                    )
+                  );
+                  return;
+                } else if (sessions.length >= 3 && userData.pro_account === 1) {
+                  dispatch(
+                    openErrorAlert(
+                      "Чтобы добавить больше 3 фотосессий, пожалуйста, обновитесь до пакета Максимум"
+                    )
+                  );
+                  return;
+                } else navigate("/profile/add-session");
+              }}
               className="places_options_right_add_p"
             >
               Добавить фотосессию

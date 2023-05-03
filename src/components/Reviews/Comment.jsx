@@ -33,7 +33,9 @@ const Comment = ({ comment }) => {
           style={{ cursor: "pointer" }}
           className="reviews_comment_upper_name"
         >{`${comment.sender_comment.name} ${comment.sender_comment.surname}`}</p>
-        {/*   <img src={Pro} alt="pro" className="reviews_comment_upper_pro" /> */}
+        {comment.sender_comment.pro_account > 0 && (
+          <img src={Pro} alt="pro" className="reviews_comment_upper_pro" />
+        )}
         <p className="reviews_comment_upper_date">
           {" "}
           {comment &&

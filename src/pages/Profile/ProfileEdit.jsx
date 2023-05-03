@@ -45,7 +45,9 @@ const ProfileEdit = ({ setActiveModule }) => {
   const [languages, setLanguages] = React.useState();
 
   const [status, setStatus] = React.useState();
-  const [category, setCategory] = React.useState();
+  const [category, setCategory] = React.useState(
+    userData.status === 2 ? "" : 12
+  );
   const [spec, setSpec] = React.useState();
   const [cost, setCost] = React.useState();
   const [conditions, setConditions] = React.useState();
@@ -216,9 +218,6 @@ const ProfileEdit = ({ setActiveModule }) => {
     } else if (!location) {
       dispatch(openErrorAlert("Вы не указали ваше местоположение!"));
       return;
-    } else if (!about) {
-      dispatch(openErrorAlert("Напишите пару слов о себе. Это обязательно!"));
-      return;
     }
 
     Requests.updateOwnProfile({
@@ -325,29 +324,32 @@ const ProfileEdit = ({ setActiveModule }) => {
             </div>
           </div>
           <div className="my_profile_header_middle_row">
-            <div className="my_profile_header_middle_row_status">
-              <div className="reg_auth_content_input_wrapper">
-                {status !== undefined && (
-                  <SelectInput
-                    values={[
-                      {
-                        id: "BUSY",
-                        value: "Занят",
-                      },
-                      {
-                        id: "FREE",
-                        value: "Свободен",
-                      },
-                    ]}
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    label={"Статус"}
-                    setValue={setStatus}
-                    width={"50%"}
-                  />
-                )}
+            {userData.status === 2 && (
+              <div className="my_profile_header_middle_row_status">
+                <div className="reg_auth_content_input_wrapper">
+                  {status !== undefined && (
+                    <SelectInput
+                      values={[
+                        {
+                          id: "BUSY",
+                          value: "Занят",
+                        },
+                        {
+                          id: "FREE",
+                          value: "Свободен",
+                        },
+                      ]}
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                      label={"Статус"}
+                      setValue={setStatus}
+                      width={"50%"}
+                      lock={userData?.pro_account === 0}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -359,12 +361,14 @@ const ProfileEdit = ({ setActiveModule }) => {
             {category !== undefined && (
               <SelectInput
                 values={
-                  categories &&
-                  categories.map((item) => {
-                    return { id: item.id, value: item.name_category };
-                  })
+                  userData.status === 2
+                    ? categories &&
+                      categories.map((item) => {
+                        return { id: item.id, value: item.name_category };
+                      })
+                    : [{ id: 12, value: "Пользователь" }]
                 }
-                value={category}
+                value={userData.status === 2 ? category : 12}
                 onChange={(e) => setCategory(e.target.value)}
                 label={
                   <span>
@@ -376,7 +380,7 @@ const ProfileEdit = ({ setActiveModule }) => {
               />
             )}
 
-            {countries && (
+            {countries && userData.status === 2 && (
               <AutoCompleteInput
                 values={
                   countries &&
@@ -387,19 +391,37 @@ const ProfileEdit = ({ setActiveModule }) => {
                     };
                   })
                 }
-                value={country}
+                value={country ? country : []}
                 label={"География съемок"}
-                onChange={(e, value) => setCountry(value.map((item) => item))}
+                onChange={(e, value) => {
+                  if (value.length > 1 && userData?.pro_account === 0) {
+                    dispatch(
+                      openErrorAlert(
+                        "Чтобы указать географию съемок больше, обновитесь до пакета Стандарт"
+                      )
+                    );
+                    return;
+                  } else if (value.length > 2 && userData?.pro_account === 1) {
+                    dispatch(
+                      openErrorAlert(
+                        "Чтобы указать географию съемок больше, обновитесь до пакета Максимум"
+                      )
+                    );
+                    return;
+                  } else setCountry(value.map((item) => item));
+                }}
               />
             )}
 
-            <TextInput
-              width={"350px"}
-              height={"38px"}
-              label={"Условия работы"}
-              value={conditions}
-              callback={setConditions}
-            />
+            {userData.status === 2 && (
+              <TextInput
+                width={"350px"}
+                height={"38px"}
+                label={"Условия работы"}
+                value={conditions}
+                callback={setConditions}
+              />
+            )}
             {languages && languageSkills && (
               <AutoCompleteInput
                 values={
@@ -420,7 +442,7 @@ const ProfileEdit = ({ setActiveModule }) => {
             )}
           </div>
           <div className="my_profile_common_data_content_right_inputs">
-            {specs && spec && (
+            {specs && spec && userData.status === 2 && (
               <AutoCompleteInput
                 values={
                   specs &&
@@ -432,24 +454,44 @@ const ProfileEdit = ({ setActiveModule }) => {
                   })
                 }
                 value={spec}
-                onChange={(e, value) => setSpec(value.map((item) => item))}
+                onChange={(e, value) => {
+                  if (value.length > 1 && userData?.pro_account === 0) {
+                    dispatch(
+                      openErrorAlert(
+                        "Чтобы указать больше специализаций, обновитесь до пакета Стандарт"
+                      )
+                    );
+                    return;
+                  } else if (value.length > 3 && userData?.pro_account === 1) {
+                    dispatch(
+                      openErrorAlert(
+                        "Чтобы указать больше специализаций, обновитесь до пакета Максимум"
+                      )
+                    );
+                    return;
+                  } else setSpec(value.map((item) => item));
+                }}
                 label={"Специализация"}
               />
             )}
-            <TextInput
-              width={"350px"}
-              height={"38px"}
-              label={"Стоимость услуг"}
-              value={cost}
-              callback={setCost}
-            />
-            <TextInput
-              width={"350px"}
-              height={"38px"}
-              label={"Фототехника"}
-              value={technic}
-              callback={setTechnic}
-            />
+            {userData.status === 2 && (
+              <TextInput
+                width={"350px"}
+                height={"38px"}
+                label={"Стоимость услуг"}
+                value={cost}
+                callback={setCost}
+              />
+            )}
+            {userData.status === 2 && (
+              <TextInput
+                width={"350px"}
+                height={"38px"}
+                label={"Фототехника"}
+                value={technic}
+                callback={setTechnic}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -485,20 +527,25 @@ const ProfileEdit = ({ setActiveModule }) => {
               coords={location}
               setCoords={setLocation}
             />
-            <TextInput
-              width={"350px"}
-              height={"38px"}
-              label={"Телефон"}
-              value={number}
-              callback={setNumber}
-            />
-            <TextInput
-              width={"350px"}
-              height={"38px"}
-              label={"Сайт"}
-              value={site}
-              callback={setSite}
-            />
+            {userData.status === 2 && (
+              <TextInput
+                width={"350px"}
+                height={"38px"}
+                label={"Телефон"}
+                value={number}
+                callback={setNumber}
+              />
+            )}
+            {userData.status === 2 && (
+              <TextInput
+                width={"350px"}
+                height={"38px"}
+                label={"Сайт"}
+                value={site}
+                callback={setSite}
+                lock
+              />
+            )}
             {false && (
               <TextInput
                 width={"350px"}
@@ -539,53 +586,69 @@ const ProfileEdit = ({ setActiveModule }) => {
             )}
           </div>
         </div>
-        <div className="my_profile_temp_location">
-          <p className="my_profile_temp_location_title">Временная геолокация</p>
-          <div className="my_profile_temp_location_content">
-            <div className="my_profile_temp_location_content_upper_inputs">
-              <div style={{ marginRight: "30px" }}>
-                <LocationInput
-                  width={"350px"}
-                  height={"38px"}
-                  label={"Нахожусь сейчас"}
-                  addressLine={tempLocationString}
-                  setAddressLine={setTempLocationString}
-                  coords={tempLocation}
-                  setCoords={setTempLocation}
-                />
-              </div>
-              <div>
-                <label className="common_text_input_label">
-                  Даты пребывания
-                </label>
-                <div style={{ marginTop: "3px" }}>
-                  <Calendar
-                    onChange={(value) => setTempDate(value)}
-                    returnValue={"range"}
-                    selectRange={true}
-                    value={tempDate}
-                    activeStartDate={new Date()}
+
+        {userData.status === 2 && (
+          <div
+            className={
+              userData?.pro_account === 0
+                ? "my_profile_temp_location lock"
+                : "my_profile_temp_location"
+            }
+          >
+            <div className="my_profile_temp_location_lock">
+              <h1 className="my_profile_temp_location_lock_h1">
+                Доступно только для Pro
+              </h1>
+            </div>
+            <p className="my_profile_temp_location_title">
+              Временная геолокация
+            </p>
+            <div className="my_profile_temp_location_content">
+              <div className="my_profile_temp_location_content_upper_inputs">
+                <div style={{ marginRight: "30px" }}>
+                  <LocationInput
+                    width={"350px"}
+                    height={"38px"}
+                    label={"Нахожусь сейчас"}
+                    addressLine={tempLocationString}
+                    setAddressLine={setTempLocationString}
+                    coords={tempLocation}
+                    setCoords={setTempLocation}
                   />
+                </div>
+                <div>
+                  <label className="common_text_input_label">
+                    Даты пребывания
+                  </label>
+                  <div style={{ marginTop: "3px" }}>
+                    <Calendar
+                      onChange={(value) => setTempDate(value)}
+                      returnValue={"range"}
+                      selectRange={true}
+                      value={tempDate}
+                      activeStartDate={new Date()}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="common_text_input_wrapper">
+              <label className="common_text_input_label">Сообщение</label>
+              <textarea
+                style={{ height: "79px" }}
+                className="my_profile_about_textarea"
+                value={tempLocationMessage}
+                onChange={(e) => setTempLocationMessage(e.target.value)}
+              />
+            </div>
+            <p
+              onClick={() => resetTempLocation()}
+              className="my_profile_temp_location_content_reset"
+            >
+              Сбросить данные о временной геолокации
+            </p>
           </div>
-          <div className="common_text_input_wrapper">
-            <label className="common_text_input_label">Сообщение</label>
-            <textarea
-              style={{ height: "79px" }}
-              className="my_profile_about_textarea"
-              value={tempLocationMessage}
-              onChange={(e) => setTempLocationMessage(e.target.value)}
-            />
-          </div>
-          <p
-            onClick={() => resetTempLocation()}
-            className="my_profile_temp_location_content_reset"
-          >
-            Сбросить данные о временной геолокации
-          </p>
-        </div>
+        )}
         <div className="my_profile_lower_buttons_wrapper">
           <div style={{ marginRight: "15px" }}>
             <GreyButton

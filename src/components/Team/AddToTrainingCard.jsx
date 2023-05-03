@@ -24,11 +24,13 @@ const AddToTrainingCard = ({ profile, callback, view }) => {
             <p className="training_view_content_right_team_block_name">
               {`${profile.name} ${profile.surname}`}
             </p>
-            <img
-              src={Pro}
-              alt="pro"
-              className="training_view_content_right_team_block_pro"
-            />
+            {profile.pro_account > 0 && (
+              <img
+                src={Pro}
+                alt="pro"
+                className="training_view_content_right_team_block_pro"
+              />
+            )}
           </div>
           <div className="training_view_content_right_team_block_left_lower">
             <p className="training_view_content_right_team_block_left_lower_cat">
