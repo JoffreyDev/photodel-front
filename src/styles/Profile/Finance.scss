@@ -1,0 +1,39 @@
+.finance {
+
+    &_body {
+
+        &_subscription {
+            display: flex;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        &_history {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            &_row {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .finance {
+
+        &_body {
+            &_subscription {
+                display: flex;
+                flex-direction: column;
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+       
+    }
+}

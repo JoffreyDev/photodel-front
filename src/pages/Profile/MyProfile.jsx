@@ -147,7 +147,7 @@ const MyProfile = () => {
                       }`}
                   </p>
                   {userData?.status === 2 && (
-                    <p className="my_profile_header_upper_row_pro_prolong">
+                    <p style={{cursor: 'pointer'}} onClick={() => navigate('/profile/finance')} className="my_profile_header_upper_row_pro_prolong">
                       Продлить
                     </p>
                   )}

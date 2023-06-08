@@ -38,6 +38,7 @@ const MainProfiles = () => {
   const [places, setPlaces] = React.useState();
   const [sortField, setSortField] = React.useState(2);
   const [sortType, setSortType] = React.useState("-");
+  const [place, setPlace] = React.useState('');
 
   const [mapViewActive, setMapViewActive] = React.useState(
     localStorage.getItem("mapActive") === "true"
@@ -130,6 +131,7 @@ const MainProfiles = () => {
       sortType: sortType,
       count_positions: countPositions,
       page: page,
+       place: place,
     }).then((res) => {
       setFetching(false);
       setProfiles(res.data);
@@ -141,6 +143,7 @@ const MainProfiles = () => {
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
+      place: place,
     }).then((res) => setProfilesMarks(res.data));
 
     navigate("/profies");
@@ -158,6 +161,7 @@ const MainProfiles = () => {
       sortType: sortType,
       count_positions: countPositions,
       page: page,
+      place: place,
     }).then((res) => {
       setFetching(false);
       setProfiles(res.data);
@@ -241,6 +245,14 @@ const MainProfiles = () => {
               value={searchDist}
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
+            />
+            <TextInput
+              height={"38px"}
+              width={"255px"}
+              label={"Поиск по городу"}
+              placeholder={"Введите что-нибудь"}
+              value={place}
+              callback={setPlace}
             />
             <div className="main_photo_header_sorts mobile">
               <div style={{ display: "flex", alignItems: "center" }}>
@@ -402,6 +414,14 @@ const MainProfiles = () => {
               value={searchDist}
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
+            />
+            <TextInput
+              height={"38px"}
+              width={"255px"}
+              label={"Поиск по городу"}
+              placeholder={"Введите что-нибудь"}
+              value={place}
+              callback={setPlace}
             />
             <GreenButton
               height={"38px"}

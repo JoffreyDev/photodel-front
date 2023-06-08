@@ -1137,3 +1137,7 @@ color: var(--secondary-text-color) !important;
 .my_profile_header_upper_row_pro_period {
     color: var(--secondary-text-color) !important;
 }
+
+.places_header {
+    border-bottom: var(--arrows-border);
+}

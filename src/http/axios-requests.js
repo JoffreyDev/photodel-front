@@ -860,6 +860,7 @@ export class Requests {
     sortType,
     count_positions,
     page,
+    place,
   }) {
     return $api({
       method: "GET",
@@ -881,7 +882,7 @@ export class Requests {
         sortField ? `&filter_field=${sortField}` : ""
       }${
         sortType === "-" ? `&sort_type=${sortType}` : ""
-      }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
+      }${`&count_positions=${count_positions}`}${`&page=${page}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
     }).then((res) => res);
   }
 
@@ -894,6 +895,7 @@ export class Requests {
     sortType,
     count_positions,
     page,
+    place
   }) {
     return $api({
       method: "GET",
@@ -915,7 +917,7 @@ export class Requests {
         sortField ? `&filter_field=${sortField}` : ""
       }${
         sortType === "-" ? `&sort_type=${sortType}` : ""
-      }${`&count_positions=${count_positions}`}${`&page=${page}`}`,
+      }${`&count_positions=${count_positions}`}${`&page=${page}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
     }).then((res) => res);
   }
 
@@ -1236,6 +1238,7 @@ export class Requests {
     search_words,
     name_category,
     distance,
+    place
   }) {
     return $api({
       method: "GET",
@@ -1253,7 +1256,7 @@ export class Requests {
           : ""
       }${
         name_category !== "Все" ? `&category=${name_category}` : ""
-      }${`&distance=${distance}`}`,
+      }${`&distance=${distance}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
     }).then((res) => res);
   }
 
@@ -1288,6 +1291,7 @@ export class Requests {
     search_words,
     name_category,
     distance,
+    place
   }) {
     return $api({
       method: "GET",
@@ -1304,7 +1308,7 @@ export class Requests {
           : ""
       }${
         name_category !== "Все" ? `&name_category=${name_category}` : ""
-      }${`&distance=${distance}`}`,
+      }${`&distance=${distance}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
     }).then((res) => res);
   }
 
@@ -1989,6 +1993,48 @@ export class Requests {
       },
 
       url: `api/accounts/profile/notifications/read/`,
+    }).then((res) => res);
+  }
+
+  static async createPayment(amount, plan, duration) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        amount: amount,
+        plan: plan,
+        duration: duration,
+      },
+
+      url: `api/accounts/payment/create/`,
+    }).then((res) => res);
+  }
+
+  static async checkPayment() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/accounts/payment/check/`,
+    }).then((res) => res);
+  }
+
+  static async getPayments() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/accounts/payment/get/`,
     }).then((res) => res);
   }
 }

@@ -4,10 +4,12 @@ import Offline from "../../img/commonImages/offline.svg";
 import Avatar from "../../img/profile/avatar.png";
 import Pro from "../../img/trainings/pro.svg";
 import Trash from "../../img/trainings/trash.svg";
+import { useNavigate } from "react-router-dom";
 
 const AddToTrainingCard = ({ profile, callback, view }) => {
+  const navigate = useNavigate()
   return (
-    <div className="training_view_content_right_team_block">
+    <div onClick={() => navigate(`/public/profile/${profile.id}`)} className="training_view_content_right_team_block">
       <div className="training_view_content_right_team_block_avatar_wrapper">
         <img
           src={`data:image/png;base64,${profile.avatar}`}

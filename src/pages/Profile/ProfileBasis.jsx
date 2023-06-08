@@ -20,6 +20,7 @@ import BookmarkDis from "../../img/profile/bookmark-dis.svg";
 import BookmarkActive from "../../img/profile/bookmark-active.svg";
 import SettingsDis from "../../img/profile/settings-dis.svg";
 import MoneyDis from "../../img/commonImages/money.svg";
+import Money from "../../img/profile/money.svg";
 import StudyDis from "../../img/commonImages/study.svg";
 import StudyAct from "../../img/commonImages/study_active.svg";
 import SettingsActive from "../../img/profile/settings-active.svg";
@@ -59,6 +60,7 @@ import EditTraining from "./EditTraining";
 import AddTraining from "./AddTraining";
 import Team from "./Team";
 import Reviews from "./Reviews";
+import Finance from "./Finance";
 
 const ProfileBasis = ({ mainSocket }) => {
   const params = useParams();
@@ -386,10 +388,10 @@ const ProfileBasis = ({ mainSocket }) => {
                 <li
                   onClick={() => navigate("/profile/finance")}
                   className="profile_basis_module_choice_li"
-                  style={{ opacity: 0.4, pointerEvents: "none" }}
+                 
                 >
                   <img
-                    src={MoneyDis}
+                    src={component === 'finance' ? Money : MoneyDis}
                     className="profile_basis_module_choice_img"
                     alt="menu choice"
                   />
@@ -446,6 +448,7 @@ const ProfileBasis = ({ mainSocket }) => {
             {component === "edit-place" && <EditPlace component={component} />}
             {component === "reviews" && <Reviews component={component} />}
             {component === "invite-to-team" && <TeamInviteComponent />}
+            {component === "finance" && <Finance />}
           </div>
         </div>
       </div>
