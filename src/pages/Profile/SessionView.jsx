@@ -32,7 +32,7 @@ const SessionView = () => {
 
   const [loaded, setLoaded] = React.useState();
   const [session, setSession] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -123,6 +123,7 @@ const SessionView = () => {
   const handleComment = () => {
     Requests.createSessionComment(sessionId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
+      setComment('')
       Requests.getSingleSession(sessionId)
         .then((res) => {
           setSession(res.data);
@@ -435,6 +436,8 @@ const SessionView = () => {
                 width={"210px"}
                 height={"38px"}
                 callback={handleComment}
+                disabled={comment.length === 0}
+
               />
             </div>
           </div>

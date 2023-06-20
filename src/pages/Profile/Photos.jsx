@@ -11,6 +11,7 @@ import { openSuccessAlert } from "../../redux/actions/userData";
 import { Submit } from "../../components";
 import { ScreenLoader } from "../../components";
 import { openErrorAlert } from "../../redux/actions/userData";
+import {ReactComponent as Trash} from '../../img/commonImages/trash.svg'
 
 const Photos = ({ component }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -63,11 +64,6 @@ const Photos = ({ component }) => {
     });
   };
 
-  React.useEffect(() => {
-    if (action === 1) {
-      setSubmitActive(true);
-    }
-  }, [action]);
 
   return (
     <div className="photos">
@@ -236,20 +232,13 @@ const Photos = ({ component }) => {
               Добавить  фото
             </p>
           </div>
-          <SelectInput
-            width={200}
-            marginBottom={"10px"}
-            values={[
-              {
-                id: 1,
-                value: "Удалить",
-              },
-            ]}
-            label={"Выберите действие"}
-            labelId="demo-multiple-name-label"
-            value={action}
-            onChange={(e) => setAction(e.target.value)}
-          />
+          <Trash onClick={() => {
+          if (selectedPhotos.length === 0 ) {
+            return 
+          } else {
+            setSubmitActive(true)
+          }
+         }} className="places_options_right_delete" />
         </div>
       </div>
       <div className="photos_cards">

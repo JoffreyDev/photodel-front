@@ -36,7 +36,7 @@ const AddToTrainingCard = ({ profile, callback, view }) => {
           </div>
           <div className="training_view_content_right_team_block_left_lower">
             <p className="training_view_content_right_team_block_left_lower_cat">
-              {profile.type_pro.name_category}
+              {profile.type_pro?.name_category}
             </p>
           </div>
         </div>

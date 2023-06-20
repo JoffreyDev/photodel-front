@@ -495,6 +495,7 @@ const AddTraining = () => {
             label={"Количество мест"}
             callback={handlePlacesChange}
             value={placesCount}
+            limit={10}
           />
 
           <TextInput
@@ -504,6 +505,7 @@ const AddTraining = () => {
             label={"Стоимость"}
             callback={setCost}
             value={cost}
+            limit={10}
           />
 
           <TextInput
@@ -513,6 +515,7 @@ const AddTraining = () => {
             label={"Предоплата"}
             callback={setFirstPayment}
             value={firstPayment}
+            limit={10}
           />
 
           <div>

@@ -173,12 +173,13 @@ const ProfileEdit = ({ setActiveModule }) => {
         "JPEG",
         weight > 2e6 ? 60 : weight > 1e6 ? 80 : weight > 4e5 ? 90 : 100,
         0,
-        (uri) => {
+        (uri, file) => {
           resolve(uri);
           setLoadedPhoto(uri);
           dispatch(
             openSuccessAlert("Фото было сжато, так как вес превышал 400Кб")
           );
+          setLoadedPhotoBase64(uri)
         },
         "base64"
       );
@@ -498,7 +499,7 @@ const ProfileEdit = ({ setActiveModule }) => {
 
       <div className="my_profile_about">
         <p className="my_profile_about_title">
-          Обо мне <span style={{ color: "red", opacity: "0.8" }}>*</span>
+          Обо мне
         </p>
         <div className="my_profile_about_content">
           <textarea
@@ -543,7 +544,7 @@ const ProfileEdit = ({ setActiveModule }) => {
                 label={"Сайт"}
                 value={site}
                 callback={setSite}
-                lock
+                lock={userData?.pro_account === 0}
               />
             )}
             {false && (
@@ -595,11 +596,11 @@ const ProfileEdit = ({ setActiveModule }) => {
                 : "my_profile_temp_location"
             }
           >
-            <div className="my_profile_temp_location_lock">
+           {userData?.pro_account === 0 && <div className="my_profile_temp_location_lock">
               <h1 className="my_profile_temp_location_lock_h1">
                 Доступно только для Pro
               </h1>
-            </div>
+            </div>}
             <p className="my_profile_temp_location_title">
               Временная геолокация
             </p>

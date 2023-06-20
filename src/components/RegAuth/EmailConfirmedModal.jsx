@@ -46,7 +46,7 @@ const EmailConfirmedModal = ({
             setEmailConfirmedModalActive(false);
             setLogModuleActive(true);
           }}
-          text="Войти"
+          text="Ок"
           width={"100%"}
           height={"38px"}
           margin={"20px 0 0 0"}

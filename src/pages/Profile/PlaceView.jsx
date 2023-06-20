@@ -34,7 +34,7 @@ const PlaceView = () => {
 
   const [loaded, setLoaded] = React.useState();
   const [place, setPlace] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -125,6 +125,7 @@ const PlaceView = () => {
   const handleComment = () => {
     Requests.createPlaceComment(placeId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
+      setComment('')
       Requests.getSinglePlace(placeId)
         .then((res) => {
           setPlace(res.data);
@@ -414,6 +415,7 @@ const PlaceView = () => {
                 width={"210px"}
                 height={"38px"}
                 callback={handleComment}
+                disabled={comment.length === 0}
               />
             </div>
           </div>

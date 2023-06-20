@@ -315,6 +315,7 @@ const EditTraining = () => {
             label={'Стоимость'}
             callback={setExcerpt}
             value={excerpt}
+            limit={10}
           />
 
           <TextInput
@@ -324,6 +325,7 @@ const EditTraining = () => {
             label={'Предоплата'}
             callback={setISO}
             value={ISO}
+            limit={10}
           />
 
           <div>

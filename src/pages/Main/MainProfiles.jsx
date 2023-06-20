@@ -173,6 +173,7 @@ const MainProfiles = () => {
       name_category: category,
       search_words: searchReq,
       distance: searchDist,
+      place: place,
     }).then((res) => setProfilesMarks(res.data));
   };
 

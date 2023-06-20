@@ -295,6 +295,7 @@ const EditPhoto = () => {
             label={"Фотоаппарат"}
             callback={setCamera}
             value={camera}
+            limit={15}
           />
 
           <TextInput
@@ -304,6 +305,7 @@ const EditPhoto = () => {
             label={"Диафрагма"}
             callback={setAperture}
             value={aperture}
+            limit={15}
           />
 
           <TextInput
@@ -313,6 +315,7 @@ const EditPhoto = () => {
             label={"Фокусное расстоние"}
             callback={setFocusDistance}
             value={focusDistance}
+            limit={15}
           />
 
           <TextInput
@@ -322,6 +325,7 @@ const EditPhoto = () => {
             label={"Выдержка"}
             callback={setExcerpt}
             value={excerpt}
+            limit={15}
           />
 
           <TextInput
@@ -331,6 +335,7 @@ const EditPhoto = () => {
             label={"ISO"}
             callback={setISO}
             value={ISO}
+            limit={15}
           />
 
           <TextInput
@@ -340,6 +345,7 @@ const EditPhoto = () => {
             label={"Вспышка"}
             callback={setFlash}
             value={flash}
+            limit={15}
           />
           <h1 className="add_photo_left_content_h1 margin">Категории</h1>
           {prosSpecs && category !== undefined && (

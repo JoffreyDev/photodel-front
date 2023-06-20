@@ -12,6 +12,7 @@ import TrainingCardMain from "../../components/Previews/TrainingCardMain";
 import { Submit } from "../../components";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { openErrorAlert } from "../../redux/actions/userData";
+import {ReactComponent as Trash} from '../../img/commonImages/trash.svg'
 
 const Trainings = () => {
   const navigate = useNavigate();
@@ -50,11 +51,6 @@ const Trainings = () => {
       });
   }, [userData.id, sortType, sortField]);
 
-  React.useEffect(() => {
-    if (action === 1) {
-      setSubmitActive(true);
-    }
-  }, [action]);
 
   const deleteHandle = () => {
     Requests.deleteTraining(selectedTrainings).then((res) => {
@@ -206,20 +202,13 @@ const Trainings = () => {
               Добавить мероприятие
             </p>
           </div>
-          <SelectInput
-            width={window.screen.width <= 576 ? 170 : 200}
-            marginBottom={"10px"}
-            values={[
-              {
-                id: 1,
-                value: "Удалить",
-              },
-            ]}
-            value={action}
-            onChange={(e) => setAction(e.target.value)}
-            label={"Выберите действие"}
-            labelId="demo-multiple-name-label"
-          />
+          <Trash onClick={() => {
+          if (selectedTrainings.length === 0 ) {
+            return 
+          } else {
+            setSubmitActive(true)
+          }
+         }} className="places_options_right_delete" />
         </div>
       </div>
       <div className="training_cards">

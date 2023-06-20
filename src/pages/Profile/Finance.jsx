@@ -49,6 +49,8 @@ const Finance = () => {
         <h1 className="places_header_title">АККАУНТ PRO</h1>
       </div>
       <div className="finance_body">
+    
+
         <h1 style={{ marginTop: "20px" }} className="places_header_title">
           Подписаться на PRO аккаунт
         </h1>
@@ -104,6 +106,64 @@ const Finance = () => {
           } руб.`}
           callback={handlePay}
         />
+
+<h1 style={{ marginTop: "20px" }} className="places_header_title">
+          Тарифы
+        </h1>
+        <div className="finance_body_plans">
+          <div className="finance_body_plan">
+            <p className="finance_body_plan_title">Максимум</p>
+            <div className="finance_body_plan_options">
+              <div className="finance_body_plan_option">Загружает до 300 фото и до 30 альбомов</div>
+              <div className="finance_body_plan_option">Указывает места для съемок неограниченно</div>
+              <div className="finance_body_plan_option">Указывает ссылки на сайт и соцсети</div>
+              <div className="finance_body_plan_option">Может заводить обучение неограниченно</div>
+              <div className="finance_body_plan_option">Может получить подтвержденный аккаунт</div>
+              <div className="finance_body_plan_option">Может указывать статус</div>
+              <div className="finance_body_plan_option">Может указывать временную геолокацию</div>
+              <div className="finance_body_plan_option">Может выбрать специализации неограниченно</div>
+              <div className="finance_body_plan_option">Может задавать географию съемок</div>
+              <div className="finance_body_plan_option">Может загружать фотосессии неограниченно</div>
+              <div className="finance_body_plan_option">Может собирать команду</div>
+              <div className="finance_body_plan_option">Может добавлять организатора</div>
+
+            </div>
+          </div>
+
+          <div className="finance_body_plan">
+            <p className="finance_body_plan_title">Стандарт</p>
+            <div className="finance_body_plan_options">
+              <div className="finance_body_plan_option">Загружает до 100 фото и до 10 альбомов</div>
+              <div className="finance_body_plan_option">Указывает до 10 мест для съемок</div>
+              <div className="finance_body_plan_option">Указывает ссылку на сайт и соцсети</div>
+              <div className="finance_body_plan_option">Может заводить одно обучение, следующие за доп плату или бесплатно через месяц</div>
+              <div className="finance_body_plan_option">Может получить подтвержденный аккаунт</div>
+              <div className="finance_body_plan_option">Может указывать статус</div>
+              <div className="finance_body_plan_option">Может указывать временную геолокацию</div>
+              <div className="finance_body_plan_option">Может выбрать до 3 специализаций</div>
+              <div className="finance_body_plan_option">Может задавать географию съемок до 2 стран</div>
+               <div className="finance_body_plan_option">Может загружать до 3 фотосессии </div>
+               <div className="finance_body_plan_option">Может собирать команду</div>
+            </div>
+          </div>
+
+          <div className="finance_body_plan">
+            <p className="finance_body_plan_title">Бесплатный</p>
+            <div className="finance_body_plan_options">
+              <div className="finance_body_plan_option">Загружает до 15 фото и 3 альбомов</div>
+              <div className="finance_body_plan_option">Указывает пять мест для съемок</div>
+              <div className="finance_body_plan_option">Может указать местонахождение и почту</div>
+              <div className="finance_body_plan_option">Не может заводить обучение</div>
+              <div className="finance_body_plan_option">Не может получить подтвержден. аккаунт</div>
+              <div className="finance_body_plan_option">Не может указывать статус</div>
+              <div className="finance_body_plan_option">Не может указывать временную геолокацию</div>
+              <div className="finance_body_plan_option">Может выбрать 1 специализацию</div>
+              <div className="finance_body_plan_option">Может задавать 1 место географии съемок</div>
+              <div className="finance_body_plan_option">Может загружать 1 фотосессию</div>
+              <div className="finance_body_plan_option">Не может собирать команду</div>
+            </div>
+          </div>
+        </div>
 
         <h1 style={{ marginTop: "30px" }} className="places_header_title">
           История операций
@@ -169,6 +229,7 @@ const Finance = () => {
               </table>
             ))}
         </div>
+        
       </div>
     </div>
   );

@@ -30,9 +30,6 @@ function Reviews() {
   const params = useParams();
   const profileId = params.id;
 
-  React.useEffect(() => {
-    if (!localStorage.getItem("access")) navigate("/");
-  }, []);
 
   React.useEffect(() => {
     setDataLoading(true);

@@ -4,19 +4,10 @@ import "../../styles/Profile/Notifications.css";
 import { useSelector, useDispatch } from "react-redux";
 import Requests from "../../http/axios-requests";
 import { setNotifications } from "../../redux/actions/userData";
+import { ClickAwayListener } from '@mui/material';
 
 const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    const onClick = (e) => {
-      if (notifyRef.current) {
-        notifyRef.current.contains(e.target) || setActive(false);
-      }
-    };
-    document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
-  }, []);
 
   const { notifications } = useSelector(({ userData }) => userData);
 
@@ -35,6 +26,15 @@ const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
   };
 
   return (
+    <ClickAwayListener
+    onClickAway={
+      window.screen.width <= 576
+        ? () => {
+            return;
+          }
+        : () => setActive(false)
+    }
+  >
     <div ref={notifyRef}>
       <div
         className={
@@ -73,6 +73,7 @@ const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
         </div>
       </div>
     </div>
+    </ClickAwayListener>
   );
 };
 

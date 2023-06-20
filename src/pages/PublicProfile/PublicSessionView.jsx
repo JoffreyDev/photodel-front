@@ -24,6 +24,7 @@ import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
 import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
 import { PublicHeader } from "..";
 import Skeleton from "@mui/material/Skeleton";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 const PublicSessionView = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const PublicSessionView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [session, setSession] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -91,6 +92,10 @@ const PublicSessionView = ({ setProfileId }) => {
   }, [session]);
 
   const likeHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (session.is_liked) {
       Requests.unlikeSession(sessionId).then(() => {
         Requests.getSingleSession(sessionId).then((res) => {
@@ -108,6 +113,10 @@ const PublicSessionView = ({ setProfileId }) => {
   };
 
   const favoriteHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (session.in_favorite) {
       Requests.deleteFavoriteSession(sessionId).then(() => {
         Requests.getSingleSession(sessionId).then((res) => {
@@ -422,6 +431,7 @@ const PublicSessionView = ({ setProfileId }) => {
                   width={"210px"}
                   height={"38px"}
                   callback={handleComment}
+                  disabled={comment.length === 0}
                 />
               </div>
             </div>

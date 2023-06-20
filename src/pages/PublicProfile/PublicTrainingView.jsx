@@ -43,7 +43,7 @@ const PublicTrainingView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [training, setTraining] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -103,6 +103,10 @@ const PublicTrainingView = ({ setProfileId }) => {
   }, [training]);
 
   const likeHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (training.is_liked) {
       Requests.unlikeTraining(trainingId).then(() => {
         Requests.getSingleTraining(trainingId).then((res) => {
@@ -120,6 +124,10 @@ const PublicTrainingView = ({ setProfileId }) => {
   };
 
   const favoriteHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (training.in_favorite) {
       Requests.deleteFavoriteTraining([trainingId]).then(() => {
         Requests.getSingleTraining(trainingId).then((res) => {
@@ -593,7 +601,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                 </p>
               </div>
 
-              {training?.reserved_places < training?.summary_members && (
+              {training?.reserved_places < training?.summary_members && userData.id !== training.profile.id && (
                 <GreenButton
                   width={"180px"}
                   height={"38px"}
@@ -662,6 +670,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                   width={"210px"}
                   height={"38px"}
                   callback={handleComment}
+                  disabled={comment.length === 0}
                 />
               </div>
             </div>
@@ -926,7 +935,7 @@ const PublicTrainingView = ({ setProfileId }) => {
               </p>
             </div>
             {window.screen.width > 576 &&
-              training?.reserved_places < training?.summary_members && (
+              training?.reserved_places < training?.summary_members && userData.id !== training.profile.id && (
                 <GreenButton
                   width={"180px"}
                   height={"38px"}

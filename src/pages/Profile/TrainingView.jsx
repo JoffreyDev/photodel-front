@@ -43,7 +43,7 @@ const TrainingView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [training, setTraining] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -677,6 +677,8 @@ const TrainingView = ({ setProfileId }) => {
                   width={"210px"}
                   height={"38px"}
                   callback={handleComment}
+                disabled={comment.length === 0}
+
                 />
               </div>
             </div>

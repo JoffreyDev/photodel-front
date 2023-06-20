@@ -82,6 +82,9 @@ const RegModule = ({
             setPasswordSubmit("");
             setName("");
             setSurname("");
+            setOlderThan18(false)
+            setAgree(false)
+            setRegAsProfi(false)
           })
           .catch(() =>
             dispatch(
@@ -93,6 +96,19 @@ const RegModule = ({
       });
     });
   };
+
+  React.useEffect(() => {
+    if (!regModuleActive) {
+      setEmail("");
+            setPassword("");
+            setPasswordSubmit("");
+            setName("");
+            setSurname("");
+            setOlderThan18(false)
+            setAgree(false)
+            setRegAsProfi(false)
+    }
+  }, [regModuleActive])
 
   return (
     <ModalWindow

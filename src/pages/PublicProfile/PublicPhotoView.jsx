@@ -18,7 +18,7 @@ import Timer from "../../img/photoView/timer.svg";
 import { Comment, PhotoViewAlbum } from "../../components";
 import { GreenButton, PhotoFullScreen } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
-import { openSuccessAlert } from "../../redux/actions/userData";
+import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
 import { PublicHeader } from "..";
 import Fullscreen from "../../img/commonImages/fullscreen.svg";
@@ -37,7 +37,7 @@ const PublicPhotoView = ({ setProfileId }) => {
   const [loaded, setLoaded] = React.useState();
   const [photo, setPhoto] = React.useState();
   const [comments, setComments] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
@@ -99,6 +99,10 @@ const PublicPhotoView = ({ setProfileId }) => {
   }, [photo]);
 
   const likeHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (photo.is_liked) {
       Requests.unlikePhoto(photoId).then(() => {
         Requests.getSinglePhoto(photoId).then((res) => {
@@ -116,6 +120,10 @@ const PublicPhotoView = ({ setProfileId }) => {
   };
 
   const favoriteHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (photo.in_favorite) {
       Requests.deleteFavoritePhoto([photoId]).then(() => {
         Requests.getSinglePhoto(photoId).then((res) => {
@@ -417,6 +425,7 @@ const PublicPhotoView = ({ setProfileId }) => {
                   width={"210px"}
                   height={"38px"}
                   callback={handleComment}
+                  disabled={comment.length === 0}
                 />
               </div>
             </div>

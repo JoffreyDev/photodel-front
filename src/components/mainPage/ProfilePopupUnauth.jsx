@@ -92,7 +92,7 @@ const ProfilePopupUnauth = ({
                 onClick={() => handleModalOpen(() => setLogModuleActive(true))}>
                 Войти
               </li>
-              <li className='main_page_profile_popup_li'>Помощь</li>
+             {false && <li className='main_page_profile_popup_li'>Помощь</li>}
             </ul>
           </div>
         </div>

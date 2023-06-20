@@ -37,7 +37,7 @@ const PhotoView = () => {
   const [photoWidth, setPhotoWidth] = React.useState();
   const [photoHeight, setPhotoHeight] = React.useState();
   const [comments, setComments] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
@@ -118,6 +118,7 @@ const PhotoView = () => {
   const handleComment = () => {
     Requests.createPhotoComment(photoId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
+      setComment('')
       Requests.getSinglePhoto(photoId)
         .then((res) => {
           setPhoto(res.data);
@@ -431,6 +432,7 @@ const PhotoView = () => {
                 width={"210px"}
                 height={"38px"}
                 callback={handleComment}
+                disabled={comment.length === 0}
               />
             </div>
           </div>

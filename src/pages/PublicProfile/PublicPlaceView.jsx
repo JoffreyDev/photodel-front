@@ -25,6 +25,7 @@ import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
 import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
 import { PublicHeader } from "..";
 import Skeleton from "@mui/material/Skeleton";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 const PublicPlaceView = ({ setProfileId }) => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const PublicPlaceView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [place, setPlace] = React.useState();
-  const [comment, setComment] = React.useState();
+  const [comment, setComment] = React.useState('');
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -90,6 +91,10 @@ const PublicPlaceView = ({ setProfileId }) => {
   }, [place]);
 
   const likeHandle = () => {
+     if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (place.is_liked) {
       Requests.unlikePlace(placeId).then(() => {
         Requests.getSinglePlace(placeId).then((res) => {
@@ -107,6 +112,10 @@ const PublicPlaceView = ({ setProfileId }) => {
   };
 
   const favoriteHandle = () => {
+    if (!localStorage.getItem('access')){
+      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
+      return
+    }
     if (place.in_favorite) {
       Requests.deleteFavoritePlace(placeId).then(() => {
         Requests.getSinglePlace(placeId).then((res) => {
@@ -398,6 +407,7 @@ const PublicPlaceView = ({ setProfileId }) => {
                   width={"210px"}
                   height={"38px"}
                   callback={handleComment}
+                  disabled={comment.length === 0}
                 />
               </div>
             </div>

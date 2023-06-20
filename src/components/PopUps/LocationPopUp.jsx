@@ -24,8 +24,21 @@ function LocationPopUp({ styled }) {
     userCoords && Requests.getNearestCity(userCoords).then((res) => setSelectedCity(res.data));
   }, [userCoords]);
 
+  
+
   return (
+
+    <ClickAwayListener
+      onClickAway={
+        window.screen.width <= 576
+          ? () => {
+              return;
+            }
+          : () => setPopUpActive(false)
+      }
+    >
     <div className='main_page_header_loc_select'>
+       
       <div
         onClick={() => setPopUpActive(!popUpActive)}
         className='main_page_header_loc_select_header'>
@@ -157,7 +170,9 @@ function LocationPopUp({ styled }) {
           </div>
         </div>
       )}
+      
     </div>
+    </ClickAwayListener>
   );
 }
 

@@ -220,7 +220,7 @@ const RequestsPage = () => {
         !dataLoading && (
           <div className="photos_cards_empty">
             <h1 className="photos_cards_empty_title">
-              Нет приглашений в команду.
+              Нет запросов на обучение.
             </h1>
           </div>
         )}

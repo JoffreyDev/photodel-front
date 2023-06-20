@@ -400,6 +400,7 @@ const AddPlace = () => {
             label={"Фотоаппарат"}
             callback={setCamera}
             value={camera}
+            limit={15}
           />
 
           <TextInput
@@ -409,6 +410,7 @@ const AddPlace = () => {
             label={"Стоимость"}
             callback={setCost}
             value={cost}
+            limit={15}
           />
 
           <SelectInput

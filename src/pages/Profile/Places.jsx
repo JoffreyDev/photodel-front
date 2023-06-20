@@ -11,6 +11,7 @@ import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
 import { ScreenLoader } from "../../components";
 import { openErrorAlert } from "../../redux/actions/userData";
+import {ReactComponent as Trash} from '../../img/commonImages/trash.svg'
 
 const Places = () => {
   const navigate = useNavigate();
@@ -59,11 +60,6 @@ const Places = () => {
     });
   };
 
-  React.useEffect(() => {
-    if (action === 1) {
-      setSubmitActive(true);
-    }
-  }, [action]);
 
   return (
     <div className="places">
@@ -203,20 +199,13 @@ const Places = () => {
               Добавить место
             </p>
           </div>
-          <SelectInput
-            width={200}
-            marginBottom={"10px"}
-            values={[
-              {
-                id: 1,
-                value: "Удалить",
-              },
-            ]}
-            value={action}
-            onChange={(e) => setAction(e.target.value)}
-            label={"Выберите действие"}
-            labelId="demo-multiple-name-label"
-          />
+         <Trash onClick={() => {
+          if (selectedPlaces.length === 0 ) {
+            return 
+          } else {
+            setSubmitActive(true)
+          }
+         }} className="places_options_right_delete" />
         </div>
       </div>
       <div className="places_cards">
