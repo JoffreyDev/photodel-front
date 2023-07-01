@@ -51,7 +51,7 @@ const RequestChat = () => {
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
-      `ws://${rootSocketAddress}/ws/request_chat/${chatId}/?token=${localStorage.getItem(
+      `wss://${rootSocketAddress}/ws/request_chat/${chatId}/?token=${localStorage.getItem(
         "access"
       )}`
     );

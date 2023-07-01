@@ -55,7 +55,7 @@ const Footer = () => {
         </ul>
         <div className="main_page_footer_section_content_contacts">
           <p className="main_page_footer_section_content_contacts_p">
-            © photodel.ru, 2020-2022
+            © photodel.ru, 2020-2023
           </p>
           <div className="main_page_footer_section_content_contacts_back_wrapper">
             <svg

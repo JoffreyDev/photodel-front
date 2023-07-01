@@ -45,7 +45,7 @@ const RequestsPage = () => {
 
   React.useEffect(() => {
     mainSocket.current = new WebSocket(
-      `ws://${rootSocketAddress}/ws/?token=${localStorage.getItem("access")}`
+      `wss://${rootSocketAddress}/ws/?token=${localStorage.getItem("access")}`
     );
 
     mainSocket.current.onopen = function () {
