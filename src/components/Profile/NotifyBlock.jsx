@@ -1,12 +1,25 @@
 import React from "react";
 import Shape from "../../img/addModules/shape.svg";
 import { useNavigate } from "react-router-dom";
+import Requests from "../../http/axios-requests";
+import { useDispatch } from "react-redux";
+import { setNotifications } from "../../redux/actions/userData";
 
 const NotificationBlock = ({ notification, setActive }) => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch()
+
+  const readNotification = (id) => {
+    Requests.readNotifications([id]).then(() => {
+      Requests.getNotifications().then((res) => {
+        dispatch(setNotifications(res.data))
+      })
+    })
+  }
+
   return (
-    <div style={{ width: "100%" }}>
+    <div onClick={() => readNotification(notification.id)} style={{ width: "100%" }}>
       <a style={{ textDecoration: "none", width: "97%" }}>
         {(notification.type === "NEW_SESSION_LIKE" ||
           notification.type === "NEW_PHOTO_LIKE" ||

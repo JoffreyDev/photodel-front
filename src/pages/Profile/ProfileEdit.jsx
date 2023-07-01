@@ -95,7 +95,14 @@ const ProfileEdit = ({ setActiveModule }) => {
   }, []);
 
   React.useEffect(() => {
-    if (userData.type_pro) {
+    if (!userData.is_change){
+      setCategory(12)
+      setLanguageSkills([])
+    }
+
+
+
+    if (userData.type_pro && userData.is_change) {
       setCategory(
         isJson(userData.type_pro) &&
           Number(Object.keys(JSON.parse(userData.type_pro)[0])[0])
@@ -121,7 +128,8 @@ const ProfileEdit = ({ setActiveModule }) => {
           })
       );
 
-      setLanguageSkills(
+      if (userData.is_change)
+      {setLanguageSkills(
         isJson(userData.languages) &&
           JSON.parse(userData.languages).map((item) => {
             return {
@@ -129,7 +137,7 @@ const ProfileEdit = ({ setActiveModule }) => {
               name: Object.values(item)[0],
             };
           })
-      );
+      );}
 
       setStatus(userData.ready_status);
       setCost(userData.cost_services);
@@ -223,7 +231,7 @@ const ProfileEdit = ({ setActiveModule }) => {
 
     Requests.updateOwnProfile({
       ready_status: status,
-      filming_geo: country.map((item) => item.id),
+      filming_geo: userData.status === 2 ? country.map((item) => item.id) : [],
       work_condition: conditions,
       cost_services: cost,
       photo_technics: technic,
@@ -236,7 +244,7 @@ const ProfileEdit = ({ setActiveModule }) => {
         : null,
       phone: number,
       site: site,
-      spec_model_or_photographer: spec.map((item) => item.id),
+      spec_model_or_photographer: userData.status === 2 ? spec.map((item) => item.id) : [],
       string_location: locationString,
       avatar: loadedPhotoBase64,
       is_change: true,

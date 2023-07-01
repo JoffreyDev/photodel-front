@@ -26,6 +26,7 @@ import MainBasis from "./pages/Main/MainBasis";
 import "./styles/themes.css";
 import { ThemeContext, themes } from "./components/Theme/ThemeContext";
 import { UseSwitchesCustom } from "./components";
+import { openSuccessAlert } from "./redux/actions/userData";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,11 @@ function App() {
           Requests.getNotifications().then((res) =>
             dispatch(setNotifications(res.data))
           );
+          Requests.checkPayment()
+        .then((res) => {
+          dispatch(openSuccessAlert(res.data));
+
+        })
         })
         .catch(() => {
           localStorage.removeItem("access");

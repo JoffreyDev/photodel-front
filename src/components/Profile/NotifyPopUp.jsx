@@ -9,11 +9,23 @@ import { ClickAwayListener } from '@mui/material';
 const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
   const dispatch = useDispatch();
 
-  const { notifications } = useSelector(({ userData }) => userData);
+  const { notifications, isLoggedIn } = useSelector(({ userData }) => userData);
 
   const notifyRef = useRef(null);
   const notifyBlockRef = useRef(null);
   const [viewedNotifications, setViewedNotifications] = React.useState();
+
+  React.useEffect(() => {
+    if (!isLoggedIn) {
+      Requests.getNotifications().then((res) =>
+      dispatch(setNotifications(res.data))
+    );
+    } 
+
+    if (isLoggedIn) {
+      dispatch(setNotifications([]))
+    }
+  }, [isLoggedIn])
 
   const readAllNotifications = () => {
     Requests.readNotifications(

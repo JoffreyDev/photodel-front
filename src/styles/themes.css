@@ -1141,3 +1141,7 @@ color: var(--secondary-text-color) !important;
 .places_header {
     border-bottom: var(--arrows-border);
 }
+
+.css-zy01o1-MuiFormControl-root #demo-simple-select-filled {
+    color: var(--secondary-text-color) !important;
+}
