@@ -69,7 +69,7 @@ const PlaceCard = ({
       </div>
       <div className="sessions_card_info">
         <p className="sessions_card_info_country">
-          {limitString(place.string_place_location, 20) +
+          {limitString(place.string_place_location, 12) +
             " | ~" +
             place.diff_distance}
         </p>
