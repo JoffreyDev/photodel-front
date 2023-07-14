@@ -1392,7 +1392,7 @@ export class Requests {
         "Content-Type": "application/json",
       },
 
-      url: `api/additional_entities/list_advertisement/`,
+      url: `api/additional_entities/info_block/`,
     }).then((res) => res);
   }
 

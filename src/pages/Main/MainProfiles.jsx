@@ -19,6 +19,7 @@ import MapImg from "../../img/commonImages/map.svg";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import Shape from "../../img/commonImages/shape.svg";
 import Online from "../../img/commonImages/online.svg";
+import Offline from "../../img/commonImages/offline.svg";
 import Rate from "../../img/commonImages/rate.svg";
 import Filter from "../../img/commonImages/filter.svg";
 import Loading from "../../img/commonImages/loading.gif";
@@ -38,7 +39,8 @@ const MainProfiles = () => {
   const [places, setPlaces] = React.useState();
   const [sortField, setSortField] = React.useState(2);
   const [sortType, setSortType] = React.useState("-");
-  const [place, setPlace] = React.useState('');
+  const [place, setPlace] = React.useState("");
+  const [userOnline, setUserOnline] = React.useState(false);
 
   const [mapViewActive, setMapViewActive] = React.useState(
     localStorage.getItem("mapActive") === "true"
@@ -80,6 +82,7 @@ const MainProfiles = () => {
       setAvatar(res.data.avatar);
       setId(id);
       setRating(res.data.rating);
+      setUserOnline(res.data.user_channel_name);
       forceUpdate();
       setBalloonDataLoading(false);
     });
@@ -98,7 +101,9 @@ const MainProfiles = () => {
         <img src=${`data:image/png;base64,${avatar}`} style=height:100px;width:100px;object-fit:cover;border-radius:8px;  />
         <div style=display:flex;justify-content:center;align-items:center;margin-top:8px;flex-direction:column; >
          <div style=display:flex;justify-content:center;align-items:center;margin-top:5px; >
-          <img src=${Online} style=width:6px;height:6px;margin-right:4px; />
+          <img src=${
+            userOnline ? Online : Offline
+          } style=width:6px;height:6px;margin-right:4px; />
           <p style=font-family:Montserrat;font-style:normal;font-weight:600;font-size:12px;color:#9CA3A1;>${surname}</p>
           </div>
           <p style=font-family:Montserrat;font-style:normal;font-weight:600;font-size:12px;color:#9CA3A1;>${name}</p>
@@ -131,7 +136,7 @@ const MainProfiles = () => {
       sortType: sortType,
       count_positions: countPositions,
       page: page,
-       place: place,
+      place: place,
     }).then((res) => {
       setFetching(false);
       setProfiles(res.data);

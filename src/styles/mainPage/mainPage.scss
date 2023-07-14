@@ -59,7 +59,7 @@
 
   &_first_section {
     min-height: 100vh;
-    background-image: url(../../img/mainPage/banner.jpg);
+    background-image: url(../../img/mainPage/banner.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -1254,6 +1254,8 @@
           font-weight: normal;
           font-size: 14px;
           color: $black;
+           word-break: break-all;
+
         }
 
         &_lower_table {

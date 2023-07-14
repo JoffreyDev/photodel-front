@@ -26,67 +26,21 @@ const SurveyComponent = () => {
         <h2 className="main_page_survey_section_content_survey_table_title">
           {poll[0]?.title}
         </h2>
-        <ul className="main_page_survey_section_content_survey_table_ul">
-          <li className="main_page_survey_section_content_survey_table_li">
-            <input
-              type="radio"
-              id="survey_1"
-              name="survey_choice"
-              className="main_page_survey_section_content_survey_table_radio"
-              onChange={() => addVote(poll[0]?.choices?.[0].id)}
-            />
-            <label
-              htmlFor="survey_1"
-              className="main_page_survey_section_content_survey_table_label"
-            >
-              {`${poll[0]?.choices?.[0].title}`}
-
-              <span
-                style={{ opacity: "0.4", fontSize: "12px", marginLeft: "10px" }}
-              >
-                {" "}
-                {poll[0]?.choices?.[0].total}
-              </span>
-            </label>
-          </li>
-
-          <li className="main_page_survey_section_content_survey_table_li">
-            <input
-              type="radio"
-              id="survey_2"
-              name="survey_choice"
-              className="main_page_survey_section_content_survey_table_radio"
-              onChange={() => addVote(poll[0]?.choices?.[1].id)}
-            />
-            <label
-              htmlFor="survey_2"
-              className="main_page_survey_section_content_survey_table_label"
-            >
-              {" "}
-              {poll[0]?.choices?.[1].title}
-              <span
-                style={{ opacity: "0.4", fontSize: "12px", marginLeft: "10px" }}
-              >
-                {" "}
-                {poll[0]?.choices?.[1].total}
-              </span>
-            </label>
-          </li>
-
-          {poll[0]?.choices?.[2] && (
+        {poll && (
+          <ul className="main_page_survey_section_content_survey_table_ul">
             <li className="main_page_survey_section_content_survey_table_li">
               <input
                 type="radio"
-                id="survey_3"
+                id="survey_1"
                 name="survey_choice"
                 className="main_page_survey_section_content_survey_table_radio"
-                onChange={() => addVote(poll[0]?.choices?.[2].id)}
+                onChange={() => addVote(poll[0]?.choices?.[0].id)}
               />
               <label
-                htmlFor="survey_3"
+                htmlFor="survey_1"
                 className="main_page_survey_section_content_survey_table_label"
               >
-                {poll[0]?.choices?.[2].title}
+                {`${poll[0]?.choices?.[0].title}`}
 
                 <span
                   style={{
@@ -96,27 +50,25 @@ const SurveyComponent = () => {
                   }}
                 >
                   {" "}
-                  {poll[0]?.choices?.[2].total}
+                  {poll[0]?.choices?.[0].total}
                 </span>
               </label>
             </li>
-          )}
 
-          {poll[0]?.choices?.[3] && (
             <li className="main_page_survey_section_content_survey_table_li">
               <input
                 type="radio"
-                id="survey_4"
+                id="survey_2"
                 name="survey_choice"
                 className="main_page_survey_section_content_survey_table_radio"
-                onChange={() => addVote(poll[0]?.choices?.[3].id)}
+                onChange={() => addVote(poll[0]?.choices?.[1].id)}
               />
               <label
-                htmlFor="survey_4"
+                htmlFor="survey_2"
                 className="main_page_survey_section_content_survey_table_label"
               >
-                {poll[0]?.choices?.[3].title}
-
+                {" "}
+                {poll[0]?.choices?.[1].title}
                 <span
                   style={{
                     opacity: "0.4",
@@ -125,12 +77,70 @@ const SurveyComponent = () => {
                   }}
                 >
                   {" "}
-                  {poll[0]?.choices?.[3].total}
+                  {poll[0]?.choices?.[1].total}
                 </span>
               </label>
             </li>
-          )}
-        </ul>
+
+            {poll[0]?.choices?.[2] && (
+              <li className="main_page_survey_section_content_survey_table_li">
+                <input
+                  type="radio"
+                  id="survey_3"
+                  name="survey_choice"
+                  className="main_page_survey_section_content_survey_table_radio"
+                  onChange={() => addVote(poll[0]?.choices?.[2].id)}
+                />
+                <label
+                  htmlFor="survey_3"
+                  className="main_page_survey_section_content_survey_table_label"
+                >
+                  {poll[0]?.choices?.[2].title}
+
+                  <span
+                    style={{
+                      opacity: "0.4",
+                      fontSize: "12px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {" "}
+                    {poll[0]?.choices?.[2].total}
+                  </span>
+                </label>
+              </li>
+            )}
+
+            {poll[0]?.choices?.[3] && (
+              <li className="main_page_survey_section_content_survey_table_li">
+                <input
+                  type="radio"
+                  id="survey_4"
+                  name="survey_choice"
+                  className="main_page_survey_section_content_survey_table_radio"
+                  onChange={() => addVote(poll[0]?.choices?.[3].id)}
+                />
+                <label
+                  htmlFor="survey_4"
+                  className="main_page_survey_section_content_survey_table_label"
+                >
+                  {poll[0]?.choices?.[3].title}
+
+                  <span
+                    style={{
+                      opacity: "0.4",
+                      fontSize: "12px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {" "}
+                    {poll[0]?.choices?.[3].total}
+                  </span>
+                </label>
+              </li>
+            )}
+          </ul>
+        )}
         <p className="main_page_survey_section_content_survey_lower_p">
           Голосов: {poll[0]?.count_answer}
         </p>

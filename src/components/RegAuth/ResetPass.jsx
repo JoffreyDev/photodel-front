@@ -2,7 +2,7 @@ import React from "react";
 import ModalWindow from "./ModalWindow";
 import { GreenButton, Checkbox, TextInput } from "..";
 import Requests from "../../http/axios-requests";
-import { openSuccessAlert } from "../../redux/actions/userData";
+import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
 
 function ResetPass({ resetPassActive, setResetPassActive }) {
@@ -11,6 +11,10 @@ function ResetPass({ resetPassActive, setResetPassActive }) {
   const dispatch = useDispatch();
 
   const sendResetMail = () => {
+    if (!email) {
+      return;
+    }
+
     Requests.sendPassResetToken(email)
       .then(() => {
         dispatch(
@@ -20,12 +24,8 @@ function ResetPass({ resetPassActive, setResetPassActive }) {
         );
         setResetPassActive(false);
       })
-      .catch(() => {
-        dispatch(
-          openSuccessAlert(
-            "Письмо со ссылкой для восстановление пароля отправлено вам на почту!"
-          )
-        );
+      .catch((error) => {
+        dispatch(openErrorAlert(error.response.data.message));
         setResetPassActive(false);
       });
   };

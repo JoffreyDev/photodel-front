@@ -19,6 +19,10 @@ const PlaceCard = ({
 }) => {
   const navigate = useNavigate();
 
+  function limitString(str, limit) {
+    return str.length > limit ? str.substring(0, limit) + "..." : str;
+  }
+
   const [key, setKey] = React.useState(Math.random);
 
   return (
@@ -65,17 +69,14 @@ const PlaceCard = ({
       </div>
       <div className="sessions_card_info">
         <p className="sessions_card_info_country">
-          {place.string_place_location.split(",")[1].length > 30
-            ? place.string_place_location.split(",")[1].substr(0, 23) +
-              "..." +
-              " | ~" +
-              place.diff_distance
-            : place.string_place_location.split(",")[1] +
-              " | ~" +
-              place.diff_distance}
+          {limitString(place.string_place_location, 20) +
+            " | ~" +
+            place.diff_distance}
         </p>
         <div className="sessions_card_info_title_wrapper">
-          <p className="sessions_card_info_title">{place.name_place}</p>
+          <p className="sessions_card_info_title">
+            {limitString(place.name_place, 15)}
+          </p>
           {!disableEdit && (
             <img
               src={Edit}
