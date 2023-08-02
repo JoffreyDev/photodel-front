@@ -102,8 +102,6 @@ const PublicProfile = ({ setProfileId }) => {
                       className="my_profile_header_upper_row_pro"
                     />
                   )}
-                 
-                
                 </div>
                 {profileData.status === 2 && (
                   <div className="my_profile_header_upper_row_right">
@@ -287,9 +285,9 @@ const PublicProfile = ({ setProfileId }) => {
               </div>
             )}
 
-          {userData.id !== Number(profileId) &&
-            localStorage.getItem("access") && (
-              <div className="my_profile_header_middle_row_buttons">
+          <div className="my_profile_header_middle_row_buttons">
+            {userData.id !== Number(profileId) &&
+              localStorage.getItem("access") && (
                 <div className="my_profile_header_middle_row_buttons_button mail">
                   <img
                     src={Mail}
@@ -303,21 +301,24 @@ const PublicProfile = ({ setProfileId }) => {
                     Написать сообщение
                   </p>
                 </div>
-                {profileData.status === 2 && (
-                  <div className="my_profile_header_middle_row_buttons_button req">
-                    <img
-                      src={Req}
-                      alt="mail"
-                      className="my_profile_header_middle_row_buttons_button_img"
-                    />
-                    <p
-                      onClick={() => setReqWindowActive(true)}
-                      className="my_profile_header_middle_row_buttons_mail_p notheme"
-                    >
-                      Отправить запрос
-                    </p>
-                  </div>
-                )}
+              )}
+            {profileData.status === 2 && (
+              <div className="my_profile_header_middle_row_buttons_button req">
+                <img
+                  src={Req}
+                  alt="mail"
+                  className="my_profile_header_middle_row_buttons_button_img"
+                />
+                <p
+                  onClick={() => setReqWindowActive(true)}
+                  className="my_profile_header_middle_row_buttons_mail_p notheme"
+                >
+                  Отправить запрос
+                </p>
+              </div>
+            )}
+            {userData.id !== Number(profileId) &&
+              localStorage.getItem("access") && (
                 <div className="my_profile_header_middle_row_buttons_button fave">
                   <img
                     src={Fave}
@@ -331,8 +332,8 @@ const PublicProfile = ({ setProfileId }) => {
                     Добавить в Избранное
                   </p>
                 </div>
-              </div>
-            )}
+              )}
+          </div>
 
           <div className="my_profile_common_data">
             <p className="my_profile_common_data_title">Общие данные</p>

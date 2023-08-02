@@ -64,51 +64,55 @@ const RegModule = ({
       return;
     }
 
-    Requests.register(email, password, passwordSubmit).then((res) => {
-      Requests.updateProfile(
-        name,
-        surname,
-        email,
-        olderThan18,
-        regAsProfi,
-        res.data.token
-      ).then(() => {
-        Requests.sendEmailSubmitLink(res.data.token)
-          .then(() => {
-            setEmailSentModalActive(true);
-            setRegModuleActive(false);
-            setEmail("");
-            setPassword("");
-            setPasswordSubmit("");
-            setName("");
-            setSurname("");
-            setOlderThan18(false)
-            setAgree(false)
-            setRegAsProfi(false)
-          })
-          .catch(() =>
-            dispatch(
-              openErrorAlert(
-                "Ошибка регистрации. Проверьте правильность ввода полей"
+    Requests.register(email, password, passwordSubmit)
+      .then((res) => {
+        Requests.updateProfile(
+          name,
+          surname,
+          email,
+          olderThan18,
+          regAsProfi,
+          res.data.token
+        ).then(() => {
+          Requests.sendEmailSubmitLink(res.data.token)
+            .then(() => {
+              setEmailSentModalActive(true);
+              setRegModuleActive(false);
+              setEmail("");
+              setPassword("");
+              setPasswordSubmit("");
+              setName("");
+              setSurname("");
+              setOlderThan18(false);
+              setAgree(false);
+              setRegAsProfi(false);
+            })
+            .catch(() =>
+              dispatch(
+                openErrorAlert(
+                  "Ошибка регистрации. Проверьте правильность ввода полей"
+                )
               )
-            )
-          );
+            );
+        });
+      })
+      .catch((e) => {
+        dispatch(openErrorAlert(JSON.stringify(e.response.data, null, 2)));
       });
-    });
   };
 
   React.useEffect(() => {
     if (!regModuleActive) {
       setEmail("");
-            setPassword("");
-            setPasswordSubmit("");
-            setName("");
-            setSurname("");
-            setOlderThan18(false)
-            setAgree(false)
-            setRegAsProfi(false)
+      setPassword("");
+      setPasswordSubmit("");
+      setName("");
+      setSurname("");
+      setOlderThan18(false);
+      setAgree(false);
+      setRegAsProfi(false);
     }
-  }, [regModuleActive])
+  }, [regModuleActive]);
 
   return (
     <ModalWindow
