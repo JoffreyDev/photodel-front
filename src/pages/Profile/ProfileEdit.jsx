@@ -95,12 +95,10 @@ const ProfileEdit = ({ setActiveModule }) => {
   }, []);
 
   React.useEffect(() => {
-    if (!userData.is_change){
-      setCategory(12)
-      setLanguageSkills([])
+    if (!userData.is_change) {
+      setCategory(12);
+      setLanguageSkills([]);
     }
-
-
 
     if (userData.type_pro && userData.is_change) {
       setCategory(
@@ -128,16 +126,17 @@ const ProfileEdit = ({ setActiveModule }) => {
           })
       );
 
-      if (userData.is_change)
-      {setLanguageSkills(
-        isJson(userData.languages) &&
-          JSON.parse(userData.languages).map((item) => {
-            return {
-              id: Number(Object.keys(item)[0]),
-              name: Object.values(item)[0],
-            };
-          })
-      );}
+      if (userData.is_change) {
+        setLanguageSkills(
+          isJson(userData.languages) &&
+            JSON.parse(userData.languages).map((item) => {
+              return {
+                id: Number(Object.keys(item)[0]),
+                name: Object.values(item)[0],
+              };
+            })
+        );
+      }
 
       setStatus(userData.ready_status);
       setCost(userData.cost_services);
@@ -187,7 +186,7 @@ const ProfileEdit = ({ setActiveModule }) => {
           dispatch(
             openSuccessAlert("Фото было сжато, так как вес превышал 400Кб")
           );
-          setLoadedPhotoBase64(uri)
+          setLoadedPhotoBase64(uri);
         },
         "base64"
       );
@@ -244,7 +243,8 @@ const ProfileEdit = ({ setActiveModule }) => {
         : null,
       phone: number,
       site: site,
-      spec_model_or_photographer: userData.status === 2 ? spec.map((item) => item.id) : [],
+      spec_model_or_photographer:
+        userData.status === 2 ? spec.map((item) => item.id) : [],
       string_location: locationString,
       avatar: loadedPhotoBase64,
       is_change: true,
@@ -451,7 +451,7 @@ const ProfileEdit = ({ setActiveModule }) => {
             )}
           </div>
           <div className="my_profile_common_data_content_right_inputs">
-            {specs && spec && userData.status === 2 && (
+            {specs && userData.status === 2 && (
               <AutoCompleteInput
                 values={
                   specs &&
@@ -506,9 +506,7 @@ const ProfileEdit = ({ setActiveModule }) => {
       </div>
 
       <div className="my_profile_about">
-        <p className="my_profile_about_title">
-          Обо мне
-        </p>
+        <p className="my_profile_about_title">Обо мне</p>
         <div className="my_profile_about_content">
           <textarea
             value={about}
@@ -604,11 +602,13 @@ const ProfileEdit = ({ setActiveModule }) => {
                 : "my_profile_temp_location"
             }
           >
-           {userData?.pro_account === 0 && <div className="my_profile_temp_location_lock">
-              <h1 className="my_profile_temp_location_lock_h1">
-                Доступно только для Pro
-              </h1>
-            </div>}
+            {userData?.pro_account === 0 && (
+              <div className="my_profile_temp_location_lock">
+                <h1 className="my_profile_temp_location_lock_h1">
+                  Доступно только для Pro
+                </h1>
+              </div>
+            )}
             <p className="my_profile_temp_location_title">
               Временная геолокация
             </p>
