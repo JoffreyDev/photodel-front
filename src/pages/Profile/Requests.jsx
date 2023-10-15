@@ -14,6 +14,7 @@ import Requests from "../../http/axios-requests";
 const RequestsPage = () => {
   const [socketReconnect, setSocketReconnect] = React.useState();
   const [requests, setRequests] = React.useState();
+  const [notAuthRequests, setNotAuthRequests] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(true);
   const [sortType, setSortType] = React.useState(1);
   const navigate = useNavigate();
@@ -66,10 +67,12 @@ const RequestsPage = () => {
     };
   }, [socketReconnect]);
 
+  React.useEffect(() => {}, [userData]);
+
   React.useEffect(() => {
     if (userData) {
-      setDataLoading(true);
       if (component === "team") {
+        setDataLoading(true);
         Requests.getIncomingTeamRequests(userData.id).then((res) => {
           incomingRequests = res.data;
           Requests.getOutgoingTeamRequests(userData.id).then((res) => {
@@ -82,6 +85,7 @@ const RequestsPage = () => {
           });
         });
       } else if (component === "training") {
+        setDataLoading(true);
         Requests.getIncomingTrainingRequests(userData.id).then((res) => {
           incomingTrainRequests = res.data;
           Requests.getOutgoingTrainingRequests(userData.id).then((res) => {
@@ -94,6 +98,12 @@ const RequestsPage = () => {
             setTrainingRequests(reusltTrainArray);
             setDataLoading(false);
           });
+        });
+      } else if (component === "notAuth") {
+        setDataLoading(true);
+        Requests.getNotAuthRequests().then((res) => {
+          setNotAuthRequests(res.data);
+          setDataLoading(false);
         });
       }
     }
@@ -133,31 +143,16 @@ const RequestsPage = () => {
           >
             В КОМАНДУ
           </h1>
-        </div>
-
-        <div className="favorites_header_select">
-          <img
-            src={SortImage}
-            alt="sort"
-            className="favorites_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortType}
-          />
+          <h1
+            className={
+              component === "notAuth"
+                ? "favorites_header_title_first active"
+                : "favorites_header_title_first"
+            }
+            onClick={() => setComponent("notAuth")}
+          >
+            ОТ НЕАВТОРИЗОВАННЫХ
+          </h1>
         </div>
       </div>
       {requests &&
@@ -217,6 +212,22 @@ const RequestsPage = () => {
       {trainingRequests &&
         component === "training" &&
         trainingRequests.length === 0 &&
+        !dataLoading && (
+          <div className="photos_cards_empty">
+            <h1 className="photos_cards_empty_title">
+              Нет запросов на обучение.
+            </h1>
+          </div>
+        )}
+      {notAuthRequests &&
+        component === "notAuth" &&
+        !dataLoading &&
+        notAuthRequests.map((request, idx) => {
+          return <RequestBlock request={request} notAuth />;
+        })}
+      {notAuthRequests &&
+        component === "notAuth" &&
+        notAuthRequests.length === 0 &&
         !dataLoading && (
           <div className="photos_cards_empty">
             <h1 className="photos_cards_empty_title">

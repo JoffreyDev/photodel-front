@@ -27,6 +27,7 @@ const MainPhoto = () => {
   const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
+  const [specs, setSpecs] = React.useState();
 
   const [searchReq, setSearchReq] = React.useState();
   const [searchDist, setSearchDist] = React.useState(10000000000);
@@ -170,8 +171,11 @@ const MainPhoto = () => {
   });
 
   React.useEffect(() => {
-    if (prosSpecs && !selectAdded) {
-      prosSpecs.unshift({ id: 100, name_spec: "Все" });
+    if (!specs) {
+      setSpecs(prosSpecs);
+    }
+    if (specs && !selectAdded) {
+      setSpecs((prev) => [{ id: 100, name_spec: "Все" }, ...prev]);
       setSelectAdded(true);
     }
   }, [prosSpecs]);
@@ -197,10 +201,10 @@ const MainPhoto = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Категория"}
+              label={"Категория фото"}
               values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
+                specs &&
+                specs.map((item) => {
                   return { id: item.id, value: item.name_spec };
                 })
               }
@@ -357,8 +361,8 @@ const MainPhoto = () => {
               width={"255px"}
               label={"Категория фото"}
               values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
+                specs &&
+                specs.map((item) => {
                   return { id: item.id, value: item.name_spec };
                 })
               }

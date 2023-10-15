@@ -1139,7 +1139,7 @@
 
         &_table {
           width: 540px;
-          height: 243px;
+          height: auto;
           border: 1px solid #d2d9d8;
           box-sizing: border-box;
           border-radius: 8px;
@@ -1187,7 +1187,6 @@
       &_upper_row {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         align-items: flex-start;
 
         &_left {

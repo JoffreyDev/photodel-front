@@ -16,6 +16,7 @@ import {
   setCountries,
   setLanguages,
   setDataLoaded,
+  setPlacesCategories,
 } from "./redux/actions/siteEntities";
 import Requests, {
   rootAddress,
@@ -82,6 +83,10 @@ function App() {
 
     Requests.getLanguages().then((res) => {
       dispatch(setLanguages(res.data));
+    });
+
+    Requests.getPlacesCategories().then((res) => {
+      dispatch(setPlacesCategories(res.data));
     });
 
     if (!localStorage.getItem("mapActive")) {

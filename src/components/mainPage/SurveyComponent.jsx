@@ -1,17 +1,25 @@
 import React from "react";
 import Requests from "../../http/axios-requests";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openSuccessAlert, openErrorAlert } from "../../redux/actions/userData";
+import GreenButton from "../common/GreenButton";
 
 const SurveyComponent = () => {
   const [poll, setPoll] = React.useState(false);
   const dispatch = useDispatch();
 
+  const { userData } = useSelector(({ userData }) => userData);
+  const [choice, setChoice] = React.useState();
+
   React.useEffect(() => {
     Requests.getPollsList().then((res) => setPoll(res.data));
   }, []);
 
-  const addVote = (choice) => {
+  const addVote = () => {
+    if (!userData?.id) {
+      dispatch(openErrorAlert("Доступно только авторизованным пользователям"));
+      return;
+    }
     Requests.addPollVote(choice)
       .then(() => {
         dispatch(openSuccessAlert("Ваш голос учтен!"));
@@ -34,7 +42,7 @@ const SurveyComponent = () => {
                 id="survey_1"
                 name="survey_choice"
                 className="main_page_survey_section_content_survey_table_radio"
-                onChange={() => addVote(poll[0]?.choices?.[0].id)}
+                onChange={() => setChoice(poll[0]?.choices?.[0].id)}
               />
               <label
                 htmlFor="survey_1"
@@ -61,7 +69,7 @@ const SurveyComponent = () => {
                 id="survey_2"
                 name="survey_choice"
                 className="main_page_survey_section_content_survey_table_radio"
-                onChange={() => addVote(poll[0]?.choices?.[1].id)}
+                onChange={() => setChoice(poll[0]?.choices?.[1].id)}
               />
               <label
                 htmlFor="survey_2"
@@ -89,7 +97,7 @@ const SurveyComponent = () => {
                   id="survey_3"
                   name="survey_choice"
                   className="main_page_survey_section_content_survey_table_radio"
-                  onChange={() => addVote(poll[0]?.choices?.[2].id)}
+                  onChange={() => setChoice(poll[0]?.choices?.[2].id)}
                 />
                 <label
                   htmlFor="survey_3"
@@ -118,7 +126,7 @@ const SurveyComponent = () => {
                   id="survey_4"
                   name="survey_choice"
                   className="main_page_survey_section_content_survey_table_radio"
-                  onChange={() => addVote(poll[0]?.choices?.[3].id)}
+                  onChange={() => setChoice(poll[0]?.choices?.[3].id)}
                 />
                 <label
                   htmlFor="survey_4"
@@ -144,6 +152,14 @@ const SurveyComponent = () => {
         <p className="main_page_survey_section_content_survey_lower_p">
           Голосов: {poll[0]?.count_answer}
         </p>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <GreenButton
+            text={"Голосовать"}
+            width={"200px"}
+            height={"30px"}
+            callback={addVote}
+          />
+        </div>
       </div>
     </div>
   );

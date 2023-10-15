@@ -41,6 +41,8 @@ const AddPlace = () => {
   const [action, setAction] = React.useState("");
   const [allPhotosSelected, setAllPhotosSelected] = React.useState(false);
 
+  const [promiseProgress, setPromiseProgress] = React.useState(false);
+
   const uploadedPhotos = [];
   let mainPhotoId;
 
@@ -222,6 +224,7 @@ const AddPlace = () => {
             mainPhotoId = res.data.id;
           }
           if (upsendPhotosArray.length === sendPhotosArray.length) {
+            setPromiseProgress(true);
             Requests.createFilmPlace({
               name_place: title,
               description: description,
@@ -240,11 +243,18 @@ const AddPlace = () => {
                   openSuccessAlert("Место для съемки успешно добавлено!")
                 );
                 navigate("/profile/places");
+                setPromiseProgress(false);
               })
-              .catch((err) => openErrorAlert(err.response.data.error));
+              .catch((err) => {
+                openErrorAlert(err.response.data.error);
+                setPromiseProgress(false);
+              });
           } else return;
         })
-        .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
+        .catch((err) => {
+          dispatch(openErrorAlert(err.response.data.error));
+          setPromiseProgress(false);
+        });
     });
   };
 
@@ -544,6 +554,7 @@ const AddPlace = () => {
           width={"180px"}
           height={"38px"}
           callback={handleCreate}
+          disabled={promiseProgress}
         />
       </div>
     </div>

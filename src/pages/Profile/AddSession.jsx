@@ -34,6 +34,8 @@ const AddSession = () => {
   const [date, setDate] = React.useState();
   const [category, setCategory] = React.useState();
 
+  const [promiseProgress, setPromiseProgress] = React.useState();
+
   const [mainPhoto, setMainPhoto] = React.useState(0);
   const [selectedPhotos, setSelectedPhotos] = React.useState([]);
   const [key, setKey] = React.useState();
@@ -209,6 +211,7 @@ const AddSession = () => {
       return;
     }
     sendPhotosArray.forEach((photo, idx) => {
+      setPromiseProgress(true);
       Requests.createImage(photo).then((res) => {
         upsendPhotosArray.push(res.data.id);
         if (idx === mainPhoto) {
@@ -227,6 +230,7 @@ const AddSession = () => {
           }).then(() => {
             dispatch(openSuccessAlert("Фотосессия успешно добавлена!"));
             navigate("/profile/sessions");
+            setPromiseProgress(false);
           });
         } else return;
       });
@@ -499,6 +503,7 @@ const AddSession = () => {
             width={"180px"}
             height={"38px"}
             callback={() => navigate("/profile/sessions")}
+            disabled={promiseProgress}
           />
         </div>
         <GreenButton

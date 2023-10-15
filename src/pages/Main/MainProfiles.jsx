@@ -224,7 +224,7 @@ const MainProfiles = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Категория"}
+              label={"Категория профи"}
               values={
                 prosCategories &&
                 prosCategories.map((item) => {
@@ -393,7 +393,7 @@ const MainProfiles = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Категория"}
+              label={"Категория профи"}
               values={
                 prosCategories &&
                 prosCategories.map((item) => {

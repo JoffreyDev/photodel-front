@@ -8,8 +8,16 @@ const FirstSection = () => {
 
   const [req, setReq] = React.useState();
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   const handleSearch = () => {
-    navigate(`/profies?req=${req}`);
+    if (req) {
+      navigate(`/profies?req=${req}`);
+    }
   };
 
   return (
@@ -37,6 +45,7 @@ const FirstSection = () => {
               className="main_page_middle_block__search-input"
               value={req}
               onChange={(e) => setReq(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
           </div>
         </div>

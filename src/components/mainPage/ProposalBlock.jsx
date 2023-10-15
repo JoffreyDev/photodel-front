@@ -16,14 +16,16 @@ const ProposalBlock = ({ setRegModuleActive }) => {
         <p className="main_page_proposal_section_content_p">
           Зарегистрируйтесь на Фотодел  и начните получать заказы прямо сейчас!
         </p>
-        <GreenButton
-          callback={() => dispatch(toggleRegModule(true))}
-          text="Зарегистрироваться"
-          margin={"20px 0 0 0"}
-          width={"276px"}
-          height={"56px"}
-          disabled={isLoggedIn}
-        />
+        {!isLoggedIn && (
+          <GreenButton
+            callback={() => dispatch(toggleRegModule(true))}
+            text="Зарегистрироваться"
+            margin={"20px 0 0 0"}
+            width={"276px"}
+            height={"56px"}
+            disabled={isLoggedIn}
+          />
+        )}
       </div>
     </section>
   );

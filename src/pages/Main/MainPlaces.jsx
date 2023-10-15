@@ -25,13 +25,14 @@ import Filter from "../../img/commonImages/filter.svg";
 import { slide as Menu } from "react-burger-menu";
 
 const MainPlaces = () => {
-  const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
+  const { placesCategories } = useSelector(({ siteEntities }) => siteEntities);
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
+  const [specs, setSpecs] = React.useState(placesCategories);
 
   const [searchReq, setSearchReq] = React.useState();
   const [searchDist, setSearchDist] = React.useState(10000000000);
-  const [place, setPlace] = React.useState('');
+  const [place, setPlace] = React.useState("");
   const [category, setCategory] = React.useState("Все");
   const [places, setPlaces] = React.useState();
   const [placesMarks, setPlacesMarks] = React.useState();
@@ -195,11 +196,14 @@ const MainPlaces = () => {
   };
 
   React.useEffect(() => {
-    if (prosSpecs && !selectAdded) {
-      prosSpecs.unshift({ id: 100, name_spec: "Все" });
+    if (!specs) {
+      setSpecs(placesCategories);
+    }
+    if (specs && !selectAdded) {
+      setSpecs((prev) => [{ id: 100, name_category: "Все" }, ...prev]);
       setSelectAdded(true);
     }
-  }, [prosSpecs]);
+  }, [placesCategories]);
 
   React.useEffect(() => {
     window.scroll(0, 0);
@@ -222,11 +226,11 @@ const MainPlaces = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Категория"}
+              label={"Категория мест"}
               values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
-                  return { id: item.id, value: item.name_spec };
+                specs &&
+                specs.map((item) => {
+                  return { id: item.id, value: item.name_category };
                 })
               }
               value={category}
@@ -250,7 +254,7 @@ const MainPlaces = () => {
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
-             <TextInput
+            <TextInput
               height={"38px"}
               width={"255px"}
               label={"Поиск по городу"}
@@ -387,11 +391,11 @@ const MainPlaces = () => {
             <SelectInput
               height={"38px"}
               width={"255px"}
-              label={"Категория фото"}
+              label={"Категория мест"}
               values={
-                prosSpecs &&
-                prosSpecs.map((item) => {
-                  return { id: item.id, value: item.name_spec };
+                specs &&
+                specs.map((item) => {
+                  return { id: item.id, value: item.name_category };
                 })
               }
               value={category}
@@ -414,13 +418,14 @@ const MainPlaces = () => {
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
-             <TextInput
+            <TextInput
               height={"38px"}
               width={"255px"}
               label={"Поиск по городу"}
               placeholder={"Введите что-нибудь"}
               value={place}
-              callback={setPlace} />
+              callback={setPlace}
+            />
             <GreenButton
               height={"38px"}
               width={"180px"}

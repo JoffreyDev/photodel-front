@@ -3,6 +3,7 @@ const initialState = {
   regModuleActive: false,
   prosSpecs: null,
   prosCategories: null,
+  placesCategories: null,
   countries: null,
   languages: null,
   isLoaded: false,
@@ -45,6 +46,12 @@ const siteEntities = (state = initialState, action) => {
         ...state,
         languages: action.payload,
       };
+
+      case "SET_PLACES_CATEGORIES":
+        return {
+          ...state,
+          placesCategories: action.payload,
+        };
 
     case "SET_DATA_LOADED":
       return {

@@ -45,6 +45,8 @@ const AddTraining = () => {
   const [allPhotosSelected, setAllPhotosSelected] = React.useState(false);
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
+  const [promiseProgress, setPromiseProgress] = React.useState(false);
+
   const { userData } = useSelector(({ userData }) => userData);
 
   const [loaded, setLoaded] = React.useState(false);
@@ -273,12 +275,19 @@ const AddTraining = () => {
     } else if (!cost) {
       dispatch(openErrorAlert("Не указана информация о стоимости участия!"));
       return;
+    } else if (!cost) {
+      dispatch(openErrorAlert("Не указано количество мест на обучение!"));
+      return;
     } else if (!firstPayment) {
       dispatch(
         openErrorAlert("Не указана информация о предоплате за участие!")
       );
       return;
+    } else if (sendPhotosArray.length < 1) {
+      dispatch(openErrorAlert("Необходимо загрузить минимум 1 фото!"));
+      return;
     }
+    setPromiseProgress(true);
     sendPhotosArray.forEach((photo, idx) => {
       Requests.createImage(photo).then((res) => {
         upsendPhotosArray.push(res.data.id);
@@ -306,8 +315,12 @@ const AddTraining = () => {
             .then(() => {
               dispatch(openSuccessAlert("Мероприятие успешно запланировано!"));
               navigate("/profile/trainings");
+              setPromiseProgress(false);
             })
-            .catch((err) => dispatch(openErrorAlert(err.response.data)));
+            .catch((err) => {
+              setPromiseProgress(false);
+              dispatch(openErrorAlert(err.response.data));
+            });
         } else return;
       });
     });
@@ -496,6 +509,7 @@ const AddTraining = () => {
             callback={handlePlacesChange}
             value={placesCount}
             limit={10}
+            numberRequired
           />
 
           <TextInput
@@ -506,6 +520,7 @@ const AddTraining = () => {
             callback={setCost}
             value={cost}
             limit={10}
+            numberRequired
           />
 
           <TextInput
@@ -516,6 +531,7 @@ const AddTraining = () => {
             callback={setFirstPayment}
             value={firstPayment}
             limit={10}
+            numberRequired
           />
 
           <div>
@@ -626,6 +642,7 @@ const AddTraining = () => {
           height={"38px"}
           margin={"13px 0 0 0"}
           callback={handleCreate}
+          disabled={promiseProgress}
         />
       </div>
       <AddTeamMembers

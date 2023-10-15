@@ -11,6 +11,7 @@ const TextInput = ({
   disabled,
   lock,
   limit,
+  numberRequired,
 }) => {
   return (
     <div
@@ -31,13 +32,16 @@ const TextInput = ({
       <input
         style={width ? { width: `${width}`, height: `${height}` } : {}}
         value={value}
-        onChange={limit ? (e) => {
-          if (e.target.value.length > limit){
-            return
-          } else callback(e.target.value)
+        onChange={
+          limit
+            ? (e) => {
+                if (e.target.value.length > limit) {
+                  return;
+                } else callback(e.target.value);
+              }
+            : (e) => callback(e.target.value)
         }
-          : (e) => callback(e.target.value)}
-        type={type === "pass" ? "password" : "text"}
+        type={type === "pass" ? "password" : numberRequired ? "number" : "text"}
         className="common_text_input"
         placeholder={placeholder ? placeholder : ""}
         disabled={disabled}

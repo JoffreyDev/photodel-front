@@ -30,7 +30,6 @@ function Reviews() {
   const params = useParams();
   const profileId = params.id;
 
-
   React.useEffect(() => {
     setDataLoading(true);
     Requests.getReviewsList(profileId).then((res) => {

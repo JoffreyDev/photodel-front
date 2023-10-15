@@ -2038,6 +2038,18 @@ export class Requests {
       url: `api/accounts/payment/get/`,
     }).then((res) => res);
   }
+
+  static async getNotAuthRequests() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/film_places/list_not_auth_requests/`,
+    }).then((res) => res);
+  }
 }
 
 export default Requests;

@@ -12,6 +12,10 @@ export const setProsSpecs = (arr) => ({
   type: "SET_PROS_SPECS",
   payload: arr,
 });
+export const setPlacesCategories = (arr) => ({
+  type: "SET_PLACES_CATEGORIES",
+  payload: arr,
+});
 
 export const setProsCategories = (arr) => ({
   type: "SET_PROS_CATEGORIES",

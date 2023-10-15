@@ -33,6 +33,8 @@ const AddPhoto = () => {
   const [loadedPhoto, setLoadedPhoto] = React.useState();
   const [canBuy, setCanBuy] = React.useState(false);
 
+  const [promiseProgress, setPromiseProgress] = React.useState(false);
+
   const { prosSpecs } = useSelector(({ siteEntities }) => siteEntities);
   const { userData, userCoords } = useSelector(({ userData }) => userData);
   const [loaded, setLoaded] = React.useState(false);
@@ -239,6 +241,7 @@ const AddPhoto = () => {
       dispatch(openErrorAlert("Не указаны связанные альбомы!"));
       return;
     }
+    setPromiseProgress(true);
     Requests.createImage(loadedPhoto).then((res) => {
       Requests.createPhoto({
         gallery_image: res.data.id,
@@ -258,6 +261,7 @@ const AddPhoto = () => {
       }).then((res) => {
         dispatch(openSuccessAlert("Фото успешно опубликовано!"));
         navigate("/profile/photos");
+        setPromiseProgress(false);
       });
     });
   };
@@ -455,6 +459,7 @@ const AddPhoto = () => {
           height={"38px"}
           callback={handlePhotoCreate}
           margin={"13px 0 0 0"}
+          disabled={promiseProgress}
         />
       </div>
     </div>

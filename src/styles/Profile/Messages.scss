@@ -29,6 +29,10 @@
         background: #f4f7f6;
         transition: 0.2s;
       }
+
+      &.autoHeight {
+        height: auto;
+      }
     }
 
     &_avatar {

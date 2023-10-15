@@ -25,7 +25,7 @@ const AddReview = ({
   notAlign,
   setReviewSentModalActive,
 }) => {
-  const { isLoggedIn } = useSelector(({ userData }) => userData);
+  const { isLoggedIn, userData } = useSelector(({ userData }) => userData);
 
   const [mark, setMark] = React.useState(0);
   const [content, setContent] = React.useState();
@@ -102,33 +102,44 @@ const AddReview = ({
 
   const sendReviewHandler = () => {
     Requests.addReview({
-      senderUser: user.id,
+      senderUser: userData.id,
       receiverUser: user.id,
       content: content,
       mark: mark,
     })
       .then((createReviewRes) => {
-        sendPhotosArray.forEach((photo, idx) => {
-          Requests.createImage(photo)
-            .then((res) => {
-              upsendPhotosArray.push(res.data.id);
-              if (upsendPhotosArray.length === sendPhotosArray.length) {
-                Requests.updateReview({
-                  photos: upsendPhotosArray,
-                  id: createReviewRes.data.id,
-                })
-                  .then(() => {
-                    setActive(false);
-                    unsetData();
-                    setReviewSentModalActive(true);
+        if (sendPhotosArray.length >= 1) {
+          sendPhotosArray.forEach((photo, idx) => {
+            Requests.createImage(photo)
+              .then((res) => {
+                upsendPhotosArray.push(res.data.id);
+                if (upsendPhotosArray.length === sendPhotosArray.length) {
+                  Requests.updateReview({
+                    photos: upsendPhotosArray,
+                    id: createReviewRes.data.id,
                   })
-                  .catch((err) => openErrorAlert(err.response.data.error));
-              } else return;
-            })
-            .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
-        });
+                    .then(() => {
+                      setActive(false);
+                      unsetData();
+                      setReviewSentModalActive(true);
+                    })
+                    .catch((err) =>
+                      openErrorAlert("Произошла неизвестная ошибка")
+                    );
+                } else return;
+              })
+              .catch((err) =>
+                dispatch(openErrorAlert("Произошла неизвестная ошибка"))
+              );
+          });
+          return;
+        }
+        setReviewSentModalActive(true);
+        setActive(false);
+        unsetData();
+        console.log(123);
       })
-      .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
+      .catch((err) => dispatch(openErrorAlert("Произошла неизвестная ошибка")));
   };
 
   return (
