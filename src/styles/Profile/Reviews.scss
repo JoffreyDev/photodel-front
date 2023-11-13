@@ -244,6 +244,15 @@
 }
 
 @media (max-width: 576px) {
+  .reviews_card_head {
+    display: block;
+    margin-bottom: 40px;
+
+    &_left {
+      margin-bottom: 10px;
+    }
+  }
+
   .team {
     &_header {
       margin-bottom: 10px;

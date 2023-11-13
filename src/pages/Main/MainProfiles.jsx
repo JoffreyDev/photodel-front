@@ -30,6 +30,7 @@ const MainProfiles = () => {
   const { userCoords } = useSelector(({ userData }) => userData);
 
   const [profiles, setProfiles] = React.useState();
+  const [proCategories, setProCategories] = React.useState();
 
   const navigate = useNavigate();
 
@@ -197,11 +198,14 @@ const MainProfiles = () => {
   });
 
   React.useEffect(() => {
-    if (prosCategories && !selectAdded) {
-      prosCategories.unshift({ id: 100, name_category: "Все" });
+    if (!proCategories) {
+      setProCategories(prosCategories);
+    }
+    if (proCategories && !selectAdded) {
+      setProCategories((prev) => [{ id: 100, name_category: "Все" }, ...prev]);
       setSelectAdded(true);
     }
-  }, [prosCategories]);
+  }, [proCategories, prosCategories]);
 
   React.useEffect(() => {
     window.scroll(0, 0);
@@ -226,8 +230,8 @@ const MainProfiles = () => {
               width={"255px"}
               label={"Категория профи"}
               values={
-                prosCategories &&
-                prosCategories.map((item) => {
+                proCategories &&
+                proCategories.map((item) => {
                   return { id: item.id, value: item.name_category };
                 })
               }
@@ -395,8 +399,8 @@ const MainProfiles = () => {
               width={"255px"}
               label={"Категория профи"}
               values={
-                prosCategories &&
-                prosCategories.map((item) => {
+                proCategories &&
+                proCategories.map((item) => {
                   return { id: item.id, value: item.name_category };
                 })
               }

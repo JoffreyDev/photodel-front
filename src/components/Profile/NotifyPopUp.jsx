@@ -4,7 +4,7 @@ import "../../styles/Profile/Notifications.css";
 import { useSelector, useDispatch } from "react-redux";
 import Requests from "../../http/axios-requests";
 import { setNotifications } from "../../redux/actions/userData";
-import { ClickAwayListener } from '@mui/material';
+import { ClickAwayListener } from "@mui/material";
 
 const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
   const dispatch = useDispatch();
@@ -16,16 +16,16 @@ const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
   const [viewedNotifications, setViewedNotifications] = React.useState();
 
   React.useEffect(() => {
-    if (!isLoggedIn) {
-      Requests.getNotifications().then((res) =>
-      dispatch(setNotifications(res.data))
-    );
-    } 
-
     if (isLoggedIn) {
-      dispatch(setNotifications([]))
+      Requests.getNotifications().then((res) =>
+        dispatch(setNotifications(res.data))
+      );
     }
-  }, [isLoggedIn])
+
+    if (!isLoggedIn) {
+      dispatch(setNotifications([]));
+    }
+  }, [isLoggedIn]);
 
   const readAllNotifications = () => {
     Requests.readNotifications(
@@ -39,52 +39,52 @@ const NotifyPopUp = ({ notifyPopUpActive, setActive }) => {
 
   return (
     <ClickAwayListener
-    onClickAway={
-      window.screen.width <= 576
-        ? () => {
-            return;
+      onClickAway={
+        window.screen.width <= 576
+          ? () => {
+              return;
+            }
+          : () => setActive(false)
+      }
+    >
+      <div ref={notifyRef}>
+        <div
+          className={
+            notifyPopUpActive
+              ? "dropdown-notify-menu-wrapper active"
+              : "dropdown-notify-menu-wrapper"
           }
-        : () => setActive(false)
-    }
-  >
-    <div ref={notifyRef}>
-      <div
-        className={
-          notifyPopUpActive
-            ? "dropdown-notify-menu-wrapper active"
-            : "dropdown-notify-menu-wrapper"
-        }
-      >
-        <div className="dropdown-notify-menu-content">
-          {notifications.length == 0 && (
-            <h1
-              style={{ fontSize: "14px" }}
-              className="photos_cards_empty_title"
-            >
-              Нет новых уведомлений
-            </h1>
-          )}
+        >
+          <div className="dropdown-notify-menu-content">
+            {notifications.length == 0 && (
+              <h1
+                style={{ fontSize: "14px" }}
+                className="photos_cards_empty_title"
+              >
+                Нет новых уведомлений
+              </h1>
+            )}
 
-          {notifications.length >= 1 && (
-            <h1
-              style={{ fontSize: "11px", alignSelf: "flex-end" }}
-              className="photos_cards_empty_title"
-              onClick={readAllNotifications}
-            >
-              Прочитать все
-            </h1>
-          )}
-          {notifications.length >= 1 &&
-            notifications.map((notification, idx) => (
-              <NotifyBlock
-                notification={notification}
-                setActive={setActive}
-                key={idx}
-              />
-            ))}
+            {notifications.length >= 1 && (
+              <h1
+                style={{ fontSize: "11px", alignSelf: "flex-end" }}
+                className="photos_cards_empty_title"
+                onClick={readAllNotifications}
+              >
+                Прочитать все
+              </h1>
+            )}
+            {notifications.length >= 1 &&
+              notifications.map((notification, idx) => (
+                <NotifyBlock
+                  notification={notification}
+                  setActive={setActive}
+                  key={idx}
+                />
+              ))}
+          </div>
         </div>
       </div>
-    </div>
     </ClickAwayListener>
   );
 };

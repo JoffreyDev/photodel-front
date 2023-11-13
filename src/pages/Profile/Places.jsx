@@ -11,7 +11,7 @@ import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { Submit } from "../../components";
 import { ScreenLoader } from "../../components";
 import { openErrorAlert } from "../../redux/actions/userData";
-import {ReactComponent as Trash} from '../../img/commonImages/trash.svg'
+import { ReactComponent as Trash } from "../../img/commonImages/trash.svg";
 
 const Places = () => {
   const navigate = useNavigate();
@@ -60,7 +60,6 @@ const Places = () => {
     });
   };
 
-
   return (
     <div className="places">
       <div className="places_header">
@@ -71,67 +70,8 @@ const Places = () => {
             {places && places.length}
           </span>
         </p>
-        <div className="places_header_select">
-          <img
-            src={
-              sortType === "+"
-                ? SortImage
-                : sortType === "-"
-                ? SortImageInvert
-                : ""
-            }
-            alt="sort"
-            className="places_header_select_image"
-            onClick={() =>
-              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
-            }
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="places_options">
-        <div className="places_options_left">
-          <p className="places_options_left_p">
-            Всего:{" "}
-            <span className="places_options_left_p_span">
-              {places && places.length}
-            </span>
-          </p>
-          <Checkbox
-            value={allPlacesSelected}
-            callback={() => {
-              if (allPlacesSelected) {
-                setSelectedPlaces([]);
-                setAllPlacesSelected(false);
-                forceUpdate();
-              } else {
-                places.forEach((place) => selectedPlaces.push(place.id));
-                setSelectedPlaces(selectedPlaces);
-                setAllPlacesSelected(true);
-                forceUpdate();
-              }
-            }}
-            marginBottom={"0px"}
-            label={"Выбрать все"}
-          />
-          <div className="places_header_select mobile">
+        {false && (
+          <div className="places_header_select">
             <img
               src={
                 sortType === "+"
@@ -167,6 +107,71 @@ const Places = () => {
               onChange={(e) => setSortField(e.target.value)}
             />
           </div>
+        )}
+      </div>
+      <div className="places_options">
+        <div className="places_options_left">
+          <p className="places_options_left_p">
+            Всего:{" "}
+            <span className="places_options_left_p_span">
+              {places && places.length}
+            </span>
+          </p>
+          <Checkbox
+            value={allPlacesSelected}
+            callback={() => {
+              if (allPlacesSelected) {
+                setSelectedPlaces([]);
+                setAllPlacesSelected(false);
+                forceUpdate();
+              } else {
+                places.forEach((place) => selectedPlaces.push(place.id));
+                setSelectedPlaces(selectedPlaces);
+                setAllPlacesSelected(true);
+                forceUpdate();
+              }
+            }}
+            marginBottom={"0px"}
+            label={"Выбрать все"}
+          />
+          {false && (
+            <div className="places_header_select mobile">
+              <img
+                src={
+                  sortType === "+"
+                    ? SortImage
+                    : sortType === "-"
+                    ? SortImageInvert
+                    : ""
+                }
+                alt="sort"
+                className="places_header_select_image"
+                onClick={() =>
+                  setSortType(
+                    sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                  )
+                }
+              />
+              <SelectInput
+                values={[
+                  {
+                    id: 1,
+                    value: "По дате добавления",
+                  },
+                  {
+                    id: 2,
+                    value: "По популярности",
+                  },
+                ]}
+                width={190}
+                nonBorder={true}
+                fontSize={"13px"}
+                marginBottom={"0px"}
+                value={sortField}
+                onChange={(e) => setSortField(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <div className="places_options_right">
@@ -199,13 +204,16 @@ const Places = () => {
               Добавить место
             </p>
           </div>
-         <Trash onClick={() => {
-          if (selectedPlaces.length === 0 ) {
-            return 
-          } else {
-            setSubmitActive(true)
-          }
-         }} className="places_options_right_delete" />
+          <Trash
+            onClick={() => {
+              if (selectedPlaces.length === 0) {
+                return;
+              } else {
+                setSubmitActive(true);
+              }
+            }}
+            className="places_options_right_delete"
+          />
         </div>
       </div>
       <div className="places_cards">

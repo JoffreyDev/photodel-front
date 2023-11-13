@@ -12,7 +12,7 @@ import TrainingCardMain from "../../components/Previews/TrainingCardMain";
 import { Submit } from "../../components";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
 import { openErrorAlert } from "../../redux/actions/userData";
-import {ReactComponent as Trash} from '../../img/commonImages/trash.svg'
+import { ReactComponent as Trash } from "../../img/commonImages/trash.svg";
 
 const Trainings = () => {
   const navigate = useNavigate();
@@ -51,7 +51,6 @@ const Trainings = () => {
       });
   }, [userData.id, sortType, sortField]);
 
-
   const deleteHandle = () => {
     Requests.deleteTraining(selectedTrainings).then((res) => {
       setSelectedTrainings([]);
@@ -70,38 +69,44 @@ const Trainings = () => {
       <div className="sessions_header">
         <h1 className="sessions_header_title">ОБУЧЕНИЯ</h1>
         <div className="sessions_header_select">
-          <img
-            src={
-              sortType === "+"
-                ? SortImage
-                : sortType === "-"
-                ? SortImageInvert
-                : ""
-            }
-            onClick={() =>
-              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
-            }
-            alt="sort"
-            className="sessions_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-          />
+          {false && (
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+              alt="sort"
+              className="sessions_header_select_image"
+            />
+          )}
+          {false && (
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          )}
         </div>
       </div>
       <div className="places_options">
@@ -131,42 +136,44 @@ const Trainings = () => {
             marginBottom={"0px"}
             label={"Выбрать все"}
           />
-          <div className="sessions_header_select mobile">
-            <img
-              src={
-                sortType === "+"
-                  ? SortImage
-                  : sortType === "-"
-                  ? SortImageInvert
-                  : ""
-              }
-              onClick={() =>
-                setSortType(
-                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
-                )
-              }
-              alt="sort"
-              className="sessions_header_select_image"
-            />
-            <SelectInput
-              values={[
-                {
-                  id: 1,
-                  value: "По дате добавления",
-                },
-                {
-                  id: 2,
-                  value: "По популярности",
-                },
-              ]}
-              width={190}
-              nonBorder={true}
-              fontSize={"13px"}
-              marginBottom={"0px"}
-              value={sortField}
-              onChange={(e) => setSortField(e.target.value)}
-            />
-          </div>
+          {false && (
+            <div className="sessions_header_select mobile">
+              <img
+                src={
+                  sortType === "+"
+                    ? SortImage
+                    : sortType === "-"
+                    ? SortImageInvert
+                    : ""
+                }
+                onClick={() =>
+                  setSortType(
+                    sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                  )
+                }
+                alt="sort"
+                className="sessions_header_select_image"
+              />
+              <SelectInput
+                values={[
+                  {
+                    id: 1,
+                    value: "По дате добавления",
+                  },
+                  {
+                    id: 2,
+                    value: "По популярности",
+                  },
+                ]}
+                width={190}
+                nonBorder={true}
+                fontSize={"13px"}
+                marginBottom={"0px"}
+                value={sortField}
+                onChange={(e) => setSortField(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <div className="places_options_right">
@@ -202,13 +209,16 @@ const Trainings = () => {
               Добавить мероприятие
             </p>
           </div>
-          <Trash onClick={() => {
-          if (selectedTrainings.length === 0 ) {
-            return 
-          } else {
-            setSubmitActive(true)
-          }
-         }} className="places_options_right_delete" />
+          <Trash
+            onClick={() => {
+              if (selectedTrainings.length === 0) {
+                return;
+              } else {
+                setSubmitActive(true);
+              }
+            }}
+            className="places_options_right_delete"
+          />
         </div>
       </div>
       <div className="training_cards">

@@ -143,16 +143,18 @@ const RequestsPage = () => {
           >
             В КОМАНДУ
           </h1>
-          <h1
-            className={
-              component === "notAuth"
-                ? "favorites_header_title_first active"
-                : "favorites_header_title_first"
-            }
-            onClick={() => setComponent("notAuth")}
-          >
-            ОТ НЕАВТОРИЗОВАННЫХ
-          </h1>
+          {userData.status === 2 && (
+            <h1
+              className={
+                component === "notAuth"
+                  ? "favorites_header_title_first active"
+                  : "favorites_header_title_first"
+              }
+              onClick={() => setComponent("notAuth")}
+            >
+              ОТ НЕАВТОРИЗОВАННЫХ
+            </h1>
+          )}
         </div>
       </div>
       {requests &&

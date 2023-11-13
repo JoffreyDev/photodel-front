@@ -11,7 +11,7 @@ import { openSuccessAlert } from "../../redux/actions/userData";
 import { Submit } from "../../components";
 import { ScreenLoader } from "../../components";
 import { openErrorAlert } from "../../redux/actions/userData";
-import {ReactComponent as Trash} from '../../img/commonImages/trash.svg'
+import { ReactComponent as Trash } from "../../img/commonImages/trash.svg";
 
 const Photos = ({ component }) => {
   const { userData } = useSelector(({ userData }) => userData);
@@ -64,7 +64,6 @@ const Photos = ({ component }) => {
     });
   };
 
-
   return (
     <div className="photos">
       <div className="photos_header">
@@ -98,51 +97,8 @@ const Photos = ({ component }) => {
           </span>
         </p>
 
-        <div className="photos_header_select">
-          <img
-            src={
-              sortType === "+"
-                ? SortImage
-                : sortType === "-"
-                ? SortImageInvert
-                : ""
-            }
-            alt="sort"
-            className="photos_header_select_image"
-            onClick={() =>
-              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
-            }
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="photos_options">
-        <div className="photos_options_left">
-          <p className="photos_options_left_p">
-            Всего:{" "}
-            <span className="photos_options_left_p_span">
-              {photos && photos.length}
-            </span>
-          </p>
-
-          <div className="photos_header_select mobile">
+        {false && (
+          <div className="photos_header_select">
             <img
               src={
                 sortType === "+"
@@ -178,6 +134,55 @@ const Photos = ({ component }) => {
               onChange={(e) => setSortField(e.target.value)}
             />
           </div>
+        )}
+      </div>
+      <div className="photos_options">
+        <div className="photos_options_left">
+          <p className="photos_options_left_p">
+            Всего:{" "}
+            <span className="photos_options_left_p_span">
+              {photos && photos.length}
+            </span>
+          </p>
+
+          {false && (
+            <div className="photos_header_select mobile">
+              <img
+                src={
+                  sortType === "+"
+                    ? SortImage
+                    : sortType === "-"
+                    ? SortImageInvert
+                    : ""
+                }
+                alt="sort"
+                className="photos_header_select_image"
+                onClick={() =>
+                  setSortType(
+                    sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                  )
+                }
+              />
+              <SelectInput
+                values={[
+                  {
+                    id: 1,
+                    value: "По дате добавления",
+                  },
+                  {
+                    id: 2,
+                    value: "По популярности",
+                  },
+                ]}
+                width={190}
+                nonBorder={true}
+                fontSize={"13px"}
+                marginBottom={"0px"}
+                value={sortField}
+                onChange={(e) => setSortField(e.target.value)}
+              />
+            </div>
+          )}
           <Checkbox
             marginBottom={"0px"}
             label={"Выбрать все"}
@@ -232,13 +237,16 @@ const Photos = ({ component }) => {
               Добавить  фото
             </p>
           </div>
-          <Trash onClick={() => {
-          if (selectedPhotos.length === 0 ) {
-            return 
-          } else {
-            setSubmitActive(true)
-          }
-         }} className="places_options_right_delete" />
+          <Trash
+            onClick={() => {
+              if (selectedPhotos.length === 0) {
+                return;
+              } else {
+                setSubmitActive(true);
+              }
+            }}
+            className="places_options_right_delete"
+          />
         </div>
       </div>
       <div className="photos_cards">

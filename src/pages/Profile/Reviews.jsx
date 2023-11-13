@@ -54,30 +54,32 @@ function Reviews() {
         <div className="reviews_header_wrapper">
           <h1 className="reviews_header_title_first">ОТЗЫВЫ</h1>
         </div>
-        <div className="reviews_header_select">
-          <img
-            src={SortImage}
-            alt="sort"
-            className="reviews_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortType}
-          />
-        </div>
+        {false && (
+          <div className="reviews_header_select">
+            <img
+              src={SortImage}
+              alt="sort"
+              className="reviews_header_select_image"
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortType}
+            />
+          </div>
+        )}
       </div>
       <div className="reviews_options">
         <div className="reviews_options_left favorites">
@@ -87,7 +89,7 @@ function Reviews() {
               {reviews ? reviews.length : "-"}
             </span>
           </p>
-          <Checkbox marginBottom={"0px"} label={"Только с фото"} />
+          {false && <Checkbox marginBottom={"0px"} label={"Только с фото"} />}
         </div>
       </div>
       <div className="reviews_body">

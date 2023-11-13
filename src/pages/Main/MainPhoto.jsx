@@ -178,7 +178,7 @@ const MainPhoto = () => {
       setSpecs((prev) => [{ id: 100, name_spec: "Все" }, ...prev]);
       setSelectAdded(true);
     }
-  }, [prosSpecs]);
+  }, [prosSpecs, specs]);
 
   React.useEffect(() => {
     window.scroll(0, 0);

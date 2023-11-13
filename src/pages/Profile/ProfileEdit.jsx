@@ -226,6 +226,9 @@ const ProfileEdit = ({ setActiveModule }) => {
     } else if (!location) {
       dispatch(openErrorAlert("Вы не указали ваше местоположение!"));
       return;
+    } else if (!about) {
+      dispatch(openErrorAlert("Вы не указали ваше информацию о себе!"));
+      return;
     }
 
     Requests.updateOwnProfile({
@@ -263,7 +266,9 @@ const ProfileEdit = ({ setActiveModule }) => {
           dispatch(openSuccessAlert("Профиль изменен!"));
         });
       })
-      .catch((e) => dispatch(openErrorAlert(e.response.data.error)));
+      .catch((e) =>
+        dispatch(openErrorAlert(Object.entries(e.response.data).toString()))
+      );
   };
 
   const convertDate = (str) => {
@@ -506,7 +511,9 @@ const ProfileEdit = ({ setActiveModule }) => {
       </div>
 
       <div className="my_profile_about">
-        <p className="my_profile_about_title">Обо мне</p>
+        <p className="my_profile_about_title">
+          Обо мне <span style={{ color: "red", opacity: "0.8" }}>*</span>
+        </p>
         <div className="my_profile_about_content">
           <textarea
             value={about}

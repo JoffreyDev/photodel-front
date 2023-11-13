@@ -39,40 +39,44 @@ const Places = () => {
       <PublicHeader profile={profileData} />
       <div className="places_header">
         <h1 className="places_header_title">МЕСТА ДЛЯ СЪЕМОК</h1>
-        <div className="places_header_select">
-          <img
-            src={
-              sortType === "+"
-                ? SortImage
-                : sortType === "-"
-                ? SortImageInvert
-                : ""
-            }
-            alt="sort"
-            onClick={() =>
-              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
-            }
-            className="places_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-          />
-        </div>
+        {false && (
+          <div className="places_header_select">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              alt="sort"
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+              className="places_header_select_image"
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          </div>
+        )}
       </div>
       <div className="places_options">
         <div className="places_options_left">

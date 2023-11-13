@@ -47,7 +47,7 @@ function PublicTeam() {
             }
             onClick={() => setComponent("team")}
           >
-            МОЯ КОМАНДА
+            КОМАНДА
           </h1>
           {false && (
             <h1
@@ -74,40 +74,44 @@ function PublicTeam() {
             </h1>
           )}
         </div>
-        <div className="team_header_select">
-          <img
-            src={
-              sortType === "+"
-                ? SortImage
-                : sortType === "-"
-                ? SortImageInvert
-                : ""
-            }
-            alt="sort"
-            onClick={() =>
-              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
-            }
-            className="places_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-          />
-        </div>
+        {false && (
+          <div className="team_header_select">
+            <img
+              src={
+                sortType === "+"
+                  ? SortImage
+                  : sortType === "-"
+                  ? SortImageInvert
+                  : ""
+              }
+              alt="sort"
+              onClick={() =>
+                setSortType(
+                  sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                )
+              }
+              className="places_header_select_image"
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortField}
+              onChange={(e) => setSortField(e.target.value)}
+            />
+          </div>
+        )}
       </div>
       <div className="photos_options">
         <div
@@ -136,7 +140,7 @@ function PublicTeam() {
               Всего:{" "}
               <span className="photos_options_left_p_span">{posCount}</span>
             </p>
-            <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
+            {false && <Checkbox marginBottom={"0px"} label={"Выбрать все"} />}
           </div>
         </div>
       </div>

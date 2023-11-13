@@ -108,60 +108,64 @@ function Favorites() {
           </h1>
         </div>
 
-        <div className="favorites_header_select">
-          <img
-            src={SortImage}
-            alt="sort"
-            className="favorites_header_select_image"
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortType}
-          />
-        </div>
+        {false && (
+          <div className="favorites_header_select">
+            <img
+              src={SortImage}
+              alt="sort"
+              className="favorites_header_select_image"
+            />
+            <SelectInput
+              values={[
+                {
+                  id: 1,
+                  value: "По дате добавления",
+                },
+                {
+                  id: 2,
+                  value: "По популярности",
+                },
+              ]}
+              width={190}
+              nonBorder={true}
+              fontSize={"13px"}
+              marginBottom={"0px"}
+              value={sortType}
+            />
+          </div>
+        )}
       </div>
       <div className="photos_options">
         <div className="photos_options_left favorites">
           <p className="photos_options_left_p">
             Всего: <span className="photos_options_left_p_span">0</span>
           </p>
-          <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
+          {false && <Checkbox marginBottom={"0px"} label={"Выбрать все"} />}
         </div>
 
-        <div className="photos_options_right">
-          <SelectInput
-            width={window.screen.width <= 576 ? 170 : 200}
-            marginBottom={"10px"}
-            values={[
-              {
-                id: 1,
-                value: "Удалить",
-              },
-            ]}
-            onChange={(e) => setAction(e.target.value)}
-            label={"Выберите действие"}
-            labelId="demo-multiple-name-label"
-          />
-          <div className="photos_options_left mobile">
-            <p className="photos_options_left_p">
-              Всего: <span className="photos_options_left_p_span">0</span>
-            </p>
-            <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
+        {false && (
+          <div className="photos_options_right">
+            <SelectInput
+              width={window.screen.width <= 576 ? 170 : 200}
+              marginBottom={"10px"}
+              values={[
+                {
+                  id: 1,
+                  value: "Удалить",
+                },
+              ]}
+              onChange={(e) => setAction(e.target.value)}
+              label={"Выберите действие"}
+              labelId="demo-multiple-name-label"
+            />
+            <div className="photos_options_left mobile">
+              <p className="photos_options_left_p">
+                Всего: <span className="photos_options_left_p_span">0</span>
+              </p>
+              <Checkbox marginBottom={"0px"} label={"Выбрать все"} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="favorites_body">
         {profiles &&
@@ -173,6 +177,7 @@ function Favorites() {
               callback={setSelectedPositions}
               profile={profile}
               key={idx}
+              disableCheck
             />
           ))}
         {profiles &&
@@ -198,6 +203,7 @@ function Favorites() {
                 callback={setSelectedPositions}
                 photo={photo.gallery}
                 key={idx}
+                disableCheck
               />
             ))}
           {photos &&
@@ -222,6 +228,7 @@ function Favorites() {
                 callback={setSelectedPositions}
                 place={place.place}
                 key={idx}
+                disableCheck
               />
             ))}
           {places &&
@@ -246,6 +253,7 @@ function Favorites() {
                 callback={setSelectedPositions}
                 session={session.photo_session}
                 key={idx}
+                disableCheck
               />
             ))}
           {sessions &&

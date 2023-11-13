@@ -105,50 +105,8 @@ const Albums = ({ component }) => {
           </span>
         </p>
 
-        <div className="albums_header_select">
-          <img
-            src={
-              sortType === "+"
-                ? SortImage
-                : sortType === "-"
-                ? SortImageInvert
-                : ""
-            }
-            alt="sort"
-            className="photos_header_select_image"
-            onClick={() =>
-              setSortType(sortType === "+" ? "-" : sortType === "-" ? "+" : "")
-            }
-          />
-          <SelectInput
-            values={[
-              {
-                id: 1,
-                value: "По дате добавления",
-              },
-              {
-                id: 2,
-                value: "По популярности",
-              },
-            ]}
-            width={190}
-            nonBorder={true}
-            fontSize={"13px"}
-            marginBottom={"0px"}
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="albums_options">
-        <div className="albums_options_left">
-          <p className="albums_options_left_p">
-            Всего:{" "}
-            <span className="albums_options_left_p_span">
-              {albums && albums.length}
-            </span>
-          </p>
-          <div className="albums_header_select mobile">
+        {false && (
+          <div className="albums_header_select">
             <img
               src={
                 sortType === "+"
@@ -184,6 +142,54 @@ const Albums = ({ component }) => {
               onChange={(e) => setSortField(e.target.value)}
             />
           </div>
+        )}
+      </div>
+      <div className="albums_options">
+        <div className="albums_options_left">
+          <p className="albums_options_left_p">
+            Всего:{" "}
+            <span className="albums_options_left_p_span">
+              {albums && albums.length}
+            </span>
+          </p>
+          {false && (
+            <div className="albums_header_select mobile">
+              <img
+                src={
+                  sortType === "+"
+                    ? SortImage
+                    : sortType === "-"
+                    ? SortImageInvert
+                    : ""
+                }
+                alt="sort"
+                className="photos_header_select_image"
+                onClick={() =>
+                  setSortType(
+                    sortType === "+" ? "-" : sortType === "-" ? "+" : ""
+                  )
+                }
+              />
+              <SelectInput
+                values={[
+                  {
+                    id: 1,
+                    value: "По дате добавления",
+                  },
+                  {
+                    id: 2,
+                    value: "По популярности",
+                  },
+                ]}
+                width={190}
+                nonBorder={true}
+                fontSize={"13px"}
+                marginBottom={"0px"}
+                value={sortField}
+                onChange={(e) => setSortField(e.target.value)}
+              />
+            </div>
+          )}
           <Checkbox
             marginBottom={"0px"}
             label={"Выбрать все"}
