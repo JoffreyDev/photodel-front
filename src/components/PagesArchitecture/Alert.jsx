@@ -20,58 +20,45 @@ export default function CustomizedSnackbars() {
 
   React.useEffect(() => {
     if (successAlertMessage) setOpenSuccess(true);
+  }, [successAlertMessage]);
+
+  React.useEffect(() => {
     if (errorAlertMessage) setOpenError(true);
-  }, [successAlertMessage, errorAlertMessage]);
+  }, [errorAlertMessage]);
 
   const handleCloseSuccess = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpenSuccess(false);
-    setTimeout(() => {
-      dispatch(openSuccessAlert(false));
-      dispatch(openErrorAlert(false));
-    }, 1000);
   };
 
   const handleCloseError = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpenError(false);
-    setTimeout(() => {
-      dispatch(openSuccessAlert(false));
-      dispatch(openErrorAlert(false));
-    }, 1000);
   };
 
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={openSuccess}
         autoHideDuration={3000}
         onClose={handleCloseSuccess}
       >
-        <Alert
-          onClose={handleCloseSuccess}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
+        <Alert severity="success" sx={{ width: "100%" }}>
           {successAlertMessage}
         </Alert>
       </Snackbar>
       <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={openError}
         autoHideDuration={4000}
         onClose={handleCloseError}
       >
-        <Alert
-          onClose={handleCloseError}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
+        <Alert severity="error" sx={{ width: "100%" }}>
           {errorAlertMessage}
         </Alert>
       </Snackbar>

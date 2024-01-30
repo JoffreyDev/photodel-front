@@ -8,18 +8,21 @@ import { setNotifications } from "../../redux/actions/userData";
 const NotificationBlock = ({ notification, setActive }) => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const readNotification = (id) => {
     Requests.readNotifications([id]).then(() => {
       Requests.getNotifications().then((res) => {
-        dispatch(setNotifications(res.data))
-      })
-    })
-  }
+        dispatch(setNotifications(res.data));
+      });
+    });
+  };
 
   return (
-    <div onClick={() => readNotification(notification.id)} style={{ width: "100%" }}>
+    <div
+      onClick={() => readNotification(notification.id)}
+      style={{ width: "100%" }}
+    >
       <a style={{ textDecoration: "none", width: "97%" }}>
         {(notification.type === "NEW_SESSION_LIKE" ||
           notification.type === "NEW_PHOTO_LIKE" ||
@@ -102,13 +105,13 @@ const NotificationBlock = ({ notification, setActive }) => {
                   добавил
                   <span style={{ cursor: "pointer" }}>
                     {notification.type === "NEW_SESSION_FAVORITE"
-                      ? "вашу фотосессию"
+                      ? " вашу фотосессию"
                       : notification.type === "NEW_PHOTO_FAVORITE"
-                      ? "ваше фото"
+                      ? " ваше фото"
                       : notification.type === "NEW_PLACE_FAVORITE"
-                      ? "ваше место для съемки"
+                      ? " ваше место для съемки"
                       : notification.type === "NEW_TRAINING_FAVORITE"
-                      ? "ваше обучение"
+                      ? " ваше обучение"
                       : ""}{" "}
                   </span>{" "}
                   в избранное

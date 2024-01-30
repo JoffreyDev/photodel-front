@@ -101,6 +101,13 @@ const AddReview = ({
   };
 
   const sendReviewHandler = () => {
+    if (!mark) {
+      dispatch(openErrorAlert("Укажите оценку!"));
+      return;
+    } else if (!content) {
+      dispatch(openErrorAlert("Напишите отзыв!"));
+      return;
+    }
     Requests.addReview({
       senderUser: userData.id,
       receiverUser: user.id,
@@ -123,13 +130,11 @@ const AddReview = ({
                       unsetData();
                       setReviewSentModalActive(true);
                     })
-                    .catch((err) =>
-                      openErrorAlert("Произошла неизвестная ошибка")
-                    );
+                    .catch((err) => openErrorAlert(err.response.data.error));
                 } else return;
               })
               .catch((err) =>
-                dispatch(openErrorAlert("Произошла неизвестная ошибка"))
+                dispatch(openErrorAlert(err.response.data.error))
               );
           });
           return;
@@ -139,7 +144,7 @@ const AddReview = ({
         unsetData();
         console.log(123);
       })
-      .catch((err) => dispatch(openErrorAlert("Произошла неизвестная ошибка")));
+      .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
 
   return (

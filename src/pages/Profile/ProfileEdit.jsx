@@ -233,11 +233,16 @@ const ProfileEdit = ({ setActiveModule }) => {
 
     Requests.updateOwnProfile({
       ready_status: status,
-      filming_geo: userData.status === 2 ? country.map((item) => item.id) : [],
+      filming_geo:
+        userData.status === 2 && country?.length
+          ? country?.map((item) => item.id)
+          : [],
       work_condition: conditions,
       cost_services: cost,
       photo_technics: technic,
-      languages: languageSkills.map((item) => item.id),
+      languages: languageSkills?.length
+        ? languageSkills?.map((item) => item.id)
+        : [],
       about: about,
       status: status,
       type_pro: category,
@@ -247,7 +252,9 @@ const ProfileEdit = ({ setActiveModule }) => {
       phone: number,
       site: site,
       spec_model_or_photographer:
-        userData.status === 2 ? spec.map((item) => item.id) : [],
+        userData.status === 2 && spec?.length
+          ? spec?.map((item) => item.id)
+          : [],
       string_location: locationString,
       avatar: loadedPhotoBase64,
       is_change: true,

@@ -7,9 +7,12 @@ import Trash from "../../img/trainings/trash.svg";
 import { useNavigate } from "react-router-dom";
 
 const AddToTrainingCard = ({ profile, callback, view }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <div onClick={() => navigate(`/public/profile/${profile.id}`)} className="training_view_content_right_team_block">
+    <div
+      onClick={() => navigate(`/public/profile/${profile.id}`)}
+      className="training_view_content_right_team_block"
+    >
       <div className="training_view_content_right_team_block_avatar_wrapper">
         <img
           src={`data:image/png;base64,${profile.avatar}`}
@@ -47,7 +50,10 @@ const AddToTrainingCard = ({ profile, callback, view }) => {
             src={Trash}
             alt="delete"
             className="training_view_content_right_team_block_delete"
-            onClick={callback}
+            onClick={(e) => {
+              e.stopPropagation();
+              callback();
+            }}
           />
         )}
       </div>

@@ -199,7 +199,8 @@ const AddPlace = () => {
   };
 
   const handleCreate = () => {
-    if (!sendPhotosArray) {
+    console.log(promiseProgress);
+    if (!sendPhotosArray.length) {
       dispatch(openErrorAlert("Загрузите фото!"));
       return;
     } else if (!title) {
@@ -208,14 +209,20 @@ const AddPlace = () => {
     } else if (!coords) {
       dispatch(openErrorAlert("Не указано местоположение!"));
       return;
-    } else if (!category) {
-      dispatch(openErrorAlert("Не указана категория!"));
+    } else if (!camera) {
+      dispatch(openErrorAlert("Указание камеры обязательно!"));
       return;
     } else if (!cost) {
       dispatch(openErrorAlert("Указание стоимости обязательно!"));
-    } else if (!camera) {
-      dispatch(openErrorAlert("Указание камеры обязательно!"));
+      return;
+    } else if (!paymentType) {
+      dispatch(openErrorAlert("Указание порядка оплаты обязательно!"));
+      return;
+    } else if (!category) {
+      dispatch(openErrorAlert("Не указана категория!"));
+      return;
     }
+    setPromiseProgress(true);
     sendPhotosArray.forEach((photo, idx) => {
       Requests.createImage(photo)
         .then((res) => {
@@ -224,7 +231,6 @@ const AddPlace = () => {
             mainPhotoId = res.data.id;
           }
           if (upsendPhotosArray.length === sendPhotosArray.length) {
-            setPromiseProgress(true);
             Requests.createFilmPlace({
               name_place: title,
               description: description,

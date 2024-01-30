@@ -63,7 +63,13 @@ const PublicProfile = ({ setProfileId }) => {
 
   const addToFavorite = () => {
     Requests.addFavoriteProfile(Number(profileId))
-      .then(() => dispatch(openSuccessAlert("Профиль добавлен в избранное!")))
+      .then(() => {
+        dispatch(openSuccessAlert("Профиль добавлен в избранное!"));
+        Requests.getPublicProfile(profileId).then((res) => {
+          setProfileData(res.data);
+          setDataLoading(false);
+        });
+      })
       .catch(() =>
         dispatch(
           openErrorAlert(
@@ -71,6 +77,18 @@ const PublicProfile = ({ setProfileId }) => {
           )
         )
       );
+  };
+
+  const deleteFromFavorite = () => {
+    Requests.deleteFavoriteProfile(Number(profileId))
+      .then(() => {
+        dispatch(openSuccessAlert("Профиль удален из избранного!"));
+        Requests.getPublicProfile(profileId).then((res) => {
+          setProfileData(res.data);
+          setDataLoading(false);
+        });
+      })
+      .catch(() => dispatch(openErrorAlert("Произошла ошибка.")));
   };
 
   React.useEffect(() => {
@@ -326,10 +344,16 @@ const PublicProfile = ({ setProfileId }) => {
                     className="my_profile_header_middle_row_buttons_button_img"
                   />
                   <p
-                    onClick={addToFavorite}
+                    onClick={
+                      profileData.in_favorite
+                        ? deleteFromFavorite
+                        : addToFavorite
+                    }
                     className="my_profile_header_middle_row_buttons_mail_p notheme"
                   >
-                    Добавить в Избранное
+                    {profileData.in_favorite
+                      ? "Удалить из избранного"
+                      : "Добавить в избранное"}
                   </p>
                 </div>
               )}

@@ -194,7 +194,7 @@ const AddSession = () => {
   };
 
   const handleCreate = () => {
-    if (!upsendPhotosArray) {
+    if (!sendPhotosArray.length) {
       dispatch(openErrorAlert("Загрузите фото!"));
       return;
     } else if (!title) {
@@ -203,11 +203,11 @@ const AddSession = () => {
     } else if (!coords) {
       dispatch(openErrorAlert("Не указано местоположение!"));
       return;
-    } else if (!category) {
-      dispatch(openErrorAlert("Не указан тип фотосессии!"));
-      return;
     } else if (!date) {
       dispatch(openErrorAlert("Не указана дата съемки!"));
+      return;
+    } else if (!category) {
+      dispatch(openErrorAlert("Не указан тип фотосессии!"));
       return;
     }
     sendPhotosArray.forEach((photo, idx) => {

@@ -14,12 +14,6 @@ const $api = axios.create({
   baseURL: "http://localhost:8000",
 }); */
 
-/* export const rootAddress = "http://88.214.236.178";
-export const rootSocketAddress = "88.214.236.178";
-
-const $api = axios.create({
-  baseURL: "http://88.214.236.178",
-}); */
 
 export class Requests {
   static async login(email, password) {
@@ -648,13 +642,16 @@ export class Requests {
 
   static async deleteFavoriteSession(id) {
     return $api({
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
+      data: {
+        photo_session_favorites: [Number(id)],
+      },
 
-      url: `api/gallery/photo_session/favorite/delete/${id}/`,
+      url: `api/gallery/photo_session/favorite/delete/`,
     }).then((res) => res);
   }
 
@@ -1015,13 +1012,16 @@ export class Requests {
 
   static async deleteFavoritePlace(id) {
     return $api({
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
+      data: {
+        place_favorites: [Number(id)],
+      },
 
-      url: `api/film_places/favorite/delete/${id}/`,
+      url: `api/film_places/favorite/delete/`,
     }).then((res) => res);
   }
 
@@ -1061,6 +1061,7 @@ export class Requests {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+         ...localStorage.getItem("access") && {Authorization: `Bearer ${localStorage.getItem("access")}`},
       },
 
       url: `api/accounts/profile/${id}/`,
@@ -1141,6 +1142,22 @@ export class Requests {
       },
 
       url: `api/accounts/profile/favorite/create/`,
+    }).then((res) => res);
+  }
+
+  static async deleteFavoriteProfile(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        profile_favorites: [Number(id)],
+      },
+
+      url: `api/accounts/profile/favorite/delete/`,
     }).then((res) => res);
   }
 

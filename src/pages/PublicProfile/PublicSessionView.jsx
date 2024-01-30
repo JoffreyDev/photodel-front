@@ -35,7 +35,7 @@ const PublicSessionView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [session, setSession] = React.useState();
-  const [comment, setComment] = React.useState('');
+  const [comment, setComment] = React.useState("");
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -92,9 +92,9 @@ const PublicSessionView = ({ setProfileId }) => {
   }, [session]);
 
   const likeHandle = () => {
-    if (!localStorage.getItem('access')){
-      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
-      return
+    if (!localStorage.getItem("access")) {
+      dispatch(openErrorAlert("Доступно только авторизованным пользователям!"));
+      return;
     }
     if (session.is_liked) {
       Requests.unlikeSession(sessionId).then(() => {
@@ -113,9 +113,9 @@ const PublicSessionView = ({ setProfileId }) => {
   };
 
   const favoriteHandle = () => {
-    if (!localStorage.getItem('access')){
-      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
-      return
+    if (!localStorage.getItem("access")) {
+      dispatch(openErrorAlert("Доступно только авторизованным пользователям!"));
+      return;
     }
     if (session.in_favorite) {
       Requests.deleteFavoriteSession(sessionId).then(() => {
@@ -494,7 +494,7 @@ const PublicSessionView = ({ setProfileId }) => {
             <p className="photo_view_content_right_data_p">
               Тип съемки:{" "}
               <span className="photo_view_content_right_data_span">
-                {session?.session_category.name_spec}
+                {session?.session_category?.name_spec}
               </span>
             </p>
             <p className="photo_view_content_right_data_p">

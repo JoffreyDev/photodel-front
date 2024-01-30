@@ -176,7 +176,11 @@ const RequestsPage = () => {
             <TeamCard
               type={"request"}
               key={idx}
-              profile={request.invite_receiver}
+              profile={
+                request.invite_receiver.id === userData.id
+                  ? request.invite_sender
+                  : request.invite_receiver
+              }
               status={request.status}
               toMe={request.invite_receiver.id === userData.id}
               request_id={request.id}

@@ -275,8 +275,8 @@ const AddTraining = () => {
     } else if (!cost) {
       dispatch(openErrorAlert("Не указана информация о стоимости участия!"));
       return;
-    } else if (!cost) {
-      dispatch(openErrorAlert("Не указано количество мест на обучение!"));
+    } else if (!placesCount) {
+      dispatch(openErrorAlert("Не указано количество мест на мероприятие!"));
       return;
     } else if (!firstPayment) {
       dispatch(
@@ -321,7 +321,10 @@ const AddTraining = () => {
               setPromiseProgress(false);
               dispatch(openErrorAlert(err.response.data));
             });
-        } else return;
+        } else {
+          setPromiseProgress(false);
+          return;
+        }
       });
     });
   };

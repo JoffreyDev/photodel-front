@@ -42,6 +42,10 @@ const RequestWindow = ({ active, setActive, user, width, notAlign }) => {
   };
 
   const createRequestHandle = () => {
+    if (!time || !duration || !place || !type || !count || !budget) {
+      dispatch(openErrorAlert("Необходимо заполнить все поля!"));
+      return;
+    }
     if (isLoggedIn) {
       Requests.createNewRequest({
         filming_timestamp: time,
@@ -57,10 +61,15 @@ const RequestWindow = ({ active, setActive, user, width, notAlign }) => {
       })
         .then(() => {
           dispatch(openSuccessAlert("Запрос успешно отправлен!"));
+          unsetData();
           setActive(false);
         })
         .catch(() => dispatch(openErrorAlert("Произошла ошибка")));
     } else {
+      if (!email) {
+        dispatch(openErrorAlert("Необходимо заполнить все поля!"));
+        return;
+      }
       Requests.createNewRequestUnauth({
         filming_timestamp: time,
         hours_duration: duration,
@@ -75,17 +84,21 @@ const RequestWindow = ({ active, setActive, user, width, notAlign }) => {
         email: email,
       })
         .then(() => {
-          dispatch(openSuccessAlert("Запрос успешно отправлен!"));
+          dispatch(openSuccessAlert("Письмо с кодом отправлено вам на почту!"));
           setStep(2);
         })
-        .catch(() => dispatch(openErrorAlert("Произошла ошибка")));
+        .catch((err) => dispatch(openErrorAlert(err.response.data.message)));
     }
   };
 
   const handleCheck = () => {
-    Requests.checkUnauthRequest({ code: code, email: email }).then(() =>
-      dispatch(openSuccessAlert("Запрос успешно отправлен!"))
-    );
+    Requests.checkUnauthRequest({ code: code, email: email }).then(() => {
+      dispatch(openSuccessAlert("Запрос успешно отправлен!"));
+      unsetData();
+      setCode("");
+      setStep(1);
+      setActive(false);
+    });
   };
 
   return (
