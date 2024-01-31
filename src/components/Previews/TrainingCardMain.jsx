@@ -227,7 +227,7 @@ const TrainingCardMain = ({
             </div>
           </div>
         </div>
-        {training?.training_orgs[0] && (
+        {training?.training_orgs[0] && window.screen.width >= 576 && (
           <div className="training_card_manager">
             <p className="training_card_manager_title">Организатор</p>
             <div className="training_card_manager_account">
@@ -245,19 +245,21 @@ const TrainingCardMain = ({
             </div>
           </div>
         )}
-        <div className="training_card_profile">
-          <p className="training_card_profile_title">Автор</p>
-          <div className="training_card_profile_prof">
-            <img
-              src={`data:image/png;base64,${training?.profile?.avatar}`}
-              alt="avatar"
-              className="training_card_profile_prof_avatar"
-            />
-            <p className="training_card_profile_prof_name">
-              {training?.profile?.name + " " + training?.profile?.surname}
-            </p>
+        {window.screen.width >= 576 && (
+          <div className="training_card_profile">
+            <p className="training_card_profile_title">Автор</p>
+            <div className="training_card_profile_prof">
+              <img
+                src={`data:image/png;base64,${training?.profile?.avatar}`}
+                alt="avatar"
+                className="training_card_profile_prof_avatar"
+              />
+              <p className="training_card_profile_prof_name">
+                {training?.profile?.name + " " + training?.profile?.surname}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
         <div className="training_card_info_comm">
           <div className="training_card_info_comm_likes">
             <img

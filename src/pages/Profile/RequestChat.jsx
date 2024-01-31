@@ -36,7 +36,7 @@ const RequestChat = () => {
   const mainSocket = React.useRef(null);
 
   const updateStatus = (status) => {
-    Requests.updateFilmingStatus(Number(chatId) + 1, status).then(() => {
+    Requests.updateFilmingStatus(Number(chatId), status).then(() => {
       mainSocket.current.send(
         JSON.stringify({
           command: "fetch_messages",

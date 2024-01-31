@@ -1145,3 +1145,7 @@ color: var(--secondary-text-color) !important;
 .css-zy01o1-MuiFormControl-root #demo-simple-select-filled {
     color: var(--secondary-text-color) !important;
 }
+
+.training_view_content_left_textarea_field {
+    color: var(--secondary-text-color)
+}
