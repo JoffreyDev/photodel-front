@@ -892,7 +892,8 @@ export class Requests {
     sortType,
     count_positions,
     page,
-    place
+    place,
+    name_spec
   }) {
     return $api({
       method: "GET",
@@ -910,6 +911,8 @@ export class Requests {
           : ""
       }${
         name_category !== "Все" ? `&name_category=${name_category}` : ""
+      }${
+        name_spec !== "Все" ? `&name_spec=${name_spec}` : ""
       }${`&distance=${distance}`}${
         sortField ? `&filter_field=${sortField}` : ""
       }${

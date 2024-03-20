@@ -26,17 +26,21 @@ import Loading from "../../img/commonImages/loading.gif";
 import { slide as Menu } from "react-burger-menu";
 
 const MainProfiles = () => {
-  const { prosCategories } = useSelector(({ siteEntities }) => siteEntities);
+  const { prosCategories, prosSpecs } = useSelector(
+    ({ siteEntities }) => siteEntities
+  );
   const { userCoords } = useSelector(({ userData }) => userData);
 
   const [profiles, setProfiles] = React.useState();
   const [proCategories, setProCategories] = React.useState();
+  const [proSpecs, setProSpecs] = React.useState();
 
   const navigate = useNavigate();
 
   const [searchReq, setSearchReq] = React.useState();
   const [searchDist, setSearchDist] = React.useState(10000000000);
   const [category, setCategory] = React.useState("Все");
+  const [spec, setSpec] = React.useState("Все");
   const [places, setPlaces] = React.useState();
   const [sortField, setSortField] = React.useState(2);
   const [sortType, setSortType] = React.useState("-");
@@ -63,6 +67,7 @@ const MainProfiles = () => {
   const [menuOpened, setMenuOpened] = React.useState(false);
 
   const [selectAdded, setSelectAdded] = React.useState(false);
+  const [specSelectAdded, setSpecSelectAdded] = React.useState(false);
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
@@ -138,6 +143,7 @@ const MainProfiles = () => {
       count_positions: countPositions,
       page: page,
       place: place,
+      name_spec: spec,
     }).then((res) => {
       setFetching(false);
       setProfiles(res.data);
@@ -150,6 +156,7 @@ const MainProfiles = () => {
       search_words: searchReq,
       distance: searchDist,
       place: place,
+      name_spec: spec,
     }).then((res) => setProfilesMarks(res.data));
 
     navigate("/profies");
@@ -168,6 +175,7 @@ const MainProfiles = () => {
       count_positions: countPositions,
       page: page,
       place: place,
+      name_spec: spec,
     }).then((res) => {
       setFetching(false);
       setProfiles(res.data);
@@ -180,6 +188,7 @@ const MainProfiles = () => {
       search_words: searchReq,
       distance: searchDist,
       place: place,
+      name_spec: spec,
     }).then((res) => setProfilesMarks(res.data));
   };
 
@@ -208,9 +217,23 @@ const MainProfiles = () => {
   }, [proCategories, prosCategories]);
 
   React.useEffect(() => {
+    if (!proSpecs) {
+      setProSpecs(prosSpecs);
+    }
+    if (proSpecs && !specSelectAdded) {
+      setProSpecs((prev) => [{ id: 100, name_spec: "Все" }, ...prev]);
+      setSpecSelectAdded(true);
+    }
+  }, [proSpecs, prosSpecs]);
+
+  React.useEffect(() => {
     window.scroll(0, 0);
     document.title = "Профи рядом";
   }, []);
+
+  React.useEffect(() => {
+    setSpec("Все");
+  }, [category]);
 
   return (
     <div className="main_photo">
@@ -240,6 +263,23 @@ const MainProfiles = () => {
               setValue={setCategory}
               getName
             />
+            {(category === "Фотографы" || category === "Модели") && (
+              <SelectInput
+                height={"38px"}
+                width={"255px"}
+                label={"Специализация"}
+                values={
+                  prosSpecs &&
+                  prosSpecs.map((item) => {
+                    return { id: item.id, value: item.name_spec };
+                  })
+                }
+                value={spec}
+                onChange={(e) => setSpec(e.target.value)}
+                setValue={setSpec}
+                getName
+              />
+            )}
             <SelectInput
               height={"38px"}
               width={"255px"}
@@ -409,6 +449,23 @@ const MainProfiles = () => {
               setValue={setCategory}
               getName
             />
+            {(category === "Фотографы" || category === "Модели") && (
+              <SelectInput
+                height={"38px"}
+                width={"255px"}
+                label={"Специализация"}
+                values={
+                  proSpecs &&
+                  proSpecs.map((item) => {
+                    return { id: item.id, value: item.name_spec };
+                  })
+                }
+                value={spec}
+                onChange={(e) => setSpec(e.target.value)}
+                setValue={setSpec}
+                getName
+              />
+            )}
             <SelectInput
               height={"38px"}
               width={"255px"}
