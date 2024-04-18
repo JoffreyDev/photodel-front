@@ -122,7 +122,6 @@ const PublicPhotos = ({ component, setProfileId }) => {
             <GalleryPhotoPreview
               photo={item}
               key={index}
-              isAuthor
               wrapperWidth={window.screen.width <= 576 ? "49%" : ""}
               width={window.screen.width <= 576 ? "49%" : ""}
             />

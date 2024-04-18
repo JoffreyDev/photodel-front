@@ -3,13 +3,14 @@ import SortImage from "../../img/sessions/sort.svg";
 import { Checkbox, SelectInput, AddReview, ReviewSent } from "../../components";
 import "../../styles/Profile/Reviews.scss";
 import Requests from "../../http/axios-requests";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { ScreenLoader } from "../../components";
 import GreenButton from "../../components/common/GreenButton";
 import ReviewCard from "../../components/Previews/ReviewCard";
 import { PublicHeader } from "..";
 import SortImageInvert from "../../img/commonImages/sort-.svg";
+import { openErrorAlert } from "../../redux/actions/userData";
 
 function Reviews() {
   const navigate = useNavigate();
@@ -25,10 +26,14 @@ function Reviews() {
 
   const [dataLoading, setDataLoading] = React.useState(true);
 
+  const dispatch = useDispatch();
+
   const [profileData, setPorfileData] = React.useState();
 
   const params = useParams();
   const profileId = params.id;
+
+  const { isLoggedIn } = useSelector(({ userData }) => userData);
 
   React.useEffect(() => {
     setDataLoading(true);
@@ -105,7 +110,17 @@ function Reviews() {
               width={"180px"}
               height={"38px"}
               text={"Оставить отзыв"}
-              callback={() => setAddReviewModalActive(true)}
+              callback={() => {
+                if (!isLoggedIn) {
+                  dispatch(
+                    openErrorAlert(
+                      "Доступно только авторизованным пользователям"
+                    )
+                  );
+                  return;
+                }
+                setAddReviewModalActive(true);
+              }}
             />
           )}
         </div>

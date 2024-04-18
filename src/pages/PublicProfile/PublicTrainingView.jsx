@@ -43,7 +43,7 @@ const PublicTrainingView = ({ setProfileId }) => {
 
   const [loaded, setLoaded] = React.useState();
   const [training, setTraining] = React.useState();
-  const [comment, setComment] = React.useState('');
+  const [comment, setComment] = React.useState("");
   const [commentingId, setCommentingId] = React.useState();
   const [quotingId, setQuotingId] = React.useState();
   const [comments, setComments] = React.useState();
@@ -57,7 +57,7 @@ const PublicTrainingView = ({ setProfileId }) => {
 
   React.useEffect(() => {
     !loaded &&
-      localStorage.getItem("key") &&
+      localStorage.getItem("access") &&
       Requests.getSingleTraining(trainingId)
         .then((res) => {
           setLoaded(true);
@@ -77,7 +77,7 @@ const PublicTrainingView = ({ setProfileId }) => {
         });
 
     !loaded &&
-      !localStorage.getItem("key") &&
+      !localStorage.getItem("access") &&
       Requests.getSingleTrainingUnauth(trainingId)
         .then((res) => {
           setLoaded(true);
@@ -103,9 +103,9 @@ const PublicTrainingView = ({ setProfileId }) => {
   }, [training]);
 
   const likeHandle = () => {
-    if (!localStorage.getItem('access')){
-      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
-      return
+    if (!localStorage.getItem("access")) {
+      dispatch(openErrorAlert("Доступно только авторизованным пользователям!"));
+      return;
     }
     if (training.is_liked) {
       Requests.unlikeTraining(trainingId).then(() => {
@@ -124,9 +124,9 @@ const PublicTrainingView = ({ setProfileId }) => {
   };
 
   const favoriteHandle = () => {
-    if (!localStorage.getItem('access')){
-      dispatch(openErrorAlert('Доступно только авторизованным пользователям!'))
-      return
+    if (!localStorage.getItem("access")) {
+      dispatch(openErrorAlert("Доступно только авторизованным пользователям!"));
+      return;
     }
     if (training.in_favorite) {
       Requests.deleteFavoriteTraining([trainingId]).then(() => {
@@ -601,15 +601,16 @@ const PublicTrainingView = ({ setProfileId }) => {
                 </p>
               </div>
 
-              {training?.reserved_places < training?.summary_members && userData.id !== training.profile.id && (
-                <GreenButton
-                  width={"180px"}
-                  height={"38px"}
-                  text={"Записаться"}
-                  callback={handleRequest}
-                  margin={"20px 0 20px 0 "}
-                />
-              )}
+              {training?.reserved_places < training?.summary_members &&
+                userData.id !== training.profile.id && (
+                  <GreenButton
+                    width={"180px"}
+                    height={"38px"}
+                    text={"Записаться"}
+                    callback={handleRequest}
+                    margin={"20px 0 20px 0 "}
+                  />
+                )}
             </div>
 
             <div className="training_view_content_right_team mobile">
@@ -935,7 +936,8 @@ const PublicTrainingView = ({ setProfileId }) => {
               </p>
             </div>
             {window.screen.width > 576 &&
-              training?.reserved_places < training?.summary_members && userData.id !== training.profile.id && (
+              training?.reserved_places < training?.summary_members &&
+              userData.id !== training.profile.id && (
                 <GreenButton
                   width={"180px"}
                   height={"38px"}

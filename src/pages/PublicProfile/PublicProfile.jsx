@@ -251,9 +251,9 @@ const PublicProfile = ({ setProfileId }) => {
                         className="my_profile_header_middle_row_status_img"
                       />
                       <p className="my_profile_header_middle_row_status_p">
-                        {userData.ready_status === "BUSY"
+                        {profileData.ready_status === "BUSY"
                           ? "Занят"
-                          : userData.ready_status === "FREE"
+                          : profileData.ready_status === "FREE"
                           ? "Свободен"
                           : ""}
                       </p>
@@ -320,7 +320,7 @@ const PublicProfile = ({ setProfileId }) => {
                   </p>
                 </div>
               )}
-            {profileData.status === 2 && (
+            {profileData.status === 2 && userData.id !== Number(profileId) && (
               <div className="my_profile_header_middle_row_buttons_button req">
                 <img
                   src={Req}

@@ -274,7 +274,11 @@ const ProfileEdit = ({ setActiveModule }) => {
         });
       })
       .catch((e) =>
-        dispatch(openErrorAlert(Object.entries(e.response.data).toString()))
+        dispatch(
+          openErrorAlert(
+            Object.entries(e.response.data).toString().split(",")[1]
+          )
+        )
       );
   };
 

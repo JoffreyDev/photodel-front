@@ -266,9 +266,9 @@ const MyProfile = () => {
                       className="my_profile_header_middle_row_status_img"
                     />
                     <p className="my_profile_header_middle_row_status_p">
-                      {userData.ready_status === "BUSY"
+                      {userData?.ready_status === "BUSY"
                         ? "Занят"
-                        : userData.ready_status === "FREE"
+                        : userData?.ready_status === "FREE"
                         ? "Свободен"
                         : ""}
                     </p>

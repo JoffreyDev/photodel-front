@@ -5,7 +5,12 @@ import Requests from "../../http/axios-requests";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
 
-function ResetPass({ resetPassActive, setResetPassActive }) {
+function ResetPass({
+  resetPassActive,
+  setResetPassActive,
+  setRegModuleActive,
+  setLogModuleActive,
+}) {
   const [email, setEmail] = React.useState();
 
   const dispatch = useDispatch();
@@ -72,6 +77,26 @@ function ResetPass({ resetPassActive, setResetPassActive }) {
           margin={"20px 0 0 0"}
           callback={sendResetMail}
         />
+
+        <p
+          className="reg_auth_content_lower_p"
+          onClick={() => {
+            setLogModuleActive(true);
+            setResetPassActive(false);
+          }}
+        >
+          Я вспомнил пароль
+        </p>
+
+        <p
+          className="reg_auth_content_lower_p"
+          onClick={() => {
+            setRegModuleActive(true);
+            setResetPassActive(false);
+          }}
+        >
+          Регистрация
+        </p>
       </div>
     </ModalWindow>
   );

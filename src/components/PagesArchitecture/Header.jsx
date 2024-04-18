@@ -445,6 +445,8 @@ const Header = ({ styled, border }) => {
       <ResetPass
         resetPassActive={resetPassActive}
         setResetPassActive={setResetPassActive}
+        setRegModuleActive={setRegModuleActive}
+        setLogModuleActive={setLogModuleActive}
       />
     </header>
   );

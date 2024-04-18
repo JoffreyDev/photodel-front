@@ -43,7 +43,7 @@ function TrainingRequest({
         dispatch(
           openSuccessAlert(
             status === "ACCEPTED"
-              ? "Участник добавлен в обчуние!"
+              ? "Участник добавлен в обучение!"
               : status === "REJECTED"
               ? "Запрос на обучение отклонен!"
               : ""

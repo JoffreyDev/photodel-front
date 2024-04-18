@@ -24,7 +24,7 @@ const RequestsPage = () => {
 
   const [component, setComponent] = React.useState("filming");
 
-  const [reload, toggleReload] = React.useState(false);
+  const [reload, setReload] = React.useState(false);
 
   const [posCount, setPosCount] = React.useState("-");
 
@@ -39,6 +39,10 @@ const RequestsPage = () => {
   let incomingTrainRequests;
   let outgoingTrainRequests;
   let reusltTrainArray;
+
+  const toggleReload = () => {
+    setReload(!reload);
+  };
 
   React.useEffect(() => {
     if (!localStorage.getItem("access")) navigate("/");
