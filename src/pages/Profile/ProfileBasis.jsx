@@ -167,7 +167,7 @@ const ProfileBasis = ({ mainSocket }) => {
                   {notifications[0]?.new_messages > 0 && (
                     <span>
                       <div className="notifications_counter_wrapper profile">
-                        <p>{notifications[0].new_messages}</p>
+                        <p>{1}</p>
                       </div>
                     </span>
                   )}
@@ -388,10 +388,9 @@ const ProfileBasis = ({ mainSocket }) => {
                 <li
                   onClick={() => navigate("/profile/finance")}
                   className="profile_basis_module_choice_li"
-                 
                 >
                   <img
-                    src={component === 'finance' ? Money : MoneyDis}
+                    src={component === "finance" ? Money : MoneyDis}
                     className="profile_basis_module_choice_img"
                     alt="menu choice"
                   />

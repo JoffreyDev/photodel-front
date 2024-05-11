@@ -17,6 +17,8 @@ const LastCommentComponent = ({ comment, subj }) => {
                 ? comment && comment.place__id
                 : subj === "session"
                 ? comment && comment.photo_session__id
+                : subj === "training"
+                ? comment && comment.training__id
                 : ""
             }`
           )
@@ -30,11 +32,28 @@ const LastCommentComponent = ({ comment, subj }) => {
           ? comment && comment.place__name_place
           : subj === "session"
           ? comment && comment.photo_session__session_name
+          : subj === "training"
+          ? comment && comment.training__training_title
           : ""}
       </h3>
       <p
         style={{ cursor: "pointer" }}
         className="main_page_last_comments_section_content_comment_content"
+        onClick={() =>
+          navigate(
+            `/public/${subj}/${
+              comment && subj === "photo"
+                ? comment && comment.gallery__id
+                : subj === "place"
+                ? comment && comment.place__id
+                : subj === "session"
+                ? comment && comment.photo_session__id
+                : subj === "training"
+                ? comment && comment.training__id
+                : ""
+            }`
+          )
+        }
       >
         {comment && comment.content}
       </p>

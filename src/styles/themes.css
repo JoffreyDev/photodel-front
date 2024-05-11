@@ -308,7 +308,28 @@ html {
 
 .main_photo_header_fields_map_p {
     color: var(--secondary-text-color);
-        transition: 0.3s;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.main_photo_header_fields_map {
+    cursor: pointer;
+}
+
+.main_places_header_fields_map {
+    cursor: pointer;
+}
+
+.main_training_header_fields_map {
+    cursor: pointer;
+}
+
+.main_profile_header_fields_map {
+    cursor: pointer;
+}
+
+.main_photo_header_fields_map_img {
+    cursor: pointer;
 }
 
 .main_page_header_bottom_row_left {
@@ -1030,6 +1051,11 @@ color: var(--secondary-text-color);
     color: var(--secondary-text-color);
     cursor: pointer;
 }
+
+.main_training_header_fields_map_img {
+    cursor: pointer;
+}
+
 
 .main_training_header_sorts {
     border-bottom: var(--arrows-border);

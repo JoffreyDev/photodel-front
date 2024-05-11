@@ -30,20 +30,20 @@ const PlaceCard = ({
       className={
         halfContent ? "sessions_card map_active" : "sessions_card map_disabled"
       }
+      onClick={() =>
+        !disableRedirect &&
+        navigate(
+          !notAuthor
+            ? `/profile/place/${place.id}`
+            : `/public/place/${place.id}`
+        )
+      }
     >
       <div className="sessions_card_photo_wrapper">
         <img
           src={`${rootAddress}${place.main_photo.photo}`}
           alt="card"
           className="sessions_card_photo"
-          onClick={() =>
-            !disableRedirect &&
-            navigate(
-              !notAuthor
-                ? `/profile/photo/${place.id}`
-                : `/public/place/${place.id}`
-            )
-          }
         />
         <div className="sessions_card_photo_checkbox">
           {!disableCheck && (

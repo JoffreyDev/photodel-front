@@ -32,22 +32,25 @@ const TrainingCardMain = ({
       className={
         halfContent ? "training_card map_active" : "training_card map_disabled"
       }
+      onClick={() =>
+        !disableRedirect &&
+        navigate(
+          !notAuthor
+            ? `/profile/training/${training.id}`
+            : `/public/training/${training.id}`
+        )
+      }
     >
       <div className="training_card_photo_wrapper">
         <img
           src={`${rootAddress}${training?.main_photo?.photo}`}
           alt="card"
           className="training_card_photo"
-          onClick={() =>
-            !disableRedirect &&
-            navigate(
-              !notAuthor
-                ? `/profile/training/${training.id}`
-                : `/public/training/${training.id}`
-            )
-          }
         />
-        <div className="training_card_photo_checkbox">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="training_card_photo_checkbox"
+        >
           {!disableCheck && (
             <Checkbox
               value={array.includes(training.id)}
@@ -78,12 +81,7 @@ const TrainingCardMain = ({
             : ""}
         </p>
         <div className="training_card_info_title_wrapper">
-          <p
-            onClick={() => navigate(`/public/training/${training.id}`)}
-            className="training_card_info_title"
-          >
-            {training?.training_title}
-          </p>
+          <p className="training_card_info_title">{training?.training_title}</p>
           {!disableEdit && (
             <img
               src={Edit}

@@ -1,6 +1,6 @@
 import React from "react";
 import ModalWindow from "../RegAuth/ModalWindow";
-import { GreenButton } from "..";
+import { GreenButton, GreyButton } from "..";
 
 const Submit = ({ modalActive, setModalActive, callback, setAction, text }) => {
   return (
@@ -35,13 +35,29 @@ const Submit = ({ modalActive, setModalActive, callback, setAction, text }) => {
             ? text
             : "Удалить выбранные фото? Данное действие невозможно отменить!"}
         </p>
-        <GreenButton
-          callback={() => callback()}
-          text="Удалить"
-          width={"100%"}
-          height={"38px"}
-          margin={"30px 0 0 0 "}
-        />
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: "30px",
+          }}
+        >
+          <GreyButton
+            callback={() => setModalActive(false)}
+            text="Отменить"
+            width={"100%"}
+            height={"38px"}
+          />
+          <GreenButton
+            callback={() => callback()}
+            text="Удалить"
+            width={"100%"}
+            height={"38px"}
+            margin={"10px 0 0 10px"}
+          />
+        </div>
       </div>
     </ModalWindow>
   );
