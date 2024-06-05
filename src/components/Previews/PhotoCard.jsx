@@ -72,7 +72,7 @@ const PhotoCard = ({
         className="photos_card_info"
       >
         <p className="photos_card_info_country">
-          {photo.string_place_location.split(", ")[1]}
+          {photo.string_place_location?.split(", ")[1]}
         </p>
         <div className="photos_card_info_title_wrapper">
           <p className="photos_card_info_title">{photo.name_image}</p>

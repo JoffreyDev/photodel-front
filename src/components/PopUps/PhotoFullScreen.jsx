@@ -3,6 +3,7 @@ import React from "react";
 import { Checkbox, PhotoCard, GreenButton } from "..";
 import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
 import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
+import ZoomImage from "../common/ZoomImage";
 
 const PhotoFullScreen = ({
   photo,
@@ -57,16 +58,11 @@ const PhotoFullScreen = ({
           />
         )}
         <div className="photo_view_fullscreen_content">
-          <img
+          <ZoomImage
             src={photo}
-            alt="photo"
-            className="photo_view_fullscreen_content_image"
-            style={
-              photoWidth
-                ? { width: photoWidth + "px", height: photoHeight + "px" }
-                : {}
-            }
-            onClick={() => setModalActive(false)}
+            photoWidth={photoWidth}
+            photoHeight={photoHeight}
+            setModalActive={setModalActive}
           />
           {slider && (
             <img

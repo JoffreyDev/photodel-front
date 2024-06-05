@@ -602,14 +602,38 @@ const PublicTrainingView = ({ setProfileId }) => {
               </div>
 
               {training?.reserved_places < training?.summary_members &&
-                userData.id !== training.profile.id && (
+                userData.id !== training.profile.id &&
+                !training?.has_request_from_user && (
                   <GreenButton
                     width={"180px"}
                     height={"38px"}
                     text={"Записаться"}
                     callback={handleRequest}
                     margin={"20px 0 20px 0 "}
+                    disabled={training?.has_request_from_user}
                   />
+                )}
+
+              {training?.reserved_places < training?.summary_members &&
+                userData.id !== training.profile.id &&
+                training?.has_request_from_user && (
+                  <p
+                    style={{ marginTop: "20px", marginBottom: "20px" }}
+                    className="training_view_content_right_spec_p"
+                  >
+                    Запрос направлен на рассмотрение
+                  </p>
+                )}
+              {window.screen.width > 576 &&
+                training?.reserved_places < training?.summary_members &&
+                userData.id !== training.profile.id &&
+                training?.has_request_from_user && (
+                  <p
+                    style={{ marginTop: "20px" }}
+                    className="training_view_content_right_spec_p"
+                  >
+                    Запрос направлен на рассмотрение
+                  </p>
                 )}
             </div>
 
@@ -937,14 +961,27 @@ const PublicTrainingView = ({ setProfileId }) => {
             </div>
             {window.screen.width > 576 &&
               training?.reserved_places < training?.summary_members &&
-              userData.id !== training.profile.id && (
+              userData.id !== training.profile.id &&
+              !training?.has_request_from_user && (
                 <GreenButton
                   width={"180px"}
                   height={"38px"}
                   text={"Записаться"}
                   callback={handleRequest}
                   margin={"20px 0 20px 0 "}
+                  disabled={training?.has_request_from_user}
                 />
+              )}
+            {window.screen.width > 576 &&
+              training?.reserved_places < training?.summary_members &&
+              userData.id !== training.profile.id &&
+              training?.has_request_from_user && (
+                <p
+                  style={{ marginTop: "20px" }}
+                  className="training_view_content_right_spec_p"
+                >
+                  Запрос направлен на рассмотрение
+                </p>
               )}
           </div>
           <div className="training_view_content_right_team">

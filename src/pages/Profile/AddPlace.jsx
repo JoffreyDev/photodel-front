@@ -485,6 +485,7 @@ const AddPlace = () => {
                     type="file"
                     className="hidden_file_input"
                     onChange={(e) => handlePhotoRead(e)}
+                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif"
                     multiple
                   />
                 </div>

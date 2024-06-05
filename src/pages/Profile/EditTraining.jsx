@@ -1,5 +1,5 @@
-import React from 'react';
-import Back from '../../img/addModules/arrow-back.svg';
+import React from "react";
+import Back from "../../img/addModules/arrow-back.svg";
 import {
   TextInput,
   Checkbox,
@@ -7,18 +7,18 @@ import {
   GreenButton,
   AutoCompleteInput,
   SelectInput,
-} from '../../components';
-import { useSelector } from 'react-redux';
-import '../../styles/Profile/AddTraining.scss';
-import Requests, { rootAddress } from '../../http/axios-requests';
-import { useNavigate, useParams } from 'react-router-dom';
-import { openErrorAlert, openSuccessAlert } from '../../redux/actions/userData';
-import { useDispatch } from 'react-redux';
-import Delete from '../../img/photoView/delete.svg';
-import Lock from '../../img/photoView/lock.svg';
-import Add from '../../img/trainings/add.svg';
-import Pro from '../../img/trainings/pro.svg';
-import Trash from '../../img/trainings/trash.svg';
+} from "../../components";
+import { useSelector } from "react-redux";
+import "../../styles/Profile/AddTraining.scss";
+import Requests, { rootAddress } from "../../http/axios-requests";
+import { useNavigate, useParams } from "react-router-dom";
+import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
+import { useDispatch } from "react-redux";
+import Delete from "../../img/photoView/delete.svg";
+import Lock from "../../img/photoView/lock.svg";
+import Add from "../../img/trainings/add.svg";
+import Pro from "../../img/trainings/pro.svg";
+import Trash from "../../img/trainings/trash.svg";
 
 const EditTraining = () => {
   //состояния для полей и фото
@@ -54,7 +54,7 @@ const EditTraining = () => {
   const photoId = params.id;
 
   React.useEffect(() => {
-    if (!localStorage.getItem('access')) navigate('/');
+    if (!localStorage.getItem("access")) navigate("/");
   }, []);
 
   //получаем альбомы юзера
@@ -74,7 +74,12 @@ const EditTraining = () => {
         setTitle(res.data.name_image);
         setDescription(res.data.description);
         setCoords(
-          res.data.place_location.split('(')[1].split(')')[0].split(' ').reverse().map(Number),
+          res.data.place_location
+            .split("(")[1]
+            .split(")")[0]
+            .split(" ")
+            .reverse()
+            .map(Number)
         );
         setAddressLine(res.data.string_place_location);
         setCamera(res.data.photo_camera);
@@ -86,12 +91,12 @@ const EditTraining = () => {
         setCategory(
           res.data.category.map((item) => {
             return { id: item.id, name: item.name_spec };
-          }),
+          })
         );
         setAlbums(
           res.data.album.map((item) => {
             return { id: item.id, name: item.name_album };
-          }),
+          })
         );
         setPhotoHidden(res.data.is_hidden);
         setAperture(res.data.aperture);
@@ -106,20 +111,20 @@ const EditTraining = () => {
     function init() {
       var myPlacemark,
         myMap = new window.ymaps.Map(
-          'map',
+          "map",
           {
             center: coords,
             zoom: 9,
-            controls: ['fullscreenControl', 'geolocationControl'],
+            controls: ["fullscreenControl", "geolocationControl"],
           },
           {
-            searchControlProvider: 'yandex#search',
-          },
+            searchControlProvider: "yandex#search",
+          }
         );
 
       // Слушаем клик на карте.
-      myMap.events.add('click', function (e) {
-        var coords = e.get('coords');
+      myMap.events.add("click", function (e) {
+        var coords = e.get("coords");
         setCoords(coords);
 
         // Если метка уже создана – просто передвигаем ее.
@@ -131,7 +136,7 @@ const EditTraining = () => {
           myPlacemark = createPlacemark(coords);
           myMap.geoObjects.add(myPlacemark);
           // Слушаем событие окончания перетаскивания на метке.
-          myPlacemark.events.add('dragend', function () {
+          myPlacemark.events.add("dragend", function () {
             getAddress(myPlacemark.geometry.getCoordinates());
           });
         }
@@ -143,23 +148,23 @@ const EditTraining = () => {
         return new window.ymaps.Placemark(
           coords,
           {
-            iconCaption: 'поиск...',
+            iconCaption: "поиск...",
           },
           {
-            preset: 'islands#violetDotIconWithCaption',
+            preset: "islands#violetDotIconWithCaption",
             draggable: true,
-          },
+          }
         );
       }
 
       // Определяем адрес по координатам (обратное геокодирование).
       function getAddress(coords) {
-        myPlacemark.properties.set('iconCaption', 'поиск...');
+        myPlacemark.properties.set("iconCaption", "поиск...");
         window.ymaps.geocode(coords).then(function (res) {
           setAddressLine(
-            res.geoObjects.get(0).getAddressLine().split(',')[0] +
-              ',' +
-              res.geoObjects.get(0).getAddressLine().split(',')[1],
+            res.geoObjects.get(0).getAddressLine().split(",")[0] +
+              "," +
+              res.geoObjects.get(0).getAddressLine().split(",")[1]
           );
           var firstGeoObject = res.geoObjects.get(0);
 
@@ -174,7 +179,7 @@ const EditTraining = () => {
               firstGeoObject.getThoroughfare() || firstGeoObject.getPremise(),
             ]
               .filter(Boolean)
-              .join(', '),
+              .join(", "),
             // В качестве контента балуна задаем строку с адресом объекта.
             balloonContent: firstGeoObject.getAddressLine(),
           });
@@ -210,250 +215,297 @@ const EditTraining = () => {
       is_sell: canBuy,
       iso: ISO,
     }).then(() => {
-      dispatch(openSuccessAlert('Фото изменено!'));
-      navigate('/profile/photos');
+      dispatch(openSuccessAlert("Фото изменено!"));
+      navigate("/profile/photos");
     });
   };
 
   const hidePhoto = () => {
-    Requests.updateHiddenPhotoStatus({ is_hidden: true, id: photoId }).then((res) => {
-      dispatch(openSuccessAlert('Фото скрыто!'));
-      navigate('/profile/photos');
-    });
+    Requests.updateHiddenPhotoStatus({ is_hidden: true, id: photoId }).then(
+      (res) => {
+        dispatch(openSuccessAlert("Фото скрыто!"));
+        navigate("/profile/photos");
+      }
+    );
   };
 
   const showPhoto = () => {
-    Requests.updateHiddenPhotoStatus({ is_hidden: false, id: photoId }).then((res) => {
-      dispatch(openSuccessAlert('Фото показано!'));
-      navigate('/profile/photos');
-    });
+    Requests.updateHiddenPhotoStatus({ is_hidden: false, id: photoId }).then(
+      (res) => {
+        dispatch(openSuccessAlert("Фото показано!"));
+        navigate("/profile/photos");
+      }
+    );
   };
 
   const deletePhoto = () => {
     Requests.deletePhoto([Number(photoId)]).then(() => {
-      dispatch(openSuccessAlert('Фото удалено!'));
-      navigate('/profile/photos');
+      dispatch(openSuccessAlert("Фото удалено!"));
+      navigate("/profile/photos");
     });
   };
 
   return (
-    <div className='add_training'>
-      <div className='add_training_header'>
-        <img src={Back} alt='back' className='add_training_header_arrow' />
-        <p onClick={() => navigate('/profile/photos')} className='add_training_header_p'>
+    <div className="add_training">
+      <div className="add_training_header">
+        <img src={Back} alt="back" className="add_training_header_arrow" />
+        <p
+          onClick={() => navigate("/profile/photos")}
+          className="add_training_header_p"
+        >
           Все мероприятия
         </p>
       </div>
-      <div className='add_training_content'>
-        <div className='add_training_left_content'>
+      <div className="add_training_content">
+        <div className="add_training_left_content">
           {loadedPhoto && (
             <img
               src={`${rootAddress}${loadedPhoto}`}
-              className='add_training_left_content_photo_preview'
-              alt='preview'
+              className="add_training_left_content_photo_preview"
+              alt="preview"
             />
           )}
-          <h1 className='add_training_left_content_h1'>Название и описание</h1>
+          <h1 className="add_training_left_content_h1">Название и описание</h1>
           <TextInput
-            width={'100%'}
-            height={'38px'}
-            placeholder='Введите название'
+            width={"100%"}
+            height={"38px"}
+            placeholder="Введите название"
             callback={setTitle}
             value={title}
           />
           <textarea
-            placeholder='Введите описание (+0,001 к рейтингу)'
-            className='add_training_left_content_textarea'
+            placeholder="Введите описание (+0,001 к рейтингу)"
+            className="add_training_left_content_textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <h1 className='add_training_left_content_h1 margin'>Место проведения</h1>
+          <h1 className="add_training_left_content_h1 margin">
+            Место проведения
+          </h1>
           <TextInput
-            width={'100%'}
-            height={'38px'}
-            placeholder='Местоположение'
-            label={'Введите местоположение или выберите на карте'}
+            width={"100%"}
+            height={"38px"}
+            placeholder="Местоположение"
+            label={"Введите местоположение или выберите на карте"}
             callback={setAddressLine}
             value={addressLine}
           />
 
-          <div id='map' style={{ height: '135px', width: '100%' }}></div>
+          <div id="map" style={{ height: "135px", width: "100%" }}></div>
 
-          <h1 className='add_training_left_content_h1 margin'>Данные о мероприятии</h1>
+          <h1 className="add_training_left_content_h1 margin">
+            Данные о мероприятии
+          </h1>
           <SelectInput
-            label={'Локация'}
-            width={'100%'}
-            height={'38px'}
-            placeholder='Введите данные'
+            label={"Локация"}
+            width={"100%"}
+            height={"38px"}
+            placeholder="Введите данные"
           />
           <SelectInput
-            value={'Введите данные'}
-            label={'Тип мероприятия'}
-            width={'100%'}
-            height={'38px'}
-            placeholder='Введите данные'
+            value={"Введите данные"}
+            label={"Тип мероприятия"}
+            width={"100%"}
+            height={"38px"}
+            placeholder="Введите данные"
           />
-          <div className='add_session_left_content_date_wrapper'>
-            <label htmlFor='date' className='add_session_left_content_date_label'>
+          <div className="add_session_left_content_date_wrapper">
+            <label
+              htmlFor="date"
+              className="add_session_left_content_date_label"
+            >
               Дата проведения
             </label>
             <input
-              placeholder='Выберите дату'
-              type='date'
-              className='add_session_left_content_date'
-              id='date'
+              placeholder="Выберите дату"
+              type="date"
+              className="add_session_left_content_date"
+              id="date"
               // value={date}
               // onChange={(e) => setDate(e.target.value)}
             />
           </div>
 
           <TextInput
-            width={'100%'}
-            height={'38px'}
-            placeholder='Введите данные'
-            label={'Стоимость'}
+            width={"100%"}
+            height={"38px"}
+            placeholder="Введите данные"
+            label={"Стоимость"}
             callback={setExcerpt}
             value={excerpt}
             limit={10}
           />
 
           <TextInput
-            width={'100%'}
-            height={'38px'}
-            placeholder='Введите данные'
-            label={'Предоплата'}
+            width={"100%"}
+            height={"38px"}
+            placeholder="Введите данные"
+            label={"Предоплата"}
             callback={setISO}
             value={ISO}
             limit={10}
           />
 
           <div>
-            <div className='training_view_content_right_team_single'>
-              <p className='training_view_content_right_team_single_title'>Организаторы</p>
-              <div className='training_view_content_right_team_single_account'>
+            <div className="training_view_content_right_team_single">
+              <p className="training_view_content_right_team_single_title">
+                Организаторы
+              </p>
+              <div className="training_view_content_right_team_single_account">
                 <img
                   src={Lock}
-                  alt='avatar'
-                  className='training_view_content_right_team_single_account_avatar'
+                  alt="avatar"
+                  className="training_view_content_right_team_single_account_avatar"
                 />
-                <div className='training_view_content_right_team_single_account_name'>
-                  <div className='training_view_content_right_team_single_account_name_online' />
-                  <p className='training_view_content_right_team_single_account_name_p'>
+                <div className="training_view_content_right_team_single_account_name">
+                  <div className="training_view_content_right_team_single_account_name_online" />
+                  <p className="training_view_content_right_team_single_account_name_p">
                     Вася Пупкин
                   </p>
                 </div>
                 <img
                   src={Pro}
-                  alt='pro'
-                  className='training_view_content_right_team_single_account_pro_organiser'
+                  alt="pro"
+                  className="training_view_content_right_team_single_account_pro_organiser"
                 />
-                <div className='training_view_content_right_team_single_account_trash'>
-                  <img src={Trash} alt='trash' />
+                <div className="training_view_content_right_team_single_account_trash">
+                  <img src={Trash} alt="trash" />
                 </div>
               </div>
             </div>
-            <div className='training_options_right_add teamAdd'>
-              <img src={Add} alt='add' className='training_options_right_add_image' />
+            <div className="training_options_right_add teamAdd">
+              <img
+                src={Add}
+                alt="add"
+                className="training_options_right_add_image"
+              />
               <p
-                onClick={() => navigate('/profile/add-place')}
-                className='training_options_right_add_p'>
+                onClick={() => navigate("/profile/add-place")}
+                className="training_options_right_add_p"
+              >
                 Добавить в организаторы
               </p>
             </div>
-            <div className='training_view_content_right_team_single'>
-              <p className='training_view_content_right_team_single_title'>Команда</p>
-              <div className='training_view_content_right_team_single_account'>
+            <div className="training_view_content_right_team_single">
+              <p className="training_view_content_right_team_single_title">
+                Команда
+              </p>
+              <div className="training_view_content_right_team_single_account">
                 <img
                   src={Lock}
-                  alt='avatar'
-                  className='training_view_content_right_team_single_account_avatar'
+                  alt="avatar"
+                  className="training_view_content_right_team_single_account_avatar"
                 />
-                <div className='training_view_content_right_team_single_account_speciality'>
-                  <div className='training_view_content_right_team_single_account_speciality_name'>
-                    <div className='training_view_content_right_team_single_account_speciality_name_online' />
-                    <p className='training_view_content_right_team_single_account_speciality_name_p'>
+                <div className="training_view_content_right_team_single_account_speciality">
+                  <div className="training_view_content_right_team_single_account_speciality_name">
+                    <div className="training_view_content_right_team_single_account_speciality_name_online" />
+                    <p className="training_view_content_right_team_single_account_speciality_name_p">
                       Пупок Васи
                     </p>
                     <img
                       src={Pro}
-                      alt='pro'
-                      className='training_view_content_right_team_single_account_pro'
+                      alt="pro"
+                      className="training_view_content_right_team_single_account_pro"
                     />
                   </div>
-                  <p className='training_view_content_right_team_single_account_speciality_name_spec'>
+                  <p className="training_view_content_right_team_single_account_speciality_name_spec">
                     фотограф
                   </p>
                 </div>
-                <div className='training_view_content_right_team_single_account_trash'>
-                  <img src={Trash} alt='trash' />
+                <div className="training_view_content_right_team_single_account_trash">
+                  <img src={Trash} alt="trash" />
                 </div>
               </div>
-              <div className='training_view_content_right_team_single_account'>
+              <div className="training_view_content_right_team_single_account">
                 <img
                   src={Lock}
-                  alt='avatar'
-                  className='training_view_content_right_team_single_account_avatar'
+                  alt="avatar"
+                  className="training_view_content_right_team_single_account_avatar"
                 />
-                <div className='training_view_content_right_team_single_account_speciality'>
-                  <div className='training_view_content_right_team_single_account_speciality_name'>
-                    <div className='training_view_content_right_team_single_account_speciality_name_online' />
-                    <p className='training_view_content_right_team_single_account_speciality_name_p'>
+                <div className="training_view_content_right_team_single_account_speciality">
+                  <div className="training_view_content_right_team_single_account_speciality_name">
+                    <div className="training_view_content_right_team_single_account_speciality_name_online" />
+                    <p className="training_view_content_right_team_single_account_speciality_name_p">
                       Пупок Васи
                     </p>
                     <img
                       src={Pro}
-                      alt='pro'
-                      className='training_view_content_right_team_single_account_pro'
+                      alt="pro"
+                      className="training_view_content_right_team_single_account_pro"
                     />
                   </div>
-                  <p className='training_view_content_right_team_single_account_speciality_name_spec'>
+                  <p className="training_view_content_right_team_single_account_speciality_name_spec">
                     фотограф
                   </p>
                 </div>
-                <div className='training_view_content_right_team_single_account_trash'>
-                  <img src={Trash} alt='trash' />
+                <div className="training_view_content_right_team_single_account_trash">
+                  <img src={Trash} alt="trash" />
                 </div>
               </div>
             </div>
-            <div className='training_options_right_add'>
-              <img src={Add} alt='add' className='training_options_right_add_image' />
+            <div className="training_options_right_add">
+              <img
+                src={Add}
+                alt="add"
+                className="training_options_right_add_image"
+              />
               <p
-                onClick={() => navigate('/profile/add-place')}
-                className='training_options_right_add_p'>
+                onClick={() => navigate("/profile/add-place")}
+                className="training_options_right_add_p"
+              >
                 Добавить в команду
               </p>
             </div>
           </div>
         </div>
-        <div className='add_training_right_content'>
-          <div className='add_training_right_content_window high'>
-            <ul className='add_training_right_content_ul'>
-              <li className='add_training_right_content_li'>
-                <div className='photos_options_right_add'>
-                  <img src={Add} alt='add' className='photos_options_right_add_image' />
-                  <label className='photos_options_right_add_p' onClick={() => deletePhoto()}>
+        <div className="add_training_right_content">
+          <div className="add_training_right_content_window high">
+            <ul className="add_training_right_content_ul">
+              <li className="add_training_right_content_li">
+                <div className="photos_options_right_add">
+                  <img
+                    src={Add}
+                    alt="add"
+                    className="photos_options_right_add_image"
+                  />
+                  <label
+                    className="photos_options_right_add_p"
+                    onClick={() => deletePhoto()}
+                  >
                     Загрузить фотографии
                   </label>
                 </div>
               </li>
-              <li className='add_training_right_content_li'>
-                <div className='photos_options_right_add'>
-                  <img src={Lock} alt='add' className='photos_options_right_add_image' />
+              <li className="add_training_right_content_li">
+                <div className="photos_options_right_add">
+                  <img
+                    src={Lock}
+                    alt="add"
+                    className="photos_options_right_add_image"
+                  />
                   <label
                     onClick={() => {
                       photoHidden ? showPhoto() : hidePhoto();
                     }}
-                    htmlFor='file_input'
-                    className='photos_options_right_add_p'>
-                    {photoHidden ? 'Показать' : 'Скрыть'}
+                    htmlFor="file_input"
+                    className="photos_options_right_add_p"
+                  >
+                    {photoHidden ? "Показать" : "Скрыть"}
                   </label>
                 </div>
               </li>
-              <li className='add_training_right_content_li'>
-                <div className='photos_options_right_add'>
-                  <img src={Delete} alt='add' className='photos_options_right_add_image' />
-                  <label className='photos_options_right_add_p' onClick={() => deletePhoto()}>
+              <li className="add_training_right_content_li">
+                <div className="photos_options_right_add">
+                  <img
+                    src={Delete}
+                    alt="add"
+                    className="photos_options_right_add_image"
+                  />
+                  <label
+                    className="photos_options_right_add_p"
+                    onClick={() => deletePhoto()}
+                  >
                     Удалить
                   </label>
                 </div>
@@ -463,21 +515,21 @@ const EditTraining = () => {
         </div>
       </div>
 
-      <div className='add_training_buttons'>
-        <div style={{ marginRight: '15px ' }}>
+      <div className="add_training_buttons">
+        <div style={{ marginRight: "15px " }}>
           <GreyButton
-            text={'Отменить'}
-            width={'180px'}
-            height={'38px'}
-            callback={() => navigate('/profile/photos')}
+            text={"Отменить"}
+            width={"180px"}
+            height={"38px"}
+            callback={() => navigate("/profile/photos")}
           />
         </div>
         <GreenButton
-          text={'Сохранить'}
-          width={'180px'}
-          height={'38px'}
+          text={"Сохранить"}
+          width={"180px"}
+          height={"38px"}
           callback={handlePhotoUpdate}
-          margin={'13px 0 0 0'}
+          margin={"13px 0 0 0"}
         />
       </div>
     </div>

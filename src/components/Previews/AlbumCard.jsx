@@ -24,7 +24,7 @@ const AlbumCard = ({
     <div className="albums_card">
       <div className="albums_card_photo_wrapper">
         <img
-          src={`${rootAddress}${album.main_photo_id.photo}`}
+          src={`${rootAddress}${album.main_photo_id?.photo}`}
           alt="card"
           className="albums_card_photo"
           onClick={() =>

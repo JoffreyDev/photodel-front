@@ -127,7 +127,10 @@ const PublicProfileBasis = ({ mainSocket }) => {
               >
                 <img
                   src={
-                    component === "photos" || component === "albums"
+                    component === "photos" ||
+                    component === "albums" ||
+                    component === "photo" ||
+                    component === "album"
                       ? PhotoActive
                       : PhotoDis
                   }
@@ -136,7 +139,10 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 />
                 <p
                   className={
-                    component === "photos" || component === "albums"
+                    component === "photos" ||
+                    component === "albums" ||
+                    component === "photo" ||
+                    component === "album"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }
@@ -150,13 +156,17 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 className="profile_basis_module_choice_li"
               >
                 <img
-                  src={component === "places" ? PlacesActive : PlacesDis}
+                  src={
+                    component === "places" || component === "place"
+                      ? PlacesActive
+                      : PlacesDis
+                  }
                   className="profile_basis_module_choice_img"
                   alt="menu choice"
                 />
                 <p
                   className={
-                    component === "places"
+                    component === "places" || component === "place"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }
@@ -170,13 +180,17 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 className="profile_basis_module_choice_li"
               >
                 <img
-                  src={component === "sessions" ? AlbumActive : AlbumDis}
+                  src={
+                    component === "sessions" || component === "session"
+                      ? AlbumActive
+                      : AlbumDis
+                  }
                   className="profile_basis_module_choice_img"
                   alt="menu choice"
                 />
                 <p
                   className={
-                    component === "sessions"
+                    component === "sessions" || component === "session"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }
@@ -189,13 +203,17 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 className="profile_basis_module_choice_li"
               >
                 <img
-                  src={component === "trainings" ? AlbumActive : AlbumDis}
+                  src={
+                    component === "trainings" || component === "training"
+                      ? AlbumActive
+                      : AlbumDis
+                  }
                   className="profile_basis_module_choice_img"
                   alt="menu choice"
                 />
                 <p
                   className={
-                    component === "trainings"
+                    component === "trainings" || component === "training"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }
@@ -262,7 +280,7 @@ const PublicProfileBasis = ({ mainSocket }) => {
                 />
                 <p
                   className={
-                    component === "bookmark"
+                    component === "favorites"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }

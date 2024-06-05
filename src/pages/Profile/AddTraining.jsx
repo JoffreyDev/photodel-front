@@ -622,6 +622,7 @@ const AddTraining = () => {
                     className="hidden_file_input"
                     onChange={(e) => handlePhotoRead(e)}
                     multiple
+                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif"
                   />
                 </div>
               </li>

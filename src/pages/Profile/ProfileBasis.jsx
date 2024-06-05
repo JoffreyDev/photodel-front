@@ -152,13 +152,17 @@ const ProfileBasis = ({ mainSocket }) => {
                 }
               >
                 <img
-                  src={component === "messages" ? MessageActive : MessageDis}
+                  src={
+                    component === "messages" || component === "chat"
+                      ? MessageActive
+                      : MessageDis
+                  }
                   className="profile_basis_module_choice_img"
                   alt="menu choice"
                 />
                 <p
                   className={
-                    component === "messages"
+                    component === "messages" || component === "chat"
                       ? "profile_basis_module_choice_p active"
                       : "profile_basis_module_choice_p"
                   }
@@ -211,14 +215,24 @@ const ProfileBasis = ({ mainSocket }) => {
                 <li
                   onClick={() => navigate("/profile/photos")}
                   className={
-                    component === "photos" || component === "albums"
+                    component === "photos" ||
+                    component === "albums" ||
+                    component === "photo" ||
+                    component === "album" ||
+                    component === "add-photo" ||
+                    component === "add-album"
                       ? "profile_basis_module_choice_li active"
                       : "profile_basis_module_choice_li"
                   }
                 >
                   <img
                     src={
-                      component === "photos" || component === "albums"
+                      component === "photos" ||
+                      component === "albums" ||
+                      component === "photo" ||
+                      component === "album" ||
+                      component === "add-photo" ||
+                      component === "add-album"
                         ? PhotoActive
                         : PhotoDis
                     }
@@ -227,7 +241,12 @@ const ProfileBasis = ({ mainSocket }) => {
                   />
                   <p
                     className={
-                      component === "photos" || component === "albums"
+                      component === "photos" ||
+                      component === "albums" ||
+                      component === "photo" ||
+                      component === "album" ||
+                      component === "add-photo" ||
+                      component === "add-album"
                         ? "profile_basis_module_choice_p active"
                         : "profile_basis_module_choice_p"
                     }
@@ -240,19 +259,29 @@ const ProfileBasis = ({ mainSocket }) => {
                 <li
                   onClick={() => navigate("/profile/places")}
                   className={
-                    component === "places"
+                    component === "places" ||
+                    component === "place" ||
+                    component === "add-place"
                       ? "profile_basis_module_choice_li active"
                       : "profile_basis_module_choice_li"
                   }
                 >
                   <img
-                    src={component === "places" ? PlacesActive : PlacesDis}
+                    src={
+                      component === "places" ||
+                      component === "place" ||
+                      component === "add-place"
+                        ? PlacesActive
+                        : PlacesDis
+                    }
                     className="profile_basis_module_choice_img"
                     alt="menu choice"
                   />
                   <p
                     className={
-                      component === "places"
+                      component === "places" ||
+                      component === "place" ||
+                      component === "add-place"
                         ? "profile_basis_module_choice_p active"
                         : "profile_basis_module_choice_p"
                     }
@@ -265,19 +294,27 @@ const ProfileBasis = ({ mainSocket }) => {
                 <li
                   onClick={() => navigate("/profile/sessions")}
                   className={
-                    component === "sessions"
+                    component === "sessions" || component === "session"
                       ? "profile_basis_module_choice_li active"
                       : "profile_basis_module_choice_li"
                   }
                 >
                   <img
-                    src={component === "sessions" ? AlbumActive : AlbumDis}
+                    src={
+                      component === "sessions" ||
+                      component === "session" ||
+                      component === "add-session"
+                        ? AlbumActive
+                        : AlbumDis
+                    }
                     className="profile_basis_module_choice_img"
                     alt="menu choice"
                   />
                   <p
                     className={
-                      component === "sessions"
+                      component === "sessions" ||
+                      component === "session" ||
+                      component === "add-session"
                         ? "profile_basis_module_choice_p active"
                         : "profile_basis_module_choice_p"
                     }
@@ -314,7 +351,9 @@ const ProfileBasis = ({ mainSocket }) => {
                 <li
                   onClick={() => navigate("/profile/trainings")}
                   className={
-                    component === "trainings"
+                    component === "trainings" ||
+                    component === "training" ||
+                    component === "add-training"
                       ? "profile_basis_module_choice_li active"
                       : "profile_basis_module_choice_li"
                   }
@@ -326,7 +365,9 @@ const ProfileBasis = ({ mainSocket }) => {
                   />
                   <p
                     className={
-                      component === "trainings"
+                      component === "trainings" ||
+                      component === "training" ||
+                      component === "add-training"
                         ? "profile_basis_module_choice_p active"
                         : "profile_basis_module_choice_p"
                     }
@@ -361,29 +402,25 @@ const ProfileBasis = ({ mainSocket }) => {
                 </li>
               )}
 
-              {false && (
-                <li
-                  onClick={() => navigate("/profile/settings")}
-                  className="profile_basis_module_choice_li"
+              <li
+                onClick={() => navigate("/profile/settings")}
+                className="profile_basis_module_choice_li"
+              >
+                <img
+                  src={component === "settings" ? SettingsActive : SettingsDis}
+                  className="profile_basis_module_choice_img"
+                  alt="menu choice"
+                />
+                <p
+                  className={
+                    component === "settings"
+                      ? "profile_basis_module_choice_p active"
+                      : "profile_basis_module_choice_p"
+                  }
                 >
-                  <img
-                    src={
-                      component === "settings" ? SettingsActive : SettingsDis
-                    }
-                    className="profile_basis_module_choice_img"
-                    alt="menu choice"
-                  />
-                  <p
-                    className={
-                      component === "settings"
-                        ? "profile_basis_module_choice_p active"
-                        : "profile_basis_module_choice_p"
-                    }
-                  >
-                    Настройки
-                  </p>
-                </li>
-              )}
+                  Настройки
+                </p>
+              </li>
               {userData.status === 2 && (
                 <li
                   onClick={() => navigate("/profile/finance")}
