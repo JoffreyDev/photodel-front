@@ -61,6 +61,7 @@ import AddTraining from "./AddTraining";
 import Team from "./Team";
 import Reviews from "./Reviews";
 import Finance from "./Finance";
+import Settings from "./Settings";
 
 const ProfileBasis = ({ mainSocket }) => {
   const params = useParams();
@@ -485,6 +486,7 @@ const ProfileBasis = ({ mainSocket }) => {
             {component === "reviews" && <Reviews component={component} />}
             {component === "invite-to-team" && <TeamInviteComponent />}
             {component === "finance" && <Finance />}
+            {component === "settings" && <Settings />}
           </div>
         </div>
       </div>

@@ -51,6 +51,8 @@ const MainTraining = () => {
 
   const [balloonDataLoading, setBalloonDataLoading] = React.useState(true);
 
+  const [triggerSearch, setTriggerSearch] = React.useState(false);
+
   const [title, setTitle] = React.useState("");
   const [id, setId] = React.useState("");
   const [image, setImage] = React.useState("");
@@ -200,6 +202,19 @@ const MainTraining = () => {
     }
   }, [categories]);
 
+  const resetFilters = () => {
+    setCategory("Все");
+    setSearchReq("");
+    setSearchDist(10000000000);
+    setSortType("-");
+    setSortField(1);
+    setTriggerSearch((prev) => !prev);
+  };
+
+  React.useEffect(() => {
+    handleSearch();
+  }, [triggerSearch]);
+
   React.useEffect(() => {
     window.scroll(0, 0);
     document.title = "Обучение";
@@ -293,6 +308,13 @@ const MainTraining = () => {
                 text={"Найти"}
                 callback={handleSearch}
                 margin={"15px 0 0 0"}
+              />
+
+              <GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
               />
             </div>
           </div>
@@ -391,12 +413,22 @@ const MainTraining = () => {
               getName
             />
 
-            <GreenButton
-              height={"38px"}
-              width={"180px"}
-              text={"Найти"}
-              callback={handleSearch}
-            />
+            <div style={{ display: "flex" }}>
+              <GreenButton
+                height={"38px"}
+                width={"180px"}
+                text={"Найти"}
+                callback={handleSearch}
+                margin={"15px 0 0"}
+              />
+              <GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
+                margin={"15px 0 0 20px"}
+              />
+            </div>
           </div>
           {!mapViewActive && (
             <div

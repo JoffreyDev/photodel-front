@@ -1,6 +1,6 @@
 import React from "react";
 import ModalWindow from "./ModalWindow";
-import { GreenButton } from "..";
+import { Checkbox, GreenButton } from "..";
 import Requests from "../../http/axios-requests";
 import { useDispatch } from "react-redux";
 import {
@@ -95,6 +95,10 @@ const LoginModule = ({
             />
           </div>
 
+          <div style={{ alignSelf: "flex-start" }}>
+            <Checkbox label={"Запомнить меня"} />
+          </div>
+
           <GreenButton
             text="Войти"
             width={"100%"}
@@ -103,13 +107,13 @@ const LoginModule = ({
             onKeyPress={handleKeyPress}
           />
           <p className="reg_auth_content_lower_p" onClick={openResetPassWindow}>
-            Напомнить пароль
+            Забыли пароль?
           </p>
           <p
             className="reg_auth_content_lower_p"
             onClick={() => switchModals()}
           >
-            Зарегистрироваться
+            Регистрация
           </p>
         </div>
       </ModalWindow>

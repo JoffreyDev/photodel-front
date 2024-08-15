@@ -4,6 +4,7 @@ import {
   TextInput,
   GreenButton,
   GalleryPhotoPreview,
+  GreyButton,
 } from "../../components";
 import "../../styles/Main/MainPhoto.scss";
 import { useSelector } from "react-redux";
@@ -28,6 +29,8 @@ const MainPhoto = () => {
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
   const [specs, setSpecs] = React.useState();
+
+  const [triggerSearch, setTriggerSearch] = React.useState(false);
 
   const [searchReq, setSearchReq] = React.useState();
   const [searchDist, setSearchDist] = React.useState(10000000000);
@@ -156,6 +159,19 @@ const MainPhoto = () => {
     }).then((res) => setPhotosMarks(res.data));
   };
 
+  const resetFilters = () => {
+    setCategory("Все");
+    setSearchReq("");
+    setSearchDist(10000000000);
+    setSortType("-");
+    setSortField(1);
+    setTriggerSearch((prev) => !prev);
+  };
+
+  React.useEffect(() => {
+    handleSearch();
+  }, [triggerSearch]);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -275,6 +291,13 @@ const MainPhoto = () => {
                 callback={handleSearch}
                 margin={"15px 0 0 0"}
               />
+
+              <GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
+              />
             </div>
           </div>
         </Menu>
@@ -387,12 +410,22 @@ const MainPhoto = () => {
               onChange={(e) => setSearchDist(e.target.value)}
               setValue={setSearchDist}
             />
-            <GreenButton
-              height={"38px"}
-              width={"180px"}
-              text={"Найти"}
-              callback={handleSearch}
-            />
+            <div style={{ display: "flex" }}>
+              <GreenButton
+                height={"38px"}
+                width={"180px"}
+                text={"Найти"}
+                callback={handleSearch}
+                margin={"15px 0 0"}
+              />
+              <GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
+                margin={"15px 0 0 20px"}
+              />
+            </div>
           </div>
           {!mapViewActive && (
             <div

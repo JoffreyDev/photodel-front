@@ -4,6 +4,7 @@ import {
   TextInput,
   GreenButton,
   PlaceCardMain,
+  GreyButton,
 } from "../../components";
 import "../../styles/Main/MainPhoto.scss";
 import { useSelector } from "react-redux";
@@ -44,6 +45,8 @@ const MainPlaces = () => {
   const [page, setPage] = React.useState(1);
   const [countItems, setCountItems] = React.useState();
   const [menuOpened, setMenuOpened] = React.useState(false);
+
+  const [triggerSearch, setTriggerSearch] = React.useState(false);
 
   const [mapViewActive, setMapViewActive] = React.useState(
     localStorage.getItem("mapActive") === "true"
@@ -205,6 +208,20 @@ const MainPlaces = () => {
     }
   }, [placesCategories]);
 
+  const resetFilters = () => {
+    setCategory("Все");
+    setSearchReq("");
+    setSearchDist(10000000000);
+    setSortType("-");
+    setSortField(1);
+    setPlace('')
+    setTriggerSearch((prev) => !prev);
+  };
+
+  React.useEffect(() => {
+    handleSearch();
+  }, [triggerSearch]);
+
   React.useEffect(() => {
     window.scroll(0, 0);
     document.title = "Места для съемок";
@@ -307,6 +324,13 @@ const MainPlaces = () => {
                 text={"Найти"}
                 callback={handleSearch}
                 margin={"15px 0 0 0"}
+              />
+
+<GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
               />
             </div>
           </div>
@@ -426,12 +450,23 @@ const MainPlaces = () => {
               value={place}
               callback={setPlace}
             />
+                        <div style={{ display: "flex" }}>
             <GreenButton
               height={"38px"}
               width={"180px"}
               text={"Найти"}
               callback={handleSearch}
+              margin={"15px 0 0 0"}
             />
+
+<GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
+                margin={"15px 0 0 20px"}
+              />
+              </div>
           </div>
           {!mapViewActive && (
             <div

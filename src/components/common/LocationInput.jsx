@@ -15,15 +15,11 @@ const LocationInput = ({
 
   return (
     <div>
-      <div
-        onClick={() => setMapActive(true)}
-        className="common_location_input_wrapper"
-      >
+      <div className="common_location_input_wrapper" onClick={() => setMapActive(true)}>
         <label className="common_location_input_label">{label}</label>
         <input
           style={width ? { width: `${width}`, height: `${height}` } : {}}
           value={addressLine}
-          disabled
           type="text"
           className="common_location_input"
         />

@@ -7,13 +7,13 @@ const $api = axios.create({
   baseURL: "https://photodel.ru",
 });
 
+
 /* export const rootAddress = "http://localhost:8000";
 export const rootSocketAddress = "localhost:8000";
 
 const $api = axios.create({
   baseURL: "http://localhost:8000",
 }); */
-
 
 export class Requests {
   static async login(email, password) {
@@ -38,6 +38,17 @@ export class Requests {
         password2: password2,
       },
       url: `/api/accounts/register/`,
+    }).then((res) => res);
+  }
+
+  static async deleteProfile() {
+    return $api({
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      url: `/api/accounts/profile/delete/`,
     }).then((res) => res);
   }
 
@@ -879,7 +890,9 @@ export class Requests {
         sortField ? `&filter_field=${sortField}` : ""
       }${
         sortType === "-" ? `&sort_type=${sortType}` : ""
-      }${`&count_positions=${count_positions}`}${`&page=${page}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
+      }${`&count_positions=${count_positions}`}${`&page=${page}`}${
+        place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ""
+      }`,
     }).then((res) => res);
   }
 
@@ -893,7 +906,7 @@ export class Requests {
     count_positions,
     page,
     place,
-    name_spec
+    name_spec,
   }) {
     return $api({
       method: "GET",
@@ -909,15 +922,15 @@ export class Requests {
           : !userCoords && search_words
           ? `&search_words=${search_words}`
           : ""
-      }${
-        name_category !== "Все" ? `&name_category=${name_category}` : ""
-      }${
+      }${name_category !== "Все" ? `&name_category=${name_category}` : ""}${
         name_spec !== "Все" ? `&name_spec=${name_spec}` : ""
       }${`&distance=${distance}`}${
         sortField ? `&filter_field=${sortField}` : ""
       }${
         sortType === "-" ? `&sort_type=${sortType}` : ""
-      }${`&count_positions=${count_positions}`}${`&page=${page}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
+      }${`&count_positions=${count_positions}`}${`&page=${page}`}${
+        place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ""
+      }`,
     }).then((res) => res);
   }
 
@@ -1064,7 +1077,9 @@ export class Requests {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-         ...localStorage.getItem("access") && {Authorization: `Bearer ${localStorage.getItem("access")}`},
+        ...(localStorage.getItem("access") && {
+          Authorization: `Bearer ${localStorage.getItem("access")}`,
+        }),
       },
 
       url: `api/accounts/profile/${id}/`,
@@ -1258,7 +1273,7 @@ export class Requests {
     search_words,
     name_category,
     distance,
-    place
+    place,
   }) {
     return $api({
       method: "GET",
@@ -1276,7 +1291,9 @@ export class Requests {
           : ""
       }${
         name_category !== "Все" ? `&category=${name_category}` : ""
-      }${`&distance=${distance}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
+      }${`&distance=${distance}`}${
+        place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ""
+      }`,
     }).then((res) => res);
   }
 
@@ -1311,7 +1328,7 @@ export class Requests {
     search_words,
     name_category,
     distance,
-    place
+    place,
   }) {
     return $api({
       method: "GET",
@@ -1328,7 +1345,9 @@ export class Requests {
           : ""
       }${
         name_category !== "Все" ? `&name_category=${name_category}` : ""
-      }${`&distance=${distance}`}${place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ''}`,
+      }${`&distance=${distance}`}${
+        place ? `&place=${place.charAt(0).toUpperCase() + place.slice(1)}` : ""
+      }`,
     }).then((res) => res);
   }
 

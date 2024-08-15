@@ -4,6 +4,7 @@ import {
   TextInput,
   GreenButton,
   ProfileMainPreview,
+  GreyButton,
 } from "../../components";
 import "../../styles/Main/MainPhoto.scss";
 import { useSelector } from "react-redux";
@@ -58,6 +59,8 @@ const MainProfiles = () => {
   const [countItems, setCountItems] = React.useState();
 
   const [balloonDataLoading, setBalloonDataLoading] = React.useState(true);
+
+  const [triggerSearch, setTriggerSearch] = React.useState(false);
 
   const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
@@ -235,6 +238,20 @@ const MainProfiles = () => {
     setSpec("Все");
   }, [category]);
 
+  const resetFilters = () => {
+    setCategory("Все");
+    setSearchReq("");
+    setSearchDist(10000000000);
+    setSortType("-");
+    setSortField(1);
+    setSpec("Все");
+    setTriggerSearch((prev) => !prev);
+  };
+
+  React.useEffect(() => {
+    handleSearch();
+  }, [triggerSearch]);
+
   return (
     <div className="main_photo">
       <div className="main_photo_menu">
@@ -349,6 +366,13 @@ const MainProfiles = () => {
                 text={"Найти"}
                 callback={handleSearch}
                 margin={"15px 0 0 0"}
+              />
+
+              <GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
               />
             </div>
           </div>
@@ -490,12 +514,23 @@ const MainProfiles = () => {
               value={place}
               callback={setPlace}
             />
-            <GreenButton
-              height={"38px"}
-              width={"180px"}
-              text={"Найти"}
-              callback={handleSearch}
-            />
+            <div style={{ display: "flex" }}>
+              <GreenButton
+                height={"38px"}
+                width={"180px"}
+                text={"Найти"}
+                callback={handleSearch}
+                margin={"15px 0 0 0"}
+              />
+
+              <GreyButton
+                height={"38px"}
+                width={"180px"}
+                text={"Сброс"}
+                callback={resetFilters}
+                margin={"15px 0 0 20px"}
+              />
+            </div>
           </div>
           {!mapViewActive && (
             <div

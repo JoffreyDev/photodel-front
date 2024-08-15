@@ -621,7 +621,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                     style={{ marginTop: "20px", marginBottom: "20px" }}
                     className="training_view_content_right_spec_p"
                   >
-                    Запрос направлен на рассмотрение
+                    Запрос направлен на рассмотрение (статус рассмотрения: {training?.has_request_from_user === 'AWAITING' ? 'Ожидает' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отказано'})
                   </p>
                 )}
               {window.screen.width > 576 &&
@@ -632,7 +632,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                     style={{ marginTop: "20px" }}
                     className="training_view_content_right_spec_p"
                   >
-                    Запрос направлен на рассмотрение
+                    Запрос направлен на рассмотрение (статус рассмотрения: {training?.has_request_from_user === 'AWAITING' ? 'Ожидает' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отказано'})
                   </p>
                 )}
             </div>
@@ -980,7 +980,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                   style={{ marginTop: "20px" }}
                   className="training_view_content_right_spec_p"
                 >
-                  Запрос направлен на рассмотрение
+                 Запрос направлен на рассмотрение (статус рассмотрения: {training?.has_request_from_user === 'AWAITING' ? 'Ожидает' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отказано'})
                 </p>
               )}
           </div>
