@@ -41,6 +41,22 @@ export class Requests {
     }).then((res) => res);
   }
 
+  static async changePassword(oldPass, newPass) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        old_pass: oldPass,
+        new_pass: newPass,
+      },
+      url: `/api/accounts/profile/password/change/`,
+    }).then((res) => res);
+  }
+
+
   static async deleteProfile() {
     return $api({
       method: "GET",

@@ -149,7 +149,7 @@ const RegModule = ({
         </div>
         <div className="reg_auth_content_fields">
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">Имя</label>
+            <label className="reg_auth_content_label">Имя <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -158,7 +158,7 @@ const RegModule = ({
             />
           </div>
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">Фамилия</label>
+            <label className="reg_auth_content_label">Фамилия <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={surname}
               onChange={(e) => setSurname(e.target.value)}
@@ -167,7 +167,7 @@ const RegModule = ({
             />
           </div>
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">E-mail</label>
+            <label className="reg_auth_content_label">E-mail <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value.toLowerCase())}
@@ -176,7 +176,7 @@ const RegModule = ({
             />
           </div>
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">Пароль</label>
+            <label className="reg_auth_content_label">Пароль <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -185,7 +185,7 @@ const RegModule = ({
             />
           </div>
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">Повторите пароль</label>
+            <label className="reg_auth_content_label">Повторите пароль <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={passwordSubmit}
               onChange={(e) => setPasswordSubmit(e.target.value)}

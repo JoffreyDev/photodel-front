@@ -388,6 +388,8 @@ const AddPlace = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
+            label={'Название'}
+            required
           />
           <textarea
             placeholder="Введите описание (+0,001 к рейтингу)"
@@ -395,7 +397,7 @@ const AddPlace = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <h1 className="add_session_left_content_h1 margin">Место съемки</h1>
+          <h1 className="add_session_left_content_h1 margin">Место съемки <span style={{ color: "red", opacity: "0.8" }}>*</span> </h1>
           <TextInput
             width={"100%"}
             height={"38px"}
@@ -417,6 +419,7 @@ const AddPlace = () => {
             callback={setCamera}
             value={camera}
             limit={15}
+            required
           />
 
           <TextInput
@@ -427,6 +430,7 @@ const AddPlace = () => {
             callback={setCost}
             value={cost}
             limit={15}
+            required
           />
 
           <SelectInput
@@ -440,6 +444,7 @@ const AddPlace = () => {
             setValue={setPaymentType}
             label={"Порядок оплаты"}
             width={"100%"}
+            required
           />
 
           {categories && (
@@ -457,6 +462,8 @@ const AddPlace = () => {
               onChange={(e, value) => setCategory(value.map((item) => item))}
               placeholder={"Выберите категории"}
               width={"100%"}
+              required
+              label={'Категория'}
             />
           )}
         </div>

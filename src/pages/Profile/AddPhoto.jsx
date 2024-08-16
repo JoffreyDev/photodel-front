@@ -293,6 +293,8 @@ const AddPhoto = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
+            label={'Название'}
+            required
           />
           <textarea
             placeholder="Введите описание (+0,001 к рейтингу)"
@@ -310,6 +312,7 @@ const AddPhoto = () => {
             callback={setAddressLine}
             value={addressLine}
             disabled
+            required
           />
 
           <div id="map" style={{ height: "135px", width: "100%" }}></div>
@@ -374,7 +377,7 @@ const AddPhoto = () => {
             value={flash}
             limit={15}
           />
-          <h1 className="add_photo_left_content_h1 margin">Категории</h1>
+          <h1 className="add_photo_left_content_h1 margin">Категории <span style={{ color: "red", opacity: "0.8" }}>*</span> </h1>
           {prosSpecs && (
             <AutoCompleteInput
               values={
@@ -392,7 +395,7 @@ const AddPhoto = () => {
               width={"100%"}
             />
           )}
-          <h1 className="add_photo_left_content_h1 margin">Фото в альбомах</h1>
+          <h1 className="add_photo_left_content_h1 margin">Фото в альбомах <span style={{ color: "red", opacity: "0.8" }}>*</span></h1>
           {loadedAlbums && (
             <AutoCompleteInput
               values={

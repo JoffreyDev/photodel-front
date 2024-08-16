@@ -12,6 +12,7 @@ const TextInput = ({
   lock,
   limit,
   numberRequired,
+  required,
 }) => {
   return (
     <div
@@ -28,7 +29,7 @@ const TextInput = ({
           </h1>
         </div>
       )}
-      <label className="common_text_input_label">{label}</label>
+      <label className="common_text_input_label">{label} {required &&  <span style={{ color: "red", opacity: "0.8" }}>*</span>}</label>
       <input
         style={width ? { width: `${width}`, height: `${height}` } : {}}
         value={value}

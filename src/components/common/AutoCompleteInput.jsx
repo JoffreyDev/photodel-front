@@ -9,10 +9,11 @@ const AutoCompleteInput = ({
   value,
   placeholder,
   width,
+  required,
 }) => {
   return (
     <div className="common_text_input_wrapper">
-      <label className="common_text_input_label">{label}</label>
+      <label className="common_text_input_label">{label} {required && <span style={{ color: "red", opacity: "0.8" }}>*</span>}</label>
       <Autocomplete
         sx={
           width

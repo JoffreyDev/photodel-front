@@ -76,7 +76,7 @@ const LoginModule = ({
         </div>
         <div className="reg_auth_content_fields">
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">E-mail</label>
+            <label className="reg_auth_content_label">E-mail <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value.toLowerCase())}
@@ -86,7 +86,7 @@ const LoginModule = ({
           </div>
 
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">Пароль</label>
+            <label className="reg_auth_content_label">Пароль <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}

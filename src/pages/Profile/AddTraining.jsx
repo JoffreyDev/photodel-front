@@ -403,6 +403,8 @@ const AddTraining = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
+            label={'Название'}
+            required
           />
           <textarea
             placeholder="Введите описание (+0,001 к рейтингу)"
@@ -412,7 +414,7 @@ const AddTraining = () => {
           />
 
           <h1 className="add_training_left_content_h1 margin">
-            Место проведения
+            Место проведения <span style={{ color: "red", opacity: "0.8" }}>*</span>
           </h1>
           <TextInput
             width={"100%"}
@@ -442,6 +444,7 @@ const AddTraining = () => {
               setPlace(e.target.value);
             }}
             setValue={setPlace}
+            required
           />
           {categories && (
             <SelectInput
@@ -461,6 +464,7 @@ const AddTraining = () => {
                 console.log(e);
               }}
               setValue={setCategory}
+              required
             />
           )}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -472,7 +476,7 @@ const AddTraining = () => {
                 htmlFor="date"
                 className="add_session_left_content_date_label"
               >
-                Дата начала
+                Дата начала <span style={{ color: "red", opacity: "0.8" }}>*</span>
               </label>
               <input
                 placeholder="Выберите дату"
@@ -491,7 +495,7 @@ const AddTraining = () => {
                 htmlFor="date"
                 className="add_session_left_content_date_label"
               >
-                Дата конца
+                Дата конца <span style={{ color: "red", opacity: "0.8" }}>*</span>
               </label>
               <input
                 placeholder="Выберите дату"
@@ -513,6 +517,7 @@ const AddTraining = () => {
             value={placesCount}
             limit={10}
             numberRequired
+            required
           />
 
           <TextInput
@@ -524,6 +529,7 @@ const AddTraining = () => {
             value={cost}
             limit={10}
             numberRequired
+            required
           />
 
           <TextInput
@@ -535,6 +541,7 @@ const AddTraining = () => {
             value={firstPayment}
             limit={10}
             numberRequired
+            required
           />
 
           <div>

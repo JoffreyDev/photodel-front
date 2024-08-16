@@ -15,6 +15,7 @@ const SelectInput = ({
   marginBottom,
   getName,
   lock,
+  required,
 }) => {
   return (
     <div
@@ -31,7 +32,7 @@ const SelectInput = ({
           </h1>
         </div>
       )}
-      <label className="common_text_input_label">{label}</label>
+      <label className="common_text_input_label">{label} {required && <span style={{ color: "red", opacity: "0.8" }}>*</span>} </label>
       <FormControl
         variant="filled"
         sx={{

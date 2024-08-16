@@ -1175,3 +1175,7 @@ color: var(--secondary-text-color) !important;
 .training_view_content_left_textarea_field {
     color: var(--secondary-text-color)
 }
+
+.edit_album_left_content_h1 {
+    color: var(--secondary-text-color)
+}

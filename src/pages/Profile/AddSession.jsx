@@ -354,6 +354,8 @@ const AddSession = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
+            label={'Название'}
+            required
           />
           <textarea
             placeholder="Введите описание (+0,001 к рейтингу)"
@@ -361,7 +363,7 @@ const AddSession = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <h1 className="add_session_left_content_h1 margin">Место съемки</h1>
+          <h1 className="add_session_left_content_h1 margin">Место съемки <span style={{ color: "red", opacity: "0.8" }}>*</span></h1>
           <TextInput
             width={"100%"}
             height={"38px"}
@@ -380,7 +382,7 @@ const AddSession = () => {
               htmlFor="date"
               className="add_session_left_content_date_label"
             >
-              Дата проведения
+              Дата проведения <span style={{ color: "red", opacity: "0.8" }}>*</span>
             </label>
             <input
               placeholder="Выберите дату"
@@ -408,6 +410,7 @@ const AddSession = () => {
               setValue={setCategory}
               label={"Тип фотосессии"}
               width={"100%"}
+              required
             />
           )}
         </div>

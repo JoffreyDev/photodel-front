@@ -107,7 +107,10 @@ const AddAlbum = ({ setActiveModule }) => {
             width={"100%"}
             height={"38px"}
             placeholder="Название"
+            label={'Название'}
+            required
           />
+          <div style={{marginBottom: '5px'}} className="common_text_input_label">Описание <span style={{ color: "red", opacity: "0.8" }}>*</span></div>
           <textarea
             placeholder="Описание"
             className="edit_album_left_content_textarea"
