@@ -29,7 +29,6 @@ const MainPhoto = () => {
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
   const [specs, setSpecs] = React.useState();
-А
   const [triggerSearch, setTriggerSearch] = React.useState(false);
 
   const [searchReq, setSearchReq] = React.useState();
