@@ -29,7 +29,7 @@ const MainPhoto = () => {
   const { userCoords } = useSelector(({ userData }) => userData);
   const navigate = useNavigate();
   const [specs, setSpecs] = React.useState();
-
+А
   const [triggerSearch, setTriggerSearch] = React.useState(false);
 
   const [searchReq, setSearchReq] = React.useState();
@@ -200,6 +200,12 @@ const MainPhoto = () => {
     window.scroll(0, 0);
     document.title = "Фотографии";
   }, []);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+};
 
   return (
     <div className="main_photo">
@@ -378,6 +384,7 @@ const MainPhoto = () => {
               placeholder={"Введите что-нибудь"}
               value={searchReq}
               callback={setSearchReq}
+              onKeyDown={handleKeyDown}
             />
             <SelectInput
               height={"38px"}

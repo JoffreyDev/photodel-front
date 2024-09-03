@@ -49,6 +49,10 @@ const PublicProfile = ({ setProfileId }) => {
   }, [profileId]);
 
   const handleChatCreate = () => {
+    if (!localStorage.getItem("access")) {
+      dispatch(openErrorAlert("Вы должны быть авторизованы/зарегистрированы"));
+      return;
+    }
     Requests.createNewChat({
       sender: userData.id,
       receiver: Number(profileId),
@@ -304,22 +308,21 @@ const PublicProfile = ({ setProfileId }) => {
             )}
 
           <div className="my_profile_header_middle_row_buttons">
-            {userData.id !== Number(profileId) &&
-              localStorage.getItem("access") && (
-                <div className="my_profile_header_middle_row_buttons_button mail">
-                  <img
-                    src={Mail}
-                    alt="mail"
-                    className="my_profile_header_middle_row_buttons_button_img"
-                  />
-                  <p
-                    onClick={handleChatCreate}
-                    className="my_profile_header_middle_row_buttons_mail_p"
-                  >
-                    Написать сообщение
-                  </p>
-                </div>
-              )}
+            {userData.id !== Number(profileId) && (
+              <div className="my_profile_header_middle_row_buttons_button mail">
+                <img
+                  src={Mail}
+                  alt="mail"
+                  className="my_profile_header_middle_row_buttons_button_img"
+                />
+                <p
+                  onClick={handleChatCreate}
+                  className="my_profile_header_middle_row_buttons_mail_p"
+                >
+                  Написать сообщение
+                </p>
+              </div>
+            )}
             {profileData.status === 2 && userData.id !== Number(profileId) && (
               <div className="my_profile_header_middle_row_buttons_button req">
                 <img

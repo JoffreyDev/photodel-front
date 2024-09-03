@@ -173,12 +173,27 @@ const AddSession = () => {
 
   //обработчик добавления фотографий
   const handlePhotoRead = (e) => {
+    // Разрешенные форматы изображений
+    const allowedTypes = [
+      "image/png",
+      "image/jpeg",
+      "image/tiff",
+      "image/dng",
+      "image/heif",
+    ];
+
     if (sendPhotosArray.length + e.target.files.length > 10) {
       dispatch(openErrorAlert("Максимум 10 изображений!"));
       return;
     }
-    parsedFiles = Array.from(e.target.files);
+
+    const parsedFiles = Array.from(e.target.files);
     parsedFiles.forEach((file) => {
+      if (!allowedTypes.includes(file.type)) {
+        dispatch(openErrorAlert("Неподдерживаемый формат изображения!"));
+        return;
+      }
+
       if (file.size >= 4e5) {
         resizeFile(file, file.size);
       }
@@ -186,7 +201,7 @@ const AddSession = () => {
       if (file.size < 4e5) {
         getBase64(file, function (base64Data) {
           sendPhotosArray.push(base64Data);
-          setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
+          setSendPhotosArray([...sendPhotosArray]); // Обновление состояния с новым массивом
           forceUpdate();
         });
       }

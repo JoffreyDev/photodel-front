@@ -245,12 +245,19 @@ const MainProfiles = () => {
     setSortType("-");
     setSortField(1);
     setSpec("Все");
+    setPlace('')
     setTriggerSearch((prev) => !prev);
   };
 
   React.useEffect(() => {
     handleSearch();
   }, [triggerSearch]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+};
 
   return (
     <div className="main_photo">
@@ -457,6 +464,7 @@ const MainProfiles = () => {
               placeholder={"Введите что-нибудь"}
               value={searchReq}
               callback={setSearchReq}
+              onKeyDown={handleKeyDown}
             />
             <SelectInput
               height={"38px"}
@@ -513,6 +521,7 @@ const MainProfiles = () => {
               placeholder={"Введите что-нибудь"}
               value={place}
               callback={setPlace}
+              onKeyDown={handleKeyDown}
             />
             <div style={{ display: "flex" }}>
               <GreenButton

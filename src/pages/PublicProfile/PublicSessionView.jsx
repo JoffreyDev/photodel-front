@@ -14,7 +14,7 @@ import Lock from "../../img/photoView/lock.svg";
 import Money from "../../img/photoView/money.svg";
 import Geo from "../../img/photoView/map.svg";
 import Timer from "../../img/photoView/timer.svg";
-import { Comment, PhotoViewAlbum, PhotoFullScreen } from "../../components";
+import { Comment, PhotoViewAlbum, PhotoFullScreen, Submit } from "../../components";
 import { GreenButton } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
 import { openSuccessAlert } from "../../redux/actions/userData";
@@ -34,10 +34,12 @@ const PublicSessionView = ({ setProfileId }) => {
   const sessionId = params.id;
 
   const [loaded, setLoaded] = React.useState();
+  const [reload, toggleReload] = React.useState(false);
   const [session, setSession] = React.useState();
   const [comment, setComment] = React.useState("");
   const [commentingId, setCommentingId] = React.useState();
-  const [quotingId, setQuotingId] = React.useState();
+  const [deletingId, setDeletingId] = React.useState();
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState();
   const [comments, setComments] = React.useState();
 
   const [photos, setPhotos] = React.useState();
@@ -48,44 +50,64 @@ const PublicSessionView = ({ setProfileId }) => {
 
   const [dataLoading, setDataLoading] = React.useState(true);
 
+  const onEditClick = (value, id) => {
+    setComment(value);
+    setCommentingId(id);
+  };
+
+  const editComment = () => {
+    Requests.editPhotoSessionComment(commentingId, comment)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно отредактирован!"));
+        setComment("");
+        setCommentingId(null);
+        toggleReload(!reload);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const deleteComment = () => {
+    Requests.deletePhotoSessionComment(deletingId)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно удален!"));
+        toggleReload(!reload);
+        setDeleteModalOpen(false);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const onDeleteClick = (id) => {
+    setDeletingId(id);
+    setDeleteModalOpen(true);
+  };
+
   React.useEffect(() => {
-    !loaded &&
-      localStorage.getItem("access") &&
+    localStorage.getItem("access") &&
       Requests.getSingleSession(sessionId).then((res) => {
         setLoaded(true);
         setSession(res.data);
         setPhotos(
           res.data.photos.map((photo) => `${rootAddress}${photo.photo}`)
         );
-        setDataLoading(false);
+        Requests.getSessionComments(sessionId).then((res) => {
+          setComments(res.data);
+          setDataLoading(false);
+        });
       });
 
-    !loaded &&
-      !localStorage.getItem("access") &&
+    !localStorage.getItem("access") &&
       Requests.getSingleSessionUnauth(sessionId).then((res) => {
         setLoaded(true);
         setSession(res.data);
         setPhotos(
           res.data.photos.map((photo) => `${rootAddress}${photo.photo}`)
         );
-        setDataLoading(false);
-      });
-  }, [loaded]);
-
-  React.useEffect(() => {
-    !loaded &&
-      Requests.getSingleSession(sessionId)
-        .then((res) => {
-          setSession(res.data);
+        Requests.getSessionComments(sessionId).then((res) => {
+          setComments(res.data);
           setDataLoading(false);
-        })
-        .then(() => {
-          Requests.getSessionComments(sessionId).then((res) => {
-            setComments(res.data);
-            setLoaded(true);
-          });
         });
-  }, [loaded, sessionId]);
+      });
+  }, [loaded, reload]);
 
   React.useEffect(() => {
     session && setProfileId(session.profile.id);
@@ -98,17 +120,11 @@ const PublicSessionView = ({ setProfileId }) => {
     }
     if (session.is_liked) {
       Requests.unlikeSession(sessionId).then(() => {
-        Requests.getSingleSession(sessionId).then((res) => {
-          setLoaded(true);
-          setSession(res.data);
-        });
+        toggleReload(!reload);
       });
     } else
       Requests.likeSession(sessionId).then(() => {
-        Requests.getSingleSession(sessionId).then((res) => {
-          setLoaded(true);
-          setSession(res.data);
-        });
+        toggleReload(!reload);
       });
   };
 
@@ -119,34 +135,19 @@ const PublicSessionView = ({ setProfileId }) => {
     }
     if (session.in_favorite) {
       Requests.deleteFavoriteSession(sessionId).then(() => {
-        Requests.getSingleSession(sessionId).then((res) => {
-          setLoaded(true);
-          setSession(res.data);
-        });
+        toggleReload(!reload);
       });
     } else
       Requests.addFavoriteSession(sessionId).then(() => {
-        Requests.getSingleSession(sessionId).then((res) => {
-          setLoaded(true);
-          setSession(res.data);
-        });
+        toggleReload(!reload);
       });
   };
 
   const handleComment = () => {
     Requests.createSessionComment(sessionId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      Requests.getSingleSession(sessionId)
-        .then((res) => {
-          setSession(res.data);
-          setComment("");
-        })
-        .then(() => {
-          Requests.getSessionComments(sessionId).then((res) => {
-            setComments(res.data);
-            setLoaded(true);
-          });
-        });
+      toggleReload(!reload);
+      setComment("");
     });
   };
 
@@ -427,10 +428,10 @@ const PublicSessionView = ({ setProfileId }) => {
               />
               <div className="photo_view_content_left_textarea_button">
                 <GreenButton
-                  text={"Комментировать"}
+                  text={commentingId ? "Сохранить" : "Комментировать"}
                   width={"210px"}
                   height={"38px"}
-                  callback={handleComment}
+                  callback={commentingId ? editComment : handleComment}
                   disabled={comment.length === 0}
                 />
               </div>
@@ -439,7 +440,12 @@ const PublicSessionView = ({ setProfileId }) => {
           <div className="photo_view_content_left_comment">
             {comments &&
               comments.map((comment, idx) => (
-                <Comment comment={comment} key={idx} />
+                <Comment
+                  comment={comment}
+                  key={idx}
+                  onEditClick={onEditClick}
+                  onDeleteClick={onDeleteClick}
+                />
               ))}
           </div>
         </div>
@@ -571,6 +577,13 @@ const PublicSessionView = ({ setProfileId }) => {
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
         slider={photos && photos.length > 1}
+      />
+
+      <Submit
+        text={"Вы уверены, что хотите удалить комментарий?"}
+        callback={deleteComment}
+        modalActive={deleteModalOpen}
+        setModalActive={setDeleteModalOpen}
       />
     </div>
   );

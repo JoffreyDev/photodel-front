@@ -12,7 +12,7 @@ import View from "../../img/sessions/view.svg";
 import Lock from "../../img/photoView/lock.svg";
 import Geo from "../../img/photoView/map.svg";
 import Timer from "../../img/photoView/timer.svg";
-import { AddToTrainingCard, Comment } from "../../components";
+import { AddToTrainingCard, Comment, Submit } from "../../components";
 import { GreenButton, PhotoFullScreen } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
@@ -42,10 +42,12 @@ const TrainingView = ({ setProfileId }) => {
   const trainingId = params.id;
 
   const [loaded, setLoaded] = React.useState();
+  const [reload, toggleReload] = React.useState(false);
   const [training, setTraining] = React.useState();
-  const [comment, setComment] = React.useState('');
+  const [comment, setComment] = React.useState("");
   const [commentingId, setCommentingId] = React.useState();
-  const [quotingId, setQuotingId] = React.useState();
+  const [deletingId, setDeletingId] = React.useState();
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState();
   const [comments, setComments] = React.useState();
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
 
@@ -55,9 +57,39 @@ const TrainingView = ({ setProfileId }) => {
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
   const [dataLoading, setDataLoading] = React.useState(true);
 
+  const onEditClick = (value, id) => {
+    setComment(value);
+    setCommentingId(id);
+  };
+
+  const editComment = () => {
+    Requests.editTrainingComment(commentingId, comment)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно отредактирован!"));
+        setComment("");
+        setCommentingId(null);
+        toggleReload(!reload);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const deleteComment = () => {
+    Requests.deleteTrainingComment(deletingId)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно удален!"));
+        toggleReload(!reload);
+        setDeleteModalOpen(false);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const onDeleteClick = (id) => {
+    setDeletingId(id);
+    setDeleteModalOpen(true);
+  };
+
   React.useEffect(() => {
-    !loaded &&
-      localStorage.getItem("key") &&
+    localStorage.getItem("key") &&
       Requests.getSingleTraining(trainingId)
         .then((res) => {
           setLoaded(true);
@@ -76,8 +108,7 @@ const TrainingView = ({ setProfileId }) => {
           });
         });
 
-    !loaded &&
-      !localStorage.getItem("key") &&
+    !localStorage.getItem("key") &&
       Requests.getSingleTrainingUnauth(trainingId)
         .then((res) => {
           setLoaded(true);
@@ -96,56 +127,35 @@ const TrainingView = ({ setProfileId }) => {
             setLoaded(true);
           });
         });
-  }, [loaded, trainingId]);
+  }, [loaded, trainingId, reload]);
 
   const likeHandle = () => {
     if (training.is_liked) {
       Requests.unlikeTraining(trainingId).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload);
       });
     } else
       Requests.likeTraining(trainingId).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload);
       });
   };
 
   const favoriteHandle = () => {
     if (training.in_favorite) {
       Requests.deleteFavoriteTraining([trainingId]).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload);
       });
     } else
       Requests.addFavoriteTraining(trainingId).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload);
       });
   };
 
   const handleComment = () => {
     Requests.addTrainingComment(trainingId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      Requests.getSingleTraining(trainingId)
-        .then((res) => {
-          setTraining(res.data);
-          setComment("");
-        })
-        .then(() => {
-          Requests.getTrainingComments(trainingId).then((res) => {
-            setComments(res.data);
-            setLoaded(true);
-          });
-        });
+      setComment("");
+      toggleReload(!reload);
     });
   };
 
@@ -673,12 +683,11 @@ const TrainingView = ({ setProfileId }) => {
               />
               <div className="training_view_content_left_textarea_button">
                 <GreenButton
-                  text={"Комментировать"}
+                  text={commentingId ? "Сохранить" : "Комментировать"}
                   width={"210px"}
                   height={"38px"}
-                  callback={handleComment}
-                disabled={comment.length === 0}
-
+                  callback={commentingId ? editComment : handleComment}
+                  disabled={comment.length === 0}
                 />
               </div>
             </div>
@@ -686,7 +695,12 @@ const TrainingView = ({ setProfileId }) => {
           <div className="photo_view_content_left_comment">
             {comments &&
               comments.map((comment, idx) => (
-                <Comment comment={comment} key={idx} />
+                <Comment
+                  comment={comment}
+                  key={idx}
+                  onEditClick={onEditClick}
+                  onDeleteClick={onDeleteClick}
+                />
               ))}
           </div>
         </div>
@@ -1010,6 +1024,13 @@ const TrainingView = ({ setProfileId }) => {
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
         slider={photos && photos.length > 1}
+      />
+
+      <Submit
+        text={"Вы уверены, что хотите удалить комментарий?"}
+        callback={deleteComment}
+        modalActive={deleteModalOpen}
+        setModalActive={setDeleteModalOpen}
       />
     </div>
   );

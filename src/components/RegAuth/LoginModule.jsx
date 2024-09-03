@@ -38,7 +38,7 @@ const LoginModule = ({
         dispatch(toggleIsLoggenIn(true));
       })
       .catch((err) =>
-        dispatch(openErrorAlert("Вы ввели неправильный пароль."))
+        dispatch(openErrorAlert("Неверный e-mail или пароль."))
       );
   };
 

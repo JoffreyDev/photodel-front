@@ -219,6 +219,12 @@ const MainTraining = () => {
     window.scroll(0, 0);
     document.title = "Обучение";
   }, []);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+};
   return (
     <div className="main_training">
       <div className="main_training_menu">
@@ -381,6 +387,7 @@ const MainTraining = () => {
               placeholder={"Введите что-нибудь"}
               value={searchReq}
               callback={setSearchReq}
+              onKeyDown={handleKeyDown}
             />
             <SelectInput
               height={"38px"}

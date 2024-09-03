@@ -169,6 +169,7 @@ const AddPhoto = () => {
         "base64"
       );
     });
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/tiff', 'image/dng', 'image/heif'];
 
   //получение base64 фото
   function getBase64(file, callback) {
@@ -179,26 +180,34 @@ const AddPhoto = () => {
     reader.readAsDataURL(file);
   }
 
-  //обработка чтения фото из инпута
+  // Обработка чтения фото из инпута
   const handlePhotoRead = (e) => {
-    let parsedFile = e.target.files[0];
+    const parsedFile = e.target.files[0];
 
-    if (parsedFile.size > 4e5) {
-      resizeFile(parsedFile, parsedFile.size);
+    // Проверяем формат файла
+    if (!allowedTypes.includes(parsedFile.type)) {
+       dispatch(openErrorAlert("Неподдерживаемый формат изображения!"));
+        return;
     }
 
-    EXIF.getData(e.target.files[0], function () {
-      var allMetaData = EXIF.getAllTags(this);
-      setExifData(allMetaData);
+    // Обработка изображения, если оно больше 400КБ
+    if (parsedFile.size > 4e5) {
+        resizeFile(parsedFile, parsedFile.size);
+    }
+
+    // Получение и установка EXIF данных
+    EXIF.getData(parsedFile, function () {
+        const allMetaData = EXIF.getAllTags(this);
+        setExifData(allMetaData);
     });
 
+    // Обработка файла и преобразование в base64, если размер меньше или равен 400КБ
     if (parsedFile.size <= 4e5) {
-      getBase64(parsedFile, function (base64Data) {
-        setLoadedPhoto(base64Data); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
-      });
+        getBase64(parsedFile, function (base64Data) {
+            setLoadedPhoto(base64Data); // Установка Base64 данных
+        });
     }
-  };
-
+};
   React.useEffect(() => {
     if (exifData) {
       exifData.Make &&

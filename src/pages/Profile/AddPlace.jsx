@@ -178,12 +178,27 @@ const AddPlace = () => {
 
   //обработчик добавления фотографий
   const handlePhotoRead = (e) => {
+    // Разрешенные форматы изображений
+    const allowedTypes = [
+      "image/png",
+      "image/jpeg",
+      "image/tiff",
+      "image/dng",
+      "image/heif",
+    ];
+
     if (sendPhotosArray.length + e.target.files.length > 10) {
       dispatch(openErrorAlert("Максимум 10 изображений!"));
       return;
     }
-    parsedFiles = Array.from(e.target.files);
+
+    const parsedFiles = Array.from(e.target.files);
     parsedFiles.forEach((file) => {
+      if (!allowedTypes.includes(file.type)) {
+        dispatch(openErrorAlert("Неподдерживаемый формат изображения!"));
+        return;
+      }
+
       if (file.size >= 4e5) {
         resizeFile(file, file.size);
       }
@@ -191,7 +206,7 @@ const AddPlace = () => {
       if (file.size < 4e5) {
         getBase64(file, function (base64Data) {
           sendPhotosArray.push(base64Data);
-          setSendPhotosArray(sendPhotosArray); // Here you can have your code which uses Base64 for its operation, // file to Base64 by oneshubh
+          setSendPhotosArray([...sendPhotosArray]); // Обновление состояния с новым массивом
           forceUpdate();
         });
       }
@@ -388,7 +403,7 @@ const AddPlace = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
-            label={'Название'}
+            label={"Название"}
             required
           />
           <textarea
@@ -397,7 +412,9 @@ const AddPlace = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <h1 className="add_session_left_content_h1 margin">Место съемки <span style={{ color: "red", opacity: "0.8" }}>*</span> </h1>
+          <h1 className="add_session_left_content_h1 margin">
+            Место съемки <span style={{ color: "red", opacity: "0.8" }}>*</span>{" "}
+          </h1>
           <TextInput
             width={"100%"}
             height={"38px"}
@@ -463,7 +480,7 @@ const AddPlace = () => {
               placeholder={"Выберите категории"}
               width={"100%"}
               required
-              label={'Категория'}
+              label={"Категория"}
             />
           )}
         </div>

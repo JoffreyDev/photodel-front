@@ -9,26 +9,19 @@ import Fave from "../../img/sessions/favorite.svg";
 import LikeDisabled from "../../img/sessions/likeDisabled.svg";
 import FaveDisabled from "../../img/sessions/favoriteDisabled.svg";
 import View from "../../img/sessions/view.svg";
-import Lock from "../../img/photoView/lock.svg";
 import Geo from "../../img/photoView/map.svg";
-import Timer from "../../img/photoView/timer.svg";
-import { AddToTrainingCard, Comment } from "../../components";
+import { AddToTrainingCard, Comment, Submit } from "../../components";
 import { GreenButton, PhotoFullScreen } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
 import { openErrorAlert, openSuccessAlert } from "../../redux/actions/userData";
 import { useDispatch } from "react-redux";
-import Camera from "../../img/placeView/photo.svg";
-import Money from "../../img/placeView/money.svg";
-import Work from "../../img/placeView/work.svg";
 import { RequestWindow } from "../../components";
 import LeftArrow from "../../img/commonImages/photo_left_arrow.svg";
 import RightArrow from "../../img/commonImages/photo_right_arrow.svg";
 import { PublicHeader } from "..";
 import Skeleton from "@mui/material/Skeleton";
-import Pro from "../../img/profile/pro.svg";
 import money from "../../img/trainings/money.svg";
 import types from "../../img/trainings/type.svg";
-import users from "../../img/trainings/users.svg";
 import calendar from "../../img/trainings/calendar.svg";
 import { useSelector } from "react-redux";
 
@@ -42,10 +35,12 @@ const PublicTrainingView = ({ setProfileId }) => {
   const trainingId = params.id;
 
   const [loaded, setLoaded] = React.useState();
+  const [reload, toggleReload] = React.useState(false);
   const [training, setTraining] = React.useState();
   const [comment, setComment] = React.useState("");
   const [commentingId, setCommentingId] = React.useState();
-  const [quotingId, setQuotingId] = React.useState();
+  const [deletingId, setDeletingId] = React.useState();
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState();
   const [comments, setComments] = React.useState();
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
 
@@ -55,8 +50,38 @@ const PublicTrainingView = ({ setProfileId }) => {
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
   const [dataLoading, setDataLoading] = React.useState(true);
 
+  const onEditClick = (value, id) => {
+    setComment(value);
+    setCommentingId(id);
+  };
+
+  const editComment = () => {
+    Requests.editTrainingComment(commentingId, comment)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно отредактирован!"));
+        setComment("");
+        setCommentingId(null);
+        toggleReload(!reload);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const deleteComment = () => {
+    Requests.deleteTrainingComment(deletingId)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно удален!"));
+        toggleReload(!reload);
+        setDeleteModalOpen(false);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const onDeleteClick = (id) => {
+    setDeletingId(id);
+    setDeleteModalOpen(true);
+  };
+
   React.useEffect(() => {
-    !loaded &&
       localStorage.getItem("access") &&
       Requests.getSingleTraining(trainingId)
         .then((res) => {
@@ -76,7 +101,6 @@ const PublicTrainingView = ({ setProfileId }) => {
           });
         });
 
-    !loaded &&
       !localStorage.getItem("access") &&
       Requests.getSingleTrainingUnauth(trainingId)
         .then((res) => {
@@ -96,7 +120,7 @@ const PublicTrainingView = ({ setProfileId }) => {
             setLoaded(true);
           });
         });
-  }, [loaded, trainingId]);
+  }, [loaded, trainingId, reload]);
 
   React.useEffect(() => {
     training && setProfileId(training.profile.id);
@@ -109,17 +133,11 @@ const PublicTrainingView = ({ setProfileId }) => {
     }
     if (training.is_liked) {
       Requests.unlikeTraining(trainingId).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+      toggleReload(!reload)
       });
     } else
       Requests.likeTraining(trainingId).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload)
       });
   };
 
@@ -130,34 +148,19 @@ const PublicTrainingView = ({ setProfileId }) => {
     }
     if (training.in_favorite) {
       Requests.deleteFavoriteTraining([trainingId]).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload)
       });
     } else
       Requests.addFavoriteTraining(trainingId).then(() => {
-        Requests.getSingleTraining(trainingId).then((res) => {
-          setLoaded(true);
-          setTraining(res.data);
-        });
+        toggleReload(!reload)
       });
   };
 
   const handleComment = () => {
     Requests.addTrainingComment(trainingId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      Requests.getSingleTraining(trainingId)
-        .then((res) => {
-          setTraining(res.data);
-          setComment("");
-        })
-        .then(() => {
-          Requests.getTrainingComments(trainingId).then((res) => {
-            setComments(res.data);
-            setLoaded(true);
-          });
-        });
+      setComment('')
+      toggleReload(!reload)
     });
   };
 
@@ -621,7 +624,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                     style={{ marginTop: "20px", marginBottom: "20px" }}
                     className="training_view_content_right_spec_p"
                   >
-                    Запрос направлен на рассмотрение (статус рассмотрения: {training?.has_request_from_user === 'AWAITING' ? 'Ожидает' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отказано'})
+                    Запрос направлен на рассмотрение (Статус : {training?.has_request_from_user === 'AWAITING' ? 'На рассмотрении' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отклонен'})
                   </p>
                 )}
               {window.screen.width > 576 &&
@@ -632,7 +635,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                     style={{ marginTop: "20px" }}
                     className="training_view_content_right_spec_p"
                   >
-                    Запрос направлен на рассмотрение (статус рассмотрения: {training?.has_request_from_user === 'AWAITING' ? 'Ожидает' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отказано'})
+                    Запрос направлен на рассмотрение (Статус: {training?.has_request_from_user === 'AWAITING' ? 'На рассмотрении' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отклонен'})
                   </p>
                 )}
             </div>
@@ -690,11 +693,11 @@ const PublicTrainingView = ({ setProfileId }) => {
                 onChange={(e) => setComment(e.target.value)}
               />
               <div className="training_view_content_left_textarea_button">
-                <GreenButton
-                  text={"Комментировать"}
+              <GreenButton
+                  text={commentingId ? "Сохранить" : "Комментировать"}
                   width={"210px"}
                   height={"38px"}
-                  callback={handleComment}
+                  callback={commentingId ? editComment : handleComment}
                   disabled={comment.length === 0}
                 />
               </div>
@@ -703,7 +706,8 @@ const PublicTrainingView = ({ setProfileId }) => {
           <div className="photo_view_content_left_comment">
             {comments &&
               comments.map((comment, idx) => (
-                <Comment comment={comment} key={idx} />
+                <Comment comment={comment} key={idx}  onEditClick={onEditClick}
+                onDeleteClick={onDeleteClick} />
               ))}
           </div>
         </div>
@@ -980,7 +984,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                   style={{ marginTop: "20px" }}
                   className="training_view_content_right_spec_p"
                 >
-                 Запрос направлен на рассмотрение (статус рассмотрения: {training?.has_request_from_user === 'AWAITING' ? 'Ожидает' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отказано'})
+                  Запрос направлен на рассмотрение (Статус: {training?.has_request_from_user === 'AWAITING' ? 'На рассмотрении' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отклонен'})
                 </p>
               )}
           </div>
@@ -1041,6 +1045,13 @@ const PublicTrainingView = ({ setProfileId }) => {
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
         slider={photos && photos.length > 1}
+      />
+
+<Submit
+        text={"Вы уверены, что хотите удалить комментарий?"}
+        callback={deleteComment}
+        modalActive={deleteModalOpen}
+        setModalActive={setDeleteModalOpen}
       />
     </div>
   );

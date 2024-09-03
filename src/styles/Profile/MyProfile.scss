@@ -223,7 +223,7 @@
           font-size: 14px;
           margin-right: 22px;
           padding: 7px 10px;
-            transition: 0.2s;
+          transition: 0.2s;
 
           color: #ffffff;
           cursor: pointer;
@@ -237,6 +237,7 @@
             margin-right: 6px;
           }
 
+
           &.mail {
             border: 1px solid #50a398;
             font-family: "Montserrat";
@@ -245,6 +246,10 @@
             font-size: 14px;
 
             color: #202424;
+
+            &.disabled {
+              pointer-events: none;
+            }
           }
 
           &.req {

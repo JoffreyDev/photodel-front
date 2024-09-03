@@ -56,7 +56,7 @@ const Settings = () => {
         style={{ marginTop: "20px", marginBottom: "20px" }}
         className="places_header_title"
       >
-        Удаление аккаунта
+        Удаление профиля
       </h1>
       <div
         className="photos_options_right_add"
@@ -64,7 +64,7 @@ const Settings = () => {
       >
         <img src={Trash} alt="add" className="photos_options_right_add_image" />
         <label htmlFor="file_input" className="photos_options_right_add_p">
-          Удалить аккаунт
+          Удалить профиль
         </label>
       </div>
       <Submit

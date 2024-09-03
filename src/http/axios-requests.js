@@ -7,7 +7,6 @@ const $api = axios.create({
   baseURL: "https://photodel.ru",
 });
 
-
 /* export const rootAddress = "http://localhost:8000";
 export const rootSocketAddress = "localhost:8000";
 
@@ -55,7 +54,6 @@ export class Requests {
       url: `/api/accounts/profile/password/change/`,
     }).then((res) => res);
   }
-
 
   static async deleteProfile() {
     return $api({
@@ -696,6 +694,138 @@ export class Requests {
       },
 
       url: `api/gallery/photo/comment/create/`,
+    }).then((res) => res);
+  }
+
+  static async editPhotoComment(id, content) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+        content,
+      },
+
+      url: `api/gallery/photo/comment/edit/`,
+    }).then((res) => res);
+  }
+
+  static async deletePhotoComment(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+      },
+
+      url: `api/gallery/photo/comment/delete/`,
+    }).then((res) => res);
+  }
+
+  static async editPhotoSessionComment(id, content) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+        content,
+      },
+
+      url: `api/gallery/photo_session/comment/edit/`,
+    }).then((res) => res);
+  }
+
+  static async deletePhotoSessionComment(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+      },
+
+      url: `api/gallery/photo_session/comment/delete/`,
+    }).then((res) => res);
+  }
+
+  static async editPlaceComment(id, content) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+        content,
+      },
+
+      url: `api/film_places/comment/edit/`,
+    }).then((res) => res);
+  }
+
+  static async deletePlaceComment(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+      },
+
+      url: `api/film_places/comment/delete/`,
+    }).then((res) => res);
+  }
+
+  static async editTrainingComment(id, content) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+        content,
+      },
+
+      url: `api/trainings/comment/edit/`,
+    }).then((res) => res);
+  }
+
+  static async deleteTrainingComment(id) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        comment_id: id,
+      },
+
+      url: `api/trainings/comment/delete/`,
     }).then((res) => res);
   }
 

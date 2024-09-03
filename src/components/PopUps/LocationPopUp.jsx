@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GreenLocation from "../../img/mainPage/green_location.svg";
 import BottomArrow from "../../img/mainPage/black_bottom_arrow.svg";
 import Checkmark from "../../img/commonImages/checkmark.svg";
@@ -22,10 +22,21 @@ function LocationPopUp({ styled }) {
     Requests.getCities().then((res) => setFetchedCities(res.data));
 
     userCoords &&
-      Requests.getNearestCity(userCoords).then((res) =>
-        setSelectedCity(res.data)
-      );
+      !localStorage.getItem("city") &&
+      Requests.getNearestCity(userCoords).then((res) => {
+        setSelectedCity(res.data);
+        localStorage.setItem("city", res.data?.city_name);
+      });
   }, [userCoords]);
+
+  useEffect(() => {
+    fetchedCities &&
+      setSelectedCity(
+        fetchedCities.filter(
+          (el) => el?.city_name === localStorage.getItem("city")
+        )[0]
+      );
+  }, [fetchedCities]);
 
   return (
     /*     <ClickAwayListener
@@ -83,7 +94,7 @@ function LocationPopUp({ styled }) {
           style={styled === "themed" ? { color: "black" } : {}}
           className="main_page_header_loc_p"
         >
-          {selectedCity.city_name}
+          {selectedCity?.city_name}
         </p>
         {styled === "main" && (
           <svg
@@ -147,6 +158,7 @@ function LocationPopUp({ styled }) {
                             }
                             onClick={() => {
                               setSelectedCity(city);
+                              localStorage.setItem("city", city.city_name);
                               setPopUpActive(false);
                             }}
                           >
@@ -172,6 +184,7 @@ function LocationPopUp({ styled }) {
                             }
                             onClick={() => {
                               setSelectedCity(city);
+                              localStorage.setItem("city", city.city_name);
                               setPopUpActive(false);
                             }}
                           >

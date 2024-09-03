@@ -226,9 +226,6 @@ const ProfileEdit = ({ setActiveModule }) => {
     } else if (!location) {
       dispatch(openErrorAlert("Вы не указали ваше местоположение!"));
       return;
-    } else if (!about) {
-      dispatch(openErrorAlert("Вы не указали ваше информацию о себе!"));
-      return;
     }
 
     Requests.updateOwnProfile({
@@ -523,7 +520,7 @@ const ProfileEdit = ({ setActiveModule }) => {
 
       <div className="my_profile_about">
         <p className="my_profile_about_title">
-          Обо мне <span style={{ color: "red", opacity: "0.8" }}>*</span>
+          Обо мне
         </p>
         <div className="my_profile_about_content">
           <textarea

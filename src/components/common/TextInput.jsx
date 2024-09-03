@@ -13,6 +13,7 @@ const TextInput = ({
   limit,
   numberRequired,
   required,
+  onKeyDown
 }) => {
   return (
     <div
@@ -46,6 +47,7 @@ const TextInput = ({
         className="common_text_input"
         placeholder={placeholder ? placeholder : ""}
         disabled={disabled}
+        onKeyDown={onKeyDown}
       />
     </div>
   );

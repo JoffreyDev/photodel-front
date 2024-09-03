@@ -12,7 +12,7 @@ import View from "../../img/sessions/view.svg";
 import Lock from "../../img/photoView/lock.svg";
 import Geo from "../../img/photoView/map.svg";
 import Timer from "../../img/photoView/timer.svg";
-import { Comment } from "../../components";
+import { Comment, Submit } from "../../components";
 import { GreenButton, PhotoFullScreen } from "../../components";
 import Requests, { rootAddress } from "../../http/axios-requests";
 import { openSuccessAlert } from "../../redux/actions/userData";
@@ -35,10 +35,12 @@ const PublicPlaceView = ({ setProfileId }) => {
   const placeId = params.id;
 
   const [loaded, setLoaded] = React.useState();
+  const [reload, toggleReload] = React.useState(false);
   const [place, setPlace] = React.useState();
-  const [comment, setComment] = React.useState('');
+  const [comment, setComment] = React.useState("");
   const [commentingId, setCommentingId] = React.useState();
-  const [quotingId, setQuotingId] = React.useState();
+  const [deletingId, setDeletingId] = React.useState();
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState();
   const [comments, setComments] = React.useState();
   const [fullScreenActive, setFullScreenActive] = React.useState(false);
 
@@ -48,8 +50,39 @@ const PublicPlaceView = ({ setProfileId }) => {
   const [reqWindowAcive, setReqWindowActive] = React.useState(false);
   const [dataLoading, setDataLoading] = React.useState(true);
 
+  const onEditClick = (value, id) => {
+    setComment(value);
+    setCommentingId(id);
+  };
+
+  const editComment = () => {
+    Requests.editPlaceComment(commentingId, comment)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно отредактирован!"));
+        setComment("");
+        setCommentingId(null);
+        toggleReload(!reload);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const deleteComment = () => {
+    Requests.deletePlaceComment(deletingId)
+      .then(() => {
+        dispatch(openSuccessAlert("Комментарий успешно удален!"));
+        toggleReload(!reload);
+        setDeleteModalOpen(false);
+      })
+      .catch((err) => dispatch(openErrorAlert(err.response.data)));
+  };
+
+  const onDeleteClick = (id) => {
+    setDeletingId(id);
+    setDeleteModalOpen(true);
+  };
+
+
   React.useEffect(() => {
-    !loaded &&
       localStorage.getItem("access") &&
       Requests.getSinglePlace(placeId)
         .then((res) => {
@@ -67,7 +100,6 @@ const PublicPlaceView = ({ setProfileId }) => {
           });
         });
 
-    !loaded &&
       !localStorage.getItem("access") &&
       Requests.getSinglePlaceUnauth(placeId)
         .then((res) => {
@@ -84,7 +116,7 @@ const PublicPlaceView = ({ setProfileId }) => {
             setLoaded(true);
           });
         });
-  }, [loaded, placeId]);
+  }, [loaded, placeId, reload]);
 
   React.useEffect(() => {
     place && setProfileId(place.profile.id);
@@ -97,17 +129,11 @@ const PublicPlaceView = ({ setProfileId }) => {
     }
     if (place.is_liked) {
       Requests.unlikePlace(placeId).then(() => {
-        Requests.getSinglePlace(placeId).then((res) => {
-          setLoaded(true);
-          setPlace(res.data);
-        });
+       toggleReload(!reload)
       });
     } else
       Requests.likePlace(placeId).then(() => {
-        Requests.getSinglePlace(placeId).then((res) => {
-          setLoaded(true);
-          setPlace(res.data);
-        });
+        toggleReload(!reload)
       });
   };
 
@@ -118,34 +144,19 @@ const PublicPlaceView = ({ setProfileId }) => {
     }
     if (place.in_favorite) {
       Requests.deleteFavoritePlace(placeId).then(() => {
-        Requests.getSinglePlace(placeId).then((res) => {
-          setLoaded(true);
-          setPlace(res.data);
-        });
+        toggleReload(!reload)
       });
     } else
       Requests.addPlaceToFavorites(placeId).then(() => {
-        Requests.getSinglePlace(placeId).then((res) => {
-          setLoaded(true);
-          setPlace(res.data);
-        });
+        toggleReload(!reload)
       });
   };
 
   const handleComment = () => {
     Requests.createPlaceComment(placeId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      Requests.getSinglePlace(placeId)
-        .then((res) => {
-          setPlace(res.data);
-          setComment("");
-        })
-        .then(() => {
-          Requests.getPlaceComments(placeId).then((res) => {
-            setComments(res.data);
-            setLoaded(true);
-          });
-        });
+      setComment("");
+      toggleReload(!reload)
     });
   };
 
@@ -402,11 +413,11 @@ const PublicPlaceView = ({ setProfileId }) => {
                 onChange={(e) => setComment(e.target.value)}
               />
               <div className="photo_view_content_left_textarea_button">
-                <GreenButton
-                  text={"Комментировать"}
+              <GreenButton
+                  text={commentingId ? "Сохранить" : "Комментировать"}
                   width={"210px"}
                   height={"38px"}
-                  callback={handleComment}
+                  callback={commentingId ? editComment : handleComment}
                   disabled={comment.length === 0}
                 />
               </div>
@@ -415,7 +426,8 @@ const PublicPlaceView = ({ setProfileId }) => {
           <div className="photo_view_content_left_comment">
             {comments &&
               comments.map((comment, idx) => (
-                <Comment comment={comment} key={idx} />
+                <Comment comment={comment} key={idx}  onEditClick={onEditClick}
+                onDeleteClick={onDeleteClick} />
               ))}
           </div>
         </div>
@@ -544,6 +556,12 @@ const PublicPlaceView = ({ setProfileId }) => {
         modalActive={fullScreenActive}
         setModalActive={setFullScreenActive}
         slider={photos && photos.length > 1}
+      />
+        <Submit
+        text={"Вы уверены, что хотите удалить комментарий?"}
+        callback={deleteComment}
+        modalActive={deleteModalOpen}
+        setModalActive={setDeleteModalOpen}
       />
     </div>
   );

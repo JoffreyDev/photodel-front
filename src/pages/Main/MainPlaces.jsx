@@ -227,6 +227,12 @@ const MainPlaces = () => {
     document.title = "Места для съемок";
   }, []);
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+};
+
   return (
     <div className="main_photo">
       <div className="main_photo_menu">
@@ -411,6 +417,7 @@ const MainPlaces = () => {
               placeholder={"Введите что-нибудь"}
               value={searchReq}
               callback={setSearchReq}
+              onKeyDown={handleKeyDown}
             />
             <SelectInput
               height={"38px"}
@@ -449,6 +456,7 @@ const MainPlaces = () => {
               placeholder={"Введите что-нибудь"}
               value={place}
               callback={setPlace}
+              onKeyDown={handleKeyDown}
             />
                         <div style={{ display: "flex" }}>
             <GreenButton

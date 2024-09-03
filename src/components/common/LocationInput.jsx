@@ -27,6 +27,7 @@ const LocationInput = ({
           src={Location}
           alt="location"
           className="common_location_input_image"
+          style={{cursor: 'pointer'}}
         />
       </div>
 
