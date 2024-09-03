@@ -140,7 +140,7 @@ function LocationPopUp({ styled }) {
                       .includes(cityName.toLowerCase())
                   )
                   .map((city) => {
-                    if (country === 1 && city.country.id === 140) {
+                    if (country === 1 && city.country.id === 1) {
                       return (
                         <div className="main_page_header_loc_select_popup_content_cities_p_wrapper">
                           {selectedCity.city_name === city.city_name && (
@@ -166,7 +166,7 @@ function LocationPopUp({ styled }) {
                           </p>
                         </div>
                       );
-                    } else if (country === 2 && city.country.id === 15) {
+                    } else if (country === 2 && city.country.id === 2) {
                       return (
                         <div className="main_page_header_loc_select_popup_content_cities_p_wrapper">
                           {selectedCity.city_name === city.city_name && (
