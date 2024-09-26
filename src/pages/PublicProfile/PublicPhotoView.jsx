@@ -73,6 +73,8 @@ const PublicPhotoView = ({ setProfileId }) => {
 
   const onDeleteClick = (id) => {
     setDeletingId(id);
+    setCommentingId('')
+    setComment("");
     setDeleteModalOpen(true);
   };
 
@@ -610,6 +612,7 @@ const PublicPhotoView = ({ setProfileId }) => {
         callback={deleteComment}
         modalActive={deleteModalOpen}
         setModalActive={setDeleteModalOpen}
+        setAction={setDeleteModalOpen}
       />
     </div>
   );

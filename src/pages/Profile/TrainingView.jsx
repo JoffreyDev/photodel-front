@@ -85,6 +85,8 @@ const TrainingView = ({ setProfileId }) => {
 
   const onDeleteClick = (id) => {
     setDeletingId(id);
+    setCommentingId('')
+    setComment("");
     setDeleteModalOpen(true);
   };
 
@@ -167,9 +169,10 @@ const TrainingView = ({ setProfileId }) => {
       return;
     }
     Requests.sendTrainingRequest(userData.id, trainingId)
-      .then((res) =>
-        dispatch(openSuccessAlert("Запрос на обучение успешно отправлен!"))
-      )
+      .then((res) => {
+        dispatch(openSuccessAlert("Запрос на обучение успешно отправлен!"));
+        toggleReload(!reload);
+      })
       .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
 
@@ -1031,6 +1034,7 @@ const TrainingView = ({ setProfileId }) => {
         callback={deleteComment}
         modalActive={deleteModalOpen}
         setModalActive={setDeleteModalOpen}
+        setAction={setDeleteModalOpen}
       />
     </div>
   );

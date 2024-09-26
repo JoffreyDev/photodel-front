@@ -179,13 +179,7 @@ const AddPlace = () => {
   //обработчик добавления фотографий
   const handlePhotoRead = (e) => {
     // Разрешенные форматы изображений
-    const allowedTypes = [
-      "image/png",
-      "image/jpeg",
-      "image/tiff",
-      "image/dng",
-      "image/heif",
-    ];
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/tiff', 'image/dng', 'image/heif', 'image/webp'];
 
     if (sendPhotosArray.length + e.target.files.length > 10) {
       dispatch(openErrorAlert("Максимум 10 изображений!"));
@@ -509,7 +503,7 @@ const AddPlace = () => {
                     type="file"
                     className="hidden_file_input"
                     onChange={(e) => handlePhotoRead(e)}
-                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif"
+                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif, image/webp"
                     multiple
                   />
                 </div>

@@ -34,7 +34,7 @@ const MainPhoto = () => {
   const [searchReq, setSearchReq] = React.useState();
   const [searchDist, setSearchDist] = React.useState(10000000000);
   const [category, setCategory] = React.useState("Все");
-  const [photos, setPhotos] = React.useState();
+  const [photos, setPhotos] = React.useState([]);
   const [sortField, setSortField] = React.useState(1);
   const [sortType, setSortType] = React.useState("-");
 
@@ -44,7 +44,7 @@ const MainPhoto = () => {
   const [photosMarks, setPhotosMarks] = React.useState();
 
   const [fetching, setFetching] = React.useState(false);
-  const [countPositions, setCountPositions] = React.useState(6);
+  const [countPositions, setCountPositions] = React.useState(8);
   const [page, setPage] = React.useState(1);
   const [countItems, setCountItems] = React.useState();
   const [menuOpened, setMenuOpened] = React.useState(false);
@@ -57,6 +57,8 @@ const MainPhoto = () => {
   const [likes, setLikes] = React.useState("");
 
   const [selectAdded, setSelectAdded] = React.useState(false);
+
+  const [triggerPagination, setTriggerPagination] = React.useState(false);
 
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
@@ -107,32 +109,8 @@ const MainPhoto = () => {
     ].join(""),
   };
 
-  React.useEffect(() => {
-    setFetching(true);
-    Requests.getAllPhotos({
-      userCoords: userCoords,
-      name_category: category,
-      search_words: searchReq,
-      distance: searchDist,
-      sortField: sortField === 1 ? "id" : sortField === 2 ? "likes_stat" : "",
-      sortType: sortType,
-      count_positions: countPositions,
-      page: page,
-    }).then((res) => {
-      setFetching(false);
-      setPhotos(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
-    });
-
-    Requests.getAllPhotosMarks({
-      userCoords: userCoords,
-      name_category: category,
-      search_words: searchReq,
-      distance: searchDist,
-    }).then((res) => setPhotosMarks(res.data));
-  }, [sortType, sortField, mapViewActive, page]);
-
-  const handleSearch = () => {
+  const handleSearch = (filterChanged) => {
+    if ((!filterChanged && photos.length >= countItems) || fetching) return;
     setFetching(true);
     setMenuOpened(false);
     Requests.getAllPhotos({
@@ -143,11 +121,19 @@ const MainPhoto = () => {
       sortField: sortField === 1 ? "id" : sortField === 2 ? "likes_stat" : "",
       sortType: sortType,
       count_positions: countPositions,
-      page: page,
+      page: filterChanged ? 1 : page,
     }).then((res) => {
-      setFetching(false);
-      setPhotos(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      if (filterChanged) {
+        setPage(2);
+        setPhotos(res.data.data);
+        setCountItems(res.data.totalCount);
+        setFetching(false);
+      } else {
+        setPage(page + 1);
+        setPhotos((prev) => [...prev, ...res.data.data]);
+        setCountItems(res.data.totalCount);
+        setFetching(false);
+      }
     });
 
     Requests.getAllPhotosMarks({
@@ -168,8 +154,15 @@ const MainPhoto = () => {
   };
 
   React.useEffect(() => {
-    handleSearch();
+    handleSearch(true);
+    setPage(1);
   }, [triggerSearch]);
+
+  React.useEffect(() => {
+    if (photos.length) {
+      handleSearch();
+    }
+  }, [triggerPagination]);
 
   const theme = createTheme({
     palette: {
@@ -201,10 +194,24 @@ const MainPhoto = () => {
   }, []);
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch()
+    if (event.key === "Enter") {
+      setTriggerSearch((prev) => !prev);
     }
-};
+  };
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 100
+      ) {
+        setTriggerPagination((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [page]);
 
   return (
     <div className="main_photo">
@@ -293,7 +300,7 @@ const MainPhoto = () => {
                 height={"38px"}
                 width={"180px"}
                 text={"Найти"}
-                callback={handleSearch}
+                callback={() => setTriggerSearch((prev) => !prev)}
                 margin={"15px 0 0 0"}
               />
 
@@ -421,7 +428,7 @@ const MainPhoto = () => {
                 height={"38px"}
                 width={"180px"}
                 text={"Найти"}
-                callback={handleSearch}
+                callback={() => setTriggerSearch((prev) => !prev)}
                 margin={"15px 0 0"}
               />
               <GreyButton
@@ -437,8 +444,6 @@ const MainPhoto = () => {
             <div
               onClick={() => {
                 setMapViewActive(true);
-                setCountPositions(6);
-                setPage(1);
                 localStorage.setItem("mapActive", true);
               }}
               className="main_photo_header_fields_map"
@@ -498,8 +503,7 @@ const MainPhoto = () => {
             mapViewActive ? "main_photo_body" : "main_photo_body map_disabled"
           }
         >
-          {!fetching &&
-            photos &&
+          {photos &&
             photos.map((photo, idx) => (
               <GalleryPhotoPreview
                 photo={photo}
@@ -521,21 +525,6 @@ const MainPhoto = () => {
               />
             ))}
 
-          {(!photos || fetching) && (
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "582px",
-              }}
-            >
-              <CircularProgress color="success" />
-            </div>
-          )}
-
           {!fetching && photos && photos.length === 0 && (
             <div
               style={{
@@ -553,22 +542,6 @@ const MainPhoto = () => {
             </div>
           )}
         </div>
-        {photos && !fetching && photos && photos.length !== 0 && (
-          <div className="main_photo_body_pagination">
-            <ThemeProvider theme={theme}>
-              <Pagination
-                count={
-                  mapViewActive
-                    ? Math.ceil(countItems / 6)
-                    : Math.ceil(countItems / 16)
-                }
-                page={page}
-                color="secondary"
-                onChange={(event, value) => setPage(value)}
-              />
-            </ThemeProvider>
-          </div>
-        )}
       </div>
 
       {mapViewActive && (
@@ -582,9 +555,7 @@ const MainPhoto = () => {
           >
             <div
               onClick={() => {
-                setCountPositions(16);
                 setMapViewActive(false);
-                setPage(1);
                 localStorage.setItem("mapActive", false);
               }}
               className="main_photo_map_hide"
@@ -637,6 +608,13 @@ const MainPhoto = () => {
           </div>
         </div>
       )}
+      <div className="upperButton" onClick={() => window.scroll(0, 0)}>
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="#3c8278">
+          <g id="Layer_8" data-name="Layer 8">
+            <path d="m16 4a12 12 0 1 0 12 12 12 12 0 0 0 -12-12zm6.73 18.79a1 1 0 0 1 -.6.21 1 1 0 0 1 -.8-.39l-5.33-7-5.33 7a1 1 0 0 1 -1.59-1.22l6.13-8a1 1 0 0 1 1.58 0l6.13 8a1 1 0 0 1 -.19 1.4zm0-6a1 1 0 0 1 -.6.21 1 1 0 0 1 -.8-.39l-5.33-6.96-5.33 7a1 1 0 0 1 -1.59-1.22l6.13-8a1 1 0 0 1 1.58 0l6.13 8a1 1 0 0 1 -.19 1.36z" />
+          </g>
+        </svg>
+      </div>
     </div>
   );
 };

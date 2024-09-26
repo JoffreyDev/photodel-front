@@ -133,7 +133,16 @@
     justify-content: space-between;
 
     &.map_disabled {
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 10px;
+
+      &.places {
+        gap: 0px;
+      }
+
+      &.profilesMapDeibled {
+        gap: 0px;
+      }
     }
 
     &.profiles {
@@ -342,5 +351,20 @@
         }
       }
     }
+  }
+}
+
+.upperButton {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  bottom: 30px;
+  right: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    opacity: 1;
   }
 }

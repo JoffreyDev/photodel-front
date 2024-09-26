@@ -37,9 +37,15 @@ const LoginModule = ({
         Requests.getOwnProfile().then((res) => dispatch(setUserData(res.data)));
         dispatch(toggleIsLoggenIn(true));
       })
-      .catch((err) =>
-        dispatch(openErrorAlert("Неверный e-mail или пароль."))
-      );
+      .catch((err) => {
+        switch (err.response.status) {
+          case 400:
+            dispatch(openErrorAlert(err.response.data.non_field_errors));
+            return;
+          case 401:
+            dispatch(openErrorAlert("Неверный e-mail или пароль."));
+        }
+      });
   };
 
   const openResetPassWindow = () => {
@@ -76,7 +82,9 @@ const LoginModule = ({
         </div>
         <div className="reg_auth_content_fields">
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">E-mail <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
+            <label className="reg_auth_content_label">
+              E-mail <span style={{ color: "red", opacity: "0.8" }}>*</span>
+            </label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value.toLowerCase())}
@@ -86,7 +94,9 @@ const LoginModule = ({
           </div>
 
           <div className="reg_auth_content_input_wrapper">
-            <label className="reg_auth_content_label">Пароль <span style={{ color: "red", opacity: "0.8" }}>*</span></label>
+            <label className="reg_auth_content_label">
+              Пароль <span style={{ color: "red", opacity: "0.8" }}>*</span>
+            </label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}

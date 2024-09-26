@@ -78,6 +78,8 @@ const PublicSessionView = ({ setProfileId }) => {
 
   const onDeleteClick = (id) => {
     setDeletingId(id);
+    setCommentingId('')
+    setComment("");
     setDeleteModalOpen(true);
   };
 
@@ -584,6 +586,7 @@ const PublicSessionView = ({ setProfileId }) => {
         callback={deleteComment}
         modalActive={deleteModalOpen}
         setModalActive={setDeleteModalOpen}
+        setAction={setDeleteModalOpen}
       />
     </div>
   );

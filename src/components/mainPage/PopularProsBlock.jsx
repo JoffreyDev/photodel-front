@@ -16,7 +16,7 @@ const PopularProsBlock = () => {
   };
 
   React.useEffect(() => {
-    Requests.getPopularProfiles().then((res) => setPorfiles(res.data));
+    Requests.getPopularProfiles().then((res) => setPorfiles(res.data.data));
   }, []);
   const navigate = useNavigate();
   return (

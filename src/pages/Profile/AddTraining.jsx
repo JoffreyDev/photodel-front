@@ -229,6 +229,7 @@ const AddTraining = () => {
       "image/tiff",
       "image/dng",
       "image/heif",
+      "image/webp",
     ];
 
     if (sendPhotosArray.length + e.target.files.length > 10) {
@@ -418,7 +419,7 @@ const AddTraining = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
-            label={'Название'}
+            label={"Название"}
             required
           />
           <textarea
@@ -429,7 +430,8 @@ const AddTraining = () => {
           />
 
           <h1 className="add_training_left_content_h1 margin">
-            Место проведения <span style={{ color: "red", opacity: "0.8" }}>*</span>
+            Место проведения{" "}
+            <span style={{ color: "red", opacity: "0.8" }}>*</span>
           </h1>
           <TextInput
             width={"100%"}
@@ -491,7 +493,8 @@ const AddTraining = () => {
                 htmlFor="date"
                 className="add_session_left_content_date_label"
               >
-                Дата начала <span style={{ color: "red", opacity: "0.8" }}>*</span>
+                Дата начала{" "}
+                <span style={{ color: "red", opacity: "0.8" }}>*</span>
               </label>
               <input
                 placeholder="Выберите дату"
@@ -510,7 +513,8 @@ const AddTraining = () => {
                 htmlFor="date"
                 className="add_session_left_content_date_label"
               >
-                Дата конца <span style={{ color: "red", opacity: "0.8" }}>*</span>
+                Дата конца{" "}
+                <span style={{ color: "red", opacity: "0.8" }}>*</span>
               </label>
               <input
                 placeholder="Выберите дату"
@@ -644,7 +648,7 @@ const AddTraining = () => {
                     className="hidden_file_input"
                     onChange={(e) => handlePhotoRead(e)}
                     multiple
-                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif"
+                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif, image/webp"
                   />
                 </div>
               </li>

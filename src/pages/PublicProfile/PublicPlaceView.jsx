@@ -78,6 +78,8 @@ const PublicPlaceView = ({ setProfileId }) => {
 
   const onDeleteClick = (id) => {
     setDeletingId(id);
+    setCommentingId('')
+    setComment("");
     setDeleteModalOpen(true);
   };
 
@@ -562,6 +564,7 @@ const PublicPlaceView = ({ setProfileId }) => {
         callback={deleteComment}
         modalActive={deleteModalOpen}
         setModalActive={setDeleteModalOpen}
+        setAction={setDeleteModalOpen}
       />
     </div>
   );

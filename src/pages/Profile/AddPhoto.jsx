@@ -169,7 +169,7 @@ const AddPhoto = () => {
         "base64"
       );
     });
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/tiff', 'image/dng', 'image/heif'];
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/tiff', 'image/dng', 'image/heif', 'image/webp'];
 
   //получение base64 фото
   function getBase64(file, callback) {
@@ -442,7 +442,7 @@ const AddPhoto = () => {
                     type="file"
                     className="hidden_file_input"
                     onChange={(e) => handlePhotoRead(e)}
-                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif"
+                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif, image/webp"
                   />
                 </div>
               </li>

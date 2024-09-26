@@ -180,6 +180,7 @@ const AddSession = () => {
       "image/tiff",
       "image/dng",
       "image/heif",
+      "image/webp",
     ];
 
     if (sendPhotosArray.length + e.target.files.length > 10) {
@@ -369,7 +370,7 @@ const AddSession = () => {
             placeholder="Введите название"
             callback={setTitle}
             value={title}
-            label={'Название'}
+            label={"Название"}
             required
           />
           <textarea
@@ -378,7 +379,9 @@ const AddSession = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <h1 className="add_session_left_content_h1 margin">Место съемки <span style={{ color: "red", opacity: "0.8" }}>*</span></h1>
+          <h1 className="add_session_left_content_h1 margin">
+            Место съемки <span style={{ color: "red", opacity: "0.8" }}>*</span>
+          </h1>
           <TextInput
             width={"100%"}
             height={"38px"}
@@ -397,7 +400,8 @@ const AddSession = () => {
               htmlFor="date"
               className="add_session_left_content_date_label"
             >
-              Дата проведения <span style={{ color: "red", opacity: "0.8" }}>*</span>
+              Дата проведения{" "}
+              <span style={{ color: "red", opacity: "0.8" }}>*</span>
             </label>
             <input
               placeholder="Выберите дату"
@@ -455,7 +459,7 @@ const AddSession = () => {
                     className="hidden_file_input"
                     onChange={(e) => handlePhotoRead(e)}
                     multiple
-                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif"
+                    accept="image/png, image/jpeg, image/tiff, image/dng, image/heif, image/webp"
                   />
                 </div>
               </li>

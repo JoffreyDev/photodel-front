@@ -78,11 +78,13 @@ const PublicTrainingView = ({ setProfileId }) => {
 
   const onDeleteClick = (id) => {
     setDeletingId(id);
+    setCommentingId('')
+    setComment("");
     setDeleteModalOpen(true);
   };
 
   React.useEffect(() => {
-      localStorage.getItem("access") &&
+    localStorage.getItem("access") &&
       Requests.getSingleTraining(trainingId)
         .then((res) => {
           setLoaded(true);
@@ -101,7 +103,7 @@ const PublicTrainingView = ({ setProfileId }) => {
           });
         });
 
-      !localStorage.getItem("access") &&
+    !localStorage.getItem("access") &&
       Requests.getSingleTrainingUnauth(trainingId)
         .then((res) => {
           setLoaded(true);
@@ -133,11 +135,11 @@ const PublicTrainingView = ({ setProfileId }) => {
     }
     if (training.is_liked) {
       Requests.unlikeTraining(trainingId).then(() => {
-      toggleReload(!reload)
+        toggleReload(!reload);
       });
     } else
       Requests.likeTraining(trainingId).then(() => {
-        toggleReload(!reload)
+        toggleReload(!reload);
       });
   };
 
@@ -148,19 +150,19 @@ const PublicTrainingView = ({ setProfileId }) => {
     }
     if (training.in_favorite) {
       Requests.deleteFavoriteTraining([trainingId]).then(() => {
-        toggleReload(!reload)
+        toggleReload(!reload);
       });
     } else
       Requests.addFavoriteTraining(trainingId).then(() => {
-        toggleReload(!reload)
+        toggleReload(!reload);
       });
   };
 
   const handleComment = () => {
     Requests.addTrainingComment(trainingId, comment).then(() => {
       dispatch(openSuccessAlert("Комментарий опубликован!"));
-      setComment('')
-      toggleReload(!reload)
+      setComment("");
+      toggleReload(!reload);
     });
   };
 
@@ -172,9 +174,10 @@ const PublicTrainingView = ({ setProfileId }) => {
       return;
     }
     Requests.sendTrainingRequest(userData.id, trainingId)
-      .then((res) =>
-        dispatch(openSuccessAlert("Запрос на обучение успешно отправлен!"))
-      )
+      .then((res) => {
+        dispatch(openSuccessAlert("Запрос на обучение успешно отправлен!"));
+        toggleReload(!reload);
+      })
       .catch((err) => dispatch(openErrorAlert(err.response.data.error)));
   };
 
@@ -624,7 +627,13 @@ const PublicTrainingView = ({ setProfileId }) => {
                     style={{ marginTop: "20px", marginBottom: "20px" }}
                     className="training_view_content_right_spec_p"
                   >
-                    Запрос направлен на рассмотрение (Статус : {training?.has_request_from_user === 'AWAITING' ? 'На рассмотрении' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отклонен'})
+                    Запрос направлен на рассмотрение (Статус :{" "}
+                    {training?.has_request_from_user === "AWAITING"
+                      ? "На рассмотрении"
+                      : training?.has_request_from_user === "ACCEPTED"
+                      ? "Принят"
+                      : "Отклонен"}
+                    )
                   </p>
                 )}
               {window.screen.width > 576 &&
@@ -635,7 +644,13 @@ const PublicTrainingView = ({ setProfileId }) => {
                     style={{ marginTop: "20px" }}
                     className="training_view_content_right_spec_p"
                   >
-                    Запрос направлен на рассмотрение (Статус: {training?.has_request_from_user === 'AWAITING' ? 'На рассмотрении' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отклонен'})
+                    Запрос направлен на рассмотрение (Статус:{" "}
+                    {training?.has_request_from_user === "AWAITING"
+                      ? "На рассмотрении"
+                      : training?.has_request_from_user === "ACCEPTED"
+                      ? "Принят"
+                      : "Отклонен"}
+                    )
                   </p>
                 )}
             </div>
@@ -693,7 +708,7 @@ const PublicTrainingView = ({ setProfileId }) => {
                 onChange={(e) => setComment(e.target.value)}
               />
               <div className="training_view_content_left_textarea_button">
-              <GreenButton
+                <GreenButton
                   text={commentingId ? "Сохранить" : "Комментировать"}
                   width={"210px"}
                   height={"38px"}
@@ -706,8 +721,12 @@ const PublicTrainingView = ({ setProfileId }) => {
           <div className="photo_view_content_left_comment">
             {comments &&
               comments.map((comment, idx) => (
-                <Comment comment={comment} key={idx}  onEditClick={onEditClick}
-                onDeleteClick={onDeleteClick} />
+                <Comment
+                  comment={comment}
+                  key={idx}
+                  onEditClick={onEditClick}
+                  onDeleteClick={onDeleteClick}
+                />
               ))}
           </div>
         </div>
@@ -984,7 +1003,13 @@ const PublicTrainingView = ({ setProfileId }) => {
                   style={{ marginTop: "20px" }}
                   className="training_view_content_right_spec_p"
                 >
-                  Запрос направлен на рассмотрение (Статус: {training?.has_request_from_user === 'AWAITING' ? 'На рассмотрении' : training?.has_request_from_user === 'ACCEPTED' ? 'Принят' : 'Отклонен'})
+                  Запрос направлен на рассмотрение (Статус:{" "}
+                  {training?.has_request_from_user === "AWAITING"
+                    ? "На рассмотрении"
+                    : training?.has_request_from_user === "ACCEPTED"
+                    ? "Принят"
+                    : "Отклонен"}
+                  )
                 </p>
               )}
           </div>
@@ -1047,11 +1072,12 @@ const PublicTrainingView = ({ setProfileId }) => {
         slider={photos && photos.length > 1}
       />
 
-<Submit
+      <Submit
         text={"Вы уверены, что хотите удалить комментарий?"}
         callback={deleteComment}
         modalActive={deleteModalOpen}
         setModalActive={setDeleteModalOpen}
+        setAction={setDeleteModalOpen}
       />
     </div>
   );

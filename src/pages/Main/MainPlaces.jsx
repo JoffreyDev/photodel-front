@@ -138,8 +138,8 @@ const MainPlaces = () => {
       place: place,
     }).then((res) => {
       setFetching(false);
-      setPlaces(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      setPlaces(res.data.data);
+      setCountItems(res.data.totalCount);
     });
 
     Requests.getAllPlacesMarks({
@@ -185,8 +185,8 @@ const MainPlaces = () => {
       place: place,
     }).then((res) => {
       setFetching(false);
-      setPlaces(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      setPlaces(res.data.data);
+      setCountItems(res.data.totalCount);
     });
 
     Requests.getAllPlacesMarks({
@@ -538,7 +538,7 @@ const MainPlaces = () => {
         </div>
         <div
           className={
-            mapViewActive ? "main_photo_body" : "main_photo_body map_disabled"
+            mapViewActive ? "main_photo_body" : "main_photo_body map_disabled places"
           }
         >
           {places &&

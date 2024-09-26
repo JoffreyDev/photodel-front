@@ -137,8 +137,8 @@ const MainTraining = () => {
       page: page,
     }).then((res) => {
       setFetching(false);
-      setTrainings(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      setTrainings(res.data.data);
+      setCountItems(res.data.totalCount);
     });
 
     Requests.getAllTrainingsListMap({
@@ -183,8 +183,8 @@ const MainTraining = () => {
       page: page,
     }).then((res) => {
       setFetching(false);
-      setTrainings(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      setTrainings(res.data.data);
+      setCountItems(res.data.totalCount);
     });
 
     Requests.getAllTrainingsListMap({

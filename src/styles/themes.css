@@ -1179,3 +1179,7 @@ color: var(--secondary-text-color) !important;
 .edit_album_left_content_h1 {
     color: var(--secondary-text-color)
 }
+
+.upperButton svg {
+    fill: var(--secondary-text-color)
+}

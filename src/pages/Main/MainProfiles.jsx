@@ -149,8 +149,8 @@ const MainProfiles = () => {
       name_spec: spec,
     }).then((res) => {
       setFetching(false);
-      setProfiles(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      setProfiles(res.data.data);
+      setCountItems(res.data.totalCount);
     });
 
     Requests.getAllProfilesMarks({
@@ -181,8 +181,8 @@ const MainProfiles = () => {
       name_spec: spec,
     }).then((res) => {
       setFetching(false);
-      setProfiles(res.data);
-      setCountItems(Number(res.headers["count-filter-items"]));
+      setProfiles(res.data.data);
+      setCountItems(res.data.totalCount);
     });
 
     Requests.getAllProfilesMarks({
@@ -603,7 +603,7 @@ const MainProfiles = () => {
         </div>
         <div
           className={
-            mapViewActive ? "main_photo_body" : "main_photo_body map_disabled"
+            mapViewActive ? "main_photo_body" : "main_photo_body map_disabled profilesMapDeibled" 
           }
         >
           {!fetching &&

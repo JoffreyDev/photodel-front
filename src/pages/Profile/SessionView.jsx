@@ -80,6 +80,8 @@ const SessionView = () => {
   const onDeleteClick = (id) => {
     setDeletingId(id);
     setDeleteModalOpen(true);
+    setComment("");
+    setCommentingId('')
   };
 
   React.useEffect(() => {
@@ -604,6 +606,7 @@ const SessionView = () => {
         callback={deleteComment}
         modalActive={deleteModalOpen}
         setModalActive={setDeleteModalOpen}
+        setAction={setDeleteModalOpen}
       />
     </div>
   );
