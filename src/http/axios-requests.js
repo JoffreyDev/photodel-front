@@ -2143,14 +2143,63 @@ export class Requests {
     }).then((res) => res);
   }
 
-  static async getReviewsList(id) {
+  static async readMessagesNotifications(id) {
     return $api({
-      method: "GET",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      data: {
+        chat_id: id,
+      },
+
+      url: `api/accounts/profile/notifications/read_messages_notifications/`,
+    }).then((res) => res);
+  }
+
+  static async readReviewsNotifications() {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+
+      url: `api/accounts/profile/notifications/read_reviews_notifications/`,
+    }).then((res) => res);
+  }
+
+  static async getReviewsList(id, sortType, sortField) {
+    return $api({
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      data: {
+        sort_type: sortType === '+' ? '' : '-',
+        sort_field: sortField === 1 ? 'date' : 'mark'
+      },
 
       url: `api/gallery/review/list/${id}/`,
+    }).then((res) => res);
+  }
+
+  static async getMyReviewsList(sortType, sortField
+  ) {
+    return $api({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+      data: {
+        sort_type: sortType === '+' ? '' : '-',
+        sort_field: sortField === 1 ? 'date' : 'mark'
+      },
+
+      url: `api/gallery/review/my/`,
     }).then((res) => res);
   }
 

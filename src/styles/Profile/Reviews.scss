@@ -322,3 +322,17 @@
     }
   }
 }
+
+.reviews_card_info {
+  height: 70px;
+  padding: 10px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+}

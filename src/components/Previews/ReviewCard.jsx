@@ -37,6 +37,27 @@ function ReviewCard({ review }) {
   const navigate = useNavigate();
   return (
     <div className="reviews_card">
+      {review.status === false && (
+        <div
+          className="reviews_card_info"
+          style={{
+            backgroundColor:
+              review.status === false && review.content.includes("/**")
+                ? "#fc4903"
+                : review.status === false
+                ? "#fcce03"
+                : "",
+          }}
+        >
+          <span>
+            {review.status === false && review.content.includes("/**")
+              ? `Отзыв отклонен: ${review.content.split("/**")[1]}`
+              : review.status === false
+              ? "Отзыв на рассмотрении"
+              : ""}
+          </span>
+        </div>
+      )}
       <div className="reviews_card_head">
         <div className="reviews_card_head_left">
           <img
@@ -107,7 +128,9 @@ function ReviewCard({ review }) {
         </div>
       </div>
       <div className="reviews_card_main">
-        <p className="reviews_card_main_review">{review.content}</p>
+        <p className="reviews_card_main_review">
+          {review.content.split("/**")[0]}
+        </p>
         <div className="reviews_card_main_photos">
           {review.images?.length > 0 &&
             review.images.map((image, idx) => (

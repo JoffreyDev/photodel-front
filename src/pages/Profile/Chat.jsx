@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Back from "../../img/addModules/arrow-back.svg";
 import Avatar from "../../img/photoView/avatar.png";
 import Online from "../../img/sessions/online.svg";
@@ -7,14 +7,28 @@ import Menu from "../../img/commonImages/dopmenu.svg";
 import "../../styles/Profile/Chat.scss";
 import { TextInputNoMargin, MessageBlock } from "../../components/index";
 import { useParams } from "react-router-dom";
-import { rootAddress, rootSocketAddress } from "../../http/axios-requests";
+import Requests, {
+  rootAddress,
+  rootSocketAddress,
+} from "../../http/axios-requests";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotifications } from "../../redux/actions/userData";
 
 const Chat = () => {
   const params = useParams();
   const chatId = params.id;
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    Requests.readMessagesNotifications(chatId).then(() => {
+      Requests.getNotifications().then((res) =>
+        dispatch(setNotifications(res.data))
+      );
+    });
+  }, []);
 
   const { userData } = useSelector(({ userData }) => userData);
 

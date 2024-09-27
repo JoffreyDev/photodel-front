@@ -1183,3 +1183,7 @@ color: var(--secondary-text-color) !important;
 .upperButton svg {
     fill: var(--secondary-text-color)
 }
+
+.reviews_card_info {
+    color: var(--secondary-text-color)
+}
